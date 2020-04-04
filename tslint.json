@@ -1,0 +1,10 @@
+{
+  "extends": [
+    "./node_modules/react-redux-typescript-scripts/tslint.json",
+    "./node_modules/react-redux-typescript-scripts/tslint-react.json"
+  ],
+  "rules": {
+    "no-import-side-effect": false,
+    "no-submodule-imports": false
+  }
+}
