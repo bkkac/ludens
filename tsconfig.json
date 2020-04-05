@@ -19,10 +19,10 @@
     "noEmit": true,
     "jsx": "react",
     "baseUrl": "./src",
-    "importHelpers": true
+    "importHelpers": true,
   },
   "include": [
     "src"
   ],
-  "extends": "./node_modules/react-redux-typescript-scripts/tsconfig.json"
+  "extends": "./configs.json"
 }
