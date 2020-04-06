@@ -12,22 +12,10 @@ function RootContainer(props: IRootProps) {
   const PageElement = () => createElement(get(Pages, converseCase, (<div>Not found</div>)))
 
   return (
-    <div>
+    <>
       <Navbar />
-      <div className="container">
-        <div className="row">
-          <div className="col-sm">
-            One of three columns
-    </div>
-          <div className="col-sm">
-            One of three columns
-    </div>
-          <div className="col-sm">
-            <PageElement />
-          </div>
-        </div>
-      </div>
-    </div>
+      <PageElement />
+    </>
   )
 
 }

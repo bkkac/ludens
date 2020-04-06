@@ -1,3 +1,3 @@
-interface INavbarProps {
+declare interface INavbarProps {
   
 }

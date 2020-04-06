@@ -13,7 +13,6 @@ import 'assets/fonts/SukhumvitSet-SemiBold.ttf'
 import 'assets/fonts/SukhumvitSet-Text.ttf'
 import 'assets/fonts/SukhumvitSet-Thin.ttf'
 
-
 const router = createRouter()
 
 router.start(() => {

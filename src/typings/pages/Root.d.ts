@@ -1,3 +1,3 @@
-interface IRootProps {
+declare interface IRootProps {
   [name: string]: any
 }
