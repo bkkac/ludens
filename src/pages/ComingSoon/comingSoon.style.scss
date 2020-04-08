@@ -1,0 +1,23 @@
+.comingsoon-container {
+  height: 440px;
+  border-radius: 16px;
+  background-color: #edededb2;
+
+  .comingsoon-icon {
+    width: 180px;
+  }
+
+  .comingsoon-title {
+    font-family: "SukhumvitSet-Bold";
+    font-size: 32px;
+    line-height: 0.84;
+    color: #767676;
+  }
+
+  .comingsoon-description {
+    font-family: "SukhumvitSet-Medium";
+    font-size: 18px;
+    line-height: 1.13;
+    color: #767676;
+  }
+}

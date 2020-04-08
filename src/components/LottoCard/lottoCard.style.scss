@@ -1,0 +1,43 @@
+.lotto-card-container {
+  padding-top: 14px;
+  padding-bottom: 14px;
+  border-radius: 4px;
+  box-shadow: 2px 3px 8px 0 #ada2a033;
+  background-color: #f1f1f1;
+
+  .lotto-name {
+    font-family: "SukhumvitSet-Bold";
+    font-size: 24px;
+    line-height: 37px;
+    color: #3e3e3e;
+
+    .flag-icon {
+      width: 24px;
+      height: 24px;
+      margin-left: 12px;
+      background: #777777;
+    }
+  }
+
+  .lotto-title {
+    font-family: "SukhumvitSet-Bold";
+    font-size: 16px;
+    line-height: 26px;
+    color: #3e3e3e;
+
+    &-large {
+      font-family: "SukhumvitSet-Bold";
+      font-size: 24px;
+      line-height: 28px;
+      color: #3e3e3e;
+    }
+  }
+
+  .lotto {
+    font-family: "SukhumvitSet-Bold";
+    font-size: 40px;
+    line-height: 50px;
+    letter-spacing: 3px;
+    color: #065bc9;
+  }
+}
