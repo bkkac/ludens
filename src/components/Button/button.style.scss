@@ -1,0 +1,67 @@
+.button-container {
+  cursor: pointer;
+  height: 44px;
+  border-radius: 22px;
+  transition: all 256ms ease-in-out;
+
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  justify-content: space-between;
+
+  &.normal {
+    box-shadow: 3px 6px 10px 0 #00000029;
+    background-image: linear-gradient(179deg, #3587f1 5%, #065bc9 95%);
+    filter: brightness(1);
+
+    &:hover {
+      filter: brightness(1.15);
+    }
+  }
+
+  &.outline {
+    border: solid 1px #1171ec;
+    background-color: #ffffff;
+
+    .button-text {
+      color: #1171ec;
+      font-family: "SukhumvitSet-Bold";
+    }
+
+    &:hover {
+      background-color: #1171ec;
+
+      .button-text {
+        color: #ffffff;
+      }
+    }
+  }
+
+  &.small {
+    height: 32px;
+    border-radius: 16px;
+  }
+
+  &.medium {
+    height: 44px;
+    border-radius: 22px;
+  }
+
+  &.large {
+    height: 44px;
+    border-radius: 22px;
+  }
+
+  .button-icon {
+    width: 24px;
+    height: 24px;
+  }
+
+  .button-text {
+    font-family: "SukhumvitSet-Medium";
+    font-size: 18px;
+    line-height: 1.5;
+    text-align: center;
+    color: #fcfcfc;
+  }
+}

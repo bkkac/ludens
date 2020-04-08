@@ -1,0 +1,26 @@
+.alink-wrapper {
+  font-family: "SukhumvitSet-Medium";
+  font-size: 14px;
+  line-height: 1.93;
+  text-align: left;
+  color: #777777;
+  cursor: pointer;
+
+  &-bold {
+    font-family: "SukhumvitSet-Bold";
+    font-size: 14px;
+    line-height: 1.93;
+    text-align: left;
+    color: #777777;
+    cursor: pointer;
+
+    &:hover {
+      text-decoration: underline;
+      color: #777777;
+    }
+  }
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
