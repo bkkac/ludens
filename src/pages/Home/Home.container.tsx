@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Formik, FormikValues, FormikProps } from 'formik'
-import { LoginForm } from './components'
+import { LoginForm, LottoList } from './components'
 import './home.style.scss'
 
 class HomeContainer extends Component {
@@ -26,12 +26,21 @@ class HomeContainer extends Component {
     )
   }
 
+  renderLottoList = () => {
+
+    return <LottoList />
+  }
+
   render() {
     const RenderLoginFormComponent = this.renderLoginForm
+    const RenderLottoListComponent = this.renderLottoList
     return (
       <div className="container">
         <div className="login-container">
           <RenderLoginFormComponent />
+        </div>
+        <div className="my-5">
+          <RenderLottoListComponent />
         </div>
       </div>
     )
