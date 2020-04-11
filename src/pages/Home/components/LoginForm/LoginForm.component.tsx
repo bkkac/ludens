@@ -16,7 +16,7 @@ const constants = {
 function LoginForm(props: FormikProps<FormikValues>) {
 
   return (
-    <>
+    <div className="login-from-container">
       <div className="heading-text">{constants.heading}</div>
       <div className="row">
         <InputText placeholder={constants.placeholderUsername} />
@@ -38,7 +38,7 @@ function LoginForm(props: FormikProps<FormikValues>) {
           <ALink text={constants.alinkRegister} bold color="#88b8f6" />
         </div>
       </div>
-    </>
+    </div>
   )
 }
 
