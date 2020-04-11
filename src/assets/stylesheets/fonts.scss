@@ -1,6 +1,36 @@
-@import "../../assets/fonts/SukhumvitSet-Bold.ttf";
-@import "../../assets/fonts/SukhumvitSet-Light.ttf";
-@import "../../assets/fonts/SukhumvitSet-Medium.ttf";
-@import "../../assets/fonts/SukhumvitSet-SemiBold.ttf";
-@import "../../assets/fonts/SukhumvitSet-Text.ttf";
-@import "../../assets/fonts/SukhumvitSet-Thin.ttf";
+@import "../fonts/SukhumvitSet-Bold.ttf";
+@import "../fonts/SukhumvitSet-Light.ttf";
+@import "../fonts/SukhumvitSet-Medium.ttf";
+@import "../fonts/SukhumvitSet-SemiBold.ttf";
+@import "../fonts/SukhumvitSet-Text.ttf";
+@import "../fonts/SukhumvitSet-Thin.ttf";
+
+@font-face {
+  font-family: "SukhumvitSet-Bold";
+  src: local("SukhumvitSet-Bold"), url("../fonts/SukhumvitSet-Bold.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "SukhumvitSet-Light";
+  src: local("SukhumvitSet-Light"), url("../fonts/SukhumvitSet-Light.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "SukhumvitSet-Medium";
+  src: local("SukhumvitSet-Medium"), url("../fonts/SukhumvitSet-Medium.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "SukhumvitSet-SemiBold";
+  src: local("SukhumvitSet-SemiBold"), url("../fonts/SukhumvitSet-SemiBold.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "SukhumvitSet-Text";
+  src: local("SukhumvitSet-Text"), url("../fonts/SukhumvitSet-Text.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "SukhumvitSet-Thin";
+  src: local("SukhumvitSet-Thin"), url("../fonts/SukhumvitSet-Thin.ttf") format("truetype");
+}
