@@ -4,7 +4,7 @@ import routes from './routes'
 
 function configureRouter(): Router<Record<string, any>> {
   const router = createRouter(routes, {
-    defaultRoute: 'comingSoon',
+    defaultRoute: 'home',
   })
 
   router.usePlugin(loggerPlugin)
