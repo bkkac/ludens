@@ -7,7 +7,7 @@ declare interface ILottoNumber {
 declare interface ILotto {
   name: string
   code: string
-  date: string | Date
+  date: string
   updateTime: string | Date
   lotto: ReadonlyArray<ILottoNumber>
 }
