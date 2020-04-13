@@ -1,6 +1,7 @@
 import { combineEpics } from 'redux-observable'
-import lotto from 'reduxs/lotto/epics'
+import lotto from './lotto/epics'
 
 export default combineEpics(
-  ...lotto
+  ...lotto,
 )
+

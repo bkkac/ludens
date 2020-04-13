@@ -1,5 +1,4 @@
 import axios from 'axios'
-import { get, isEmpty } from 'lodash'
 
 const requestInterceptor = (config: any) => {
   const configMod = {
@@ -12,19 +11,15 @@ const requestInterceptor = (config: any) => {
   return configMod
 }
 
-const responseInterceptor = (response: any): any => {
-  const data = get(response, 'data', undefined)
-  const code = get(response, 'status', undefined)
-  return { data, code }
-}
+// const responseInterceptor = (response: any): AxiosResponse => response
 
-const errorResponseHandler = ({ dispatch }: any) => (error: any) => {
-  const errorResponse = get(error, 'response.data')
-  if (isEmpty(errorResponse)) {
-    return Promise.reject({ Message: error, Code: 400 })
-  }
-  return Promise.reject(errorResponse)
-}
+// const errorResponseHandler = ({ dispatch }: any) => (error: AxiosError) => {
+//   const errorResponse = get(error, 'response.data')
+//   if (isEmpty(errorResponse)) {
+//     return Promise.reject({ Message: error, Code: 400 })
+//   }
+//   return Promise.reject(errorResponse)
+// }
 
 const errorRequestHandler = (error: any) => Promise.reject(error)
 
@@ -34,7 +29,7 @@ const initService = (config: any, store: any) => {
   axios.defaults.responseType = 'json'
   axios.defaults.headers['Content-Type'] = 'application/json'
   axios.interceptors.request.use(requestInterceptor, errorRequestHandler)
-  axios.interceptors.response.use(responseInterceptor, errorResponseHandler(store))
+  // axios.interceptors.response.use(responseInterceptor, errorResponseHandler(store))
   axios.defaults.timeout = 60000
 
 }

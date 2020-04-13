@@ -1,7 +1,7 @@
 import React, { SFC } from 'react'
 import { Badge } from 'components'
 import moment from 'moment'
-import { get } from 'lodash'
+import { get, replace } from 'lodash'
 import ThaiFlagIcon from 'assets/images/flags/thailand.png'
 import './lottoCard.style.scss'
 
@@ -28,7 +28,7 @@ const LottoCard: SFC<ILottoCard & DefaultProps> = (props) => {
     lotto,
   } = data
 
-  const dateDisplay = moment(date).format('Do MMM YY')
+  const dateDisplay = moment(replace(date, /\s/g, '')).format('Do MMM YY')
 
   const NumberComponent = ({ name, numbers }: ILottoNumber) => {
     const Numbers = numbers!.map((num, index) => (
