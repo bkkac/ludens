@@ -43,7 +43,6 @@ class HomeContainer extends Component<IHomeProps & IHomeActionProps & DefaultPro
   }
 
   renderLottoList = () => {
-
     return <LottoList data={this.props.lottoList} />
   }
 
