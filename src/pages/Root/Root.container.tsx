@@ -1,21 +1,36 @@
-import React, { createElement } from 'react'
-import { upperFirst, camelCase, get } from 'lodash'
-import { useRouteNode } from 'react-router5'
+import React from 'react'
+import { isEqual } from 'lodash'
 import { Navbar } from 'components'
-import Pages from 'pages'
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+} from 'react-router-dom'
+import routes from 'configs/routes'
 
 function RootContainer(props: IRootProps) {
-  const { route } = useRouteNode('')
-  const topRouteName = route.name.split('.')[0]
-  const converseCase = upperFirst(camelCase(topRouteName))
 
-  const PageElement = () => createElement(get(Pages, converseCase, (<div>Not found</div>)))
+  const PageElement = () => (
+    <Switch>
+      {routes.map(route =>
+        isEqual(route.name, '404')
+          ? (<Route key={`${route.name}-page`} component={route.component} />)
+          : (
+            <Route
+              component={route.component}
+              key={`${route.name}-page`}
+              exact={route.exact}
+              path={route.path}
+            />
+          ))}
+    </Switch>
+  )
 
   return (
-    <>
+    <Router>
       <Navbar />
       <PageElement />
-    </>
+    </Router>
   )
 
 }

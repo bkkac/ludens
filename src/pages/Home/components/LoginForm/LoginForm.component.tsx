@@ -14,7 +14,6 @@ const constants = {
 }
 
 function LoginForm(props: FormikProps<FormikValues>) {
-
   return (
     <>
       <div className="heading-text">{constants.heading}</div>

@@ -3,6 +3,7 @@ import { Formik, FormikValues, FormikProps } from 'formik'
 import { LoginForm, LottoList } from './components'
 import './home.style.scss'
 
+// Temporary FormikValues
 class HomeContainer extends Component {
 
 
