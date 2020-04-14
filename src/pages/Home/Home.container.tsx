@@ -1,14 +1,29 @@
 import React, { Component } from 'react'
+import { noop } from 'lodash'
 import { Formik, FormikValues, FormikProps } from 'formik'
 import { LoginForm, LottoList } from './components'
 import './home.style.scss'
 
-// Temporary FormikValues
-class HomeContainer extends Component {
+type DefaultProps = Readonly<typeof defaultProps>
 
+const defaultProps: IHomeProps & IHomeActionProps = {
+  getLottoList() { noop() },
+  lottoList: [],
+  getLottoCode: 0,
+  getLottoError: '',
+  getLottoIsFetching: false,
+}
+
+class HomeContainer extends Component<IHomeProps & IHomeActionProps & DefaultProps, {}> {
+
+  static defaultProps = defaultProps
+
+  componentDidMount() {
+    this.props.getLottoList()
+  }
 
   onSubmitLogin = (values: FormikValues) => {
-    console.log(values)
+    // console.log(values)
   }
 
   renderLoginForm = () => {
@@ -29,7 +44,7 @@ class HomeContainer extends Component {
 
   renderLottoList = () => {
 
-    return <LottoList />
+    return <LottoList data={this.props.lottoList} />
   }
 
   render() {
@@ -40,7 +55,7 @@ class HomeContainer extends Component {
         <div className="login-container">
           <RenderLoginFormComponent />
         </div>
-        <div className="my-5">
+        <div className="mt-5 mb-4">
           <RenderLottoListComponent />
         </div>
       </div>
