@@ -1,6 +1,6 @@
 import React from 'react'
 import { isEqual } from 'lodash'
-import { Navbar } from 'components'
+import { Navbar, TextRunning } from 'components'
 import {
   BrowserRouter as Router,
   Switch,
@@ -29,6 +29,7 @@ function RootContainer(props: IRootProps) {
   return (
     <Router>
       <Navbar />
+      <TextRunning text="Welcome to ThailandBet" />
       <PageElement />
     </Router>
   )

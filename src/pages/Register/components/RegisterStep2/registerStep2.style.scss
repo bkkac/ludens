@@ -1,0 +1,62 @@
+.register-step-2-form {
+  .header-title {
+    font-family: "SukhumvitSet-Bold";
+    font-size: 20px;
+    line-height: 1.35;
+    color: #777777;
+
+    span {
+      &::before {
+        content: "(";
+      }
+      &::after {
+        content: ")";
+      }
+      margin-left: 8px;
+      font-size: 12px;
+      line-height: 2.25;
+      color: #bb130a;
+    }
+  }
+
+  .confirm-phonenumber {
+    opacity: 0.7;
+    font-family: "SukhumvitSet-Medium";
+    font-size: 14px;
+    line-height: 1.93;
+    color: #777777;
+
+    &.bold {
+      opacity: 1;
+      font-size: 18px;
+      line-height: 1.5;
+    }
+  }
+
+  .message-icon {
+    width: 120px;
+    height: 120px;
+  }
+
+  .remain-text {
+    font-family: "SukhumvitSet-Bold";
+    font-size: 16px;
+    line-height: 1.69;
+    color: #bb130a;
+  }
+
+  .remain-number-text {
+    font-family: "SukhumvitSet-Bold";
+    font-size: 64px;
+    line-height: 1.1;
+    color: #ff5148;
+
+    span {
+      &::before {
+        content: ":";
+      }
+      padding-left: 8px;
+      padding-right: 8px;
+    }
+  }
+}

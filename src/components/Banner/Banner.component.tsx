@@ -13,7 +13,7 @@ const Banner: SFC<IBanner & DefaultProps> = (props) => {
   const { ImageIcon } = props
 
   if (isEmpty(ImageIcon)) {
-    return <div className="col banner-container" />
+    return <div className="col banner-container empty" />
   }
 
   return <img src={ImageIcon} className="col banner-container" alt="banner" />

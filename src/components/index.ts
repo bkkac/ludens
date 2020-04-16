@@ -5,6 +5,9 @@ import { Banner } from './Banner'
 import { Button } from './Button'
 import { InputText } from './InputText'
 import { LottoCard } from './LottoCard'
+import { TextRunning } from './TextRunning'
+import { InputCheckbox } from './InputCheckbox'
+import { InputRadioImage } from './InputRadioImage'
 
 export {
   ALink,
@@ -14,4 +17,7 @@ export {
   Button,
   InputText,
   LottoCard,
+  TextRunning,
+  InputCheckbox,
+  InputRadioImage,
 }

@@ -1,3 +1,3 @@
-declare interface IRegisterStep1Props {
-
+declare interface IRegisterFormProps {
+  onConfirmPresses?(currentStep: number): void
 }

@@ -10,7 +10,8 @@ declare interface IHomeActionProps {
 }
 
 declare interface ILoginFormProps {
-
+  onNavigateToRegister?(): viod
+  onNavigateToForgotPassword?(): viod
 }
 
 declare interface ILottoListProps {
