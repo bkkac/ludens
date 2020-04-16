@@ -1,0 +1,63 @@
+.input-checkbox {
+  display: block;
+  position: relative;
+  padding-left: 24px;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+
+  &:hover .core-checkbox ~ .checkbox-checkmark {
+    background-color: #ccc;
+  }
+
+  .core-checkbox {
+    position: absolute;
+    cursor: pointer;
+    opacity: 0;
+    height: 0;
+    width: 0;
+
+    &:checked ~ .checkbox-checkmark {
+      background-color: #065bc9;
+    }
+
+    &:checked ~ .checkbox-checkmark::after {
+      display: block;
+    }
+  }
+
+  .checkbox-checkmark {
+    position: absolute;
+    top: 5px;
+    left: 0;
+    height: 16px;
+    width: 16px;
+    border-radius: 3px;
+    background-color: #eee;
+
+    &::after {
+      left: 6px;
+      top: 2px;
+      width: 5px;
+      height: 10px;
+      border: solid white;
+      border-width: 0 3px 3px 0;
+      -webkit-transform: rotate(45deg);
+      -ms-transform: rotate(45deg);
+      transform: rotate(45deg);
+
+      content: "";
+      position: absolute;
+      display: none;
+    }
+  }
+
+  .checkbox-label {
+    font-family: "SukhumvitSet-Medium";
+    font-size: 14px;
+    text-align: left;
+    color: #777777;
+  }
+}

@@ -1,5 +1,5 @@
 import React, { SFC } from 'react'
-import { LottoCard, Button } from 'components'
+import { LottoCard } from 'components'
 import TrophyIcon from 'assets/images/home/trophy.png'
 import './lottoList.style.scss'
 
@@ -30,7 +30,7 @@ const LottoList: SFC<ILottoListProps & DefaultProps> = (props) => {
   return (
     <div className="lotto-list-container">
       <div className="row mb-4 px-2">
-        <div className="col-4 mb-2 px-1"><Button text={constants.filtGove} type="outline" size="small" /></div>
+        {/* <div className="col-4 mb-2 px-1"><Button text={constants.filtGove} type="outline" size="small" /></div>
         <div className="col-4 mb-2 px-1"><Button text={constants.filtBaac} type="outline" size="small" /></div>
         <div className="col-4 mb-2 px-1"><Button text={constants.filtGsb} type="outline" size="small" /></div>
         <div className="col-4 mb-2 px-1"><Button text={constants.filtLao} type="outline" size="small" /></div>
@@ -38,7 +38,7 @@ const LottoList: SFC<ILottoListProps & DefaultProps> = (props) => {
         <div className="col-4 mb-2 px-1"><Button text={constants.filtThaiBroker} type="outline" size="small" /></div>
         <div className="col-4 mb-2 px-1"><Button text={constants.filtForeBroker} type="outline" size="small" /></div>
         <div className="col-4 mb-2 px-1"><Button text={constants.filyYeege} type="outline" size="small" /></div>
-        <div className="col-4 mb-2 px-1"><Button text={constants.filyYeegeUni} type="outline" size="small" /></div>
+        <div className="col-4 mb-2 px-1"><Button text={constants.filyYeegeUni} type="outline" size="small" /></div> */}
       </div>
       <div className="row mb-2">
         <div className="col d-flex flex-row align-items-center header-text">

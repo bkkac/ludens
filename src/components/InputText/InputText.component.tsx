@@ -21,7 +21,7 @@ const InputText = class extends Component<IInputProps & DefaultProps> {
 
     const hasErrorClass = error ? 'error' : ''
     return (
-      <div className={`col-12 input-text ${hasErrorClass}`}>
+      <div className={`col input-text ${hasErrorClass}`}>
         <input className="input-core" placeholder={placeholder} />
         <div className="input-placehoder-label">{placeholder}</div>
         <div className="input-underline" />

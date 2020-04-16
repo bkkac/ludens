@@ -1,7 +1,10 @@
 import React, { Component } from 'react'
 import { noop } from 'lodash'
-import { Formik, FormikValues, FormikProps } from 'formik'
+import { Formik, FormikProps } from 'formik'
+import { RouteComponentProps } from 'react-router-dom'
 import { LoginForm, LottoList } from './components'
+import initialValues from './models/initialValues'
+import scheme from './models/scheme'
 import './home.style.scss'
 
 type DefaultProps = Readonly<typeof defaultProps>
@@ -14,7 +17,7 @@ const defaultProps: IHomeProps & IHomeActionProps = {
   getLottoIsFetching: false,
 }
 
-class HomeContainer extends Component<IHomeProps & IHomeActionProps & DefaultProps, {}> {
+class HomeContainer extends Component<IHomeProps & IHomeActionProps & DefaultProps & RouteComponentProps, {}> {
 
   static defaultProps = defaultProps
 
@@ -22,18 +25,32 @@ class HomeContainer extends Component<IHomeProps & IHomeActionProps & DefaultPro
     this.props.getLottoList()
   }
 
-  onSubmitLogin = (values: FormikValues) => {
+  onSubmitLogin = (values: ILogin) => {
     // console.log(values)
   }
 
+  onNavigateToRegister = () => {
+    this.props.history.push('/register')
+  }
+
+  onNavigateToForgotPassword = () => {
+    // this.props.history.replace('/register')
+  }
+
   renderLoginForm = () => {
-    const LoginFormComponent = (formProps: FormikProps<FormikValues>) => {
-      return <LoginForm {...formProps} />
+    const LoginFormComponent = (formProps: FormikProps<ILogin>) => {
+      return (
+        <LoginForm
+          onNavigateToRegister={this.onNavigateToRegister}
+          onNavigateToForgotPassword={this.onNavigateToForgotPassword}
+          {...formProps}
+        />
+      )
     }
     return (
       <Formik
-        initialValues={{}}
-        validationSchema={{}}
+        initialValues={initialValues}
+        validationSchema={scheme}
         enableReinitialize
         onSubmit={this.onSubmitLogin}
       >
@@ -42,8 +59,8 @@ class HomeContainer extends Component<IHomeProps & IHomeActionProps & DefaultPro
     )
   }
 
-  renderLottoList = () => {
 
+  renderLottoList = () => {
     return <LottoList data={this.props.lottoList} />
   }
 

@@ -1,0 +1,28 @@
+.register-step-4-form {
+  .header-title {
+    font-family: "SukhumvitSet-Bold";
+    font-size: 20px;
+    line-height: 1.35;
+    color: #777777;
+
+    span {
+      &::before {
+        content: "(";
+      }
+      &::after {
+        content: ")";
+      }
+      margin-left: 8px;
+      font-size: 12px;
+      line-height: 2.25;
+      color: #bb130a;
+    }
+  }
+
+  .select-bank-header {
+    font-family: "SukhumvitSet-Bold";
+    font-size: 18px;
+    line-height: 1.5;
+    color: #777777;
+  }
+}
