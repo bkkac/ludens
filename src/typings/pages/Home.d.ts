@@ -13,6 +13,7 @@ declare interface IHomeProps {
 declare interface IHomeActionProps {
   getLottoList(): void
   login(data: ILoginRequest): void
+  loader(data: boolean): void
 }
 
 declare interface ILoginFormProps {

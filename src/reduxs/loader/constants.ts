@@ -1,1 +1,3 @@
-export const LOADING = 'LOADING'
+export const LOADING_REQUSET = 'LOADING_REQUSET'
+export const LOADING_SHOW = 'LOADING_SHOW'
+export const LOADING_HIDE = 'LOADING_HIDE'

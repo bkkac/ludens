@@ -39,7 +39,6 @@ class RegisterContainer extends
 
   state: IRegisterStates = {
     currentStep: 1,
-    activePhoneNumber: false,
   }
 
   componentDidUpdate(prevProps: IRegisterProps, prevState: IRegisterStates) {
@@ -53,6 +52,7 @@ class RegisterContainer extends
 
     if (this.state.currentStep === 1) {
       if (prevProps.requestOTPIsFetching !== this.props.requestOTPIsFetching && !this.props.requestOTPIsFetching) {
+        this.props.loading(false)
         if (this.props.requestOTPCode === response.OK) {
           this.setState({ currentStep: 2 })
         } else {
@@ -62,6 +62,7 @@ class RegisterContainer extends
       }
     } else if (this.state.currentStep === 2) {
       if (prevProps.validateOTPIsFetching !== this.props.validateOTPIsFetching && !this.props.validateOTPIsFetching) {
+        this.props.loading(false)
         if (this.props.validateOTPCode === response.OK && this.props.validateResult === true) {
           this.setState({ currentStep: 3 })
         } else {
@@ -71,9 +72,9 @@ class RegisterContainer extends
       }
     } else if (this.state.currentStep === 4) {
       if (prevProps.registerIsFetching !== this.props.registerIsFetching && !this.props.registerIsFetching) {
+        this.props.loading(false)
         if (this.props.registerCode === response.OK) {
           // TODO: handle if success
-          alert('success')
           this.props.history.replace('/')
         } else {
           // TODO: Error handler
@@ -83,19 +84,21 @@ class RegisterContainer extends
     }
   }
 
-  onSubmitLogin = (values: IRegister) => {
-    console.log(values)
+  onSubmitRegister = (_: IRegister) => {
+    noop()
   }
 
   onNextStepPresses = (currentStep: number, value?: IRegister) => {
     if (currentStep === 1) {
       const phoneNumber = value?.phoneNumber!
       if (phoneNumber) {
+        this.props.loading(true)
         this.props.requestOTP(phoneNumber)
       }
     } else if (currentStep === 2) {
       const phoneNumber = value?.phoneNumber!
       const otp = value?.otp!
+      this.props.loading(true)
       this.props.validateOTP({ phoneNumber, otp })
     } else if (currentStep === 3) {
       this.setState({ currentStep: 4 })
@@ -111,18 +114,31 @@ class RegisterContainer extends
         },
         phone_number: value?.phoneNumber!,
       }
+      this.props.loading(true)
       this.props.register(registerData)
     }
   }
 
   onBackStep = (step: number) => {
-    this.setState({ currentStep: this.state.currentStep - step })
+    if (step === 1) {
+      this.props.history.push('/')
+    } else if (step === 2 || step === 4) {
+      this.setState({ currentStep: step - 1 })
+    } else if (step === 3) {
+      this.setState({ currentStep: 1 })
+    }
   }
 
   renderRegisterForm = () => {
     const RegisterFormComponent = (formProps: FormikProps<IRegister>) => {
       if (this.state.currentStep <= 1) {
-        return <RegisterStep1 {...formProps} onConfirmPresses={this.onNextStepPresses} />
+        return (
+          <RegisterStep1
+            {...formProps}
+            onBackStep={this.onBackStep}
+            onConfirmPresses={this.onNextStepPresses}
+          />
+        )
       } else if (this.state.currentStep === 2) {
         return (
           <RegisterStep2
@@ -133,9 +149,21 @@ class RegisterContainer extends
           />
         )
       } else if (this.state.currentStep === 3) {
-        return <RegisterStep3 {...formProps} onConfirmPresses={this.onNextStepPresses} />
+        return (
+          <RegisterStep3
+            {...formProps}
+            onBackStep={this.onBackStep}
+            onConfirmPresses={this.onNextStepPresses}
+          />
+        )
       } else if (this.state.currentStep >= 4) {
-        return <RegisterStep4 {...formProps} onConfirmPresses={this.onNextStepPresses} />
+        return (
+          <RegisterStep4
+            {...formProps}
+            onBackStep={this.onBackStep}
+            onConfirmPresses={this.onNextStepPresses}
+          />
+        )
       }
     }
 
@@ -144,7 +172,7 @@ class RegisterContainer extends
         initialValues={initialValues}
         validationSchema={scheme}
         enableReinitialize
-        onSubmit={this.onSubmitLogin}
+        onSubmit={this.onSubmitRegister}
       >
         {RegisterFormComponent}
       </Formik>

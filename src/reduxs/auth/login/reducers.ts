@@ -14,7 +14,7 @@ const loginReducer = (state: ILoginState = initialState, action: RootAction): IL
       return {
         isFetching: false,
         data: action.payload.data.data,
-        code: action.payload.status,
+        code: action.payload.data.code,
       }
 
     case getType(actions.loginFailureAction):

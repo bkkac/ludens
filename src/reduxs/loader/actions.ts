@@ -1,8 +1,20 @@
 import { createAction } from 'typesafe-actions'
-import { LOADING } from './constants'
+import {
+  LOADING_REQUSET,
+  LOADING_SHOW,
+  LOADING_HIDE,
+} from './constants'
 
 const loadingAction = createAction(
-  LOADING,
+  LOADING_REQUSET,
   action => (data: boolean) => action(data))
 
-export default { loadingAction }
+const loadingShow = createAction(LOADING_SHOW)
+
+const loadingHide = createAction(LOADING_HIDE)
+
+export default {
+  loadingAction,
+  loadingShow,
+  loadingHide,
+}

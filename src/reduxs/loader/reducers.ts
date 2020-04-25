@@ -4,8 +4,10 @@ import actions from './actions'
 
 const loadingReducer = (state: boolean = false, action: RootAction): boolean => {
   switch (action.type) {
-    case getType(actions.loadingAction):
-      return action.payload
+    case getType(actions.loadingShow):
+      return true
+    case getType(actions.loadingHide):
+      return false
     default:
       return state
   }

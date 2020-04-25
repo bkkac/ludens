@@ -31,19 +31,52 @@ const RegisterStep4: SFC<FormikProps<IRegister> & IRegisterFormProps & DefaultPr
 
   const {
     onConfirmPresses,
+    onBackStep,
     values,
     errors,
     touched,
     handleBlur,
     handleChange,
     isValid,
+    setValues,
+    setErrors,
+    setTouched,
   } = props
+
+  const resetInformationForm = () => {
+    setValues({
+      ...values,
+      bankType: '',
+      bankNumber: '',
+      ownerName: '',
+      ownerSurname: '',
+    })
+    setErrors({
+      ...errors,
+      bankType: '',
+      bankNumber: '',
+      ownerName: '',
+      ownerSurname: '',
+    })
+    setTouched({
+      ...touched,
+      bankType: false,
+      bankNumber: false,
+      ownerName: false,
+      ownerSurname: false,
+    })
+  }
+
+  const onPressBackStep = () => {
+    resetInformationForm()
+    onBackStep!(CURRENT_STEP)
+  }
 
   return (
     <div className="register-step-4-form mb-5">
       <div className="row">
         <div className="col">
-          <ALink text={constants.backText} color="#ff9b96" bold />
+          <ALink text={constants.backText} color="#ff9b96" bold onClick={onPressBackStep} />
         </div>
       </div>
       <div className="row pt-4">

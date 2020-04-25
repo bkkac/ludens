@@ -7,6 +7,7 @@ import {
   Route,
 } from 'react-router-dom'
 import routes from 'configs/routes'
+import { Loader } from '../Loader'
 import { THEME_MODE } from 'constants/variables'
 import { ThemeContext } from 'configs/context'
 
@@ -55,6 +56,7 @@ const RootContainer: SFC<IRootProps & DefaultProps> = (props) => {
         <TextRunning text={constants.textRunning} />
         <PageElement />
       </Router>
+      <Loader />
     </ThemeContext.Provider>
   )
 

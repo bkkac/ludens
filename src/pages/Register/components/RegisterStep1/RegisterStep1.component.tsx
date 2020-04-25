@@ -1,5 +1,5 @@
 import React, { SFC } from 'react'
-import { Banner, InputText, Button } from 'components'
+import { Banner, InputText, Button, ALink } from 'components'
 import { noop, isEmpty } from 'lodash'
 import { FormikProps } from 'formik'
 import './registerStep1.style.scss'
@@ -10,12 +10,14 @@ const constants = {
   placeholderPhoneNumber: 'หมายเลขโทรศัพท์ 10 หลัก',
   placeholderHint: 'รหัส 4 ตัวในภาพ',
   buttonRequestOTP: 'ขอ OTP',
+  backText: '< กลับ',
 }
 
 type DefaultProps = Readonly<typeof defaultProps>
 
 const defaultProps: IRegisterFormProps = {
   onConfirmPresses() { noop() },
+  onBackStep() { noop() },
 }
 
 const CURRENT_STEP = 1
@@ -26,8 +28,12 @@ const RegisterStep1: SFC<FormikProps<IRegister> & IRegisterFormProps & DefaultPr
     values,
     touched,
     errors,
+    onBackStep,
     handleBlur,
     handleChange,
+    setFieldValue,
+    setFieldError,
+    setFieldTouched,
     onConfirmPresses,
   } = props
 
@@ -37,9 +43,25 @@ const RegisterStep1: SFC<FormikProps<IRegister> & IRegisterFormProps & DefaultPr
     }
   }
 
+  const resetMobileForm = () => {
+    setFieldValue('phoneNumber', '')
+    setFieldError('phoneNumber', '')
+    setFieldTouched('phoneNumber', false)
+  }
+
+  const onPressBackStep = () => {
+    resetMobileForm()
+    onBackStep!(CURRENT_STEP)
+  }
+
   return (
     <div className="register-step-1-form mb-5">
       <div className="row">
+        <div className="col">
+          <ALink text={constants.backText} color="#ff9b96" bold onClick={onPressBackStep} />
+        </div>
+      </div>
+      <div className="row pt-4">
         <div className="col">
           <Banner />
         </div>

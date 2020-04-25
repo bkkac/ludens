@@ -22,6 +22,7 @@ const defaultProps: IHomeProps & IHomeActionProps = {
   loginCode: 0,
   loginError: '',
   loginIsFetching: false,
+  loader() { noop() },
 }
 
 class HomeContainer extends Component<IHomeProps & IHomeActionProps & DefaultProps & RouteComponentProps, {}> {
@@ -34,8 +35,8 @@ class HomeContainer extends Component<IHomeProps & IHomeActionProps & DefaultPro
 
   componentDidUpdate(prevProps: IHomeProps) {
     if (prevProps.loginIsFetching !== this.props.loginIsFetching && !this.props.loginIsFetching) {
+      this.props.loader(false)
       if (this.props.loginCode === response.OK) {
-        alert('success')
         this.props.history.replace('/main')
       } else {
         alert(this.props.loginError)
@@ -45,6 +46,7 @@ class HomeContainer extends Component<IHomeProps & IHomeActionProps & DefaultPro
   }
 
   onSubmitLogin = (values: ILogin) => {
+    this.props.loader(true)
     this.props.login(values)
   }
 

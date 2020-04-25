@@ -24,7 +24,6 @@ declare interface IRegisterActionProps {
 
 declare interface IRegisterStates {
   currentStep: number
-  activePhoneNumber: boolean
 }
 
 declare interface IRegisterFormProps<T = any> {
