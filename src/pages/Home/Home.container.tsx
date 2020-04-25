@@ -2,9 +2,11 @@ import React, { Component } from 'react'
 import { noop } from 'lodash'
 import { Formik, FormikProps } from 'formik'
 import { RouteComponentProps } from 'react-router-dom'
+import response from 'constants/response'
 import { LoginForm, LottoList } from './components'
 import initialValues from './models/initialValues'
 import scheme from './models/scheme'
+import ThailandIcon from 'assets/images/flags/thailand.png'
 import './home.style.scss'
 
 type DefaultProps = Readonly<typeof defaultProps>
@@ -15,6 +17,12 @@ const defaultProps: IHomeProps & IHomeActionProps = {
   getLottoCode: 0,
   getLottoError: '',
   getLottoIsFetching: false,
+  login() { noop() },
+  loginResult: [],
+  loginCode: 0,
+  loginError: '',
+  loginIsFetching: false,
+  loader() { noop() },
 }
 
 class HomeContainer extends Component<IHomeProps & IHomeActionProps & DefaultProps & RouteComponentProps, {}> {
@@ -25,8 +33,21 @@ class HomeContainer extends Component<IHomeProps & IHomeActionProps & DefaultPro
     this.props.getLottoList()
   }
 
+  componentDidUpdate(prevProps: IHomeProps) {
+    if (prevProps.loginIsFetching !== this.props.loginIsFetching && !this.props.loginIsFetching) {
+      this.props.loader(false)
+      if (this.props.loginCode === response.OK) {
+        this.props.history.replace('/main')
+      } else {
+        alert(this.props.loginError)
+        // TODO: Handler error
+      }
+    }
+  }
+
   onSubmitLogin = (values: ILogin) => {
-    // console.log(values)
+    this.props.loader(true)
+    this.props.login(values)
   }
 
   onNavigateToRegister = () => {
@@ -68,14 +89,29 @@ class HomeContainer extends Component<IHomeProps & IHomeActionProps & DefaultPro
     const RenderLoginFormComponent = this.renderLoginForm
     const RenderLottoListComponent = this.renderLottoList
     return (
-      <div className="container">
+      <>
         <div className="login-container">
-          <RenderLoginFormComponent />
+          <div className="container">
+            <div className="d-flex flex-column justify-content-center align-items-center mb-3">
+              <img alt="thailand bet logo" src={ThailandIcon} className="login-logo" />
+              <div className="login-app-name">THAILAND<span>BET</span></div>
+            </div>
+            <RenderLoginFormComponent />
+          </div>
         </div>
-        <div className="mt-5 mb-4">
+        <div className="my-4">
+          <div className="container">
+            <div className="row">
+              <div className="col">
+                <div className="ad-image" />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="mb-4">
           <RenderLottoListComponent />
         </div>
-      </div>
+      </>
     )
   }
 }

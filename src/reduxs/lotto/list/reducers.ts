@@ -13,7 +13,7 @@ const getLottoListReducer = (state: ILottoListState = initialState, action: Root
     case getType(actions.getLottoListSuccessAction):
       return {
         isFetching: false,
-        data: action.payload.data,
+        data: action.payload.data.data,
         code: action.payload.status,
       }
 

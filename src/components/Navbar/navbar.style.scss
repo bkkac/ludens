@@ -22,7 +22,7 @@
 
       .name-container {
         padding-left: 8px;
-        font-family: "SukhumvitSet-Medium";
+        font-family: "SukhumvitSet-Thin";
         font-size: 18px;
         line-height: 1.5;
         text-align: left;
@@ -44,6 +44,30 @@
         width: 24px;
         height: 24px;
         // background-color: #dddddd;
+      }
+    }
+  }
+
+  &.light-mode {
+    box-shadow: 0 1px 6px 0 rgba(0, 0, 0, 0.16);
+    background-color: #fcfcfc;
+
+    .container > .leading-navbar-container > .name-container {
+      color: #8f8080;
+      span {
+        color: #1171ec;
+      }
+    }
+  }
+
+  &.dark-mode {
+    box-shadow: 0 1px 6px 0 #00000029;
+    background-color: #065bc9;
+
+    .container > .leading-navbar-container > .name-container {
+      color: white;
+      span {
+        color: white;
       }
     }
   }

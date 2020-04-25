@@ -4,5 +4,15 @@
 
   &.empty {
     height: 407px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    &::after {
+      content: "โฆษณา";
+      font-family: "SukhumvitSet-Bold";
+      font-size: 60px;
+      line-height: 0.39;
+      color: #ada2a0;
+    }
   }
 }
