@@ -4,5 +4,6 @@ declare interface RootReducers {
     otp: IOTPState
     register: IRegisterState
     loader: boolean
+    auth: IAuthState
   }
 }

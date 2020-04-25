@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { noop } from 'lodash'
 import { Formik, FormikProps } from 'formik'
 import { RouteComponentProps } from 'react-router-dom'
+import response from 'constants/response'
 import { LoginForm, LottoList } from './components'
 import initialValues from './models/initialValues'
 import scheme from './models/scheme'
@@ -16,6 +17,11 @@ const defaultProps: IHomeProps & IHomeActionProps = {
   getLottoCode: 0,
   getLottoError: '',
   getLottoIsFetching: false,
+  login() { noop() },
+  loginResult: [],
+  loginCode: 0,
+  loginError: '',
+  loginIsFetching: false,
 }
 
 class HomeContainer extends Component<IHomeProps & IHomeActionProps & DefaultProps & RouteComponentProps, {}> {
@@ -26,8 +32,20 @@ class HomeContainer extends Component<IHomeProps & IHomeActionProps & DefaultPro
     this.props.getLottoList()
   }
 
+  componentDidUpdate(prevProps: IHomeProps) {
+    if (prevProps.loginIsFetching !== this.props.loginIsFetching && !this.props.loginIsFetching) {
+      if (this.props.loginCode === response.OK) {
+        alert('success')
+        this.props.history.replace('/main')
+      } else {
+        alert(this.props.loginError)
+        // TODO: Handler error
+      }
+    }
+  }
+
   onSubmitLogin = (values: ILogin) => {
-    console.log(values)
+    this.props.login(values)
   }
 
   onNavigateToRegister = () => {
@@ -79,7 +97,7 @@ class HomeContainer extends Component<IHomeProps & IHomeActionProps & DefaultPro
             <RenderLoginFormComponent />
           </div>
         </div>
-        <div className="my-3">
+        <div className="my-4">
           <div className="container">
             <div className="row">
               <div className="col">
