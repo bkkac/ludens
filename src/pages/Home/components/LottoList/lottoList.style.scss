@@ -5,10 +5,15 @@
     line-height: 1.13;
     text-align: left;
     color: #3e3e3e;
-    
+
     .header-icon {
       width: 30px;
       height: 30px;
     }
+  }
+
+  .card-section-wrapper {
+    box-shadow: 0 0 10px 0 #0000004d;
+    background-color: #ffffff;
   }
 }

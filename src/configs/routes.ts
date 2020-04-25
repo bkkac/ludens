@@ -18,6 +18,11 @@ const routes: IRoutes[] = [
     component: pages.Register,
   },
   {
+    name: 'main',
+    path: '/main',
+    component: pages.Main,
+  },
+  {
     name: '404',
     path: '',
     component: pages.ComingSoon,

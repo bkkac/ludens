@@ -9,6 +9,8 @@ const defaultProps: IButton = {
   onClick() { noop() },
   type: 'normal',
   size: 'medium',
+  disabled: false,
+  buttonType: 'button',
 }
 
 const Button: SFC<IButton & DefaultProps> = (props) => {
@@ -18,19 +20,22 @@ const Button: SFC<IButton & DefaultProps> = (props) => {
     onClick,
     type,
     size,
+    disabled,
+    buttonType,
   } = props
 
-  const containerClass = `col px-2 button-container ${type} ${size}`
+  const containerClass = `col px-2 button-container ${type} ${size} ${disabled ? 'disabled' : ''}`
 
   return (
-    <div
+    <button
+      type={buttonType}
       className={containerClass}
-      onClick={onClick}
+      onClick={disabled ? noop : onClick}
     >
       {/* <div className="button-icon" /> */}
       <div className="col px-1 button-text">{text}</div>
       {/* <div className="buttosn-icon" /> */}
-    </div>
+    </button>
   )
 }
 

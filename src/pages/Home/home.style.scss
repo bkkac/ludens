@@ -1,3 +1,43 @@
 .login-container {
   padding-top: 112px;
+  box-shadow: 0 0 10px 0 #0000004d;
+  background-color: #ffffff;
+
+  .login-logo {
+    width: 50px;
+    height: 50px;
+    border-radius: 25px;
+  }
+
+  .login-app-name {
+    font-family: "SukhumvitSet-Thin";
+    font-size: 20px;
+    line-height: 1.5;
+    text-align: left;
+    color: #000000;
+
+    span {
+      padding-left: 4px;
+      font-family: "SukhumvitSet-Bold";
+      color: #1171ec;
+    }
+  }
+}
+
+.ad-image {
+  height: 73px;
+  border-radius: 12px;
+  background-color: #d2cecd;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+
+  &::after {
+    content: "โฆษณา";
+    font-family: "SukhumvitSet-Bold";
+    font-size: 20px;
+    line-height: 1.35;
+    text-align: left;
+    color: #ada2a0;
+  }
 }

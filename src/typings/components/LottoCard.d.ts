@@ -1,4 +1,4 @@
-type LottoType = | 'GOVERNMENT' | 'BAAC' | 'GSB' | 'LAO_SET' | 'THAI_BROKER' | 'FOREIGN_BROKER' | 'YEEGE'
+type LottoType = | 'GOVN' | 'BAAC' | 'GSB' | 'LAO' | 'THAI_BROKER' | 'FOREIGN_BROKER' | 'YEEGE'
 
 declare interface ILottoCard {
   type: LottoType

@@ -1,11 +1,20 @@
-import React from 'react'
+import React, { SFC } from 'react'
 import ThaiFlagIcon from 'assets/images/flags/thailand.png'
+import { THEME_MODE } from 'constants/variables'
 import './navbar.style.scss'
 
-function Navbar(props: INavbarProps) {
+type DefaultProps = Readonly<typeof defaultProps>
+
+const defaultProps: INavbarProps = {
+  mode: THEME_MODE.DARK,
+}
+
+const Navbar: SFC<INavbarProps & DefaultProps> = ({
+  mode,
+}) => {
 
   return (
-    <div className="col-12 navbar-container position-fixed">
+    <div className={`col-12 navbar-container position-fixed ${mode}`}>
       <div className="container">
         <div className="leading-navbar-container">
           <img src={ThaiFlagIcon} alt="thailand" className="logo-container" />
@@ -18,5 +27,7 @@ function Navbar(props: INavbarProps) {
     </div>
   )
 }
+
+Navbar.defaultProps = defaultProps
 
 export default Navbar

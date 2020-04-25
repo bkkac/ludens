@@ -1,4 +1,4 @@
-import Register from './Register.container'
+import Register from './Register.connect'
 
 export {
   Register

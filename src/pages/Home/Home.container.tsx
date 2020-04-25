@@ -5,6 +5,7 @@ import { RouteComponentProps } from 'react-router-dom'
 import { LoginForm, LottoList } from './components'
 import initialValues from './models/initialValues'
 import scheme from './models/scheme'
+import ThailandIcon from 'assets/images/flags/thailand.png'
 import './home.style.scss'
 
 type DefaultProps = Readonly<typeof defaultProps>
@@ -26,7 +27,7 @@ class HomeContainer extends Component<IHomeProps & IHomeActionProps & DefaultPro
   }
 
   onSubmitLogin = (values: ILogin) => {
-    // console.log(values)
+    console.log(values)
   }
 
   onNavigateToRegister = () => {
@@ -68,14 +69,29 @@ class HomeContainer extends Component<IHomeProps & IHomeActionProps & DefaultPro
     const RenderLoginFormComponent = this.renderLoginForm
     const RenderLottoListComponent = this.renderLottoList
     return (
-      <div className="container">
+      <>
         <div className="login-container">
-          <RenderLoginFormComponent />
+          <div className="container">
+            <div className="d-flex flex-column justify-content-center align-items-center mb-3">
+              <img alt="thailand bet logo" src={ThailandIcon} className="login-logo" />
+              <div className="login-app-name">THAILAND<span>BET</span></div>
+            </div>
+            <RenderLoginFormComponent />
+          </div>
         </div>
-        <div className="mt-5 mb-4">
+        <div className="my-3">
+          <div className="container">
+            <div className="row">
+              <div className="col">
+                <div className="ad-image" />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="mb-4">
           <RenderLottoListComponent />
         </div>
-      </div>
+      </>
     )
   }
 }

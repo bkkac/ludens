@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { SFC, useState } from 'react'
 import { isEqual } from 'lodash'
 import { Navbar, TextRunning } from 'components'
 import {
@@ -7,8 +7,24 @@ import {
   Route,
 } from 'react-router-dom'
 import routes from 'configs/routes'
+import { THEME_MODE } from 'constants/variables'
+import { ThemeContext } from 'configs/context'
 
-function RootContainer(props: IRootProps) {
+const constants = {
+  textRunning: 'ยินดีต้อนรับสู่ to ThailandBet',
+}
+
+type DefaultProps = Readonly<typeof defaultProps>
+
+const defaultProps: IRootProps = {}
+
+const RootContainer: SFC<IRootProps & DefaultProps> = (props) => {
+
+  const [themeMode, setThemeMode] = useState(THEME_MODE.DARK)
+
+  const changeMode = (mode: string) => {
+    setThemeMode(mode)
+  }
 
   const PageElement = () => (
     <Switch>
@@ -26,14 +42,24 @@ function RootContainer(props: IRootProps) {
     </Switch>
   )
 
+  const RenderNavbar = () => (
+    <ThemeContext.Consumer>
+      {({ mode }) => <Navbar mode={mode} />}
+    </ThemeContext.Consumer>
+  )
+
   return (
-    <Router>
-      <Navbar />
-      <TextRunning text="Welcome to ThailandBet" />
-      <PageElement />
-    </Router>
+    <ThemeContext.Provider value={{ mode: themeMode, changeMode }}>
+      <Router>
+        <RenderNavbar />
+        <TextRunning text={constants.textRunning} />
+        <PageElement />
+      </Router>
+    </ThemeContext.Provider>
   )
 
 }
+
+RootContainer.defaultProps = defaultProps
 
 export default RootContainer

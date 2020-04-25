@@ -5,8 +5,10 @@ import { Banner } from './Banner'
 import { Button } from './Button'
 import { InputText } from './InputText'
 import { LottoCard } from './LottoCard'
+import { ButtonMenu } from './ButtonMenu'
 import { TextRunning } from './TextRunning'
 import { InputCheckbox } from './InputCheckbox'
+import { ResponsiveIcon } from './ResponsiveIcon'
 import { InputRadioImage } from './InputRadioImage'
 
 export {
@@ -17,7 +19,9 @@ export {
   Button,
   InputText,
   LottoCard,
+  ButtonMenu,
   TextRunning,
   InputCheckbox,
+  ResponsiveIcon,
   InputRadioImage,
 }

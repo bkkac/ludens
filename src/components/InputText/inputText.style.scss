@@ -2,7 +2,8 @@
   position: relative;
 
   input.input-core {
-    padding-left: 0;
+    padding-top: 2px;
+    padding-left: 32px;
     outline: none;
     width: 100%;
     font-family: "SukhumvitSet-Medium";
@@ -12,15 +13,18 @@
     color: #777777;
     border: none;
     margin-bottom: 4px;
-    margin-top: 27px;
+    margin-top: 18px;
 
     &:focus {
-      & ~ .input-placehoder-label {
-        font-size: 12px;
-        line-height: 2.25;
-        color: #5c9ef4;
-        top: 0px;
-        left: 15px;
+      & ~ .input-placehoder-wrapper {
+        .input-placehoder-label-wrapper {
+          .input-placehoder-label {
+            font-size: 12px;
+            line-height: 2.25;
+            color: #5c9ef4;
+            top: 0px;
+          }
+        }
       }
       & ~ .input-underline {
         border-color: #1171ec;
@@ -32,27 +36,51 @@
     }
 
     &:not(:placeholder-shown) {
-      & ~ .input-placehoder-label {
-        font-size: 12px;
-        line-height: 2.25;
-        top: 0px;
-        left: 15px;
+      & ~ .input-placehoder-wrapper {
+        .input-placehoder-label-wrapper {
+          .input-placehoder-label {
+            font-size: 12px;
+            line-height: 2.25;
+            top: 0px;
+          }
+        }
       }
     }
   }
 
-  .input-placehoder-label {
+  .input-placehoder-wrapper {
     position: absolute;
-    font-family: "SukhumvitSet-Medium";
-    text-align: left;
+    top: 0;
+    left: 16px;
+    right: 0;
+    bottom: 0;
     pointer-events: none;
 
-    transition: all 256ms ease;
-    font-size: 18px;
-    line-height: 1.5;
-    color: #c9c9c9;
-    top: 28px;
-    left: 16px;
+    .input-icon {
+      margin-top: 22px;
+      width: 20px;
+      height: 20px;
+      border-radius: 12px;
+    }
+
+    .input-placehoder-label-wrapper {
+      position: relative;
+      flex: 1;
+
+      .input-placehoder-label {
+        position: absolute;
+        font-family: "SukhumvitSet-Medium";
+        text-align: left;
+        pointer-events: none;
+
+        transition: all 256ms ease;
+        font-size: 18px;
+        line-height: 1.5;
+        color: #c9c9c9;
+        top: 20px;
+        left: 10px;
+      }
+    }
   }
 
   .input-underline {
@@ -62,6 +90,7 @@
   }
 
   .input-error-message {
+    min-height: 27px;
     font-family: "SukhumvitSet-Medium";
     text-align: left;
     pointer-events: none;
@@ -69,6 +98,7 @@
     line-height: 2.25;
     color: #ff9b96;
     visibility: hidden;
+    padding-left: 11px;
   }
 
   &.error {

@@ -3,6 +3,7 @@
   height: 44px;
   border-radius: 22px;
   transition: all 256ms ease-in-out;
+  outline: none;
 
   display: flex;
   align-items: center;
@@ -63,5 +64,26 @@
     line-height: 1.5;
     text-align: center;
     color: #fcfcfc;
+  }
+
+  &.disabled {
+    opacity: 0.3;
+    cursor: no-drop;
+
+    &.normal {
+      &:hover {
+        filter: unset;
+      }
+    }
+
+    &.outline {
+      &:hover {
+        background-color: #ffffff;
+
+        .button-text {
+          color: #1171ec;
+        }
+      }
+    }
   }
 }
