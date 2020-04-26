@@ -1,4 +1,4 @@
-import Home from './Home.container'
+import Home from './Home.connect'
 
 export {
   Home

@@ -1,6 +1,32 @@
+import pages from 'pages'
+
 const routes: IRoutes[] = [
-  { name: 'home', path: './home' },
-  { name: 'comingSoon', path: './soon' },
+  {
+    name: 'comingSoon',
+    path: '/comingSoon',
+    component: pages.ComingSoon,
+  },
+  {
+    exact: true,
+    name: 'home',
+    path: '/',
+    component: pages.Home,
+  },
+  {
+    name: 'register',
+    path: '/register',
+    component: pages.Register,
+  },
+  {
+    name: 'main',
+    path: '/main',
+    component: pages.Main,
+  },
+  {
+    name: '404',
+    path: '',
+    component: pages.ComingSoon,
+  },
 ]
 
 export default routes

@@ -1,92 +1,77 @@
 import React, { Component } from 'react'
-import { Formik, FormikValues, FormikProps } from 'formik'
+import { noop } from 'lodash'
+import { Formik, FormikProps } from 'formik'
+import { RouteComponentProps } from 'react-router-dom'
+import response from 'constants/response'
 import { LoginForm, LottoList } from './components'
+import initialValues from './models/initialValues'
+import scheme from './models/scheme'
+import ThailandIcon from 'assets/images/flags/thailand.png'
 import './home.style.scss'
 
-const lottos: ILotto[] = [
-  {
-    name: 'หวยรัฐบาล',
-    code: 'GOVERNMENT',
-    date: '2020-04-07T16:53:24.648Z',
-    updateTime: '2020-04-07T16:53:24.648Z',
-    lotto: [
-      { name: 'รางวัลที่ 1', numbers: ['439344'] },
-      { name: 'สองตัวหลัง', numbers: ['64'] },
-      { name: 'สามตัวหน้า', numbers: ['206', '678'] },
-      { name: 'สามตัวหน้า', numbers: ['206', '678'] },
-    ],
-  },
-  {
-    name: 'หวยธกส',
-    code: 'BAAC',
-    date: '2020-04-07T16:53:24.648Z',
-    updateTime: '2020-04-07T16:53:24.648Z',
-    lotto: [
-      { name: 'สองตัวล่าง', numbers: ['99'] },
-      { name: 'สามตัวหน้า', numbers: ['206'] },
-    ],
-  },
-  {
-    name: 'หวยหุ้นไทย',
-    code: 'THAI_BROKER',
-    date: '2020-04-07T16:53:24.648Z',
-    updateTime: '2020-04-07T16:53:24.648Z',
-    lotto: [
-      {
-        name: 'หุ้นไทยเช้า',
-        lotto: [
-          { name: 'สามตัวบน', numbers: ['949'] },
-          { name: 'สองตัวล่าง', numbers: ['20'] },
-        ],
-      },
-      {
-        name: 'หุ้นไทยเที่ยง',
-        lotto: [
-          { name: 'สามตัวบน', numbers: ['949'] },
-          { name: 'สองตัวล่าง', numbers: ['20'] },
-        ],
-      },
-    ],
-  },
-  {
-    name: 'หวยยี่กี',
-    code: 'YEEGE',
-    date: '2020-04-07T16:53:24.648Z',
-    updateTime: '2020-04-07T16:53:24.648Z',
-    lotto: [
-      {
-        name: 'รอบที่ 1',
-        lotto: [
-          { name: 'สามตัวบน', numbers: ['949'] },
-          { name: 'สองตัวล่าง', numbers: ['20'] },
-        ],
-      },
-      {
-        name: 'รอบที่ 2',
-        lotto: [
-          { name: 'สามตัวบน', numbers: ['949'] },
-          { name: 'สองตัวล่าง', numbers: ['20'] },
-        ],
-      },
-    ],
-  },
-]
+type DefaultProps = Readonly<typeof defaultProps>
 
-class HomeContainer extends Component {
+const defaultProps: IHomeProps & IHomeActionProps = {
+  getLottoList() { noop() },
+  lottoList: [],
+  getLottoCode: 0,
+  getLottoError: '',
+  getLottoIsFetching: false,
+  login() { noop() },
+  loginResult: [],
+  loginCode: 0,
+  loginError: '',
+  loginIsFetching: false,
+  loader() { noop() },
+}
 
+class HomeContainer extends Component<IHomeProps & IHomeActionProps & DefaultProps & RouteComponentProps, {}> {
 
-  onSubmitLogin = (values: FormikValues) => {
-    // console.log(values)
+  static defaultProps = defaultProps
+
+  componentDidMount() {
+    this.props.getLottoList()
+  }
+
+  componentDidUpdate(prevProps: IHomeProps) {
+    if (prevProps.loginIsFetching !== this.props.loginIsFetching && !this.props.loginIsFetching) {
+      this.props.loader(false)
+      if (this.props.loginCode === response.OK) {
+        this.props.history.replace('/main')
+      } else {
+        alert(this.props.loginError)
+        // TODO: Handler error
+      }
+    }
+  }
+
+  onSubmitLogin = (values: ILogin) => {
+    this.props.loader(true)
+    this.props.login(values)
+  }
+
+  onNavigateToRegister = () => {
+    this.props.history.push('/register')
+  }
+
+  onNavigateToForgotPassword = () => {
+    // this.props.history.replace('/register')
   }
 
   renderLoginForm = () => {
-    const LoginFormComponent = (formProps: FormikProps<FormikValues>) => {
-      return <LoginForm {...formProps} />
+    const LoginFormComponent = (formProps: FormikProps<ILogin>) => {
+      return (
+        <LoginForm
+          onNavigateToRegister={this.onNavigateToRegister}
+          onNavigateToForgotPassword={this.onNavigateToForgotPassword}
+          {...formProps}
+        />
+      )
     }
     return (
       <Formik
-        initialValues={{}}
-        validationSchema={{}}
+        initialValues={initialValues}
+        validationSchema={scheme}
         enableReinitialize
         onSubmit={this.onSubmitLogin}
       >
@@ -95,23 +80,38 @@ class HomeContainer extends Component {
     )
   }
 
-  renderLottoList = () => {
 
-    return <LottoList data={lottos} />
+  renderLottoList = () => {
+    return <LottoList data={this.props.lottoList} />
   }
 
   render() {
     const RenderLoginFormComponent = this.renderLoginForm
     const RenderLottoListComponent = this.renderLottoList
     return (
-      <div className="container">
+      <>
         <div className="login-container">
-          <RenderLoginFormComponent />
+          <div className="container">
+            <div className="d-flex flex-column justify-content-center align-items-center mb-3">
+              <img alt="thailand bet logo" src={ThailandIcon} className="login-logo" />
+              <div className="login-app-name">THAILAND<span>BET</span></div>
+            </div>
+            <RenderLoginFormComponent />
+          </div>
         </div>
-        <div className="mt-5 mb-4">
+        <div className="my-4">
+          <div className="container">
+            <div className="row">
+              <div className="col">
+                <div className="ad-image" />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="mb-4">
           <RenderLottoListComponent />
         </div>
-      </div>
+      </>
     )
   }
 }

@@ -1,0 +1,47 @@
+.input-radio {
+  position: relative;
+  width: 80px;
+  height: 80px;
+  border-radius: 10px;
+  box-shadow: 3px 3px 10px 0 #00000029;
+
+  .radio-wrapper {
+    transition: all 200ms ease-in;
+    width: 80px;
+    height: 80px;
+    border-radius: 10px;
+    border: solid 6px #ffffff;
+    background-color: #ffffff;
+
+    &:hover {
+      border: solid 6px #66c6b933;
+      background-color: #66c6b933;
+    }
+  }
+
+  .radio-core {
+    cursor: pointer;
+    margin: 0;
+    position: absolute;
+    width: 80px;
+    height: 80px;
+    opacity: 0;
+  }
+
+  .radio-core:checked ~ .radio-wrapper {
+    border: solid 6px #66c6b9;
+    background-color: #66c6b933;
+  }
+
+  .radio-image {
+    position: absolute;
+    z-index: 0;
+    top: 10px;
+    left: 10px;
+    width: 60px;
+    height: 60px;
+    object-fit: contain;
+    border-radius: 30px;
+    pointer-events: none;
+  }
+}

@@ -6,7 +6,8 @@
   "rules": {
     "no-import-side-effect": false,
     "no-submodule-imports": false,
-    "semicolon": false,
-    "jsx-boolean-value": false
+    "jsx-boolean-value": false,
+    "no-invalid-this": false,
+    "semicolon": false
   }
 }

@@ -12,7 +12,6 @@ const defaultProps: ILottoCard = {
   data: {
     name: '',
     code: '',
-    date: '',
     updateTime: '',
     lotto: [],
   },
@@ -24,11 +23,12 @@ const LottoCard: SFC<ILottoCard & DefaultProps> = (props) => {
 
   const {
     name: lottoName,
-    date,
+    updateTime,
     lotto,
   } = data
 
-  const dateDisplay = moment(date).format('Do MMM YY')
+  // const dateDisplay = moment(replace(updateTime, /\s/g, '')).format('Do MMM YY')
+  const dateDisplay = moment(updateTime, 'YYYY-MM-DD').format('Do MMM YY')
 
   const NumberComponent = ({ name, numbers }: ILottoNumber) => {
     const Numbers = numbers!.map((num, index) => (
@@ -48,7 +48,7 @@ const LottoCard: SFC<ILottoCard & DefaultProps> = (props) => {
 
   const LottoNumbersFormat = () => {
     switch (type) {
-      case 'GOVERNMENT':
+      case 'GOVN':
         const govSet1 = get(lotto, '0', { name: '', numbers: '' }) as ILottoNumber
         const govSet2 = get(lotto, '1', { name: '', numbers: '' }) as ILottoNumber
         const govSet3 = get(lotto, '2', { name: '', numbers: '' }) as ILottoNumber
@@ -79,7 +79,7 @@ const LottoCard: SFC<ILottoCard & DefaultProps> = (props) => {
             ))}
           </div>
         )
-      case 'LAO_SET':
+      case 'LAO':
         return (
           <>{lotto.map(({ name, numbers }, index) =>
             <NumberComponent key={`lao-${name}-${index}`} name={name} numbers={numbers} />)}</>
