@@ -1,6 +1,10 @@
 import React, { SFC, useState } from 'react'
 import { isEqual } from 'lodash'
-import { Navbar, TextRunning } from 'components'
+import {
+  Modal,
+  Navbar,
+  TextRunning
+} from 'components'
 import {
   BrowserRouter as Router,
   Switch,
@@ -56,6 +60,7 @@ const RootContainer: SFC<IRootProps & DefaultProps> = (props) => {
         <TextRunning text={constants.textRunning} />
         <PageElement />
       </Router>
+      <Modal.Core />
       <Loader />
     </ThemeContext.Provider>
   )
