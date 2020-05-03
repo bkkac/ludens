@@ -1,3 +1,4 @@
+import { Modal } from './Modal'
 import { ALink } from './ALink'
 import { Badge } from './Badge'
 import { Navbar } from './Navbar'
@@ -12,6 +13,7 @@ import { ResponsiveIcon } from './ResponsiveIcon'
 import { InputRadioImage } from './InputRadioImage'
 
 export {
+  Modal,
   ALink,
   Badge,
   Banner,
