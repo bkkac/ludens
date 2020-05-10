@@ -3,15 +3,21 @@ import { RouteComponentProps } from 'react-router-dom'
 import { Formik, FormikProps } from 'formik'
 import { noop } from 'lodash'
 import response from 'constants/response'
+import { Modal } from 'components'
 import {
   RegisterStep1,
   RegisterStep2,
   RegisterStep3,
-  RegisterStep4,
 } from './components'
 import initialValues from './models/initialValues'
 import scheme from './models/scheme'
 import './register.style.scss'
+
+const constants = {
+  ok: 'ตกลง',
+  login: 'เข้าสู่ระบบ',
+  registerSuccess: 'สมัครสมาชิคสำเร็จ!',
+}
 
 type DefaultProps = Readonly<typeof defaultProps>
 
@@ -56,8 +62,11 @@ class RegisterContainer extends
         if (this.props.requestOTPCode === response.OK) {
           this.setState({ currentStep: 2 })
         } else {
-          // TODO: Error handler
-          alert(this.props.requestOTPError)
+          Modal.error.show({
+            action: Modal.error.hide,
+            description: this.props.requestOTPError,
+            actionText: constants.ok,
+          })
         }
       }
     } else if (this.state.currentStep === 2) {
@@ -66,19 +75,28 @@ class RegisterContainer extends
         if (this.props.validateOTPCode === response.OK && this.props.validateResult === true) {
           this.setState({ currentStep: 3 })
         } else {
-          // TODO: Error handler
-          alert('OTP ผิด')
+          Modal.error.show({
+            action: Modal.error.hide,
+            description: this.props.validateOTPError,
+            actionText: constants.ok,
+          })
         }
       }
-    } else if (this.state.currentStep === 4) {
+    } else if (this.state.currentStep === 3) {
       if (prevProps.registerIsFetching !== this.props.registerIsFetching && !this.props.registerIsFetching) {
         this.props.loading(false)
         if (this.props.registerCode === response.OK) {
-          // TODO: handle if success
-          this.props.history.replace('/')
+          Modal.success.show({
+            action: () => this.props.history.replace('/'),
+            actionText: constants.login,
+            description: constants.registerSuccess,
+          })
         } else {
-          // TODO: Error handler
-          alert(this.props.registerError)
+          Modal.error.show({
+            action: Modal.error.hide,
+            description: this.props.registerError,
+            actionText: constants.ok,
+          })
         }
       }
     }
@@ -101,8 +119,6 @@ class RegisterContainer extends
       this.props.loading(true)
       this.props.validateOTP({ phoneNumber, otp })
     } else if (currentStep === 3) {
-      this.setState({ currentStep: 4 })
-    } else if (currentStep === 4) {
       const registerData: IRegisterRequest = {
         username: value?.username!,
         password: value?.password!,
@@ -122,8 +138,8 @@ class RegisterContainer extends
   onBackStep = (step: number) => {
     if (step === 1) {
       this.props.history.push('/')
-    } else if (step === 2 || step === 4) {
-      this.setState({ currentStep: step - 1 })
+    } else if (step === 2) {
+      this.setState({ currentStep: 1 })
     } else if (step === 3) {
       this.setState({ currentStep: 1 })
     }
@@ -151,14 +167,6 @@ class RegisterContainer extends
       } else if (this.state.currentStep === 3) {
         return (
           <RegisterStep3
-            {...formProps}
-            onBackStep={this.onBackStep}
-            onConfirmPresses={this.onNextStepPresses}
-          />
-        )
-      } else if (this.state.currentStep >= 4) {
-        return (
-          <RegisterStep4
             {...formProps}
             onBackStep={this.onBackStep}
             onConfirmPresses={this.onNextStepPresses}

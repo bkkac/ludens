@@ -9,6 +9,7 @@ class Modal extends Component<{}, IModalState> {
   state: IModalState = {
     show: false,
     RenderComponent: <></>,
+    extraProps: {},
   }
 
   componentDidMount() {
@@ -19,11 +20,11 @@ class Modal extends Component<{}, IModalState> {
     Emitter.off(event.MODAL)
   }
 
-  onEventSubscribed = ({ state, component }: IModalShowProps | IModalHideProps) => {
+  onEventSubscribed = ({ state, component, extraProps }: IModalShowProps | IModalHideProps) => {
     if (state === 'show') {
       if (this.state.show) {
         return this.hideModal(() => {
-          this.setState({ RenderComponent: component! }, () => { this.setState({ show: true }) })
+          this.setState({ RenderComponent: component!, extraProps }, () => { this.setState({ show: true }) })
         })
       }
       this.setState({ RenderComponent: component! }, () => { this.setState({ show: true }) })
@@ -32,10 +33,12 @@ class Modal extends Component<{}, IModalState> {
     }
   }
 
-  hideModal = (collback?: () => void) => {
+  hideModal = (callback?: () => void) => {
     this.setState({
       show: false,
-    }, collback)
+    }, () => {
+      this.setState({ extraProps: {}, RenderComponent: <></> }, callback)
+    })
   }
 
   render() {
@@ -49,6 +52,7 @@ class Modal extends Component<{}, IModalState> {
           backdrop="static"
           aria-labelledby="contained-modal-title-vcenter"
           onHide={() => this.setState({ show: false })}
+          {...this.state.extraProps}
         >
           {RenderComponent}
         </ModalCore>

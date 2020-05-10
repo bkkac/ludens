@@ -3,11 +3,16 @@ import { noop } from 'lodash'
 import { Formik, FormikProps } from 'formik'
 import { RouteComponentProps } from 'react-router-dom'
 import response from 'constants/response'
+import { Modal } from 'components'
 import { LoginForm, LottoList } from './components'
 import initialValues from './models/initialValues'
 import scheme from './models/scheme'
 import ThailandIcon from 'assets/images/flags/thailand.png'
 import './home.style.scss'
+
+const constants = {
+  ok: 'ตกลง',
+}
 
 type DefaultProps = Readonly<typeof defaultProps>
 
@@ -39,8 +44,11 @@ class HomeContainer extends Component<IHomeProps & IHomeActionProps & DefaultPro
       if (this.props.loginCode === response.OK) {
         this.props.history.replace('/main')
       } else {
-        alert(this.props.loginError)
-        // TODO: Handler error
+        Modal.error.show({
+          action: Modal.error.hide,
+          description: this.props.loginError,
+          actionText: constants.ok,
+        })
       }
     }
   }

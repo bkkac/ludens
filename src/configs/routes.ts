@@ -23,6 +23,16 @@ const routes: IRoutes[] = [
     component: pages.Main,
   },
   {
+    name: 'deposit',
+    path: '/deposit',
+    component: pages.Deposit,
+  },
+  {
+    name: 'withdraw',
+    path: '/withdraw',
+    component: pages.Withdraw,
+  },
+  {
     name: '404',
     path: '',
     component: pages.ComingSoon,

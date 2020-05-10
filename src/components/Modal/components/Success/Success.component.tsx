@@ -1,9 +1,9 @@
 import React, { SFC } from 'react'
 import { noop } from 'lodash'
 import { ResponsiveIcon, Button } from 'components'
-import CheckIcon from 'assets/images/successModal/check/check.png'
-import CheckIcon2x from 'assets/images/successModal/check/check@2x.png'
-import CheckIcon3x from 'assets/images/successModal/check/check@3x.png'
+import CheckIcon from 'assets/images/modal/check/check.png'
+import CheckIcon2x from 'assets/images/modal/check/check@2x.png'
+import CheckIcon3x from 'assets/images/modal/check/check@3x.png'
 import './success.style.scss'
 
 const constants = {

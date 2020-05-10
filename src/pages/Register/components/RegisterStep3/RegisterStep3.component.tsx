@@ -1,7 +1,16 @@
 import React, { SFC } from 'react'
-import { noop, isEmpty } from 'lodash'
-import { InputText, Button, ALink } from 'components'
+import { noop, isEmpty, isEqual } from 'lodash'
+import {
+  InputRadioImage,
+  InputText,
+  Button,
+  ALink,
+} from 'components'
 import { FormikProps } from 'formik'
+import KasikornIcon from 'assets/images/register/kasikorn.png'
+import KrungsriIcon from 'assets/images/register/krungsri.png'
+import KrungthaiIcon from 'assets/images/register/krungthai.png'
+import SCBIcon from 'assets/images/register/scb.png'
 import './registerStep3.style.scss'
 
 const constants = {
@@ -12,7 +21,11 @@ const constants = {
   placeholderPassword: 'รหัสผ่าน*',
   placeholderConfirmPassword: 'ยืนยันรหัสผ่าน*',
   placeholderAffilate: 'รหัสคนชวน',
-  buttonNextStep: 'ถัดไป',
+  selectBankText: 'เลือกธนาคาร',
+  placeholderBankNumber: 'หมายเลขบัญชี*',
+  placeholderOwnerName: 'ชื่อเจ้าของบัญชี*',
+  placeholderOwnerSurname: 'นามสกุล*',
+  buttonConfirm: 'สมัครสมาชิค',
 }
 
 type DefaultProps = Readonly<typeof defaultProps>
@@ -31,6 +44,7 @@ const RegisterStep3: SFC<FormikProps<IRegister> & IRegisterFormProps & DefaultPr
     values,
     touched,
     errors,
+    isValid,
     handleChange,
     handleBlur,
     setValues,
@@ -46,6 +60,10 @@ const RegisterStep3: SFC<FormikProps<IRegister> & IRegisterFormProps & DefaultPr
       confirmPassword: '',
       otp: '',
       affilateRef: '',
+      bankType: '',
+      bankNumber: '',
+      ownerName: '',
+      ownerSurname: '',
     })
     setErrors({
       ...errors,
@@ -54,6 +72,10 @@ const RegisterStep3: SFC<FormikProps<IRegister> & IRegisterFormProps & DefaultPr
       confirmPassword: '',
       otp: '',
       affilateRef: '',
+      bankType: '',
+      bankNumber: '',
+      ownerName: '',
+      ownerSurname: '',
     })
     setTouched({
       ...touched,
@@ -62,6 +84,10 @@ const RegisterStep3: SFC<FormikProps<IRegister> & IRegisterFormProps & DefaultPr
       confirmPassword: false,
       otp: false,
       affilateRef: false,
+      bankType: false,
+      bankNumber: false,
+      ownerName: false,
+      ownerSurname: false,
     })
   }
 
@@ -129,16 +155,97 @@ const RegisterStep3: SFC<FormikProps<IRegister> & IRegisterFormProps & DefaultPr
           placeholder={constants.placeholderAffilate}
         />
       </div>
+
+      <div className="row pt-4">
+        <div className="col select-bank-header">{constants.selectBankText}</div>
+        <div className="select-bank-error-message">{isEmpty(errors.bankType) ? '' : errors.bankType}</div>
+      </div>
+      <div className="d-flex flex-row pt-3">
+        <div className="mr-2">
+          <InputRadioImage
+            image={KasikornIcon}
+            name="bankType"
+            alt="kasikorn"
+            value="kasikorn"
+            onBlur={handleBlur}
+            onChange={handleChange}
+            checked={isEqual(values.bankType, 'kasikorn')}
+          />
+        </div>
+        <div className="mx-2">
+          <InputRadioImage
+            image={KrungsriIcon}
+            name="bankType"
+            alt="krungsri"
+            value="krungsri"
+            onBlur={handleBlur}
+            onChange={handleChange}
+            checked={isEqual(values.bankType, 'krungsri')}
+          />
+        </div>
+        <div className="mx-2">
+          <InputRadioImage
+            image={KrungthaiIcon}
+            name="bankType"
+            alt="krungthai"
+            value="krungthai"
+            onBlur={handleBlur}
+            onChange={handleChange}
+            checked={isEqual(values.bankType, 'krungthai')}
+          />
+        </div>
+        <div className="mx-2">
+          <InputRadioImage
+            image={SCBIcon}
+            name="bankType"
+            alt="scb"
+            value="scb"
+            onBlur={handleBlur}
+            onChange={handleChange}
+            checked={isEqual(values.bankType, 'scb')}
+          />
+        </div>
+      </div>
+      <div className="row pt-4">
+        <InputText
+          name="bankNumber"
+          value={values.bankNumber}
+          onBlur={handleBlur}
+          onChange={handleChange}
+          errorMessage={errors.bankNumber}
+          error={!!errors.bankNumber && touched.bankNumber}
+          placeholder={constants.placeholderBankNumber}
+        />
+      </div>
+      <div className="row pt-1">
+        <InputText
+          name="ownerName"
+          value={values.ownerName}
+          onBlur={handleBlur}
+          onChange={handleChange}
+          errorMessage={errors.ownerName}
+          error={!!errors.ownerName && touched.ownerName}
+          placeholder={constants.placeholderOwnerName}
+        />
+      </div>
+      <div className="row pt-1">
+        <InputText
+          name="ownerSurname"
+          value={values.ownerSurname}
+          onBlur={handleBlur}
+          onChange={handleChange}
+          errorMessage={errors.ownerSurname}
+          error={!!errors.ownerSurname && touched.ownerSurname}
+          placeholder={constants.placeholderOwnerSurname}
+        />
+      </div>
+
       <div className="row pt-4">
         <div className="col">
           <Button
-            disabled={
-              !!errors.username || isEmpty(values.username)
-              || !!errors.password || isEmpty(values.password)
-              || !!errors.confirmPassword || isEmpty(values.confirmPassword)
-            }
-            text={constants.buttonNextStep}
-            onClick={() => onConfirmPresses!(CURRENT_STEP)}
+            disabled={!isValid}
+            text={constants.buttonConfirm}
+            onClick={() => onConfirmPresses!(CURRENT_STEP, values)}
           />
         </div>
       </div>

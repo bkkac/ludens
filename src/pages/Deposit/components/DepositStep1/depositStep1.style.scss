@@ -1,22 +1,18 @@
-.register-step-4-form {
-  .header-title {
+.deposit-form-wrapper {
+  
+  .deposit-title {
+    padding-top: 20px;
     font-family: "SukhumvitSet-Bold";
-    font-size: 20px;
-    line-height: 1.35;
+    font-size: 24px;
+    line-height: 1.13;
     color: #777777;
-
-    span {
-      &::before {
-        content: "(";
-      }
-      &::after {
-        content: ")";
-      }
-      margin-left: 8px;
-      font-size: 12px;
-      line-height: 2.25;
-      color: #bb130a;
-    }
+  }
+  
+  .deposit-description-text {
+    font-family: "SukhumvitSet-Bold";
+    font-size: 14px;
+    line-height: 1.93;
+    color: #bb130a;
   }
 
   .select-bank-header {

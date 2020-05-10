@@ -10,7 +10,9 @@ import { ButtonMenu } from './ButtonMenu'
 import { TextRunning } from './TextRunning'
 import { InputCheckbox } from './InputCheckbox'
 import { ResponsiveIcon } from './ResponsiveIcon'
+import { BankNumberCard } from './BankNumberCard'
 import { InputRadioImage } from './InputRadioImage'
+import { CreditAmountCard } from './CreditAmountCard'
 
 export {
   Modal,
@@ -25,5 +27,7 @@ export {
   TextRunning,
   InputCheckbox,
   ResponsiveIcon,
+  BankNumberCard,
   InputRadioImage,
+  CreditAmountCard,
 }
