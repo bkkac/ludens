@@ -5,5 +5,6 @@ declare interface RootReducers {
     register: IRegisterState
     loader: boolean
     auth: IAuthState
+    credit: ICreditState
   }
 }
