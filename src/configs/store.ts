@@ -1,6 +1,7 @@
-import { createStore, applyMiddleware } from 'redux'
+import { createStore, applyMiddleware, Store } from 'redux'
 import { composeWithDevTools } from 'redux-devtools-extension'
 import { createEpicMiddleware } from 'redux-observable'
+import { persistStore } from 'redux-persist'
 import epics from 'reduxs/epics'
 import rootReducer from 'reduxs/reducers'
 import axiosMiddleware from 'middleware/axios'
@@ -20,11 +21,13 @@ const composedEnhancer = process.env.REACT_APP_LUDENS_STATE === project.environm
   : composeWithDevTools(applyMiddleware(...enhancer))
 
 export default function configureStore(initialState?: RootReducers) {
-  const store = createStore(
+  const store: Store = createStore(
     rootReducer,
     {},
     composedEnhancer
   )
   epicMiddleware.run(epics)
-  return store
+  const persistor = persistStore(store)
+
+  return { store, persistor }
 }

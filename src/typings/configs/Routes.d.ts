@@ -3,4 +3,5 @@ declare interface IRoutes {
   path: string
   component: any
   exact?: boolean
+  private?: boolean
 }

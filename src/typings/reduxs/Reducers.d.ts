@@ -1,5 +1,6 @@
 declare interface RootReducers {
   ludens: {
+    user: IUserState
     lotto: ILottoState
     otp: IOTPState
     register: IRegisterState

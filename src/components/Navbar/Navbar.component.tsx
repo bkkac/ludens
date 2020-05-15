@@ -11,12 +11,13 @@ const defaultProps: INavbarProps = {
 
 const Navbar: SFC<INavbarProps & DefaultProps> = ({
   mode,
+  onPressesLogo,
 }) => {
 
   return (
     <div className={`col-12 navbar-container position-fixed ${mode}`}>
       <div className="container">
-        <div className="leading-navbar-container">
+        <div className="leading-navbar-container" onClick={onPressesLogo}>
           <img src={ThaiFlagIcon} alt="thailand" className="logo-container" />
           <div className="name-container">THAILAND<span>BET</span></div>
         </div>

@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
-import { ThemeContext } from 'configs/context'
+import { LudensContext } from 'configs/context'
 import { THEME_MODE } from 'constants/variables'
+import { RouteComponentProps } from 'react-router-dom'
 import { ButtonMenu, ResponsiveIcon, ALink } from 'components'
 
 import WalletIcon from 'assets/images/global/wallet/wallet.png'
@@ -45,17 +46,19 @@ const constants = {
   gotoContact: 'ติดต่อทีมงาน',
 }
 
-class MainContainer extends Component<{}> {
+class MainContainer extends Component<RouteComponentProps> {
 
-  static contextType = ThemeContext
+  static contextType = LudensContext
 
   componentDidMount() {
-    this.context.changeMode(THEME_MODE.LIGHT)
+    this.context.theme.changeMode(THEME_MODE.LIGHT)
   }
 
   componentWillUnmount() {
-    this.context.changeMode(THEME_MODE.DARK)
+    this.context.theme.changeMode(THEME_MODE.DARK)
   }
+
+  onPressAddingCredit = () => this.props.history.push('/deposit')
 
   render() {
     const creditTotal = '0.00'
@@ -83,7 +86,7 @@ class MainContainer extends Component<{}> {
             <div className="col">
               <div className="credit-button-wrapper">
                 <div className="condition-text-label"><ALink text={constants.conditionText} /></div>
-                <div className="crefit-text-label">{constants.creditText}</div>
+                <div className="crefit-text-label" onClick={this.onPressAddingCredit}>{constants.creditText}</div>
               </div>
             </div>
           </div>

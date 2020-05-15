@@ -2,11 +2,6 @@ import pages from 'pages'
 
 const routes: IRoutes[] = [
   {
-    name: 'comingSoon',
-    path: '/comingSoon',
-    component: pages.ComingSoon,
-  },
-  {
     exact: true,
     name: 'home',
     path: '/',
@@ -21,20 +16,23 @@ const routes: IRoutes[] = [
     name: 'main',
     path: '/main',
     component: pages.Main,
+    private: true,
   },
   {
     name: 'deposit',
     path: '/deposit',
     component: pages.Deposit,
+    private: true,
   },
   {
     name: 'withdraw',
     path: '/withdraw',
     component: pages.Withdraw,
+    private: true,
   },
   {
     name: '404',
-    path: '',
+    path: '*',
     component: pages.ComingSoon,
   },
 ]

@@ -1,19 +1,22 @@
-import React, { SFC, useState } from 'react'
-import { isEqual } from 'lodash'
+import React, { Component } from 'react'
+import { isEqual, isEmpty } from 'lodash'
 import {
   Modal,
   Navbar,
-  TextRunning
+  TextRunning,
 } from 'components'
 import {
   BrowserRouter as Router,
+  RouteComponentProps,
+  Redirect,
   Switch,
   Route,
+  Link,
 } from 'react-router-dom'
 import routes from 'configs/routes'
 import { Loader } from '../Loader'
 import { THEME_MODE } from 'constants/variables'
-import { ThemeContext } from 'configs/context'
+import { LudensContext } from 'configs/context'
 
 const constants = {
   textRunning: 'ยินดีต้อนรับสู่ to ThailandBet',
@@ -21,52 +24,89 @@ const constants = {
 
 type DefaultProps = Readonly<typeof defaultProps>
 
-const defaultProps: IRootProps = {}
+const defaultProps: IRootProps = {
+  accessToken: '',
+}
 
-const RootContainer: SFC<IRootProps & DefaultProps> = (props) => {
+class RootContainer extends Component<IRootProps & DefaultProps, IRootStates> {
 
-  const [themeMode, setThemeMode] = useState(THEME_MODE.DARK)
+  static defaultProps = defaultProps
 
-  const changeMode = (mode: string) => {
-    setThemeMode(mode)
+  state: IRootStates = {
+    themeMode: THEME_MODE.DARK,
   }
 
-  const PageElement = () => (
+  changeThemeMode = (mode: string) => this.setState({
+    themeMode: mode,
+  })
+
+  onPressLogo = () => {
+    return <Link to="/main" />
+  }
+
+  renderGuardRoute = ({ component: RouteComponent, name, path, exact }: IRoutes) => {
+    const renderRoute = (routeProps: RouteComponentProps) => {
+      if (isEmpty(this.props.accessToken)) {
+        return (<Redirect to={{ pathname: '/', state: { from: routeProps.location } }} />)
+      }
+      return (<RouteComponent {...routeProps} />)
+    }
+
+    return (
+      <Route
+        key={`${name}-page`}
+        exact={exact}
+        path={path}
+        render={renderRoute}
+      />
+    )
+  }
+
+  renderPageElement = () => (
     <Switch>
       {routes.map(route =>
         isEqual(route.name, '404')
           ? (<Route key={`${route.name}-page`} component={route.component} />)
-          : (
-            <Route
-              component={route.component}
-              key={`${route.name}-page`}
-              exact={route.exact}
-              path={route.path}
-            />
-          ))}
+          : (route.private)
+            ? this.renderGuardRoute(route)
+            : (
+              <Route
+                component={route.component}
+                key={`${route.name}-page`}
+                exact={route.exact}
+                path={route.path}
+              />
+            ))}
     </Switch>
   )
 
-  const RenderNavbar = () => (
-    <ThemeContext.Consumer>
-      {({ mode }) => <Navbar mode={mode} />}
-    </ThemeContext.Consumer>
+  renderNavbar = () => (
+    <LudensContext.Consumer>
+      {({ theme }) => <Navbar mode={theme.mode} onPressesLogo={this.onPressLogo} />}
+    </LudensContext.Consumer>
   )
 
-  return (
-    <ThemeContext.Provider value={{ mode: themeMode, changeMode }}>
-      <Router>
-        <RenderNavbar />
-        <TextRunning text={constants.textRunning} />
-        <PageElement />
-      </Router>
-      <Modal.Core />
-      <Loader />
-    </ThemeContext.Provider>
-  )
+  render() {
+    const PageElement = this.renderPageElement
+    const PageNavbar = this.renderNavbar
 
+    const contextProviderValues = {
+      theme: { mode: this.state.themeMode, changeMode: this.changeThemeMode },
+    }
+
+    return (
+      <LudensContext.Provider value={contextProviderValues}>
+        <Router>
+          <PageNavbar />
+          <TextRunning text={constants.textRunning} />
+          <PageElement />
+        </Router>
+        <Modal.Core />
+        <Loader />
+      </LudensContext.Provider>
+    )
+
+  }
 }
-
-RootContainer.defaultProps = defaultProps
 
 export default RootContainer

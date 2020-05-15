@@ -4,19 +4,22 @@ import { Provider } from 'react-redux'
 import { Root } from 'pages/Root'
 import configureStore from 'configs/store'
 import interceptor from 'configs/interceptor'
+import { PersistGate } from 'redux-persist/lib/integration/react'
 import 'configs/global'
 import * as serviceWorker from './serviceWorker'
 
 import 'assets/stylesheets/global.scss'
 
-const store = configureStore()
-interceptor({}, configureStore)
+const { store, persistor } = configureStore()
+interceptor({}, () => store)
 
 ReactDOM.render(
   (
     <StrictMode>
       <Provider store={store}>
-        <Root />
+        <PersistGate loading={null} persistor={persistor}>
+          <Root />
+        </PersistGate>
       </Provider>
     </StrictMode>
   ),

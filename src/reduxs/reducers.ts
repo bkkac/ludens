@@ -6,8 +6,23 @@ import register from './register/reducers'
 import loader from './loader/reducers'
 import auth from './auth/reducers'
 import credit from './credit/reducers'
+import user from './user/reducers'
+import storage from 'redux-persist/lib/storage'
+import { persistReducer } from 'redux-persist'
+
+const persistConfig = {
+  key: project.name,
+  storage,
+  blacklist: ['user'],
+}
+
+const userPersistConfig = {
+  key: 'user',
+  storage,
+}
 
 const rootReducers = {
+  user: persistReducer(userPersistConfig, user),
   lotto,
   otp,
   register,
@@ -16,4 +31,7 @@ const rootReducers = {
   credit,
 }
 
-export default combineReducers({ [project.name]: combineReducers(rootReducers) })
+export default persistReducer(
+  persistConfig,
+  combineReducers({ [project.name]: combineReducers(rootReducers) })
+)
