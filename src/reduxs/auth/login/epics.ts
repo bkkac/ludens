@@ -12,6 +12,7 @@ import { RootAction } from 'typings/reduxs/Actions'
 import { fetchLogin } from './services'
 import actions from './actions'
 import userActions from 'reduxs/user/actions'
+import { AxiosResponse } from 'axios'
 
 const loginEpic: Epic<RootAction, RootAction, RootReducers> = (action$, store, dependencies) =>
   action$.pipe(
@@ -19,9 +20,10 @@ const loginEpic: Epic<RootAction, RootAction, RootReducers> = (action$, store, d
     exhaustMap(action =>
       from(fetchLogin(action.payload))
         .pipe(
-          mergeMap((response) => of(
+          mergeMap((response: AxiosResponse<APISuccessResponse<string>>) => of(
             actions.loginSuccessAction(response),
-            userActions.persistedUserAction({ token: 'TESTTOKENHAJA555' }) // TODO
+            userActions.persistedUserAction({ token: response.data.data }),
+            userActions.getMeAction()
           )),
           catchError(error => of(
             actions.loginFailureAction(error),

@@ -13,7 +13,7 @@ const loginAction = createAction(
 
 const loginSuccessAction = createAction(
   LOGIN_SUCCESS,
-  resolve => (data: AxiosResponse<APISuccessResponse<any>>) => resolve(data))
+  resolve => (data: AxiosResponse<APISuccessResponse<string>>) => resolve(data))
 
 const loginFailureAction = createAction(
   LOGIN_FAILURE,

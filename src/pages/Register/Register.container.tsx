@@ -87,7 +87,10 @@ class RegisterContainer extends
         this.props.loading(false)
         if (this.props.registerCode === response.OK) {
           Modal.success.show({
-            action: () => this.props.history.replace('/'),
+            action: () => {
+              this.props.history.replace('/')
+              Modal.success.hide()
+            },
             actionText: constants.login,
             description: constants.registerSuccess,
           })

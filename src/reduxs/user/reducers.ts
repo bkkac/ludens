@@ -1,19 +1,8 @@
-import { getType } from 'typesafe-actions'
-import { RootAction } from 'typings/reduxs/Actions'
-import { initialState } from './constants'
-import actions from './actions'
+import { combineReducers } from 'redux'
+import token from './token/reducers'
+import me from './me/reducers'
 
-const userReducer = (state: IUserState = initialState, action: RootAction): IUserState => {
-  switch (action.type) {
-    case getType(actions.persistedUserAction):
-      return {
-        ...state,
-        accessToken: action.payload.token,
-        refreshToken: action.payload.token,
-      }
-    default:
-      return state
-  }
-}
-
-export default userReducer
+export default combineReducers({
+  token,
+  me,
+})

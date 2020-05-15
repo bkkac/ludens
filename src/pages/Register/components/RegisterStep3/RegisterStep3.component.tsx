@@ -6,6 +6,7 @@ import {
   Button,
   ALink,
 } from 'components'
+import { EBANK } from 'constants/variables'
 import { FormikProps } from 'formik'
 import KasikornIcon from 'assets/images/register/kasikorn.png'
 import KrungsriIcon from 'assets/images/register/krungsri.png'
@@ -166,10 +167,10 @@ const RegisterStep3: SFC<FormikProps<IRegister> & IRegisterFormProps & DefaultPr
             image={KasikornIcon}
             name="bankType"
             alt="kasikorn"
-            value="kasikorn"
+            value={EBANK.KBANK}
             onBlur={handleBlur}
             onChange={handleChange}
-            checked={isEqual(values.bankType, 'kasikorn')}
+            checked={isEqual(values.bankType, EBANK.KBANK)}
           />
         </div>
         <div className="mx-2">
@@ -177,10 +178,10 @@ const RegisterStep3: SFC<FormikProps<IRegister> & IRegisterFormProps & DefaultPr
             image={KrungsriIcon}
             name="bankType"
             alt="krungsri"
-            value="krungsri"
+            value={EBANK.BAY}
             onBlur={handleBlur}
             onChange={handleChange}
-            checked={isEqual(values.bankType, 'krungsri')}
+            checked={isEqual(values.bankType, EBANK.BAY)}
           />
         </div>
         <div className="mx-2">
@@ -188,10 +189,10 @@ const RegisterStep3: SFC<FormikProps<IRegister> & IRegisterFormProps & DefaultPr
             image={KrungthaiIcon}
             name="bankType"
             alt="krungthai"
-            value="krungthai"
+            value={EBANK.KTB}
             onBlur={handleBlur}
             onChange={handleChange}
-            checked={isEqual(values.bankType, 'krungthai')}
+            checked={isEqual(values.bankType, EBANK.KTB)}
           />
         </div>
         <div className="mx-2">
@@ -199,10 +200,10 @@ const RegisterStep3: SFC<FormikProps<IRegister> & IRegisterFormProps & DefaultPr
             image={SCBIcon}
             name="bankType"
             alt="scb"
-            value="scb"
+            value={EBANK.SCB}
             onBlur={handleBlur}
             onChange={handleChange}
-            checked={isEqual(values.bankType, 'scb')}
+            checked={isEqual(values.bankType, EBANK.SCB)}
           />
         </div>
       </div>
