@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { noop } from 'lodash'
 import { LudensContext } from 'configs/context'
 import { THEME_MODE } from 'constants/variables'
 import { RouteComponentProps } from 'react-router-dom'
@@ -46,15 +47,28 @@ const constants = {
   gotoContact: 'ติดต่อทีมงาน',
 }
 
-class MainContainer extends Component<RouteComponentProps> {
+type DefaultProps = Readonly<typeof defaultProps>
+
+const defaultProps: IMainProps & IMainActionProps = {
+  user: {},
+  getUser() { noop() },
+}
+
+class MainContainer extends Component<IMainProps & IMainActionProps & DefaultProps & RouteComponentProps> {
 
   static contextType = LudensContext
 
+  static defaultProps = defaultProps
+
+  tempInterval: any = null
+
   componentDidMount() {
+    this.tempInterval = setInterval(this.props.getUser, 5000)
     this.context.theme.changeMode(THEME_MODE.LIGHT)
   }
 
   componentWillUnmount() {
+    clearInterval(this.tempInterval)
     this.context.theme.changeMode(THEME_MODE.DARK)
   }
 
@@ -63,8 +77,9 @@ class MainContainer extends Component<RouteComponentProps> {
   onNavigateTo = (path: string) => this.props.history.push(path)
 
   render() {
-    const creditTotal = '0.00'
-    const currency = '฿'
+    const creditTotal = this.props.user.wallet?.money || 0
+    const credit = new Intl.NumberFormat('th-TH', { style: 'currency', currency: 'THB' }).format(creditTotal)
+    // const currency = '฿'
     return (
       <div className="main-container">
         <div className="main-background" />
@@ -79,7 +94,7 @@ class MainContainer extends Component<RouteComponentProps> {
                 />
                 <div className="credit-total-container">
                   <div className="credit-label">{constants.creditLabel}</div>
-                  <div className="credit-total-text">{creditTotal} {currency}</div>
+                  <div className="credit-total-text">{credit}</div>
                 </div>
               </div>
             </div>

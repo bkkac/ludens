@@ -13,7 +13,7 @@ const loginReducer = (state: IGetMeState = initialState, action: RootAction): IG
     case getType(actions.getMeSuccessAction):
       return {
         isFetching: false,
-        data: action.payload.data.data,
+        data: { ...action.payload.data.data, updatedTime: new Date() },
         code: action.payload.data.code,
       }
 

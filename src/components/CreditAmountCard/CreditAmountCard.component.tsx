@@ -13,7 +13,7 @@ const constants = {
 type DefaultProps = Readonly<typeof defaultProps>
 
 const defaultProps: ICreditAmountCardProps = {
-  creditAmount: '0.00',
+  creditAmount: 0,
 }
 
 const CreditAmountCard: SFC<ICreditAmountCardProps & DefaultProps> = (props) => {
@@ -21,6 +21,8 @@ const CreditAmountCard: SFC<ICreditAmountCardProps & DefaultProps> = (props) => 
   const {
     creditAmount,
   } = props
+
+  const credit = new Intl.NumberFormat('th-TH', { style: 'currency', currency: 'THB' }).format(creditAmount || 0)
 
   return (
     <div className="credit-amount-card-container">
@@ -31,7 +33,7 @@ const CreditAmountCard: SFC<ICreditAmountCardProps & DefaultProps> = (props) => 
       />
       <div className="credit-amount-description-wrapper">
         <div className="credit-amount-label">{constants.creditAmountLabel}</div>
-        <div className="credit-amount-text">{creditAmount} {constants.curency}</div>
+        <div className="credit-amount-text">{credit}</div>
       </div>
     </div>
   )

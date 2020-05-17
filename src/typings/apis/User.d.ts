@@ -8,4 +8,6 @@ declare interface IUser {
   
   bank?: IBank
   wallet?: IWallet
+
+  updatedTime?: Date // Temp
 }

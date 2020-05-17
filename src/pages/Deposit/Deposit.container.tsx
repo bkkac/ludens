@@ -75,8 +75,8 @@ class DepositContainer extends
     const depositRequestValues: IDepositRequest = {
       money: values.money,
       depositTime: new Date().toISOString(),
-      paySlipImage: 'values.paySlipImage',
-      description: values.description,
+      paySlipImage: '-',
+      description: values.description || '-',
       webBankId: Number(values.webBankId),
     }
     this.props.loader(true)

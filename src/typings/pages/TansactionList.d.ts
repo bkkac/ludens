@@ -8,5 +8,6 @@ declare interface ITransactionListProps {
 
 declare interface ITransactionListActionProps {
   loader(state: boolean): void
+  getUser(): void
   getTransactionList(): void
 }

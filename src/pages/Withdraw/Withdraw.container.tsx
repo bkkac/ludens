@@ -56,7 +56,7 @@ class Withdraw extends Component<IWithdrawProps & IWithdrawActionProps & Default
   onSubmitWithdraw = (values: IWithdraw) => {
     const withdrawRequestValue: IWithdrawRequest = {
       money: values.money,
-      description: values.description,
+      description: values.description || '-',
     }
     this.props.loader(true)
     this.props.withdrawRequest(withdrawRequestValue)

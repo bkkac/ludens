@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { RouteComponentProps } from 'react-router-dom'
 import { noop } from 'lodash'
+import moment from 'moment'
 import response from 'constants/response'
 import { ALink, Modal } from 'components'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -13,6 +14,7 @@ const constants = {
   deposit: 'ฝาก',
   withdraw: 'ถอน',
   back: '< ย้อนกลับ',
+  latedUpdate: 'อัพเดทล่าสุด:',
   ok: 'ตกลง',
 }
 
@@ -26,13 +28,17 @@ const defaultProps: ITransactionListProps & ITransactionListActionProps = {
   tansactionList: [],
   user: {},
   loader() { noop() },
+  getUser() { noop() },
 }
 
 class TransactionListContainer extends
   Component<ITransactionListProps & ITransactionListActionProps & DefaultProps & RouteComponentProps> {
 
+  tempInterval: any = null
+
   componentDidMount() {
     this.props.loader(true)
+    this.tempInterval = setInterval(this.props.getUser, 5000)
     this.props.getTransactionList()
   }
 
@@ -51,6 +57,10 @@ class TransactionListContainer extends
     }
   }
 
+  componentWillUnmount(){
+    clearInterval(this.tempInterval)
+  }
+
   onPressBack = () => {
     this.props.history.goBack()
   }
@@ -64,9 +74,11 @@ class TransactionListContainer extends
   }
 
   render() {
-    const updatedTime = 'อัพเดทล่าสุด: 18 มี.ค. 2563 15:57 น.'
-    const remainingMoney = this.props.user.wallet?.money
-    const currency = '฿'
+    const updatedTime = moment(this.props.user.updatedTime).format('lll')
+    const updatedTimeText = `${constants.latedUpdate} ${updatedTime}`
+    const creditTotal = this.props.user.wallet?.money || 0
+    const credit = new Intl.NumberFormat('th-TH', { style: 'currency', currency: 'THB' }).format(creditTotal)
+    // const currency = '฿'
 
     return (
       <div className="transaction-list-container">
@@ -83,8 +95,8 @@ class TransactionListContainer extends
           <div className="row mt-4">
             <div className="col">
               <div className="remaining-label mx-auto">{constants.remainingLabel}</div>
-              <div className="credit-amount-text">{remainingMoney} {currency}</div>
-              <div className="updated-time-text">{updatedTime}</div>
+              <div className="credit-amount-text">{credit}</div>
+              <div className="updated-time-text">{updatedTimeText}</div>
             </div>
           </div>
           <div className="row mt-3">
