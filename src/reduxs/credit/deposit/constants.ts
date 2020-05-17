@@ -15,5 +15,5 @@ export const initialState: IDepositState = {
 const develop = 'dev'
 
 export const endpoint = {
-  depositRequest: `${project.environment[develop].api}/credit/deposit`,
+  depositRequest: `${project.environment[develop].api}/finance/deposit`,
 }

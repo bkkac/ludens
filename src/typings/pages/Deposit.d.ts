@@ -1,11 +1,19 @@
 declare interface IDepositProps {
+  getBankListIsFetching: boolean
+  getBankListError: string
+  getBankListCode: number | string
+  bankList: IBank[]
+  depositRequestResult: any
+  depositRequestCode: number | string
+  depositRequestError: string
+  depositRequestIsFetching: boolean
+  user: IUser
 }
 
 declare interface IDepositActionProps {
-  // requestOTP(mobileNumber: string): void
-  // validateOTP(data: { phoneNumber: string, otp: string }): void
-  // register(data: IDepositRequest): void
-  // loading(data: boolean): void
+  getBankList(): void
+  depositRequest(data: IDepositRequest): void
+  loader(data: boolean): void
 }
 
 declare interface IDepositStates {

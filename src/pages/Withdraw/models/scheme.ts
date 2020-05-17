@@ -19,8 +19,8 @@ import { string, object, ObjectSchema } from 'yup'
 // }
 
 const scheme: ObjectSchema<IWithdraw> = object().shape({
-  amount: string(),
-  remark: string(),
+  money: string(),
+  description: string(),
 })
 
 export default scheme

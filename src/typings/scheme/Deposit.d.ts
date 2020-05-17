@@ -1,7 +1,11 @@
-declare interface IDeposit {
-  bankType: string
-  amount: string
-  remark: string
+declare interface IDepositForm {
+  paySlipImage: string
+  money: string
+  depositDate: string
+  depositMonth: string
+  depositYear: string
   depositHours: string
-  depositMinuite: string
+  depositMinutes: string
+  webBankId: string
+  description: string
 }

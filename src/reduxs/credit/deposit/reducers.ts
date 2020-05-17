@@ -14,7 +14,7 @@ const depositReducer = (state: IDepositState = initialState, action: RootAction)
       return {
         isFetching: false,
         data: action.payload.data.data,
-        code: action.payload.data.code,
+        code: action.payload.status,
       }
 
     case getType(actions.depositRequestFailureAction):

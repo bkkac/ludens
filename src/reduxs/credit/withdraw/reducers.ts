@@ -14,13 +14,13 @@ const withdrawReducer = (state: IWithdrawState = initialState, action: RootActio
       return {
         isFetching: false,
         data: action.payload.data.data,
-        code: action.payload.data.code,
+        code: action.payload.status,
       }
 
     case getType(actions.withdrawRequestFailureAction):
       return {
         isFetching: false,
-        error: action.payload.message,
+        error: action.payload.response?.data.devMessage,
         code: action.payload.code,
       }
     default:

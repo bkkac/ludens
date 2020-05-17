@@ -12,7 +12,12 @@ declare interface IWithdrawState {
   code?: number | string
 }
 
+declare interface ITransactionState {
+  list: ReducerState<ITransaction[]>
+}
+
 declare interface ICreditState {
   deposit: IDepositState
   withdraw: IWithdrawState
+  transaction: ITransactionState
 }

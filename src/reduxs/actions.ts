@@ -5,6 +5,7 @@ import loaderAction from './loader/actions'
 import authAction from './auth/actions'
 import creditAction from './credit/actions'
 import userAction from './user/actions'
+import bankAction from './bank/actions'
 
 export default {
   ...userAction,
@@ -14,4 +15,5 @@ export default {
   ...loaderAction,
   ...authAction,
   ...creditAction,
+  ...bankAction,
 }

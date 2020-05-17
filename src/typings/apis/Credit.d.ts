@@ -1,28 +1,19 @@
 declare interface IDepositRequest {
-  bankType: string
-  amount: string
-  remark: string
-  depositHours: string
-  depositMinuite: string
+  paySlipImage: string
+  money: string
+  depositTime: string
+  webBankId: number
+  description: string
 }
 
 declare interface IWithdrawRequest {
-  amount: string
-  remark: string
-}
-
-declare interface IBank {
-  id: number
-  type: string
-  name: string
-  number: string
-  createdAt: string
-  updatedAt: string
+  money: string
+  description: string
 }
 
 declare interface IWallet {
-  id: number
-  money: number
-  createdAt: string
-  updatedAt: string
+  id?: number
+  money?: number
+  createdAt?: string
+  updatedAt?: string
 }

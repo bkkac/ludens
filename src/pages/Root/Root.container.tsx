@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { isEqual, isEmpty } from 'lodash'
+import { isEqual, isEmpty, noop } from 'lodash'
 import {
   Modal,
   Navbar,
@@ -24,11 +24,12 @@ const constants = {
 
 type DefaultProps = Readonly<typeof defaultProps>
 
-const defaultProps: IRootProps = {
+const defaultProps: IRootProps & IRootActionProps = {
   accessToken: '',
+  loader() { noop() },
 }
 
-class RootContainer extends Component<IRootProps & DefaultProps, IRootStates> {
+class RootContainer extends Component<IRootProps & IRootActionProps & DefaultProps, IRootStates> {
 
   static defaultProps = defaultProps
 

@@ -6,6 +6,7 @@ import epics from 'reduxs/epics'
 import rootReducer from 'reduxs/reducers'
 import axiosMiddleware from 'middleware/axios'
 import project from 'constants/project'
+import loaderAction from 'reduxs/loader/actions'
 import { RootAction } from 'typings/reduxs/Actions'
 
 const epicMiddleware = createEpicMiddleware<
@@ -28,6 +29,9 @@ export default function configureStore(initialState?: RootReducers) {
   )
   epicMiddleware.run(epics)
   const persistor = persistStore(store)
+
+  // Force hide loader
+  store.dispatch(loaderAction.loadingAction(false))
 
   return { store, persistor }
 }

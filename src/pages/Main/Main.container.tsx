@@ -60,6 +60,8 @@ class MainContainer extends Component<RouteComponentProps> {
 
   onPressAddingCredit = () => this.props.history.push('/deposit')
 
+  onNavigateTo = (path: string) => this.props.history.push(path)
+
   render() {
     const creditTotal = '0.00'
     const currency = '฿'
@@ -105,6 +107,7 @@ class MainContainer extends Component<RouteComponentProps> {
             </div>
             <div className="col-xl-2 col-md-4 col-6 mb-4">
               <ButtonMenu
+                onClick={() => this.onNavigateTo('/transaction')}
                 text={constants.gotoWD}
                 icon={{ x1: PurseIcon, x2: PurseIcon2x, x3: PurseIcon3x }}
               />

@@ -1,4 +1,4 @@
-import Deposit from './Deposit.container'
+import Deposit from './Deposit.connect'
 
 export {
   Deposit

@@ -8,7 +8,7 @@ export const LOGIN_CANCEL = 'LOGIN_CANCEL'
 export const initialState: ILoginState = {
   isFetching: false,
   code: 0,
-  data: [],
+  data: '',
   error: '',
 }
 

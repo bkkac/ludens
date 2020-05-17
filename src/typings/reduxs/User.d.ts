@@ -1,6 +1,6 @@
 declare interface IGetMeState {
   isFetching?: boolean
-  data?: any
+  data?: IUser
   error?: string
   code?: number | string
 }

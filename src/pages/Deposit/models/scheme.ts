@@ -18,12 +18,16 @@ import { string, object, ObjectSchema } from 'yup'
 //   ownerSurname: 'กรุญากรอกนามสกุล',
 // }
 
-const scheme: ObjectSchema<IDeposit> = object().shape({
-  amount: string(),
-  bankType: string(),
+const scheme: ObjectSchema<IDepositForm> = object().shape({
+  paySlipImage: string(),
+  money: string(),
+  depositDate: string(),
+  depositMonth: string(),
+  depositYear: string(),
   depositHours: string(),
-  depositMinuite: string(),
-  remark: string(),
+  depositMinutes: string(),
+  description: string(),
+  webBankId: string(),
 })
 
 export default scheme

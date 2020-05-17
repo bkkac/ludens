@@ -1,4 +1,4 @@
-import Withdraw from './Withdraw.container'
+import Withdraw from './Withdraw.connect'
 
 export {
   Withdraw,

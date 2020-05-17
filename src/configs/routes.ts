@@ -31,6 +31,12 @@ const routes: IRoutes[] = [
     private: true,
   },
   {
+    name: 'transaction',
+    path: '/transaction',
+    component: pages.TransactionList,
+    private: true,
+  },
+  {
     name: '404',
     path: '*',
     component: pages.ComingSoon,

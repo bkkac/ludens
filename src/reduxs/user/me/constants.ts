@@ -8,7 +8,7 @@ export const GET_ME_CANCEL = 'GET_ME_CANCEL'
 export const initialState: IGetMeState = {
   isFetching: false,
   code: 0,
-  data: [],
+  data: {},
   error: '',
 }
 

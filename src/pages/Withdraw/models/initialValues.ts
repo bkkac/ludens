@@ -1,6 +1,6 @@
 const initialValues: IWithdraw = {
-  amount: '',
-  remark: '',
+  money: '',
+  description: '',
 }
 
 export default initialValues

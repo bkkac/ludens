@@ -1,9 +1,13 @@
-const initialValues: IDeposit = {
-  amount: '',
-  bankType: '',
+const initialValues: IDepositForm = {
+  depositDate: '',
+  depositMonth: '',
+  depositYear: '',
   depositHours: '',
-  depositMinuite: '',
-  remark: ''
+  depositMinutes: '',
+  description: '',
+  paySlipImage: '',
+  webBankId: '',
+  money: '',
 }
 
 export default initialValues

@@ -15,5 +15,5 @@ export const initialState: IWithdrawState = {
 const develop = 'dev'
 
 export const endpoint = {
-  withdrawRequest: `${project.environment[develop].api}/credit/withdraw`,
+  withdrawRequest: `${project.environment[develop].api}/finance/withdraw`,
 }

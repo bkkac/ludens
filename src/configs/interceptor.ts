@@ -8,6 +8,7 @@ import { Store } from 'redux'
 import { transformer } from 'utils'
 
 const transformResponse: AxiosTransformer = transformer.camelcaseTransform
+const transformRequest: AxiosTransformer = (data) => JSON.stringify(transformer.snakecaseTransform(data))
 
 const requestInterceptor = (config: AxiosRequestConfig): AxiosRequestConfig => {
   return {
@@ -16,17 +17,18 @@ const requestInterceptor = (config: AxiosRequestConfig): AxiosRequestConfig => {
       ...config.headers,
     },
     transformResponse,
+    transformRequest,
     url: config.url?.replace(/([^:])(\/\/)/g, '$1/'),
   }
 }
 
+const errorRequestHandler = (error: any) => Promise.reject(error)
+
 const responseInterceptor = (response: AxiosResponse<any>): AxiosResponse<any> => response
 
-const errorResponseHandler = (_: Store) => (error: AxiosError) => {
+const errorResponseHandler = (_: Store) => (error: AxiosError<AxiosResponse<any>>) => {
   return Promise.reject(error)
 }
-
-const errorRequestHandler = (error: any) => Promise.reject(error)
 
 const initService = (config: any, store: any) => {
   // Axios globals configuration

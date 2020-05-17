@@ -1,4 +1,4 @@
 declare interface IWithdraw {
-  amount: string
-  remark: string
+  money: string
+  description: string
 }

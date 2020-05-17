@@ -8,10 +8,10 @@ import {
 } from 'components'
 import { EBANK } from 'constants/variables'
 import { FormikProps } from 'formik'
-import KasikornIcon from 'assets/images/register/kasikorn.png'
-import KrungsriIcon from 'assets/images/register/krungsri.png'
-import KrungthaiIcon from 'assets/images/register/krungthai.png'
-import SCBIcon from 'assets/images/register/scb.png'
+import KasikornIcon from 'assets/images/global/bank/KBANK.png'
+import KrungsriIcon from 'assets/images/global/bank/BAY.png'
+import KrungthaiIcon from 'assets/images/global/bank/KTB.png'
+import SCBIcon from 'assets/images/global/bank/SCB.png'
 import './registerStep3.style.scss'
 
 const constants = {

@@ -6,6 +6,7 @@ import loader from './loader/epics'
 import auth from './auth/epics'
 import credit from './credit/epics'
 import user from './user/epics'
+import bank from './bank/epics'
 
 export default combineEpics(
   ...user,
@@ -15,5 +16,6 @@ export default combineEpics(
   ...loader,
   ...auth,
   ...credit,
+  ...bank,
 )
 
