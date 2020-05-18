@@ -18,7 +18,7 @@ import ISBT from './ISBT.png'
 const collectBank: IImageSet = {
   kasikorn: {
     Icon: kasikorn,
-    key: 'BBL',
+    key: 'KBANK',
   },
   BBL: {
     Icon: BBL,

@@ -14,7 +14,7 @@ const constants = {
   backText: '< ย้อนกลับ',
   confirmPhoneNumber: 'ยืนยันหมายเลขโทรศัพท์',
   confirmSMS: 'ระบบได้ส่งรหัสยืนยันผ่าน SMS ไปยังเบอร์โทรศัพท์ที่กรอก',
-  confirmNumber: (phoneNumber: string, confirmCode?: string) => `${phoneNumber} Ref. ${confirmCode}`,
+  confirmNumber: (phoneNumber: string) => `${phoneNumber}`,
   placeholderOTPNumber: 'หมายเลข OTP*',
   remainText: 'คุณมีเวลากรอกภายใน 1 นาที',
   buttonOTPRequest: 'ขอ OTP ใหม่',
@@ -93,7 +93,7 @@ const RegisterStep2: SFC<
 
   const onPressRequestNewOTP = () => {
     resetOTPForm()
-    extraProps?.requestOTP(extraProps.otp.mobileNumber!)
+    extraProps?.requestOTP(extraProps.otp.phoneNumber!)
   }
 
   const onPressBackStep = () => {
@@ -133,7 +133,7 @@ const RegisterStep2: SFC<
           </div>
           <div className="row">
             <div className="col text-center confirm-phonenumber bold">
-              {constants.confirmNumber(extraProps?.otp.mobileNumber!, extraProps?.otp!.otp)}
+              {constants.confirmNumber(extraProps?.otp.phoneNumber!)}
             </div>
           </div>
         </div>

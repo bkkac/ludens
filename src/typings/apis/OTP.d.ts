@@ -1,6 +1,6 @@
 declare interface IOTP {
   id?: number
-  mobileNumber?: string
+  phoneNumber?: string
   otp?: string
   count?: number
   createAt?: string

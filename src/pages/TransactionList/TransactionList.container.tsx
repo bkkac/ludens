@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { RouteComponentProps } from 'react-router-dom'
-import { noop } from 'lodash'
+import { noop, get } from 'lodash'
 import moment from 'moment'
 import response from 'constants/response'
 import { ALink, Modal } from 'components'
@@ -57,7 +57,7 @@ class TransactionListContainer extends
     }
   }
 
-  componentWillUnmount(){
+  componentWillUnmount() {
     clearInterval(this.tempInterval)
   }
 
@@ -74,10 +74,12 @@ class TransactionListContainer extends
   }
 
   render() {
-    const updatedTime = moment(this.props.user.updatedTime).format('lll')
+    const time = get(this.props, 'user.updatedTime', '')
+    const updatedTime = moment(time).format('lll') || ''
     const updatedTimeText = `${constants.latedUpdate} ${updatedTime}`
-    const creditTotal = this.props.user.wallet?.money || 0
-    const credit = new Intl.NumberFormat('th-TH', { style: 'currency', currency: 'THB' }).format(creditTotal)
+
+    const total = get(this.props, 'user.wallet.money', 0)
+    const credit = new Intl.NumberFormat('th-TH', { style: 'currency', currency: 'THB' }).format(total)
     // const currency = '฿'
 
     return (

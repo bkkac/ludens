@@ -1,17 +1,13 @@
 import React, { SFC } from 'react'
-import { noop, isEmpty, isEqual } from 'lodash'
+import { noop, isEmpty, isEqual, values as _values } from 'lodash'
 import {
   InputRadioImage,
   InputText,
   Button,
   ALink,
 } from 'components'
-import { EBANK } from 'constants/variables'
 import { FormikProps } from 'formik'
-import KasikornIcon from 'assets/images/global/bank/KBANK.png'
-import KrungsriIcon from 'assets/images/global/bank/BAY.png'
-import KrungthaiIcon from 'assets/images/global/bank/KTB.png'
-import SCBIcon from 'assets/images/global/bank/SCB.png'
+import ImageBankSet from 'assets/images/global/bank'
 import './registerStep3.style.scss'
 
 const constants = {
@@ -97,6 +93,25 @@ const RegisterStep3: SFC<FormikProps<IRegister> & IRegisterFormProps & DefaultPr
     onBackStep!(CURRENT_STEP)
   }
 
+  const RenderBankList = (): JSX.Element => {
+    const RadioImages = _values(ImageBankSet).map((bank, index) => {
+      return (
+        <div className="col-3 col-sm-3 col-md-2 col-lg-1 mt-2" key={`bank-${index}-${bank.key}`}>
+          <InputRadioImage
+            image={bank.Icon}
+            name="bankType"
+            alt={bank.key}
+            value={bank.key}
+            onBlur={handleBlur}
+            onChange={handleChange}
+            checked={isEqual(values.bankType, bank.key)}
+          />
+        </div>
+      )
+    })
+    return (<>{RadioImages}</>)
+  }
+
   return (
     <div className="register-step-3-form mb-5">
       <div className="row">
@@ -161,51 +176,8 @@ const RegisterStep3: SFC<FormikProps<IRegister> & IRegisterFormProps & DefaultPr
         <div className="col select-bank-header">{constants.selectBankText}</div>
         <div className="select-bank-error-message">{isEmpty(errors.bankType) ? '' : errors.bankType}</div>
       </div>
-      <div className="d-flex flex-row pt-3">
-        <div className="mr-2">
-          <InputRadioImage
-            image={KasikornIcon}
-            name="bankType"
-            alt="kasikorn"
-            value={EBANK.KBANK}
-            onBlur={handleBlur}
-            onChange={handleChange}
-            checked={isEqual(values.bankType, EBANK.KBANK)}
-          />
-        </div>
-        <div className="mx-2">
-          <InputRadioImage
-            image={KrungsriIcon}
-            name="bankType"
-            alt="krungsri"
-            value={EBANK.BAY}
-            onBlur={handleBlur}
-            onChange={handleChange}
-            checked={isEqual(values.bankType, EBANK.BAY)}
-          />
-        </div>
-        <div className="mx-2">
-          <InputRadioImage
-            image={KrungthaiIcon}
-            name="bankType"
-            alt="krungthai"
-            value={EBANK.KTB}
-            onBlur={handleBlur}
-            onChange={handleChange}
-            checked={isEqual(values.bankType, EBANK.KTB)}
-          />
-        </div>
-        <div className="mx-2">
-          <InputRadioImage
-            image={SCBIcon}
-            name="bankType"
-            alt="scb"
-            value={EBANK.SCB}
-            onBlur={handleBlur}
-            onChange={handleChange}
-            checked={isEqual(values.bankType, EBANK.SCB)}
-          />
-        </div>
+      <div className="row pt-3">
+        <RenderBankList />
       </div>
       <div className="row pt-4">
         <InputText
