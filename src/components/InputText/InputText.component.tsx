@@ -5,7 +5,7 @@ import './inputText.style.scss'
 
 type DefaultProps = Readonly<typeof defaultProps>
 
-const defaultProps: IInputProps = {
+const defaultProps: IInputTextProps = {
   error: false,
   type: 'text',
   placeholder: '',
@@ -19,7 +19,7 @@ const defaultProps: IInputProps = {
   useNumberpad: false,
 }
 
-const InputText = class extends Component<IInputProps & DefaultProps> {
+const InputText = class extends Component<IInputTextProps & DefaultProps> {
 
   static defaultProps = defaultProps
 
@@ -68,6 +68,6 @@ const InputText = class extends Component<IInputProps & DefaultProps> {
       </div>
     )
   }
-} as ComponentClass<IInputProps>
+} as ComponentClass<IInputTextProps>
 
 export default InputText

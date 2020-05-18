@@ -1,4 +1,4 @@
-declare interface IInputProps {
+declare interface IInputTextProps {
   name?: string
   error?: boolean
   icon?: string

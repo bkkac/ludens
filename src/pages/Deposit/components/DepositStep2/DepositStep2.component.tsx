@@ -3,6 +3,7 @@ import {
   ALink,
   Button,
   InputText,
+  InputNumber,
   ResponsiveIcon,
   BankNumberCard,
 } from 'components'
@@ -20,9 +21,6 @@ const constants = {
   buttonFinish: 'แจ้งโอนเงิน',
   buttonCancel: 'ยกเลิกรายการ',
   placeholdeAmount: 'ระบุจำนวนเงิน',
-  placeholdeDate: 'วันที่',
-  placeholdeMonth: 'เดือน',
-  placeholdeYear: 'ปี(ค.ศ.)',
   placeholdeHours: 'ชั่วโมง',
   placeholdeMinuite: 'นาที',
   placeholdeRemark: 'หมายเหตุ',
@@ -53,12 +51,36 @@ const DepositStep2:
       handleChange,
       onBackStep,
       onCancelPresses,
+      setValues,
+      setErrors,
+      setTouched,
       extraProps,
     } = props
 
     const ownBank = find(extraProps?.banks, (value) => value.id === Number(values.webBankId))
 
     const onPressBack = () => {
+      setValues({
+        ...values,
+        depositHours: '',
+        depositMinutes: '',
+        description: '',
+        money: '',
+      })
+      setErrors({
+        ...errors,
+        depositHours: '',
+        depositMinutes: '',
+        description: '',
+        money: '',
+      })
+      setTouched({
+        ...touched,
+        depositHours: false,
+        depositMinutes: false,
+        description: false,
+        money: false,
+      })
       onBackStep!(CURRENT_STEP)
     }
 
@@ -125,40 +147,10 @@ const DepositStep2:
             </div>
           </div>
           <div className="row">
-            <InputText
-              useNumberpad
-              name="depositDate"
-              onBlur={handleBlur}
-              onChange={handleChange}
-              value={values.depositDate}
-              errorMessage={errors.depositDate}
-              placeholder={constants.placeholdeDate}
-              error={!!errors.depositDate && touched.depositDate}
-            />
-            <InputText
-              useNumberpad
-              name="depositMonth"
-              onBlur={handleBlur}
-              onChange={handleChange}
-              value={values.depositMonth}
-              errorMessage={errors.depositMonth}
-              placeholder={constants.placeholdeMonth}
-              error={!!errors.depositMonth && touched.depositMonth}
-            />
-            <InputText
-              useNumberpad
-              name="depositYear"
-              onBlur={handleBlur}
-              onChange={handleChange}
-              value={values.depositYear}
-              errorMessage={errors.depositYear}
-              placeholder={constants.placeholdeYear}
-              error={!!errors.depositYear && touched.depositYear}
-            />
-          </div>
-          <div className="row">
-            <InputText
-              useNumberpad
+            <InputNumber
+              format="##"
+              decimalScale={0}
+              allowLeadingZeros
               name="depositHours"
               onBlur={handleBlur}
               onChange={handleChange}
@@ -167,8 +159,10 @@ const DepositStep2:
               placeholder={constants.placeholdeHours}
               error={!!errors.depositHours && touched.depositHours}
             />
-            <InputText
-              useNumberpad
+            <InputNumber
+              format="##"
+              decimalScale={0}
+              allowLeadingZeros
               name="depositMinutes"
               onBlur={handleBlur}
               onChange={handleChange}

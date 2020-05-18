@@ -5,6 +5,7 @@ import {
   ALink,
   Button,
   InputText,
+  InputNumber,
   ResponsiveIcon,
   BankNumberCard,
   CreditAmountCard,
@@ -22,7 +23,7 @@ const constants = {
   placeholdeAmount: 'จำนวนเงินถอน',
   placeholdeRemark: 'หมายเหตุ',
   amountTitle: 'ระบุจำนวนเงินถอน',
-  minimumAmount: '(ถอนขั้นต่ำ 500 บาทขึ้นไป)',
+  minimumAmount: '(ถอนขั้นต่ำ 100 บาทขึ้นไป)',
   remarkTitle: 'หมายเหตุ',
 }
 
@@ -98,8 +99,9 @@ const WithdrawForm:
             </div>
           </div>
           <div className="row">
-            <InputText
-              useNumberpad
+            <InputNumber
+              thousandSeparator
+              decimalScale={0}
               name="money"
               onBlur={handleBlur}
               onChange={handleChange}

@@ -1,5 +1,4 @@
 declare interface IDepositRequest {
-  paySlipImage: string
   money: string
   depositTime: string
   webBankId: number

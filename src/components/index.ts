@@ -7,6 +7,7 @@ import { Button } from './Button'
 import { InputText } from './InputText'
 import { LottoCard } from './LottoCard'
 import { ButtonMenu } from './ButtonMenu'
+import { InputNumber} from './InputNumber'
 import { TextRunning } from './TextRunning'
 import { InputCheckbox } from './InputCheckbox'
 import { ResponsiveIcon } from './ResponsiveIcon'
@@ -24,6 +25,7 @@ export {
   InputText,
   LottoCard,
   ButtonMenu,
+  InputNumber,
   TextRunning,
   InputCheckbox,
   ResponsiveIcon,

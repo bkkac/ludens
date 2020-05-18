@@ -1,7 +1,6 @@
 .error-modal-container {
   border-radius: 16px;
   background-color: #ededed;
-  height: 440px;
   text-align: center;
   padding-left: 46px !important;
   padding-right: 46px !important;
@@ -26,16 +25,16 @@
   }
 
   .description-error-modal {
-    margin-top: 12px;
+    margin-top: 16px;
     font-family: "SukhumvitSet-Bold";
-    font-size: 24px;
-    line-height: 1.13;
+    font-size: 22px;
+    line-height: 30px;
     text-align: center;
     color: #767676;
   }
 
   .footer-wrapper-error-modal {
-    margin-top: 55px;
+    margin-top: 32px;
     margin-bottom: 24px;
   }
 }

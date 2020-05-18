@@ -1,11 +1,11 @@
-import React, { StrictMode } from 'react'
-import ReactDOM from 'react-dom'
+import 'configs/global'
+import React from 'react'
 import { Provider } from 'react-redux'
 import { Root } from 'pages/Root'
+import ReactDOM from 'react-dom'
 import configureStore from 'configs/store'
 import interceptor from 'configs/interceptor'
 import { PersistGate } from 'redux-persist/lib/integration/react'
-import 'configs/global'
 import * as serviceWorker from './serviceWorker'
 
 import 'assets/stylesheets/global.scss'
@@ -15,13 +15,11 @@ interceptor({}, () => store)
 
 ReactDOM.render(
   (
-    <StrictMode>
-      <Provider store={store}>
-        <PersistGate loading={null} persistor={persistor}>
-          <Root />
-        </PersistGate>
-      </Provider>
-    </StrictMode>
+    <Provider store={store}>
+      <PersistGate loading={null} persistor={persistor}>
+        <Root />
+      </PersistGate>
+    </Provider>
   ),
   document.getElementById('root')
 )

@@ -4,10 +4,13 @@ import { FormikProps, Formik } from 'formik'
 import { RouteComponentProps } from 'react-router-dom'
 import response from 'constants/response'
 import { Modal } from 'components'
+import { date } from 'utils'
 import { DepositStep1, DepositStep2 } from './components'
 import initialValues from './models/initialValues'
 import scheme from './models/scheme'
 import './deposit.style.scss'
+
+// TODO Counting doown time
 
 const constants = {
   ok: 'ตกลง',
@@ -72,12 +75,12 @@ class DepositContainer extends
   }
 
   onSubmitDeposit = (values: IDepositForm) => {
+    const castedValue = scheme.cast(values)
     const depositRequestValues: IDepositRequest = {
-      money: values.money,
-      depositTime: new Date().toISOString(),
-      paySlipImage: '-',
-      description: values.description || '-',
-      webBankId: Number(values.webBankId),
+      money: castedValue.money,
+      depositTime: date.convertTimeToMoment(castedValue.depositHours, castedValue.depositMinutes).toISOString(),
+      description: castedValue.description || '-',
+      webBankId: Number(castedValue.webBankId),
     }
     this.props.loader(true)
     this.props.depositRequest(depositRequestValues)

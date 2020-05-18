@@ -54,9 +54,10 @@ class Withdraw extends Component<IWithdrawProps & IWithdrawActionProps & Default
   }
 
   onSubmitWithdraw = (values: IWithdraw) => {
+    const castedValue = scheme.cast(values)
     const withdrawRequestValue: IWithdrawRequest = {
-      money: values.money,
-      description: values.description || '-',
+      money: castedValue.money,
+      description: castedValue.description || '-',
     }
     this.props.loader(true)
     this.props.withdrawRequest(withdrawRequestValue)

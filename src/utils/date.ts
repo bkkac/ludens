@@ -1,10 +1,10 @@
-import moment from 'moment'
+import moment, { Moment } from 'moment'
 
-const convertStringToMoment = () => {
-  const momentTime = moment().format()
+const convertTimeToMoment = (hours: string = '00', minutes: string = '00'): Moment => {
+  const momentTime = moment(`${hours}:${minutes}`, 'HH:mm')
   return momentTime
 }
 
 export default {
-  convertStringToMoment,
+  convertTimeToMoment,
 }

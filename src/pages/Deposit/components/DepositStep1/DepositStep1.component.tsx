@@ -2,7 +2,7 @@ import React, { SFC } from 'react'
 import {
   ALink,
   Button,
-  InputText,
+  InputNumber,
   BankNumberCard,
   InputRadioImage,
 } from 'components'
@@ -99,9 +99,8 @@ const DepositStep1:
               <BankNumberCard bank={extraProps?.userBank!} />
             </div>
           </div>
-          <div className="row pt-5">
+          <div className="row pt-5 flex-column">
             <div className="col select-bank-header">{constants.selectBankText}</div>
-            <div className="select-bank-error-message">{isEmpty(errors.webBankId) ? '' : errors.webBankId}</div>
           </div>
           <div className="row pt-3">
             <RenderBankList />
@@ -110,8 +109,9 @@ const DepositStep1:
             <div className="col select-bank-header">{constants.amountTitle}</div>
           </div>
           <div className="row">
-            <InputText
-              useNumberpad
+            <InputNumber
+              thousandSeparator
+              decimalScale={0}
               name="money"
               onBlur={handleBlur}
               onChange={handleChange}
