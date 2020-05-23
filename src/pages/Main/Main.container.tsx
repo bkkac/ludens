@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
-import { ThemeContext } from 'configs/context'
+import { noop } from 'lodash'
+import { LudensContext } from 'configs/context'
 import { THEME_MODE } from 'constants/variables'
+import { RouteComponentProps } from 'react-router-dom'
 import { ButtonMenu, ResponsiveIcon, ALink } from 'components'
 
 import WalletIcon from 'assets/images/global/wallet/wallet.png'
@@ -45,21 +47,39 @@ const constants = {
   gotoContact: 'ติดต่อทีมงาน',
 }
 
-class MainContainer extends Component<{}> {
+type DefaultProps = Readonly<typeof defaultProps>
 
-  static contextType = ThemeContext
+const defaultProps: IMainProps & IMainActionProps = {
+  user: {},
+  getUser() { noop() },
+}
+
+class MainContainer extends Component<IMainProps & IMainActionProps & DefaultProps & RouteComponentProps> {
+
+  static contextType = LudensContext
+
+  static defaultProps = defaultProps
+
+  tempInterval: any = null
 
   componentDidMount() {
-    this.context.changeMode(THEME_MODE.LIGHT)
+    this.tempInterval = setInterval(this.props.getUser, 5000)
+    this.context.theme.changeMode(THEME_MODE.LIGHT)
   }
 
   componentWillUnmount() {
-    this.context.changeMode(THEME_MODE.DARK)
+    clearInterval(this.tempInterval)
+    this.context.theme.changeMode(THEME_MODE.DARK)
   }
 
+  onPressAddingCredit = () => this.props.history.push('/deposit')
+
+  onNavigateTo = (path: string) => this.props.history.push(path)
+
   render() {
-    const creditTotal = '0.00'
-    const currency = '฿'
+    const creditTotal = this.props.user.wallet?.money || 0
+    const credit = new Intl.NumberFormat('th-TH', { style: 'currency', currency: 'THB' }).format(creditTotal)
+    // const currency = '฿'
     return (
       <div className="main-container">
         <div className="main-background" />
@@ -74,7 +94,7 @@ class MainContainer extends Component<{}> {
                 />
                 <div className="credit-total-container">
                   <div className="credit-label">{constants.creditLabel}</div>
-                  <div className="credit-total-text">{creditTotal} {currency}</div>
+                  <div className="credit-total-text">{credit}</div>
                 </div>
               </div>
             </div>
@@ -83,7 +103,7 @@ class MainContainer extends Component<{}> {
             <div className="col">
               <div className="credit-button-wrapper">
                 <div className="condition-text-label"><ALink text={constants.conditionText} /></div>
-                <div className="crefit-text-label">{constants.creditText}</div>
+                <div className="crefit-text-label" onClick={this.onPressAddingCredit}>{constants.creditText}</div>
               </div>
             </div>
           </div>
@@ -102,6 +122,7 @@ class MainContainer extends Component<{}> {
             </div>
             <div className="col-xl-2 col-md-4 col-6 mb-4">
               <ButtonMenu
+                onClick={() => this.onNavigateTo('/transaction')}
                 text={constants.gotoWD}
                 icon={{ x1: PurseIcon, x2: PurseIcon2x, x3: PurseIcon3x }}
               />

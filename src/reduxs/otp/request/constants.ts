@@ -13,7 +13,7 @@ export const initialState: IOTPRequestState = {
     otp: '',
     count: 0,
     createAt: '',
-    mobileNumber: '',
+    phoneNumber: '',
   },
   error: '',
 }

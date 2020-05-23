@@ -14,7 +14,7 @@ const constants = {
   backText: '< ย้อนกลับ',
   confirmPhoneNumber: 'ยืนยันหมายเลขโทรศัพท์',
   confirmSMS: 'ระบบได้ส่งรหัสยืนยันผ่าน SMS ไปยังเบอร์โทรศัพท์ที่กรอก',
-  confirmNumber: (phoneNumber: string, confirmCode?: string) => `${phoneNumber} Ref. ${confirmCode}`,
+  confirmNumber: (phoneNumber: string) => `${phoneNumber}`,
   placeholderOTPNumber: 'หมายเลข OTP*',
   remainText: 'คุณมีเวลากรอกภายใน 1 นาที',
   buttonOTPRequest: 'ขอ OTP ใหม่',
@@ -55,7 +55,7 @@ const RegisterStep2: SFC<
   const [isTimesup, setIsTimesup] = useState(false)
 
   const countingdown = () => {
-    const createAt = moment(replace(extraProps?.otp!.createAt, /\s/g, ''))
+    const createAt = moment(replace(extraProps?.otp.createAt!, /\s/g, ''))
     const timeRange = createAt.clone().add(LIMIT_TIME, LIMIT_UNIT)
     timer.intervalDuration(timeRange, (coreInterval, duration) => {
       const minutes = duration.minutes()
@@ -73,7 +73,6 @@ const RegisterStep2: SFC<
 
   useEffect(() => {
     if (isTimesup) {
-      console.log(extraProps)
       setIsTimesup(false)
       setRemain({ minutes: 0, seconds: 0 })
       countingdown()
@@ -94,7 +93,7 @@ const RegisterStep2: SFC<
 
   const onPressRequestNewOTP = () => {
     resetOTPForm()
-    extraProps?.requestOTP(extraProps.otp.mobileNumber)
+    extraProps?.requestOTP(extraProps.otp.phoneNumber!)
   }
 
   const onPressBackStep = () => {
@@ -134,7 +133,7 @@ const RegisterStep2: SFC<
           </div>
           <div className="row">
             <div className="col text-center confirm-phonenumber bold">
-              {constants.confirmNumber(extraProps?.otp!.mobileNumber, extraProps?.otp!.otp)}
+              {constants.confirmNumber(extraProps?.otp.phoneNumber!)}
             </div>
           </div>
         </div>

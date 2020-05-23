@@ -1,3 +1,4 @@
+import { Modal } from './Modal'
 import { ALink } from './ALink'
 import { Badge } from './Badge'
 import { Navbar } from './Navbar'
@@ -9,9 +10,12 @@ import { ButtonMenu } from './ButtonMenu'
 import { TextRunning } from './TextRunning'
 import { InputCheckbox } from './InputCheckbox'
 import { ResponsiveIcon } from './ResponsiveIcon'
+import { BankNumberCard } from './BankNumberCard'
 import { InputRadioImage } from './InputRadioImage'
+import { CreditAmountCard } from './CreditAmountCard'
 
 export {
+  Modal,
   ALink,
   Badge,
   Banner,
@@ -23,5 +27,7 @@ export {
   TextRunning,
   InputCheckbox,
   ResponsiveIcon,
+  BankNumberCard,
   InputRadioImage,
+  CreditAmountCard,
 }

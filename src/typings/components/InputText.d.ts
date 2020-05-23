@@ -3,6 +3,7 @@ declare interface IInputProps {
   error?: boolean
   icon?: string
   type?: string
+  disabled?: boolean
   placeholder?: string
   value?: string
   errorMessage?: string

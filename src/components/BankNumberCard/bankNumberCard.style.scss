@@ -1,0 +1,64 @@
+.bankcard-number-container {
+  width: 374px;
+  height: 88px;
+  border-radius: 12px;
+  box-shadow: 3px 3px 10px 0 #00000029;
+  background-color: #ffffff;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding-left: 30px;
+  padding-right: 30px;
+
+
+  .bank-image {
+    width: 60px;
+    height: 60px;
+    margin-right: 10px;
+    object-fit: contain;
+  }
+
+  .bank-information-wrapper {
+    display: flex;
+    flex-direction: column;
+
+    .bank-name-title {
+      font-family: "SukhumvitSet-Bold";
+      font-size: 10px;
+      line-height: 14px;
+      text-align: left;
+      color: #c9c9c9;
+    }
+
+    .bank-name {
+      font-family: "SukhumvitSet-Bold";
+      font-size: 20px;
+      line-height: 1.35;
+      text-align: left;
+      color: #3587f1;
+    }
+
+    .bank-number-wrapper {
+      display: flex;
+      flex-direction: row;
+
+      .bank-number-title {
+        font-family: "SukhumvitSet-Bold";
+        font-size: 12px;
+        line-height: 2.25;
+        text-align: left;
+        color: #c9c9c9;
+        margin-right: 4px;
+      }
+
+      .bank-number {
+        font-family: "SukhumvitSet-Bold";
+        font-size: 14px;
+        line-height: 1.93;
+        text-align: left;
+        color: #3587f1;
+      }
+    }
+  }
+}

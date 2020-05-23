@@ -1,0 +1,40 @@
+.success-modal-container {
+  border-radius: 16px;
+  background-color: #ededed;
+  height: 440px;
+  text-align: center;
+  padding-left: 46px !important;
+  padding-right: 46px !important;
+
+  .success-checked-icon {
+    align-self: center;
+    margin: auto;
+    margin-top: 40px;
+    width: 156px;
+    height: 156px;
+    object-fit: contain;
+  }
+
+  .title-success-modal {
+    margin-top: 32px;
+    font-family: "SukhumvitSet-Bold";
+    font-size: 32px;
+    line-height: 0.84;
+    text-align: center;
+    color: #32bea6;
+  }
+
+  .description-success-modal {
+    margin-top: 4px;
+    font-family: "SukhumvitSet-Bold";
+    font-size: 24px;
+    line-height: 1.13;
+    text-align: center;
+    color: #767676;
+  }
+
+  .footer-wrapper-success-modal {
+    margin-top: 55px;
+    margin-bottom: 24px;
+  }
+}

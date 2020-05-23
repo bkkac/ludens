@@ -4,22 +4,31 @@ import {
   catchError,
   exhaustMap,
   takeUntil,
+  mergeMap,
   filter,
-  map,
 } from 'rxjs/operators'
 import { isActionOf } from 'typesafe-actions'
 import { RootAction } from 'typings/reduxs/Actions'
 import { fetchLogin } from './services'
 import actions from './actions'
+import userActions from 'reduxs/user/actions'
+import { AxiosResponse } from 'axios'
 
-const loginEpic: Epic<RootAction, RootAction, RootReducers> = (action$, store) =>
+const loginEpic: Epic<RootAction, RootAction, RootReducers> = (action$, store, dependencies) =>
   action$.pipe(
     filter(isActionOf(actions.loginAction)),
     exhaustMap(action =>
       from(fetchLogin(action.payload))
         .pipe(
-          map(actions.loginSuccessAction),
-          catchError(error => of(actions.loginFailureAction(error))),
+          mergeMap((response: AxiosResponse<APISuccessResponse<string>>) => of(
+            actions.loginSuccessAction(response),
+            userActions.persistedUserAction({ token: response.data.data }),
+            userActions.getMeAction()
+          )),
+          catchError(error => of(
+            actions.loginFailureAction(error),
+            userActions.clearUserAction()
+          )),
           takeUntil(action$.pipe(filter(isActionOf(actions.loginCancelAction))))
         ),
     )

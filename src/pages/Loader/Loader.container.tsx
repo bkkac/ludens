@@ -4,10 +4,6 @@ import './loader.style.scss'
 
 class LoaderContainer extends Component<ILoader> {
 
-  componentDidMount() {
-    // this.props.isLoading
-  }
-
   render() {
     const containerClass = this.props.isLoading
       ? 'loader-container show'

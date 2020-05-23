@@ -1,4 +1,4 @@
-import Main from './Main.container'
+import Main from './Main.connect'
 
 export {
   Main

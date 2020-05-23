@@ -1,4 +1,4 @@
-import Root from './Root.container'
+import Root from './Root.connect'
 
 export {
   Root

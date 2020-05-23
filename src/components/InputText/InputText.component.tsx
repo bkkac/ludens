@@ -12,6 +12,7 @@ const defaultProps: IInputProps = {
   name: '',
   icon: '',
   value: '',
+  disabled: false,
   errorMessage: '',
   onBlur() { noop() },
   onChange() { noop() },
@@ -34,6 +35,7 @@ const InputText = class extends Component<IInputProps & DefaultProps> {
       errorMessage,
       placeholder,
       useNumberpad,
+      disabled,
     } = this.props
 
     const RenderIcon = () => isEmpty(icon)
@@ -44,6 +46,7 @@ const InputText = class extends Component<IInputProps & DefaultProps> {
     return (
       <div className={`col input-text ${hasErrorClass}`}>
         <input
+          disabled={disabled}
           name={name}
           type={type}
           value={value}

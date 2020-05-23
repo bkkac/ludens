@@ -1,27 +1,34 @@
-import axios from 'axios'
+import axios, {
+  AxiosRequestConfig,
+  AxiosTransformer,
+  AxiosResponse,
+  AxiosError,
+} from 'axios'
+import { Store } from 'redux'
+import { transformer } from 'utils'
 
-const requestInterceptor = (config: any) => {
-  const configMod = {
+const transformResponse: AxiosTransformer = transformer.camelcaseTransform
+const transformRequest: AxiosTransformer = (data) => JSON.stringify(transformer.snakecaseTransform(data))
+
+const requestInterceptor = (config: AxiosRequestConfig): AxiosRequestConfig => {
+  return {
     ...config,
     headers: {
       ...config.headers,
     },
-    url: config.url.replace(/([^:])(\/\/)/g, '$1/'),
+    transformResponse,
+    transformRequest,
+    url: config.url?.replace(/([^:])(\/\/)/g, '$1/'),
   }
-  return configMod
 }
 
-// const responseInterceptor = (response: any): AxiosResponse => response
-
-// const errorResponseHandler = ({ dispatch }: any) => (error: AxiosError) => {
-//   const errorResponse = get(error, 'response.data')
-//   if (isEmpty(errorResponse)) {
-//     return Promise.reject({ Message: error, Code: 400 })
-//   }
-//   return Promise.reject(errorResponse)
-// }
-
 const errorRequestHandler = (error: any) => Promise.reject(error)
+
+const responseInterceptor = (response: AxiosResponse<any>): AxiosResponse<any> => response
+
+const errorResponseHandler = (_: Store) => (error: AxiosError<AxiosResponse<any>>) => {
+  return Promise.reject(error)
+}
 
 const initService = (config: any, store: any) => {
   // Axios globals configuration
@@ -29,7 +36,7 @@ const initService = (config: any, store: any) => {
   axios.defaults.responseType = 'json'
   axios.defaults.headers['Content-Type'] = 'application/json'
   axios.interceptors.request.use(requestInterceptor, errorRequestHandler)
-  // axios.interceptors.response.use(responseInterceptor, errorResponseHandler(store))
+  axios.interceptors.response.use(responseInterceptor, errorResponseHandler(store))
   axios.defaults.timeout = 60000
 
 }

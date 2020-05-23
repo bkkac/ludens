@@ -1,6 +1,6 @@
 declare interface ILoginState {
   isFetching?: boolean
-  data?: any
+  data?: string
   error?: string
   code?: number | string
 }
