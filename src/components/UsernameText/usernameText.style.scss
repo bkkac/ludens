@@ -1,0 +1,23 @@
+.username-text-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  .username-text-icon {
+    width: 14px;
+    height: 14px;
+    object-fit: contain;
+    margin-left: 4px;
+    margin-right: 4px;
+  }
+
+  .username-text {
+    font-family: "SukhumvitSet-Bold";
+    font-size: 14px;
+    line-height: 14px;
+    transform: translateY(1px);
+    text-transform: uppercase;
+    text-align: left;
+    color: #777777;
+  }
+}

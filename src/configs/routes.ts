@@ -37,6 +37,12 @@ const routes: IRoutes[] = [
     private: true,
   },
   {
+    name: 'lotto',
+    path: '/lotto',
+    component: pages.LottoMain,
+    private: true,
+  },
+  {
     name: '404',
     path: '*',
     component: pages.ComingSoon,

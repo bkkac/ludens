@@ -1,0 +1,101 @@
+.lotto-action-card-container {
+  opacity: 0.5;
+  border-radius: 6px;
+  box-shadow: 2px 2px 10px 0 #0000004d;
+  background-color: #ffffff;
+  padding: 16px;
+  position: relative;
+  overflow: hidden;
+  transition: all 240ms ease-in;
+  cursor: pointer;
+
+  &.unavailable {
+    cursor: none;
+  }
+
+  .lotto-status-bar {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 6px;
+    background-color: #d2cecd;
+
+    &.active {
+      background-color: #66c6b9;
+    }
+
+    &.available {
+      background-color: #66c6b9;
+    }
+
+    &.unavailable {
+      background-color: #d2cecd;
+    }
+  }
+
+  &:hover {
+    // border: solid 1px #dddddd;
+    background-color: #ededed;
+  }
+
+  .lotto-action-name {
+    font-family: "SukhumvitSet-Bold";
+    font-size: 20px;
+    line-height: 1.35;
+    text-align: left;
+    color: #777777;
+  }
+
+  .lotto-action-card-flag {
+    width: 24px;
+    height: 24px;
+    object-fit: contain;
+  }
+
+  .closed-time-badge {
+    height: 24px;
+    width: fit-content;
+    padding-left: 12px;
+    padding-right: 12px;
+    border-radius: 16px;
+    background-color: #d2cecd;
+    text-align: center;
+
+    .closed-time-badge-text {
+      font-family: "SukhumvitSet-Bold";
+      font-size: 18px;
+      line-height: 18px;
+      text-align: left;
+      color: #fcfcfc;
+    }
+
+    &.active {
+      background-color: #66c6b9;
+    }
+
+    &.available {
+      background-color: #66c6b9;
+    }
+
+    &.unavailable {
+      background-color: #d2cecd;
+    }
+  }
+
+  .lotto-status-label {
+    font-family: "SukhumvitSet-Bold";
+    font-size: 16px;
+    line-height: 1.69;
+    text-align: left;
+    color: #777777;
+  }
+
+  .lotto-status-time {
+    font-family: "SukhumvitSet-Medium";
+    font-size: 16px;
+    line-height: 1.69;
+    text-align: left;
+    color: #777777;
+  }
+}

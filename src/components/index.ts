@@ -9,9 +9,11 @@ import { LottoCard } from './LottoCard'
 import { ButtonMenu } from './ButtonMenu'
 import { InputNumber} from './InputNumber'
 import { TextRunning } from './TextRunning'
+import { UsernameText } from './UsernameText'
 import { InputCheckbox } from './InputCheckbox'
 import { ResponsiveIcon } from './ResponsiveIcon'
 import { BankNumberCard } from './BankNumberCard'
+import { LottoActionCard } from './LottoActionCard'
 import { InputRadioImage } from './InputRadioImage'
 import { CreditAmountCard } from './CreditAmountCard'
 
@@ -27,9 +29,11 @@ export {
   ButtonMenu,
   InputNumber,
   TextRunning,
+  UsernameText,
   InputCheckbox,
   ResponsiveIcon,
   BankNumberCard,
+  LottoActionCard,
   InputRadioImage,
   CreditAmountCard,
 }
