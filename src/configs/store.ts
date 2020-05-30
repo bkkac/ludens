@@ -5,6 +5,7 @@ import { persistStore } from 'redux-persist'
 import epics from 'reduxs/epics'
 import rootReducer from 'reduxs/reducers'
 import axiosMiddleware from 'middleware/axios'
+import socketMiddleware from 'middleware/socket'
 import project from 'constants/project'
 import loaderAction from 'reduxs/loader/actions'
 import { RootAction } from 'typings/reduxs/Actions'
@@ -15,7 +16,7 @@ const epicMiddleware = createEpicMiddleware<
   RootReducers
 >();
 
-const enhancer = [axiosMiddleware, epicMiddleware]
+const enhancer = [axiosMiddleware, socketMiddleware, epicMiddleware]
 
 const composedEnhancer = process.env.REACT_APP_LUDENS_STATE === project.environment.prod.name
   ? applyMiddleware(...enhancer)

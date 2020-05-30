@@ -51,6 +51,7 @@ type DefaultProps = Readonly<typeof defaultProps>
 
 const defaultProps: IMainProps & IMainActionProps = {
   user: {},
+  wallet: {},
   getUser() { noop() },
 }
 
@@ -60,15 +61,13 @@ class MainContainer extends Component<IMainProps & IMainActionProps & DefaultPro
 
   static defaultProps = defaultProps
 
-  tempInterval: any = null
 
   componentDidMount() {
-    this.tempInterval = setInterval(this.props.getUser, 5000)
+    this.props.getUser()
     this.context.theme.changeMode(THEME_MODE.LIGHT)
   }
 
   componentWillUnmount() {
-    clearInterval(this.tempInterval)
     this.context.theme.changeMode(THEME_MODE.DARK)
   }
 
@@ -77,7 +76,7 @@ class MainContainer extends Component<IMainProps & IMainActionProps & DefaultPro
   onNavigateTo = (path: string) => this.props.history.push(path)
 
   render() {
-    const creditTotal = this.props.user.wallet?.money || 0
+    const creditTotal = this.props.wallet.money || 0
     const credit = new Intl.NumberFormat('th-TH', { style: 'currency', currency: 'THB' }).format(creditTotal)
     // const currency = '฿'
     return (

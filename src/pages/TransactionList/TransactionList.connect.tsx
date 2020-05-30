@@ -7,11 +7,11 @@ import userAction from 'reduxs/user/actions'
 import TransactionListContainer from './TransactionList.container'
 
 const mapStateToProps = (state: RootReducers): ITransactionListProps => ({
-  user: state.ludens.user.me.data!,
+  wallet: state.ludens.user.wallet,
   getTransactionListCode: state.ludens.credit.transaction.list.code!,
   getTransactionListError: state.ludens.credit.transaction.list.error!,
   getTransactionListIsFetching: state.ludens.credit.transaction.list.isFetching!,
-  tansactionList: state.ludens.credit.transaction.list.data!,
+  transactionList: state.ludens.credit.transaction.list.data!,
 })
 
 const mapDispatchToProos = (dispatch: Dispatch<RootAction>): ITransactionListActionProps => bindActionCreators({

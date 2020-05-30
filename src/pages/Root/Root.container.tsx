@@ -27,6 +27,7 @@ type DefaultProps = Readonly<typeof defaultProps>
 const defaultProps: IRootProps & IRootActionProps = {
   accessToken: '',
   loader() { noop() },
+  connectSocket() { noop() },
 }
 
 class RootContainer extends Component<IRootProps & IRootActionProps & DefaultProps, IRootStates> {
@@ -35,6 +36,13 @@ class RootContainer extends Component<IRootProps & IRootActionProps & DefaultPro
 
   state: IRootStates = {
     themeMode: THEME_MODE.DARK,
+  }
+
+  componentDidMount() {
+    this.props.loader(false)
+    if (!isEmpty(this.props.accessToken)) {
+      this.props.connectSocket()
+    }
   }
 
   changeThemeMode = (mode: string) => this.setState({
@@ -63,6 +71,24 @@ class RootContainer extends Component<IRootProps & IRootActionProps & DefaultPro
     )
   }
 
+  renderRedirectRoute = ({ component: RouteComponent, name, path, exact }: IRoutes) => {
+    const renderRoute = (routeProps: RouteComponentProps) => {
+      if (!isEmpty(this.props.accessToken)) {
+        return (<Redirect to={{ pathname: '/main', state: { from: routeProps.location } }} />)
+      }
+      return (<RouteComponent {...routeProps} />)
+    }
+
+    return (
+      <Route
+        key={`${name}-page`}
+        exact={exact}
+        path={path}
+        render={renderRoute}
+      />
+    )
+  }
+
   renderPageElement = () => (
     <Switch>
       {routes.map(route =>
@@ -70,14 +96,7 @@ class RootContainer extends Component<IRootProps & IRootActionProps & DefaultPro
           ? (<Route key={`${route.name}-page`} component={route.component} />)
           : (route.private)
             ? this.renderGuardRoute(route)
-            : (
-              <Route
-                component={route.component}
-                key={`${route.name}-page`}
-                exact={route.exact}
-                path={route.path}
-              />
-            ))}
+            : this.renderRedirectRoute(route))}
     </Switch>
   )
 

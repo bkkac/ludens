@@ -15,4 +15,5 @@ declare interface IWallet {
   money?: number
   createdAt?: string
   updatedAt?: string
+  updatedTime?: string
 }

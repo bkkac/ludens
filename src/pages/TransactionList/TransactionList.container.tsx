@@ -1,9 +1,17 @@
 import React, { Component } from 'react'
 import { RouteComponentProps } from 'react-router-dom'
-import { noop, get } from 'lodash'
+import {
+  noop,
+  keys,
+  sortBy,
+  reverse,
+  groupBy,
+  Dictionary,
+} from 'lodash'
 import moment from 'moment'
+import { number } from 'utils'
 import response from 'constants/response'
-import { ALink, Modal } from 'components'
+import { ALink, Modal, TransactionItem } from 'components'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlus, faMinus } from '@fortawesome/free-solid-svg-icons'
 import './transactionList.style.scss'
@@ -25,8 +33,8 @@ const defaultProps: ITransactionListProps & ITransactionListActionProps = {
   getTransactionListCode: 0,
   getTransactionListError: '',
   getTransactionListIsFetching: false,
-  tansactionList: [],
-  user: {},
+  transactionList: [],
+  wallet: {},
   loader() { noop() },
   getUser() { noop() },
 }
@@ -34,11 +42,9 @@ const defaultProps: ITransactionListProps & ITransactionListActionProps = {
 class TransactionListContainer extends
   Component<ITransactionListProps & ITransactionListActionProps & DefaultProps & RouteComponentProps> {
 
-  tempInterval: any = null
-
   componentDidMount() {
     this.props.loader(true)
-    this.tempInterval = setInterval(this.props.getUser, 5000)
+    this.props.getUser()
     this.props.getTransactionList()
   }
 
@@ -57,10 +63,6 @@ class TransactionListContainer extends
     }
   }
 
-  componentWillUnmount() {
-    clearInterval(this.tempInterval)
-  }
-
   onPressBack = () => {
     this.props.history.goBack()
   }
@@ -73,14 +75,55 @@ class TransactionListContainer extends
     this.props.history.push('/withdraw')
   }
 
+  onPressTransactionDetail = (transaction: ITransaction) => {
+    this.props.history.push('transaction-detail')
+  }
+
+  renderTransactionList = () => {
+    const transactionGroupList: Dictionary<ITransaction[]> = groupBy<ITransaction>(
+      this.props.transactionList.map(transaction =>
+        ({ ...transaction, createdAt: moment(transaction.createdAt).format('YYYYMMDD') })),
+      'createdAt')
+
+    return reverse(keys(transactionGroupList).sort()).map((key, index) => {
+      const TransactionDay = sortBy(
+        transactionGroupList[key].map(ts => ({ ...ts, updatedAt: moment(ts.updatedAt).format('YYYYMMDDHHmmss') })),
+        ['createdAt', 'updatedAt'])
+        .map((transaction, transactionIndex) => {
+          return (
+            <TransactionItem
+              onClick={() => this.onPressTransactionDetail(transaction)}
+              containerClassName="mt-2"
+              key={`${transaction.type}-${transaction.createdAt}-${transactionIndex}`}
+              money={transaction.money}
+              status={transaction.status}
+              time={transaction.updatedAt}
+              type={transaction.type}
+            />
+          )
+        })
+
+      const dayString = moment(key, 'YYYYMMDD').format('DD MMM YYYY')
+      return (
+        <div className="row mt-5" key={`${key}-${index}`}>
+          <div className="col px-5">
+            <div className="display-date-text">{dayString}</div>
+            {TransactionDay}
+          </div>
+        </div>
+      )
+    })
+  }
+
   render() {
-    const time = get(this.props, 'user.updatedTime', '')
+    const time = this.props.wallet.updatedTime || ''
     const updatedTime = moment(time).format('lll') || ''
     const updatedTimeText = `${constants.latedUpdate} ${updatedTime}`
 
-    const total = get(this.props, 'user.wallet.money', 0)
-    const credit = new Intl.NumberFormat('th-TH', { style: 'currency', currency: 'THB' }).format(total)
-    // const currency = '฿'
+    const total = this.props.wallet.money || 0
+    const credit = number.castToMoney(total)
+
+    const TransactionList = this.renderTransactionList()
 
     return (
       <div className="transaction-list-container">
@@ -117,6 +160,11 @@ class TransactionListContainer extends
                   </div>
                 </div>
               </div>
+            </div>
+          </div>
+          <div className="row mb-4">
+            <div className="col">
+              {TransactionList}
             </div>
           </div>
         </div>

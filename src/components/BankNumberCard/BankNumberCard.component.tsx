@@ -35,7 +35,9 @@ const BankNumberCard: SFC<{ bank: IBank } & DefaultProps> = (props) => {
       />
       <div className="bank-information-wrapper">
         <div className="bank-name-title">{constants.bankNameTitle}</div>
-        <div className="bank-name">{props.bank.name}</div>
+        <div className="bank-name">
+          <div className="text-truncate">{props.bank.name}</div>
+        </div>
         <div className="bank-number-wrapper">
           <div className="bank-number-title">{constants.bankNumberTitle}</div>
           <div className="bank-number">{props.bank.number}</div>

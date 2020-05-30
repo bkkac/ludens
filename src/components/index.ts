@@ -15,6 +15,7 @@ import { ResponsiveIcon } from './ResponsiveIcon'
 import { BankNumberCard } from './BankNumberCard'
 import { LottoActionCard } from './LottoActionCard'
 import { InputRadioImage } from './InputRadioImage'
+import { TransactionItem } from './TransactionItem'
 import { CreditAmountCard } from './CreditAmountCard'
 
 export {
@@ -35,5 +36,6 @@ export {
   BankNumberCard,
   LottoActionCard,
   InputRadioImage,
+  TransactionItem,
   CreditAmountCard,
 }

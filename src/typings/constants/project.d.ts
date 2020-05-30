@@ -1,6 +1,7 @@
 interface IEnvironmentConstants {
   name: string
   api: string
+  socket: string
 }
 
 interface IStateConstants {
@@ -8,6 +9,7 @@ interface IStateConstants {
 }
 
 declare interface IProjectConstants {
-  name: string,
+  name: string
+  environmentName: string
   environment: IStateConstants
 }

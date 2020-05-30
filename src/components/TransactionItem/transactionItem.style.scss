@@ -1,0 +1,68 @@
+.transaction-item-container {
+  min-height: 59px;
+  border-radius: 8px;
+  box-shadow: 0 3px 6px 0 #00000029;
+  background-color: #fcfcfc;
+  align-items: center;
+  cursor: pointer;
+  transition: all 250ms ease-in;
+
+  &:hover {
+    background-color: #f3f3f3;
+  }
+
+  .transaction-name {
+    font-family: "SukhumvitSet-Bold";
+    font-size: 14px;
+    line-height: 20px;
+    color: #777777;
+  }
+
+  .transaction-time {
+    font-family: "SukhumvitSet-SemiBold";
+    font-size: 10px;
+    line-height: 10px;
+    color: #c9c9c9;
+  }
+
+  .transaction-money {
+    font-family: "SukhumvitSet-Bold";
+    font-size: 18px;
+    line-height: 20px;
+    color: #777777;
+
+    &.deposit {
+      color: #66c6b9;
+
+      &::before {
+        content: "+";
+      }
+
+      &.pending {
+        color: #ffb751;
+      }
+    }
+    &.withdraw {
+      color: #d10250;
+
+      &::before {
+        content: "-";
+      }
+
+      &.pending {
+        color: #ffb751;
+      }
+    }
+  }
+
+  .transaction-remaining {
+    font-family: "SukhumvitSet-Bold";
+    font-size: 10px;
+    line-height: 10px;
+    color: #c9c9c9;
+  }
+
+  .display-transaction-wrapper {
+    flex: 1;
+  }
+}

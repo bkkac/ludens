@@ -4,13 +4,14 @@ import {
   catchError,
   exhaustMap,
   takeUntil,
-  map,
+  mergeMap,
   filter,
 } from 'rxjs/operators'
 import { isActionOf } from 'typesafe-actions'
 import { RootAction } from 'typings/reduxs/Actions'
 import { fetchGetMe } from './services'
-import actions from './actions'
+import actions from '../actions'
+import { AxiosResponse } from 'axios'
 
 const getMeEpic: Epic<RootAction, RootAction, RootReducers> = (action$, store, dependencies) =>
   action$.pipe(
@@ -18,7 +19,10 @@ const getMeEpic: Epic<RootAction, RootAction, RootReducers> = (action$, store, d
     exhaustMap(_ =>
       from(fetchGetMe())
         .pipe(
-          map(actions.getMeSuccessAction),
+          mergeMap((response: AxiosResponse<APISuccessResponse<IUser>>) => of(
+            actions.getMeSuccessAction(response),
+            actions.walletUpdateRequestSocketAction(response.data.data.wallet!)
+          )),
           catchError(error => of(actions.getMeFailureAction(error))),
           takeUntil(action$.pipe(filter(isActionOf(actions.getMeCancelAction))))
         ),

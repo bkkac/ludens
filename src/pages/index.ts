@@ -1,4 +1,5 @@
 import { Home } from './Home'
+import { TransactionDetail } from './TransactionDetail'
 import { TransactionList } from './TransactionList'
 import { ComingSoon } from './ComingSoon'
 import { Register } from './Register'
@@ -16,4 +17,5 @@ export default {
   LottoMain,
   ComingSoon,
   TransactionList,
+  TransactionDetail,
 }

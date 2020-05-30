@@ -11,6 +11,7 @@ declare interface ITokenState {
 }
 
 declare interface IUserState {
+  wallet: IWallet
   token: ITokenState
   me: IGetMeState
 }

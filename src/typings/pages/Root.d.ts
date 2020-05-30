@@ -4,6 +4,7 @@ declare interface IRootProps {
 
 declare interface IRootActionProps {
   loader(state: boolean): void
+  connectSocket(): void
 }
 
 declare interface IRootStates {

@@ -15,5 +15,5 @@ export const initialState: ReducerState<ITransaction[]> = {
 const develop = 'dev'
 
 export const endpoint = {
-  getTransactionList: `${project.environment[develop].api}/finance/list`,
+  getTransactionList: `${project.environment[develop].api}/finance/me`,
 }
