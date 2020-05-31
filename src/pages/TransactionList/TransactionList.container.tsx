@@ -82,13 +82,13 @@ class TransactionListContainer extends
   renderTransactionList = () => {
     const transactionGroupList: Dictionary<ITransaction[]> = groupBy<ITransaction>(
       this.props.transactionList.map(transaction =>
-        ({ ...transaction, createdAt: moment(transaction.createdAt).format('YYYYMMDD') })),
+        ({ ...transaction, createdAt: moment(transaction.updatedAt).format('YYYYMMDD') })),
       'createdAt')
 
     return reverse(keys(transactionGroupList).sort()).map((key, index) => {
-      const TransactionDay = sortBy(
+      const TransactionDay = reverse(sortBy(
         transactionGroupList[key].map(ts => ({ ...ts, updatedAt: moment(ts.updatedAt).format('YYYYMMDDHHmmss') })),
-        ['createdAt', 'updatedAt'])
+        ['createdAt', 'updatedAt']))
         .map((transaction, transactionIndex) => {
           return (
             <TransactionItem

@@ -10,7 +10,7 @@ type DefaultProps = Readonly<typeof defaultProps>
 const defaultProps: IButtonMenu = {
   icon: '',
   text: '',
-  onClick() { noop() },
+  onClick: undefined,
 }
 
 const ButtonMenu: SFC<IButtonMenu & DefaultProps> = ({
@@ -19,8 +19,13 @@ const ButtonMenu: SFC<IButtonMenu & DefaultProps> = ({
   onClick,
 }) => {
 
+
+  const onClickHandler = (typeof onClick === 'undefined') ? noop : onClick
+
+  const disabledClass = (typeof onClick === 'undefined') ? 'disabled' : ''
+
   return (
-    <div className="col button-menu-container" onClick={onClick}>
+    <div className={`col button-menu-container ${disabledClass}`} onClick={onClickHandler}>
       <div className="d-flex flex-row">
         <ResponsiveIcon icon={icon!} className="icon-button-menu" alt="button-menu" />
         <div className="chevron-icon-container">

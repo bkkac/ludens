@@ -18,9 +18,12 @@ const onError = (handlerStore: MiddlewareAPI<Dispatch, RootReducers>) => (error:
   handlerStore.dispatch(socketAction.connectSocketErrorAction(error))
 }
 
-const onUpdateWallet = (handlerStore: MiddlewareAPI<Dispatch, RootReducers>) => (wallet: IWallet) => {
-  handlerStore.dispatch(userAction.walletUpdateRequestSocketAction(wallet))
-}
+const onUpdateWallet = (handlerStore: MiddlewareAPI<Dispatch, RootReducers>) =>
+  (response: any) => {
+    const responseWallet: APISuccessResponse<IWallet> = (typeof response === 'string')
+      ? JSON.parse(response) : response
+    handlerStore.dispatch(userAction.walletUpdateRequestSocketAction(responseWallet.data))
+  }
 
 const socketMiddleware = (store: MiddlewareAPI<Dispatch, RootReducers>) => (next: Dispatch) => (action: RootAction) => {
 

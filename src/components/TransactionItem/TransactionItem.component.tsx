@@ -33,15 +33,15 @@ const TransactionItem: SFC<ITransactionItem & DefaultProps> = (props) => {
     containerClassName,
   } = props
 
-  const name = `${transactionName[type]} ${status === 'WAIT' ? '(รอตรวจสอบ)' : ''}`
+  const name = `${transactionName[type]} ${status === 'WAIT' ? '(รอตรวจสอบ)' : (status === 'FAIL' ? '(ไม่สำเร็จ)' : '')}`
   const displayMoney = number.castToMoney(money)
   const displayTime = moment(time, 'YYYYMMDDHHmmss').format('lll')
   const statusClass = () => {
     switch (type) {
       case 'DEPOSIT':
-        return `deposit ${status === 'WAIT' ? 'pending' : ''}`
+        return `deposit ${status === 'WAIT' ? 'pending' : (status === 'FAIL' ? 'failed' : '')}`
       case 'WITHDRAW':
-        return `withdraw ${status === 'WAIT' ? 'pending' : ''}`
+        return `withdraw ${status === 'WAIT' ? 'pending' : (status === 'FAIL' ? 'failed' : '')}`
       default:
         return ''
     }

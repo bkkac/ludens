@@ -41,6 +41,10 @@
       &.pending {
         color: #ffb751;
       }
+
+      &.failed {
+        color: #d10250;
+      }
     }
     &.withdraw {
       color: #d10250;
@@ -51,6 +55,10 @@
 
       &.pending {
         color: #ffb751;
+      }
+
+      &.failed {
+        color: #d10250;
       }
     }
   }

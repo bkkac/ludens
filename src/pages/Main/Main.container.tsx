@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { noop } from 'lodash'
 import { LudensContext } from 'configs/context'
 import { THEME_MODE } from 'constants/variables'
+import { number } from 'utils'
 import { RouteComponentProps } from 'react-router-dom'
 import { ButtonMenu, ResponsiveIcon, ALink } from 'components'
 
@@ -77,8 +78,8 @@ class MainContainer extends Component<IMainProps & IMainActionProps & DefaultPro
 
   render() {
     const creditTotal = this.props.wallet.money || 0
-    const credit = new Intl.NumberFormat('th-TH', { style: 'currency', currency: 'THB' }).format(creditTotal)
-    // const currency = '฿'
+    const credit = number.castToMoney(creditTotal)
+
     return (
       <div className="main-container">
         <div className="main-background" />
@@ -109,6 +110,7 @@ class MainContainer extends Component<IMainProps & IMainActionProps & DefaultPro
           <div className="row">
             <div className="col-xl-2 col-md-4 col-6 mb-4 justify-center">
               <ButtonMenu
+                onClick={() => this.onNavigateTo('/lotto')}
                 text={constants.gotoLotto}
                 icon={{ x1: TicketIcon, x2: TicketIcon2x, x3: TicketIcon3x }}
               />
