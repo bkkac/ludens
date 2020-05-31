@@ -17,3 +17,16 @@ declare interface IWallet {
   updatedAt?: string
   updatedTime?: string
 }
+
+declare interface ITransactionRequest {
+  id?: number
+  money?: number
+  createdAt?: string
+  userBank?: IBank
+  webBank?: IBank
+}
+
+declare interface ISignTransactionRequest {
+  webBankId: number
+  money: string
+}
