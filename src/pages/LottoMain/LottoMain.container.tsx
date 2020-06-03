@@ -1,5 +1,10 @@
 import React, { Component } from 'react'
-import { UsernameText, CreditAmountCard, LottoActionCard } from 'components'
+import { RouteComponentProps } from 'react-router-dom'
+import {
+  UsernameText,
+  LottoActionCard,
+  CreditAmountCard,
+} from 'components'
 import './lottoMain.style.scss'
 
 // Temporary
@@ -8,16 +13,18 @@ declare interface ILottoList {
   subLotto: ILottoActionCard[]
 }
 
-class LottoMainContainer extends Component {
+class LottoMainContainer extends Component<RouteComponentProps> {
 
   renderLottoList = (lottos: ILottoList[]) => lottos.map((lotto, index) => {
     const SubLotto = lotto.subLotto.map((subLotto, subIndex) => (
       <div className="col-6 my-2" key={`sub-${subLotto.name}-${subIndex}`}>
         <LottoActionCard
+          onClick={() => this.props.history.push('/lotto/yeege')}
           name={subLotto.name}
-          time={subLotto.time}
           status={subLotto.status}
-          closedTime={subLotto.closedTime}
+          countdownTime={subLotto.countdownTime}
+          rangeTimeLabel={subLotto.rangeTimeLabel}
+          rangeTime={subLotto.rangeTime}
         />
       </div>
     ))
@@ -39,8 +46,14 @@ class LottoMainContainer extends Component {
       {
         name: 'หวยยี่กี',
         subLotto: [
-          { name: 'ยี่กี', closedTime: '00:10:50', time: '88 รอบ', status: 'active' },
-          { name: 'ยี่กี (พื่นบ้าน)', closedTime: '00:20:50', time: '16 มี.ค. 63 18:00', status: 'unavailable' },
+          {
+            name: 'ยี่กี', status: 'available', countdownTime: '00:10:50',
+            rangeTimeLabel: 'เปิดรับ', rangeTime: '88 รอบ',
+          },
+          {
+            name: 'ยี่กี (พื่นบ้าน)', status: 'available', countdownTime: '01:10:50',
+            rangeTimeLabel: 'เปิดรับ', rangeTime: '88 รอบ',
+          },
         ],
       },
     ]

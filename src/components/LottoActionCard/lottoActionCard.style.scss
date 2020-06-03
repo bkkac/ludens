@@ -1,5 +1,5 @@
 .lotto-action-card-container {
-  opacity: 0.5;
+  opacity: 1;
   border-radius: 6px;
   box-shadow: 2px 2px 10px 0 #0000004d;
   background-color: #ffffff;
@@ -10,7 +10,16 @@
   cursor: pointer;
 
   &.unavailable {
-    cursor: none;
+    opacity: 0.5;
+    cursor: unset;
+
+    &:hover {
+      background-color: unset;
+    }
+  }
+
+  &:hover {
+    background-color: #ededed;
   }
 
   .lotto-status-bar {
@@ -32,11 +41,6 @@
     &.unavailable {
       background-color: #d2cecd;
     }
-  }
-
-  &:hover {
-    // border: solid 1px #dddddd;
-    background-color: #ededed;
   }
 
   .lotto-action-name {

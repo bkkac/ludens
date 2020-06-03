@@ -8,6 +8,9 @@ declare interface IClosedTimeBadge {
 declare interface ILottoActionCard {
   name?: string
   status?: LottoStatus
-  time?: string
-  closedTime?: string
+  countdownTime?: string
+  rangeTimeLabel?: string
+  rangeTime?: string
+  icon?: string | IIconSet
+  onClick?(): void
 }

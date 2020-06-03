@@ -6,6 +6,7 @@ import { Banner } from './Banner'
 import { Button } from './Button'
 import { InputText } from './InputText'
 import { LottoCard } from './LottoCard'
+import { Breadcrumb } from './Breadcrumb'
 import { ButtonMenu } from './ButtonMenu'
 import { InputNumber} from './InputNumber'
 import { TextRunning } from './TextRunning'
@@ -27,6 +28,7 @@ export {
   Button,
   InputText,
   LottoCard,
+  Breadcrumb,
   ButtonMenu,
   InputNumber,
   TextRunning,

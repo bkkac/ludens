@@ -1,6 +1,14 @@
 import React, { SFC } from 'react'
 
-const ResponsiveIcon: SFC<IResponsiveIcon> = ({
+type DefaultProps = Readonly<typeof defaultProps>
+
+const defaultProps: IResponsiveIcon = {
+  icon: '',
+  alt: '',
+  className: '',
+}
+
+const ResponsiveIcon: SFC<IResponsiveIcon & DefaultProps> = ({
   icon,
   alt,
   className,
@@ -20,5 +28,7 @@ const ResponsiveIcon: SFC<IResponsiveIcon> = ({
   }
   return <></>
 }
+
+ResponsiveIcon.defaultProps = defaultProps
 
 export default ResponsiveIcon

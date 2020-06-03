@@ -7,6 +7,7 @@ import { Withdraw } from './Withdraw'
 import { Deposit } from './Deposit'
 import { Main } from './Main'
 import { LottoMain } from './LottoMain'
+import { LottoSub } from './LottoSub'
 
 export default {
   Home,
@@ -14,6 +15,7 @@ export default {
   Deposit,
   Withdraw,
   Register,
+  LottoSub,
   LottoMain,
   ComingSoon,
   TransactionList,

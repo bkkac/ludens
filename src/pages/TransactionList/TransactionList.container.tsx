@@ -76,7 +76,7 @@ class TransactionListContainer extends
   }
 
   onPressTransactionDetail = (transaction: ITransaction) => {
-    this.props.history.push('transaction-detail')
+    this.props.history.push('/transaction/detail', { transaction })
   }
 
   renderTransactionList = () => {
