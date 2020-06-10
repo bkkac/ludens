@@ -7,7 +7,6 @@ import { isActionOf } from 'typesafe-actions'
 import { RootAction } from 'typings/reduxs/Actions'
 import actions from './actions'
 
-
 const walletUpdateSocketEpic: Epic<RootAction, RootAction, RootReducers> = (action$, store) =>
   action$.pipe(
     filter(isActionOf(actions.walletUpdateRequestSocketAction)),

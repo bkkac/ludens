@@ -4,6 +4,7 @@ import {
   noop,
   keys,
   sortBy,
+  isEmpty,
   reverse,
   groupBy,
   Dictionary,
@@ -84,6 +85,8 @@ class TransactionListContainer extends
       this.props.transactionList.map(transaction =>
         ({ ...transaction, createdAt: moment(transaction.updatedAt).format('YYYYMMDD') })),
       'createdAt')
+
+    if (isEmpty(transactionGroupList)) { return <></> }
 
     return reverse(keys(transactionGroupList).sort()).map((key, index) => {
       const TransactionDay = reverse(sortBy(

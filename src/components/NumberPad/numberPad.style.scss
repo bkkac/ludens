@@ -1,0 +1,27 @@
+.number-pad-container {
+  background-color: #7777771a;
+
+  .number-pad-wrapper {
+    display: flex;
+    flex-direction: row;
+
+    .number-pad {
+      flex: 1;
+      padding: 16px 24px;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+
+      font-family: "SukhumvitSet-Bold";
+      font-size: 40px;
+      line-height: 40px;
+      text-align: left;
+      color: #777777;
+      text-align: center;
+
+      &:hover {
+        background-color: #88b8f626;
+      }
+    }
+  }
+}

@@ -1,0 +1,74 @@
+.switch-container {
+  margin: unset !important;
+
+  &.fill {
+    height: 50px;
+    border-radius: 25px;
+    box-shadow: 3px 3px 6px 0 #00000029;
+    background-color: #ff726b;
+
+    .switch-item-wrapper {
+      height: 32px;
+      border-radius: 20px;
+      background-color: transparent;
+
+      font-family: "SukhumvitSet-Bold";
+      font-size: 16px;
+      line-height: 32px;
+      text-align: center;
+      color: #ffffff;
+      transition: all 254ms ease-in;
+      cursor: pointer;
+
+      &.active {
+        background-color: #bb130a;
+      }
+
+      &:hover {
+        background-color: #a70b03;
+      }
+    }
+  }
+
+  &.outline {
+    border-top: solid 2px #065bc9;
+
+    .switch-item-wrapper {
+      margin-top: 4px !important;
+      margin-bottom: 4px !important;
+
+      font-family: "SukhumvitSet-Bold";
+      font-size: 16px;
+      line-height: 25px;
+      text-align: center;
+      color: #777777;
+
+      height: 24px;
+      border-radius: 12px;
+      background-color: transparent;
+      cursor: pointer;
+
+      &.active {
+        position: relative;
+        color: #065bc9;
+
+        &::after {
+          top: 26px;
+          left: 50%;
+          transform: translateX(-4px);
+          position: absolute;
+          content: "";
+          width: 8px;
+          height: 8px;
+          border-radius: 4px;
+          background-color: #065bc9;
+        }
+      }
+
+      &:hover {
+        background-color: #88b8f6;
+        color: #ffffff;
+      }
+    }
+  }
+}

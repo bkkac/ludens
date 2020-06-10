@@ -4,7 +4,6 @@ import { noop, replace, isEmpty } from 'lodash'
 import moment from 'moment'
 import { FormikProps } from 'formik'
 import { InputText, Button, ALink } from 'components'
-import { timer } from 'utils'
 import MessageIcon from 'assets/images/register/message.png'
 import './registerStep2.style.scss'
 
@@ -37,6 +36,8 @@ const RegisterStep2: SFC<
   & DefaultProps
 > = (props) => {
 
+  let intervalId: NodeJS.Timeout | null = null
+
   const {
     onConfirmPresses,
     onBackStep,
@@ -54,22 +55,38 @@ const RegisterStep2: SFC<
   const [remain, setRemain] = useState({ minutes: 0, seconds: 0 })
   const [isTimesup, setIsTimesup] = useState(false)
 
+  const clearLocalInterval = () => {
+    if (intervalId !== null) {
+      clearInterval(intervalId)
+      setIsTimesup(true)
+    }
+  }
+
   const countingdown = () => {
     const createAt = moment(replace(extraProps?.otp.createAt!, /\s/g, ''))
     const timeRange = createAt.clone().add(LIMIT_TIME, LIMIT_UNIT)
-    timer.intervalDuration(timeRange, (coreInterval, duration) => {
+
+    intervalId = setInterval(() => {
+      const duration = moment.duration(timeRange.diff(moment()))
       const minutes = duration.minutes()
       const seconds = duration.seconds()
+
       if (minutes <= 0 && seconds < 0) {
-        clearInterval(coreInterval)
-        setIsTimesup(true)
+        clearLocalInterval()
+      } else if (isNaN(minutes) || isNaN(seconds)) {
+        setRemain({ minutes: 0, seconds: 0 })
+        clearLocalInterval()
       } else {
         setRemain({ minutes, seconds })
       }
-    })
+
+    }, 1000);
   }
 
-  useEffect(countingdown, [])
+  useEffect(() => {
+    countingdown()
+    return clearLocalInterval
+  }, [])
 
   useEffect(() => {
     if (isTimesup) {

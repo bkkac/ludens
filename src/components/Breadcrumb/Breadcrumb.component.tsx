@@ -1,4 +1,4 @@
-import React, { SFC } from 'react'
+import React, { SFC, Fragment } from 'react'
 import { noop } from 'lodash'
 import { ALink } from 'components'
 import './breadcrumb.style.scss'
@@ -15,7 +15,7 @@ const Breadcrumb: SFC<IBreadcrumbProps & DefaultProps> = (props) => {
   const RenderBreadcrumbItems = () => {
     const ItemsComponent = props.items.map((item, index) => {
       return (
-        <>
+        <Fragment key={`${item.path}-${index}`}>
           <ALink
             bold
             color={item.active ? '#777777' : '#74605c'}
@@ -26,7 +26,7 @@ const Breadcrumb: SFC<IBreadcrumbProps & DefaultProps> = (props) => {
             onClick={() => props.handleOnClickItem!(item.path)}
           />
           <span className="breadcrumb-slash">{item.active ? '' : ' / '}</span>
-        </>
+        </ Fragment>
       )
     })
 

@@ -1,13 +1,11 @@
-type LottoStatus = 'active' | 'available' | 'unavailable'
-
 declare interface IClosedTimeBadge {
-  status?: LottoStatus
+  status?: ILottoStatus
   text?: string
 }
 
 declare interface ILottoActionCard {
   name?: string
-  status?: LottoStatus
+  status?: ILottoStatus
   countdownTime?: string
   rangeTimeLabel?: string
   rangeTime?: string

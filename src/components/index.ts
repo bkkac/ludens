@@ -4,11 +4,13 @@ import { Badge } from './Badge'
 import { Navbar } from './Navbar'
 import { Banner } from './Banner'
 import { Button } from './Button'
+import { Switch } from './Switch'
+import { NumberPad } from './NumberPad'
 import { InputText } from './InputText'
 import { LottoCard } from './LottoCard'
 import { Breadcrumb } from './Breadcrumb'
 import { ButtonMenu } from './ButtonMenu'
-import { InputNumber} from './InputNumber'
+import { InputNumber } from './InputNumber'
 import { TextRunning } from './TextRunning'
 import { UsernameText } from './UsernameText'
 import { InputCheckbox } from './InputCheckbox'
@@ -26,6 +28,8 @@ export {
   Banner,
   Navbar,
   Button,
+  Switch,
+  NumberPad,
   InputText,
   LottoCard,
   Breadcrumb,

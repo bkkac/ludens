@@ -8,6 +8,7 @@ import { Deposit } from './Deposit'
 import { Main } from './Main'
 import { LottoMain } from './LottoMain'
 import { LottoSub } from './LottoSub'
+import { LottoMake } from './LottoMake'
 
 export default {
   Home,
@@ -17,6 +18,7 @@ export default {
   Register,
   LottoSub,
   LottoMain,
+  LottoMake,
   ComingSoon,
   TransactionList,
   TransactionDetail,

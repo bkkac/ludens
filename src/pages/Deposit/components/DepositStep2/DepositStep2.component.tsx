@@ -8,7 +8,7 @@ import {
   BankNumberCard,
 } from 'components'
 import moment from 'moment'
-import { timer, number } from 'utils'
+import { number } from 'utils'
 import { noop, replace } from 'lodash'
 import { FormikProps, Form } from 'formik'
 import TransferTo from 'assets/images/deposit/transferTo/transferTo.png'
@@ -47,6 +47,8 @@ const DepositStep2:
   SFC<FormikProps<IDepositForm>
     & IDepositFormProps<{ requestedTransaction: ITransactionRequest }> & DefaultProps> = (props) => {
 
+      let intervalId: NodeJS.Timeout | null = null
+
       const {
         values,
         errors,
@@ -63,28 +65,41 @@ const DepositStep2:
       } = props
 
       const [remain, setRemain] = useState({ minutes: 0, seconds: 0 })
-      const [isTimesup, setIsTimesup] = useState(false)
+
+      const clearLocalInterval = () => {
+        if (intervalId !== null) {
+          clearInterval(intervalId)
+        }
+      }
 
       const countingdown = () => {
         const LIMIT_TIME = 10
         const LIMIT_UNIT = 'minutes'
         const createAt = moment(replace(extraProps?.requestedTransaction.createdAt!, /\s/g, ''))
         const timeRange = createAt.clone().add(LIMIT_TIME, LIMIT_UNIT)
-        if (!isTimesup) {
-          timer.intervalDuration(timeRange, (coreInterval, duration) => {
-            const minutes = duration.minutes()
-            const seconds = duration.seconds()
-            if (minutes <= 0 && seconds < 0) {
-              clearInterval(coreInterval)
-              setIsTimesup(true)
-            } else {
-              setRemain({ minutes, seconds })
-            }
-          })
-        }
+
+        intervalId = setInterval(() => {
+          const duration = moment.duration(timeRange.diff(moment()))
+          const minutes = duration.minutes()
+          const seconds = duration.seconds()
+
+          if (minutes <= 0 && seconds < 0) {
+            clearLocalInterval()
+          } else if (isNaN(minutes) || isNaN(seconds)) {
+            setRemain({ minutes: 0, seconds: 0 })
+            clearLocalInterval()
+          } else {
+            setRemain({ minutes, seconds })
+          }
+
+        }, 1000);
       }
 
-      useEffect(countingdown, [])
+      useEffect(() => {
+        countingdown()
+        return clearLocalInterval
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+      }, [])
 
       const onPressBack = () => {
         setValues({

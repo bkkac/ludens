@@ -9,7 +9,7 @@
   transition: all 240ms ease-in;
   cursor: pointer;
 
-  &.unavailable {
+  &.CLOSE {
     opacity: 0.5;
     cursor: unset;
 
@@ -30,15 +30,11 @@
     height: 6px;
     background-color: #d2cecd;
 
-    &.active {
+    &.OPEN {
       background-color: #66c6b9;
     }
 
-    &.available {
-      background-color: #66c6b9;
-    }
-
-    &.unavailable {
+    &.CLOSE {
       background-color: #d2cecd;
     }
   }
@@ -74,15 +70,11 @@
       color: #fcfcfc;
     }
 
-    &.active {
+    &.OPEN {
       background-color: #66c6b9;
     }
 
-    &.available {
-      background-color: #66c6b9;
-    }
-
-    &.unavailable {
+    &.CLOSE {
       background-color: #d2cecd;
     }
   }

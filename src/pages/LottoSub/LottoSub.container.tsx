@@ -1,46 +1,74 @@
 import React, { Component } from 'react'
 import { RouteComponentProps } from 'react-router-dom'
 import {
+  ALink,
   Breadcrumb,
   UsernameText,
   LottoActionCard,
   CreditAmountCard,
 } from 'components'
+import response from 'constants/response'
+import { isEmpty } from 'lodash'
+import moment from 'moment'
 import './lottoSub.style.scss'
-
-const lottosMock: ILottoActionCard[] = [
-  { name: 'รอบที่ 1', status: 'available', countdownTime: '00:10:50', rangeTimeLabel: 'ปิดรับ', rangeTime: '16 มี.ค. 63 08:00' },
-  { name: 'รอบที่ 2', status: 'available', countdownTime: '00:20:50', rangeTimeLabel: 'ปิดรับ', rangeTime: '16 มี.ค. 63 08:10' },
-  { name: 'รอบที่ 3', status: 'available', countdownTime: '00:30:50', rangeTimeLabel: 'ปิดรับ', rangeTime: '16 มี.ค. 63 08:20' },
-]
 
 const constants = {
   lottoLabel: 'แทงหวย',
+  back: '< ย้อนกลับ',
 }
 
 const lottoTypes: { [name: string]: string } = {
   yeege: 'ยี่กี',
 }
 
-class LottoSubContainer extends Component<RouteComponentProps<{ type: string }>> {
+class LottoSubContainer extends Component<
+  ISubLottoProps & ISubLottoActionProps & RouteComponentProps<{ type: string }>,
+  ISubLottoState> {
 
-  subLotto = (lottos: ILottoActionCard[]) => {
-    const ListComponent = lottos.map((lotto, index) => (
-      <div className="col-6 my-2" key={`sub-${lotto.name}-${index}`}>
-        <LottoActionCard
-          name={lotto.name}
-          status={lotto.status}
-          countdownTime={lotto.countdownTime}
-          rangeTimeLabel={lotto.rangeTimeLabel}
-          rangeTime={lotto.rangeTime}
-        />
-      </div>
-    ))
-    return (<div className="row">{ListComponent}</div>)
+  componentDidMount() {
+    this.props.loader(true)
+    this.props.getYeegeGameList()
+  }
+
+  componentDidUpdate(prevProps: ISubLottoProps) {
+    if (prevProps.getYeegeGameListIsFetching !== this.props.getYeegeGameListIsFetching
+      && !this.props.getYeegeGameListIsFetching) {
+      if (this.props.getYeegeGameListCode === response.OK) {
+        this.props.loader(false)
+      }
+    }
   }
 
   handleOnClickBreadcrumb = (path: string) => {
     this.props.history.replace(path)
+  }
+
+  handleOnClickPlay = (path: string) => {
+    this.props.history.replace('/lotto/making/yeege')
+  }
+
+  renderSubLottoList = () => {
+    if (!isEmpty(this.props.yeegeGameList)) {
+      const ListComponent = this.props.yeegeGameList.map((yeege: IYeegeGame, index) => {
+        const yeegeRound = `รอบที่ ${yeege.round}`
+        const rangeLabel = 'ปิดรับ'
+        const rangeTime = moment(yeege.endTime).format('DD MMM YY HH:mm')
+        return (
+          <div className="col-6 my-2" key={`sub-${yeege.round}-${index}`}>
+            <LottoActionCard
+              onClick={() => this.handleOnClickPlay('')}
+              name={yeegeRound}
+              status={yeege.status}
+              countdownTime={yeege.endTime}
+              rangeTimeLabel={rangeLabel}
+              rangeTime={rangeTime}
+            />
+          </div>
+        )
+      })
+      return (<div className="row">{ListComponent}</div>)
+    }
+    return <></>
   }
 
   render() {
@@ -52,8 +80,18 @@ class LottoSubContainer extends Component<RouteComponentProps<{ type: string }>>
     ]
 
     return (
-      <div className="container lotto-main-container">
+      <div className="container lotto-sub-container">
+        <div className="row mb-3">
+          <div className="col">
+            <ALink text={constants.back} color="#ff9b96" bold onClick={() => this.props.history.replace('/lotto')} />
+          </div>
+        </div>
         <div className="row">
+          <div className="col">
+            <Breadcrumb items={navigates} handleOnClickItem={this.handleOnClickBreadcrumb} />
+          </div>
+        </div>
+        <div className="row mt-3">
           <div className="col d-flex justify-content-center">
             <UsernameText username={username} />
           </div>
@@ -63,14 +101,9 @@ class LottoSubContainer extends Component<RouteComponentProps<{ type: string }>>
             <CreditAmountCard creditAmount={money} />
           </div>
         </div>
-        <div className="row">
-          <div className="col">
-            <Breadcrumb items={navigates} handleOnClickItem={this.handleOnClickBreadcrumb} />
-          </div>
-        </div>
         <div className="row mt-3">
           <div className="col">
-            {this.subLotto(lottosMock)}
+            {this.renderSubLottoList()}
           </div>
         </div>
       </div>
