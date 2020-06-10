@@ -6,7 +6,6 @@ import NumberFormat, { NumberFormatProps } from 'react-number-format'
 const InputNumberComponent: SFC<IInputTextProps & NumberFormatProps> = (props) => {
 
   const {
-    value,
     placeholder,
     ...inputProps
   } = props

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { noop } from 'lodash'
+import { noop, isEmpty } from 'lodash'
 import { FormikProps, Formik } from 'formik'
 import { RouteComponentProps } from 'react-router-dom'
 import response from 'constants/response'
@@ -10,13 +10,13 @@ import initialValues from './models/initialValues'
 import scheme from './models/scheme'
 import './deposit.style.scss'
 
-// TODO Counting doown time
-
 const constants = {
   ok: 'ตกลง',
   gotoMain: 'รายการฝาก - ถอน',
   requestedSuccess: 'กรุณารอการตรวจสอบสักครู่',
+  pleaseTryAgain: 'โปรดลองใหม่อีกครั้ง',
 }
+
 type DefaultProps = Readonly<typeof defaultProps>
 
 const defaultProps: IDepositProps & IDepositActionProps = {
@@ -32,6 +32,12 @@ const defaultProps: IDepositProps & IDepositActionProps = {
   depositRequestCode: 0,
   depositRequestError: '',
   depositRequestIsFetching: false,
+  getTransactionRequest() { noop() },
+  signTransactionRequest() { noop() },
+  transactionRequest: {},
+  transactionRequestCode: 0,
+  transactionRequestError: '',
+  transactionRequestIsFetching: false,
 }
 
 class DepositContainer extends
@@ -41,17 +47,16 @@ class DepositContainer extends
 
   state: IDepositStates = {
     currentStep: 1,
+    initialFormValue: initialValues,
   }
 
   componentDidMount() {
     this.props.loader(true)
     this.props.getBankList()
+    this.props.getTransactionRequest()
   }
 
   componentDidUpdate(prevProps: IDepositProps) {
-    if (prevProps.getBankListIsFetching !== this.props.getBankListIsFetching && !this.props.getBankListIsFetching) {
-      this.props.loader(false)
-    }
     if (prevProps.depositRequestIsFetching !== this.props.depositRequestIsFetching
       && !this.props.depositRequestIsFetching) {
       if (this.props.depositRequestCode === response.OK) {
@@ -72,6 +77,31 @@ class DepositContainer extends
       }
       this.props.loader(false)
     }
+
+    if (prevProps.transactionRequestIsFetching !== this.props.transactionRequestIsFetching
+      && !this.props.transactionRequestIsFetching) {
+      this.props.loader(false)
+      if (this.props.transactionRequestCode === response.OK) {
+        if (!isEmpty(this.props.transactionRequest)) {
+          this.setState({
+            currentStep: 2,
+            initialFormValue: {
+              ...this.state.initialFormValue,
+              money: String(this.props.transactionRequest.money),
+              webBankId: String(this.props.transactionRequest.webBank?.id),
+            },
+          })
+        }
+      } else if (this.props.transactionRequestCode === response.NOT_FOUND) {
+        // TODO: when never transaction request before
+      } else {
+        Modal.error.show({
+          action: () => { Modal.error.hide(); return this.props.history.goBack(); },
+          description: `${this.props.transactionRequestError} ${constants.pleaseTryAgain}`,
+          actionText: constants.ok,
+        })
+      }
+    }
   }
 
   onSubmitDeposit = (values: IDepositForm) => {
@@ -86,8 +116,13 @@ class DepositContainer extends
     this.props.depositRequest(depositRequestValues)
   }
 
-  onNextStepHandler = (targetStep: number) => () => {
-    this.setState({ currentStep: targetStep })
+  onNextStepHandler = (values: IDepositForm) => {
+    const castedValue = scheme.cast(values)
+    this.props.loader(true)
+    this.props.signTransactionRequest({
+      webBankId: Number(castedValue.webBankId),
+      money: castedValue.money,
+    })
   }
 
   onBackStepHandler = (step: number) => {
@@ -109,7 +144,7 @@ class DepositContainer extends
             {...formProps}
             extraProps={{ banks: this.props.bankList, userBank: this.props.user.bank! }}
             onBackStep={this.onBackStepHandler}
-            onConfirmPresses={this.onNextStepHandler(2)}
+            onConfirmPresses={this.onNextStepHandler}
           />
         )
       } else if (this.state.currentStep === 2) {
@@ -117,7 +152,7 @@ class DepositContainer extends
         return (
           <DepositStep2
             {...formProps}
-            extraProps={{ banks: this.props.bankList, userBank: this.props.user.bank! }}
+            extraProps={{ requestedTransaction: this.props.transactionRequest }}
             onBackStep={this.onBackStepHandler}
             onCancelPresses={this.onCancelHandler}
           />
@@ -128,7 +163,7 @@ class DepositContainer extends
 
     return (
       <Formik
-        initialValues={initialValues}
+        initialValues={this.state.initialFormValue}
         validationSchema={scheme}
         enableReinitialize
         onSubmit={this.onSubmitDeposit}

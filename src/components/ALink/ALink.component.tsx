@@ -9,6 +9,7 @@ const defaultProps: IALink = {
   fontSize: 14,
   bold: false,
   color: '#777777',
+  disabled: false,
   onClick() { noop() },
 }
 
@@ -19,17 +20,20 @@ const ALink: SFC<IALink & DefaultProps> = (props) => {
     bold,
     color,
     onClick,
+    disabled,
     fontSize,
   } = props
 
-  const wrapperClass = bold ? 'alink-wrapper-bold' : 'alink-wrapper'
+  const disabledClass = disabled ? 'disabled' : ''
+  const wrapperClass = bold ? `alink-wrapper-bold ${disabledClass}` : `alink-wrapper ${disabledClass}`
   const style = {
     color,
     fontSize,
   }
-  return (
-    <span onClick={onClick} className={wrapperClass} style={style}>{text}</span>
-  )
+
+  const handleOnClick = () => disabled ? noop() : onClick!()
+
+  return (<span onClick={handleOnClick} className={wrapperClass} style={style}>{text}</span>)
 }
 
 ALink.defaultProps = defaultProps

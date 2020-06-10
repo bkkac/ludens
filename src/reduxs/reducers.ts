@@ -8,6 +8,7 @@ import auth from './auth/reducers'
 import credit from './credit/reducers'
 import user from './user/reducers'
 import bank from './bank/reducers'
+import socket from './socket/reducers'
 import storage from 'redux-persist/lib/storage'
 import { persistReducer } from 'redux-persist'
 
@@ -31,6 +32,7 @@ const rootReducers = {
   auth,
   credit,
   bank,
+  socket,
 }
 
 export default persistReducer(

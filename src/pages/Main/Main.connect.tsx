@@ -6,6 +6,7 @@ import MainContainer from './Main.container'
 
 const mapStateToProps = (state: RootReducers): IMainProps => ({
   user: state.ludens.user.me.data!,
+  wallet: state.ludens.user.wallet,
 })
 
 const mapDispatchToProos = (dispatch: Dispatch<RootAction>): IMainActionProps => bindActionCreators({

@@ -15,5 +15,6 @@ declare interface RootReducers {
     auth: IAuthState
     credit: ICreditState
     bank: IBankState
+    socket: ISocketState
   }
 }

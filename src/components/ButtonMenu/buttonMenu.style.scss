@@ -10,6 +10,23 @@
   box-shadow: 0 3px 10px 0 #00000029;
   background-color: #ffffff;
 
+  &.disabled {
+    cursor: unset;
+    background-color: #ececec;
+    
+    &:hover {
+      box-shadow: 0 3px 10px 0 #00000029;
+      &:before {
+        opacity: 0;
+      }
+      .title-text-button,
+      .icon-button-menu,
+      .chevron-icon-container {
+        transform: unset;
+      }
+    }
+  }
+
   &::before {
     position: absolute;
     bottom: 0;

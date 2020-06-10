@@ -15,6 +15,10 @@ const mapStateToProps = (state: RootReducers): IDepositProps => ({
   depositRequestCode: state.ludens.credit.deposit.code!,
   depositRequestError: state.ludens.credit.deposit.error!,
   depositRequestIsFetching: state.ludens.credit.deposit.isFetching!,
+  transactionRequest: state.ludens.credit.transactionRequest.data!,
+  transactionRequestCode: state.ludens.credit.transactionRequest.code!,
+  transactionRequestError: state.ludens.credit.transactionRequest.error!,
+  transactionRequestIsFetching: state.ludens.credit.transactionRequest.isFetching!,
   user: state.ludens.user.me.data!,
 })
 
@@ -22,6 +26,8 @@ const mapDispatchToProos = (dispatch: Dispatch<RootAction>): IDepositActionProps
   getBankList: bankAction.getBankListAction,
   depositRequest: creditAction.depositRequestAction,
   loader: loaderAction.loadingAction,
+  getTransactionRequest: creditAction.getTransactionRequestAction,
+  signTransactionRequest: creditAction.signTransactionRequestAction,
 }, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProos)(DepositContainer)

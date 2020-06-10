@@ -20,4 +20,5 @@ declare interface ICreditState {
   deposit: IDepositState
   withdraw: IWithdrawState
   transaction: ITransactionState
+  transactionRequest: ReducerState<ITransactionRequest>
 }

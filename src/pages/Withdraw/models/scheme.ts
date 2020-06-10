@@ -8,7 +8,7 @@ const constants = {
 const scheme: ObjectSchema<IWithdraw> = object().shape({
   money: string()
     .required(constants.moneyRequired)
-    .minimumMoneyRequire(100, constants.moneyMinimunRequired)
+    .minimumMoneyRequire(10, constants.moneyMinimunRequired)
     .transformIntegerMoney(),
   description: string(),
 })

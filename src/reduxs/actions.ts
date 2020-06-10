@@ -6,6 +6,7 @@ import authAction from './auth/actions'
 import creditAction from './credit/actions'
 import userAction from './user/actions'
 import bankAction from './bank/actions'
+import socketAction from './socket/actions'
 
 export default {
   ...userAction,
@@ -16,4 +17,5 @@ export default {
   ...authAction,
   ...creditAction,
   ...bankAction,
+  ...socketAction,
 }

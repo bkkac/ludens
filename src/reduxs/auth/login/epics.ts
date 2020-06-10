@@ -12,6 +12,7 @@ import { RootAction } from 'typings/reduxs/Actions'
 import { fetchLogin } from './services'
 import actions from './actions'
 import userActions from 'reduxs/user/actions'
+import socketActions from 'reduxs/socket/actions'
 import { AxiosResponse } from 'axios'
 
 const loginEpic: Epic<RootAction, RootAction, RootReducers> = (action$, store, dependencies) =>
@@ -23,7 +24,8 @@ const loginEpic: Epic<RootAction, RootAction, RootReducers> = (action$, store, d
           mergeMap((response: AxiosResponse<APISuccessResponse<string>>) => of(
             actions.loginSuccessAction(response),
             userActions.persistedUserAction({ token: response.data.data }),
-            userActions.getMeAction()
+            userActions.getMeAction(),
+            socketActions.connectSocketAction()
           )),
           catchError(error => of(
             actions.loginFailureAction(error),

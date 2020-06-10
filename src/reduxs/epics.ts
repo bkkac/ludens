@@ -7,6 +7,7 @@ import auth from './auth/epics'
 import credit from './credit/epics'
 import user from './user/epics'
 import bank from './bank/epics'
+import socket from './socket/epics'
 
 export default combineEpics(
   ...user,
@@ -17,5 +18,6 @@ export default combineEpics(
   ...auth,
   ...credit,
   ...bank,
+  ...socket,
 )
 

@@ -18,9 +18,21 @@
       text-decoration: underline;
       color: #777777;
     }
+
+    &.disabled {
+      &:hover {
+        text-decoration: unset;
+      }
+    }
   }
 
   &:hover {
     text-decoration: underline;
+  }
+
+  &.disabled {
+    &:hover {
+      text-decoration: unset;
+    }
   }
 }

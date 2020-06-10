@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { noop } from 'lodash'
 import { LudensContext } from 'configs/context'
 import { THEME_MODE } from 'constants/variables'
+import { number } from 'utils'
 import { RouteComponentProps } from 'react-router-dom'
 import { ButtonMenu, ResponsiveIcon, ALink } from 'components'
 
@@ -51,6 +52,7 @@ type DefaultProps = Readonly<typeof defaultProps>
 
 const defaultProps: IMainProps & IMainActionProps = {
   user: {},
+  wallet: {},
   getUser() { noop() },
 }
 
@@ -60,15 +62,13 @@ class MainContainer extends Component<IMainProps & IMainActionProps & DefaultPro
 
   static defaultProps = defaultProps
 
-  tempInterval: any = null
 
   componentDidMount() {
-    this.tempInterval = setInterval(this.props.getUser, 5000)
+    this.props.getUser()
     this.context.theme.changeMode(THEME_MODE.LIGHT)
   }
 
   componentWillUnmount() {
-    clearInterval(this.tempInterval)
     this.context.theme.changeMode(THEME_MODE.DARK)
   }
 
@@ -77,9 +77,9 @@ class MainContainer extends Component<IMainProps & IMainActionProps & DefaultPro
   onNavigateTo = (path: string) => this.props.history.push(path)
 
   render() {
-    const creditTotal = this.props.user.wallet?.money || 0
-    const credit = new Intl.NumberFormat('th-TH', { style: 'currency', currency: 'THB' }).format(creditTotal)
-    // const currency = '฿'
+    const creditTotal = this.props.wallet.money || 0
+    const credit = number.castToMoney(creditTotal)
+
     return (
       <div className="main-container">
         <div className="main-background" />
@@ -110,6 +110,7 @@ class MainContainer extends Component<IMainProps & IMainActionProps & DefaultPro
           <div className="row">
             <div className="col-xl-2 col-md-4 col-6 mb-4 justify-center">
               <ButtonMenu
+                onClick={() => this.onNavigateTo('/lotto')}
                 text={constants.gotoLotto}
                 icon={{ x1: TicketIcon, x2: TicketIcon2x, x3: TicketIcon3x }}
               />

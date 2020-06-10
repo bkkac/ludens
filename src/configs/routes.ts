@@ -31,9 +31,38 @@ const routes: IRoutes[] = [
     private: true,
   },
   {
+    exact: true,
     name: 'transaction',
     path: '/transaction',
     component: pages.TransactionList,
+    private: true,
+  },
+  {
+    exact: true,
+    name: 'transaction-detail',
+    path: '/transaction/detail',
+    component: pages.TransactionDetail,
+    private: true,
+  },
+  {
+    exact: true,
+    name: 'lotto',
+    path: '/lotto',
+    component: pages.LottoMain,
+    private: true,
+  },
+  {
+    exact: true,
+    name: 'lotto',
+    path: '/lotto/:type',
+    component: pages.LottoSub,
+    private: true,
+  },
+  {
+    exact: true,
+    name: 'lotto',
+    path: '/lotto/making/:type',
+    component: pages.LottoMake,
     private: true,
   },
   {

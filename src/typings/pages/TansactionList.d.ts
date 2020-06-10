@@ -1,6 +1,6 @@
 declare interface ITransactionListProps {
-  user: IUser
-  tansactionList: ITransaction[]
+  wallet: IWallet
+  transactionList: ITransaction[]
   getTransactionListIsFetching: boolean
   getTransactionListCode: number | string
   getTransactionListError: string

@@ -10,3 +10,14 @@ declare interface ILotto {
   updateTime: string
   lotto: ReadonlyArray<ILottoNumber>
 }
+
+declare type ILottoStatus = 'OPEN' | 'CLOSE'
+
+declare interface IYeegeGame {
+  id: number
+  round: string
+  endTime: string
+  startTime: string
+  createdAt: string
+  status: ILottoStatus
+}

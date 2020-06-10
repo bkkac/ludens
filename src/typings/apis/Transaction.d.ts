@@ -4,10 +4,12 @@ declare interface ITransaction {
   status: string,
   userTxTime: string,
   paySlipImage: string,
-  userId: number,
   userBankId: number,
   webBankId: number,
   walletId: number,
   createdAt: string,
-  updatedAt: string
+  description: string,
+  updatedAt: string,
+  userId: number,
+  type: string,
 }
