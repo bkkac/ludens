@@ -49,8 +49,6 @@ class LottoMakeContainer extends Component<
   }
 
   render() {
-    // const money = 100
-    // const username = 'Biwswalker'
     const navigates: IBreadcrumbItem[] = [
       { label: constants.lottoLabel, path: '/lotto' },
       { label: constants.yeegeLabel, path: '/lotto/yeege' },

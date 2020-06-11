@@ -19,7 +19,9 @@ declare interface ILottoList {
   subLotto: ILottoActionCard[]
 }
 
-class LottoMainContainer extends Component<RouteComponentProps> {
+class LottoMainContainer extends Component<
+  IMainLottoProps & IMainLottoActionProps & RouteComponentProps<{}>,
+  IMainLottoState> {
 
   renderLottoList = (lottos: ILottoList[]) => lottos.map((lotto, index) => {
     const SubLotto = lotto.subLotto.map((subLotto, subIndex) => (
@@ -49,8 +51,6 @@ class LottoMainContainer extends Component<RouteComponentProps> {
   }
 
   render() {
-    const money = 100
-    const username = 'Biwswalker'
     const navigates: IBreadcrumbItem[] = [{ label: constants.makingLotto, active: true }]
 
     const lottos: ILottoList[] = [
@@ -83,12 +83,12 @@ class LottoMainContainer extends Component<RouteComponentProps> {
         </div>
         <div className="row mt-3">
           <div className="col d-flex justify-content-center">
-            <UsernameText username={username} />
+            <UsernameText username={this.props.user.username!} />
           </div>
         </div>
         <div className="row mt-2 mb-5">
           <div className="col d-flex justify-content-center">
-            <CreditAmountCard creditAmount={money} />
+            <CreditAmountCard creditAmount={this.props.user.wallet?.money!} />
           </div>
         </div>
         <div className="row mt-3">

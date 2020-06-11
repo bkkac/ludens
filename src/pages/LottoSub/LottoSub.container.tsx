@@ -72,8 +72,6 @@ class LottoSubContainer extends Component<
   }
 
   render() {
-    const money = 100
-    const username = 'Biwswalker'
     const navigates: IBreadcrumbItem[] = [
       { label: constants.lottoLabel, path: '/lotto' },
       { label: lottoTypes[this.props.match.params.type] || '', active: true },
@@ -93,12 +91,12 @@ class LottoSubContainer extends Component<
         </div>
         <div className="row mt-3">
           <div className="col d-flex justify-content-center">
-            <UsernameText username={username} />
+            <UsernameText username={this.props.user.username!} />
           </div>
         </div>
         <div className="row mt-2 mb-4">
           <div className="col d-flex justify-content-center">
-            <CreditAmountCard creditAmount={money} />
+            <CreditAmountCard creditAmount={this.props.user.wallet?.money!} />
           </div>
         </div>
         <div className="row mt-3">
