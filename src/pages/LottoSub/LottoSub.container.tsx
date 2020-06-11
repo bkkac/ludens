@@ -43,8 +43,8 @@ class LottoSubContainer extends Component<
     this.props.history.replace(path)
   }
 
-  handleOnClickPlay = (path: string) => {
-    this.props.history.replace('/lotto/making/yeege')
+  handleOnClickPlay = (game: IYeegeGame) => {
+    this.props.history.replace('/lotto/making/yeege', { selectedLottoGame: game })
   }
 
   renderSubLottoList = () => {
@@ -56,7 +56,7 @@ class LottoSubContainer extends Component<
         return (
           <div className="col-6 my-2" key={`sub-${yeege.round}-${index}`}>
             <LottoActionCard
-              onClick={() => this.handleOnClickPlay('')}
+              onClick={() => this.handleOnClickPlay(yeege)}
               name={yeegeRound}
               status={yeege.status}
               countdownTime={yeege.endTime}

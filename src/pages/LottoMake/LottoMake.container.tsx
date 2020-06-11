@@ -8,7 +8,9 @@ import {
   // UsernameText,
   // CreditAmountCard,
 } from 'components'
-import { MakingLotto } from './components'
+import moment from 'moment'
+import { number } from 'utils'
+import { MakingLotto, summaryLottoModal } from './components'
 import './lottoMake.style.scss'
 
 import DocumentIcon from 'assets/images/lotto/document/document.png'
@@ -26,14 +28,33 @@ const constants = {
   back: '< ย้อนกลับ',
 }
 
+const slugNames: { [P in IGamePath]: ILottoGameType } = {
+  yeege: 'LOTTER_YEGEE',
+}
+
 class LottoMakeContainer extends Component<
-  IMakingLottoProps & RouteComponentProps<{ type: string }, any, IMakingLottoParam>,
+  IMakingLottoProps & RouteComponentProps<{ type: IGamePath }, any, IMakingLottoParam>,
   IMakingLottoState
   > {
 
   state: IMakingLottoState = {
     activeModeSwitch: 'lotto',
-    activeLottoGameModeSwitch: 'three',
+    activeLottoGameModeSwitch: 'THREE_UP',
+    numberList: [],
+    defaultGameValue: '100',
+  }
+
+  getGameSlugFromGamePath = () => {
+    const generateSlug = (slugName: ILottoGameType) => {
+      const currentTime = moment().format('DDMMYYYYHHmm')
+      return `${slugName}_${currentTime}${number.padNumber(this.props.location.state.selectedLottoGame.round, 3)}`
+    }
+    switch (this.props.match.params.type) {
+      case 'yeege':
+        return generateSlug(slugNames.yeege)
+      default:
+        return ''
+    }
   }
 
   handleOnClickBreadcrumb = (path: string) => {
@@ -44,8 +65,42 @@ class LottoMakeContainer extends Component<
     this.setState({ activeModeSwitch: currentTab })
   }
 
-  handleOnSwitchLottoTypeChanged = (currentTab: LottoGameMode) => {
+  handleOnSwitchLottoTypeChanged = (currentTab: ILottoType) => {
     this.setState({ activeLottoGameModeSwitch: currentTab })
+  }
+
+  handleOnAddLottoNumber = (lottoNumber: ILottoNumber) => {
+    // TODO: Check dupplicate
+    this.setState({
+      numberList: [...this.state.numberList, {
+        ...lottoNumber,
+        value: this.state.defaultGameValue,
+        slug: this.getGameSlugFromGamePath(),
+      }],
+    })
+  }
+
+  handleOnWatchLottoNumberList = () => {
+    summaryLottoModal.show({ lottoList: this.state.numberList })
+  }
+
+  renderViewLottoListButton = () => {
+    if (this.state.numberList.length > 0) {
+      return (
+        <div
+          className="summary-badge-container d-flex justify-content-center align-items-center"
+          onClick={this.handleOnWatchLottoNumberList}
+        >
+          <ResponsiveIcon
+            icon={{ x1: DocumentIcon, x2: DocumentIcon2x, x3: DocumentIcon3x }}
+            alt="document-badge"
+            className="document-image-icon"
+          />
+          <div className="badge"><span className="badge-text">{this.state.numberList.length}</span></div>
+        </div>
+      )
+    }
+    return <></>
   }
 
   render() {
@@ -60,11 +115,13 @@ class LottoMakeContainer extends Component<
       { label: constants.numsumLabel, value: 'sum' },
     ]
 
-    const switchsLottoMode: ISwitchItem<LottoGameMode>[] = [
-      { label: constants.lotto3, value: 'three' },
-      { label: constants.lotto2, value: 'two' },
+    const switchsLottoMode: ISwitchItem<ILottoType>[] = [
+      { label: constants.lotto3, value: 'THREE_UP' },
+      { label: constants.lotto2, value: 'TWO_UP' },
       // { label: constants.lottoRun, value: 'run' },
     ]
+
+    const ViewLottoListButton = this.renderViewLottoListButton
 
     return (
       <>
@@ -79,16 +136,6 @@ class LottoMakeContainer extends Component<
               <Breadcrumb items={navigates} handleOnClickItem={this.handleOnClickBreadcrumb} />
             </div>
           </div>
-          {/* <div className="row mt-3">
-          <div className="col d-flex justify-content-center">
-            <UsernameText username={username} />
-          </div>
-        </div>
-        <div className="row mt-2 mb-4">
-          <div className="col d-flex justify-content-center">
-            <CreditAmountCard creditAmount={money} />
-          </div>
-        </div> */}
           <div className="row mt-4">
             <div className="col">
               <Switch tabs={switchsMode} handleOnChangeTab={this.handleOnSwitchChanged} />
@@ -101,17 +148,14 @@ class LottoMakeContainer extends Component<
           </div>
           <div className="row">
             <div className="col">
-              <MakingLotto numberMode={this.state.activeLottoGameModeSwitch} />
+              <MakingLotto
+                numberMode={this.state.activeLottoGameModeSwitch}
+                onClickAddNumber={this.handleOnAddLottoNumber}
+              />
             </div>
           </div>
         </div>
-        <div className="summary-badge-container d-flex justify-content-center align-items-center">
-          <ResponsiveIcon
-            icon={{ x1: DocumentIcon, x2: DocumentIcon2x, x3: DocumentIcon3x }}
-            alt="document-badge"
-            className="document-image-icon"
-          />
-        </div>
+        <ViewLottoListButton />
       </>
     )
   }

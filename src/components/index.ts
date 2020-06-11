@@ -10,6 +10,7 @@ import { InputText } from './InputText'
 import { LottoCard } from './LottoCard'
 import { Breadcrumb } from './Breadcrumb'
 import { ButtonMenu } from './ButtonMenu'
+import { ButtonIcon } from './ButtonIcon'
 import { InputNumber } from './InputNumber'
 import { TextRunning } from './TextRunning'
 import { UsernameText } from './UsernameText'
@@ -34,6 +35,7 @@ export {
   LottoCard,
   Breadcrumb,
   ButtonMenu,
+  ButtonIcon,
   InputNumber,
   TextRunning,
   UsernameText,

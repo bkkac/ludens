@@ -1,14 +1,14 @@
-declare interface ILottoNumber {
+declare interface ILottoResult {
   name: string
   numbers?: string[]
-  lotto?: ReadonlyArray<ILottoNumber>
+  lotto?: ReadonlyArray<ILottoResult>
 }
 
 declare interface ILotto {
   name: string
   code: string
   updateTime: string
-  lotto: ReadonlyArray<ILottoNumber>
+  lotto: ReadonlyArray<ILottoResult>
 }
 
 declare type ILottoStatus = 'OPEN' | 'CLOSE'

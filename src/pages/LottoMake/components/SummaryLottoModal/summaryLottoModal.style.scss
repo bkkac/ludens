@@ -1,0 +1,95 @@
+.summary-lotto-modal-container {
+  border: solid 1px #707070;
+  background-color: #ffffff;
+  border-radius: 16px;
+
+  .summary-lotto-modal-title {
+    font-family: "SukhumvitSet-Bold";
+    font-size: 24px;
+    line-height: 1.13;
+    text-align: left;
+    color: #777777;
+  }
+
+  .lotto-name-type {
+    font-family: "SukhumvitSet-Bold";
+    font-size: 20px;
+    line-height: 1.35;
+    text-align: left;
+    color: #777777;
+  }
+
+  .lotto-row {
+    background-color: #3587f1;
+    height: 44px;
+
+    .lotto-wrapper {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    &:nth-child(even) {
+      background-color: #71aaf5;
+    }
+  }
+
+  .summary-lotto-row {
+    background-color: #85d1c7;
+    height: 44px;
+
+    .summary-lotto-wrapper {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0;
+
+      .leading-summary {
+        flex: 1;
+
+        font-family: "SukhumvitSet-Bold";
+        font-size: 16px;
+        line-height: 1.69;
+        text-align: left;
+        color: #ffffff;
+
+        display: flex;
+        align-items: center;
+      }
+
+      .trailing-summary {
+        flex: 1;
+        height: 100%;
+        background-color: #b9e4df;
+
+        font-family: "SukhumvitSet-Bold";
+        font-size: 16px;
+        line-height: 1.69;
+        text-align: left;
+        color: #777777;
+
+        display: flex;
+        align-items: center;
+      }
+    }
+
+    &:nth-child(even) {
+      background-color: #66c6b9;
+    }
+  }
+}
+
+.delete-lotto-button-container {
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  outline: hidden;
+
+  .delete-lotto-button-icon {
+    width: 30px;
+    height: 30px;
+    object-fit: contain;
+  }
+}

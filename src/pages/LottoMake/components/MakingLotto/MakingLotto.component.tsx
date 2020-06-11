@@ -1,9 +1,7 @@
 import React, { Component, SFC, ChangeEvent } from 'react'
 import NumberFormat, { NumberFormatProps } from 'react-number-format'
 import { get } from 'lodash'
-import {
-  NumberPad,
-} from 'components'
+import { NumberPad } from 'components'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlus, faCircleNotch } from '@fortawesome/free-solid-svg-icons'
 
@@ -46,7 +44,8 @@ const InputCellComponent: SFC<IInputTextProps & NumberFormatProps> = (inputProps
 }
 
 declare interface IIMakingLottoProps {
-  numberMode: LottoGameMode
+  numberMode: ILottoType
+  onClickAddNumber(lottoNumber: ILottoNumber): void
 }
 
 declare interface IMakingLottoState {
@@ -60,7 +59,7 @@ class MakingLotto extends Component<IIMakingLottoProps, IMakingLottoState> {
   }
 
   renderInputCell = () => {
-    if (this.props.numberMode === 'two') {
+    if (this.props.numberMode === 'TWO_UP') {
       const setOfNumber = [0, 1]
 
       return setOfNumber.map((num) => {
@@ -74,7 +73,7 @@ class MakingLotto extends Component<IIMakingLottoProps, IMakingLottoState> {
           />
         )
       })
-    } else if (this.props.numberMode === 'three') {
+    } else if (this.props.numberMode === 'THREE_UP') {
       const setOfNumber = [0, 1, 2]
 
       return setOfNumber.map((num) => {
@@ -88,7 +87,7 @@ class MakingLotto extends Component<IIMakingLottoProps, IMakingLottoState> {
           />
         )
       })
-    } else if (this.props.numberMode === 'run') {
+    } else if (this.props.numberMode === 'RUN_DOWN') {
       const setOfNumber = [0, 1, 2]
 
       return setOfNumber.map((num) => {
@@ -124,6 +123,15 @@ class MakingLotto extends Component<IIMakingLottoProps, IMakingLottoState> {
     return this.setState({ numberSet: newValue })
   }
 
+  handleOnAddNumber = () => {
+    const lottoNumber: ILottoNumber = {
+      number: this.state.numberSet,
+      type: this.props.numberMode,
+    }
+    this.props.onClickAddNumber(lottoNumber)
+    this.setState({ numberSet: '' })
+  }
+
   render() {
 
     return (
@@ -140,7 +148,7 @@ class MakingLotto extends Component<IIMakingLottoProps, IMakingLottoState> {
               {this.renderInputCell()}
             </div>
             <div className="trailing-making-lotto-panel">
-              <div className="button-making-lotto">
+              <div className="button-making-lotto" onClick={this.handleOnAddNumber}>
                 <FontAwesomeIcon icon={faPlus} className="plus-icon-button" />
                 {constants.make}
               </div>

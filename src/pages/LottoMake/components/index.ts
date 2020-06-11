@@ -1,5 +1,7 @@
 import { MakingLotto } from './MakingLotto'
+import { summaryLottoModal } from './SummaryLottoModal'
 
 export {
-  MakingLotto
+  MakingLotto,
+  summaryLottoModal,
 }
