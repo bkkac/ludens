@@ -1,11 +1,11 @@
 declare interface IClosedTimeBadge {
-  status?: ILottoStatus
+  status?: TLottoAvailableStatus
   text?: string
 }
 
 declare interface ILottoActionCard {
   name?: string
-  status?: ILottoStatus
+  status?: TLottoAvailableStatus
   countdownTime?: string
   rangeTimeLabel?: string
   rangeTime?: string

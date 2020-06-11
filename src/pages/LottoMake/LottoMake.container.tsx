@@ -5,9 +5,8 @@ import {
   Switch,
   Breadcrumb,
   ResponsiveIcon,
-  // UsernameText,
-  // CreditAmountCard,
 } from 'components'
+import { noop } from 'lodash'
 import moment from 'moment'
 import { number } from 'utils'
 import { MakingLotto, summaryLottoModal } from './components'
@@ -16,6 +15,7 @@ import './lottoMake.style.scss'
 import DocumentIcon from 'assets/images/lotto/document/document.png'
 import DocumentIcon2x from 'assets/images/lotto/document/document@2x.png'
 import DocumentIcon3x from 'assets/images/lotto/document/document@3x.png'
+import response from 'constants/response'
 
 const constants = {
   lottoLabel: 'แทงหวย',
@@ -32,16 +32,40 @@ const slugNames: { [P in IGamePath]: ILottoGameType } = {
   yeege: 'LOTTER_YEGEE',
 }
 
+type DefaultProps = Readonly<typeof defaultProps>
+
+const defaultProps: IMakingLottoProps & IMakingLottoActionProps = {
+  loader() { noop() },
+  makingBetLotto() { noop() },
+  makingBetLottoCode: 0,
+  makingBetLottoError: '',
+  makingBetLottoIsFetching: false,
+  makingBetLottoResult: [],
+}
+
 class LottoMakeContainer extends Component<
-  IMakingLottoProps & RouteComponentProps<{ type: IGamePath }, any, IMakingLottoParam>,
+  IMakingLottoProps & IMakingLottoActionProps & DefaultProps
+  & RouteComponentProps<{ type: IGamePath }, any, IMakingLottoParam>,
   IMakingLottoState
   > {
+
+  static defaultProps = defaultProps
 
   state: IMakingLottoState = {
     activeModeSwitch: 'lotto',
     activeLottoGameModeSwitch: 'THREE_UP',
     numberList: [],
     defaultGameValue: '100',
+  }
+
+  componentDidUpdate(prevProps: IMakingLottoProps) {
+    if (prevProps.makingBetLottoIsFetching !== this.props.makingBetLottoIsFetching
+      && !this.props.makingBetLottoIsFetching) {
+      this.props.loader(false)
+      if (this.props.makingBetLottoCode === response.OK) {
+        // Handle this
+      }
+    }
   }
 
   getGameSlugFromGamePath = () => {
@@ -80,8 +104,21 @@ class LottoMakeContainer extends Component<
     })
   }
 
+  handleOnMakingBetLotto = (lottoLost: ILottoNumber[]) => {
+    this.props.loader(true)
+    this.props.makingBetLotto(lottoLost)
+  }
+
   handleOnWatchLottoNumberList = () => {
-    summaryLottoModal.show({ lottoList: this.state.numberList })
+    summaryLottoModal.show({
+      lottoList: this.state.numberList,
+      onClickBet: this.handleOnMakingBetLotto,
+      onClickClose: (callbackLottoList: ILottoNumber[]) => {
+        this.setState({ numberList: callbackLottoList }, () => {
+          summaryLottoModal.hide()
+        })
+      },
+    })
   }
 
   renderViewLottoListButton = () => {

@@ -1,4 +1,4 @@
-import React, { SFC } from 'react'
+import React, { SFC, useState, useEffect } from 'react'
 import {
   Button,
   ButtonIcon,
@@ -33,11 +33,30 @@ type DefaultProps = Readonly<typeof defaultProps>
 
 const defaultProps: ISummaryLottoModalProps = {
   lottoList: [],
+  onClickBet() { noop() },
+  onClickClose() { noop() },
 }
 
 const SummaryLottoModal: SFC<ISummaryLottoModalProps & DefaultProps> = ({
   lottoList,
+  onClickBet,
+  onClickClose,
 }) => {
+
+  const [betList, setBetList] = useState<ILottoNumber[]>([])
+
+  useEffect(() => {
+    setBetList(lottoList)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  const handleOnClickBet = () => {
+    onClickBet(betList)
+  }
+
+  const handleOnClickClose = () => {
+    onClickClose(betList)
+  }
 
   const calculateBenefitValue = (betValueString: string) => {
     const betValue = Number(number.castToInteger(betValueString))
@@ -45,7 +64,7 @@ const SummaryLottoModal: SFC<ISummaryLottoModalProps & DefaultProps> = ({
   }
 
   const calculateTotalValue = () => {
-    const totally: number = reduce(lottoList, (prev, curr) => {
+    const totally: number = reduce(betList, (prev, curr) => {
       const betValue = Number(number.castToInteger(curr.value || '0'))
       return sum([prev, betValue])
     }, 0)
@@ -53,7 +72,7 @@ const SummaryLottoModal: SFC<ISummaryLottoModalProps & DefaultProps> = ({
   }
 
   const RenderLottoList = () => {
-    const groupingLottoListObject: { [name in ILottoType]?: ILottoNumber[] } = groupBy<ILottoNumber>(lottoList, 'type')
+    const groupingLottoListObject: { [name in ILottoType]?: ILottoNumber[] } = groupBy<ILottoNumber>(betList, 'type')
     const GroupingLottoListComponent = keys(groupingLottoListObject).map((lottos, lottosIndex) => {
       const LottoListComponent = groupingLottoListObject[lottos as ILottoType]?.map((lotto, lottoIndex) => {
         return (
@@ -128,7 +147,7 @@ const SummaryLottoModal: SFC<ISummaryLottoModalProps & DefaultProps> = ({
               <span className="summary-lotto-modal-title">{constants.lottoListTitle}</span>
             </div>
             <div className="col d-flex justify-content-end">
-              <ButtonIcon type="close" />
+              <ButtonIcon type="close" onClick={handleOnClickClose} />
             </div>
           </div>
           <RenderLottoList />
@@ -139,7 +158,7 @@ const SummaryLottoModal: SFC<ISummaryLottoModalProps & DefaultProps> = ({
           </div>
           <div className="row mt-3">
             <div className="col">
-              <Button onClick={noop} text={constants.makeLotto} />
+              <Button onClick={handleOnClickBet} text={constants.makeLotto} />
             </div>
           </div>
         </div>

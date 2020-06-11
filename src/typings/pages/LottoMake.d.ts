@@ -7,6 +7,15 @@ declare interface IMakingLottoParam {
 }
 
 declare interface IMakingLottoProps {
+  makingBetLottoIsFetching: boolean
+  makingBetLottoError: string
+  makingBetLottoCode: number | string
+  makingBetLottoResult: ILottoNumberBet[]
+}
+
+declare interface IMakingLottoActionProps {
+  makingBetLotto(data: ILottoNumber[]): void
+  loader(state: boolean): void
 }
 
 declare interface IMakingLottoState {
@@ -16,13 +25,8 @@ declare interface IMakingLottoState {
   defaultGameValue: string
 }
 
-declare interface ILottoNumber {
-  number: string,
-  type: ILottoType,
-  value?: string,
-  slug?: string
-}
-
 declare interface ISummaryLottoModalProps {
   lottoList: ILottoNumber[]
+  onClickBet(data: ILottoNumber[]): void
+  onClickClose(data: ILottoNumber[]): void
 }
