@@ -64,14 +64,20 @@ class MakingGame extends Component<IMakingGameComponentProps, IMakingGameCompone
     return this.setState({ numberSet: newValue })
   }
 
+  handleOnClickAddNumber = () => {
+    this.props.onClickAddNumber(this.state.numberSet)
+    this.setState({
+      numberSet: '',
+    })
+  }
+
   render() {
-    const result = '123456'
     return (
       <>
         <div className="row mt-3 mb-4 mx-1">
           <div className="col making-game-container">
             <div className="making-game-title mt-3">{constants.makingGameLabel}</div>
-            <div className="making-game-result mt-3">{result}</div>
+            <div className="making-game-result mt-3">{this.props.yeegeSum || '0'}</div>
             <div className="row mt-4">
               <div className="col-8" style={{ padding: 0 }}>
                 <InputGameComponent
@@ -81,7 +87,7 @@ class MakingGame extends Component<IMakingGameComponentProps, IMakingGameCompone
                 />
               </div>
               <div className="col-4" style={{ padding: 0 }}>
-                <div className="making-game-button">
+                <div className="making-game-button" onClick={this.handleOnClickAddNumber}>
                   {constants.addNumber}
                 </div>
               </div>

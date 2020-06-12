@@ -37,10 +37,20 @@ type DefaultProps = Readonly<typeof defaultProps>
 const defaultProps: IMakingLottoProps & IMakingLottoActionProps = {
   loader() { noop() },
   makingBetLotto() { noop() },
+  getYeegeSum() { noop() },
+  playYeege() { noop() },
   makingBetLottoCode: 0,
   makingBetLottoError: '',
   makingBetLottoIsFetching: false,
   makingBetLottoResult: [],
+  playYeegeCode: 0,
+  playYeegeError: '',
+  playYeegeIsFetching: false,
+  playYeegeResult: {},
+  getYeegeSumIsFetching: false!,
+  getYeegeSumError: '',
+  getYeegeSumCode: 0,
+  yeegeSum: '0',
 }
 
 class LottoMakeContainer extends Component<
@@ -55,6 +65,13 @@ class LottoMakeContainer extends Component<
     activeModeSwitch: 'lotto',
     numberList: [],
     defaultGameValue: '100',
+  }
+
+  componentDidMount() {
+    this.props.getYeegeSum({
+      date: moment().format('DDMMYYYY'),
+      round: this.props.location.state.selectedLottoGame.round,
+    })
   }
 
   componentDidUpdate(prevProps: IMakingLottoProps) {
@@ -133,6 +150,13 @@ class LottoMakeContainer extends Component<
     })
   }
 
+  handleOnPlayYeegeGame = (gameNumber: string) => {
+    this.props.playYeege({
+      number: gameNumber,
+      round: this.props.location.state.selectedLottoGame.round,
+    })
+  }
+
   renderViewLottoListButton = () => {
     if (this.state.numberList.length > 0) {
       return (
@@ -157,7 +181,12 @@ class LottoMakeContainer extends Component<
       case 'lotto':
         return (<MakingLotto onClickAddNumber={this.handleOnAddLottoNumber} />)
       case 'game':
-        return (<MakingGame onClickAddNumber={noop} />)
+        return (
+          <MakingGame
+            onClickAddNumber={this.handleOnPlayYeegeGame}
+            yeegeSum={this.props.yeegeSum}
+          />
+        )
       default:
         return (<></>)
     }

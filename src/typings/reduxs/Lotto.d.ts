@@ -1,5 +1,7 @@
 declare interface IYeegeState {
-  game: ReducerState<any>
+  game: ReducerState<IYeegeGame[]>
+  sum: ReducerState<string>
+  play: ReducerState<IYeegePlay>
 }
 
 declare interface ILottoState {

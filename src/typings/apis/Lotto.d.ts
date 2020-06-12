@@ -38,3 +38,21 @@ declare interface ILottoNumberBet {
   updateAt: string
   userId: number
 }
+
+declare interface IGetYeegeSum {
+  date: string
+  round: string
+}
+
+declare interface IYeegePlayRequest {
+  number: string
+  round: string
+}
+
+declare interface IYeegePlay {
+  id?: number
+  number?: number
+  round?: string
+  createAt?: string
+  user?: IUser
+}
