@@ -4,13 +4,12 @@ import {
   Modal,
   ALink,
   Switch,
-  Breadcrumb,
   ResponsiveIcon,
 } from 'components'
 import { noop } from 'lodash'
 import moment from 'moment'
 import { number } from 'utils'
-import { MakingLotto, summaryLottoModal } from './components'
+import { MakingLotto, MakingGame, summaryLottoModal } from './components'
 import './lottoMake.style.scss'
 
 import DocumentIcon from 'assets/images/lotto/document/document.png'
@@ -153,19 +152,25 @@ class LottoMakeContainer extends Component<
     return <></>
   }
 
-  render() {
-    const navigates: IBreadcrumbItem[] = [
-      { label: constants.lottoLabel, path: '/lotto' },
-      { label: constants.yeegeLabel, path: '/lotto/yeege' },
-      { label: constants.makeLabel, active: true },
-    ]
+  renderGameMode = () => {
+    switch (this.state.activeModeSwitch) {
+      case 'lotto':
+        return (<MakingLotto onClickAddNumber={this.handleOnAddLottoNumber} />)
+      case 'game':
+        return (<MakingGame onClickAddNumber={noop} />)
+      default:
+        return (<></>)
+    }
+  }
 
+  render() {
     const switchsMode: ISwitchItem[] = [
       { label: constants.lottoLabel, value: 'lotto' },
-      { label: constants.numsumLabel, value: 'sum' },
+      { label: constants.numsumLabel, value: 'game' },
     ]
 
     const ViewLottoListButton = this.renderViewLottoListButton
+    const GameModeComponent = this.renderGameMode
 
     return (
       <>
@@ -180,11 +185,6 @@ class LottoMakeContainer extends Component<
               />
             </div>
           </div>
-          <div className="row">
-            <div className="col">
-              <Breadcrumb items={navigates} handleOnClickItem={this.handleOnClickBreadcrumb} />
-            </div>
-          </div>
           <div className="row mt-4">
             <div className="col">
               <Switch tabs={switchsMode} handleOnChangeTab={this.handleOnSwitchChanged} />
@@ -192,9 +192,7 @@ class LottoMakeContainer extends Component<
           </div>
           <div className="row">
             <div className="col">
-              <MakingLotto
-                onClickAddNumber={this.handleOnAddLottoNumber}
-              />
+              <GameModeComponent />
             </div>
           </div>
         </div>

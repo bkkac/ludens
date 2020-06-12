@@ -1,5 +1,6 @@
 declare interface IMainLottoProps {
   user: IUser
+  wallet: IWallet
 }
 
 declare interface IMainLottoActionProps {

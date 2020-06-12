@@ -11,6 +11,7 @@ const mapStateToProps = (state: RootReducers): ISubLottoProps => ({
   getYeegeGameListCode: state.ludens.lotto.yeege.game.code!,
   yeegeGameList: state.ludens.lotto.yeege.game.data!,
   user: state.ludens.user.me.data!,
+  wallet: state.ludens.user.wallet,
 })
 
 const mapDispatchToProos = (dispatch: Dispatch<RootAction>): ISubLottoActionProps => bindActionCreators({

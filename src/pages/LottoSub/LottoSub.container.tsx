@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { RouteComponentProps } from 'react-router-dom'
 import {
   ALink,
-  Breadcrumb,
   UsernameText,
   LottoActionCard,
   CreditAmountCard,
@@ -17,9 +16,9 @@ const constants = {
   back: '< ย้อนกลับ',
 }
 
-const lottoTypes: { [name: string]: string } = {
-  yeege: 'ยี่กี',
-}
+// const lottoTypes: { [name: string]: string } = {
+//   yeege: 'ยี่กี',
+// }
 
 class LottoSubContainer extends Component<
   ISubLottoProps & ISubLottoActionProps & RouteComponentProps<{ type: string }>,
@@ -39,10 +38,6 @@ class LottoSubContainer extends Component<
     }
   }
 
-  handleOnClickBreadcrumb = (path: string) => {
-    this.props.history.replace(path)
-  }
-
   handleOnClickPlay = (game: IYeegeGame) => {
     this.props.history.replace('/lotto/making/yeege', { selectedLottoGame: game })
   }
@@ -52,7 +47,7 @@ class LottoSubContainer extends Component<
       const ListComponent = this.props.yeegeGameList.map((yeege: IYeegeGame, index) => {
         const yeegeRound = `รอบที่ ${yeege.round}`
         const rangeLabel = 'ปิดรับ'
-        const rangeTime = moment(yeege.endTime).format('DD MMM YY HH:mm')
+        const rangeTime = moment(yeege.endTime).add(-7, 'hour').format('DD MMM YY HH:mm') // TODO: Temporary
         return (
           <div className="col-6 my-2" key={`sub-${yeege.round}-${index}`}>
             <LottoActionCard
@@ -72,21 +67,11 @@ class LottoSubContainer extends Component<
   }
 
   render() {
-    const navigates: IBreadcrumbItem[] = [
-      { label: constants.lottoLabel, path: '/lotto' },
-      { label: lottoTypes[this.props.match.params.type] || '', active: true },
-    ]
-
     return (
       <div className="container lotto-sub-container">
         <div className="row mb-3">
           <div className="col">
             <ALink text={constants.back} color="#ff9b96" bold onClick={() => this.props.history.replace('/lotto')} />
-          </div>
-        </div>
-        <div className="row">
-          <div className="col">
-            <Breadcrumb items={navigates} handleOnClickItem={this.handleOnClickBreadcrumb} />
           </div>
         </div>
         <div className="row mt-3">
@@ -96,7 +81,7 @@ class LottoSubContainer extends Component<
         </div>
         <div className="row mt-2 mb-4">
           <div className="col d-flex justify-content-center">
-            <CreditAmountCard creditAmount={this.props.user.wallet?.money!} />
+            <CreditAmountCard creditAmount={this.props.wallet.money!} />
           </div>
         </div>
         <div className="row mt-3">

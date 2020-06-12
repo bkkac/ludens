@@ -38,3 +38,11 @@ declare interface IMakingLottoComponentState {
   numberSet: string
   gameType: ILottoType
 }
+
+declare interface IMakingGameComponentProps {
+  onClickAddNumber(lottoNumber: ILottoNumber): void // TODO
+}
+
+declare interface IMakingGameComponentState {
+  numberSet: string
+}

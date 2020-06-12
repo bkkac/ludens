@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { RouteComponentProps } from 'react-router-dom'
 import {
   ALink,
-  Breadcrumb,
   UsernameText,
   LottoActionCard,
   CreditAmountCard,
@@ -51,18 +50,16 @@ class LottoMainContainer extends Component<
   }
 
   render() {
-    const navigates: IBreadcrumbItem[] = [{ label: constants.makingLotto, active: true }]
-
     const lottos: ILottoList[] = [
       {
         name: 'หวยยี่กี',
         subLotto: [
           {
-            name: 'ยี่กี', status: 'OPEN', countdownTime: '00:10:50',
+            name: 'ยี่กี', status: 'OPEN', countdownTime: '00:00:00',
             rangeTimeLabel: 'เปิดรับ', rangeTime: '88 รอบ',
           },
           {
-            name: 'ยี่กี (พื่นบ้าน)', status: 'OPEN', countdownTime: '01:10:50',
+            name: 'ยี่กี (พื้นบ้าน)', status: 'CLOSE', countdownTime: '00:00:00',
             rangeTimeLabel: 'เปิดรับ', rangeTime: '88 รอบ',
           },
         ],
@@ -76,11 +73,6 @@ class LottoMainContainer extends Component<
             <ALink text={constants.back} color="#ff9b96" bold onClick={() => this.props.history.replace('/main')} />
           </div>
         </div>
-        <div className="row">
-          <div className="col">
-            <Breadcrumb items={navigates} handleOnClickItem={this.handleOnClickBreadcrumb} />
-          </div>
-        </div>
         <div className="row mt-3">
           <div className="col d-flex justify-content-center">
             <UsernameText username={this.props.user.username!} />
@@ -88,7 +80,7 @@ class LottoMainContainer extends Component<
         </div>
         <div className="row mt-2 mb-5">
           <div className="col d-flex justify-content-center">
-            <CreditAmountCard creditAmount={this.props.user.wallet?.money!} />
+            <CreditAmountCard creditAmount={this.props.wallet.money!} />
           </div>
         </div>
         <div className="row mt-3">
