@@ -1,7 +1,7 @@
 import React, { Component, SFC, ChangeEvent } from 'react'
 import NumberFormat, { NumberFormatProps } from 'react-number-format'
 import { get } from 'lodash'
-import { NumberPad } from 'components'
+import { NumberPad, Switch } from 'components'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlus, faCircleNotch } from '@fortawesome/free-solid-svg-icons'
 
@@ -10,6 +10,9 @@ import './makingLotto.style.scss'
 const constants = {
   make: 'เพิ่มเลข',
   numSet: 'สลับ',
+  lotto3: 'สามตัวบน',
+  lotto2: 'สองตัวล่าง',
+  lottoRun: 'เลขวิ่ง',
 }
 
 const InputCellComponent: SFC<IInputTextProps & NumberFormatProps> = (inputProps) => {
@@ -43,23 +46,15 @@ const InputCellComponent: SFC<IInputTextProps & NumberFormatProps> = (inputProps
   )
 }
 
-declare interface IIMakingLottoProps {
-  numberMode: ILottoType
-  onClickAddNumber(lottoNumber: ILottoNumber): void
-}
+class MakingLotto extends Component<IMakingLottoComponentProps, IMakingLottoComponentState> {
 
-declare interface IMakingLottoState {
-  numberSet: string
-}
-
-class MakingLotto extends Component<IIMakingLottoProps, IMakingLottoState> {
-
-  state: IMakingLottoState = {
+  state: IMakingLottoComponentState = {
     numberSet: '',
+    gameType: 'THREE_UP',
   }
 
   renderInputCell = () => {
-    if (this.props.numberMode === 'TWO_UP') {
+    if (this.state.gameType === 'TWO_DOWN') {
       const setOfNumber = [0, 1]
 
       return setOfNumber.map((num) => {
@@ -73,7 +68,7 @@ class MakingLotto extends Component<IIMakingLottoProps, IMakingLottoState> {
           />
         )
       })
-    } else if (this.props.numberMode === 'THREE_UP') {
+    } else if (this.state.gameType === 'THREE_UP') {
       const setOfNumber = [0, 1, 2]
 
       return setOfNumber.map((num) => {
@@ -87,7 +82,7 @@ class MakingLotto extends Component<IIMakingLottoProps, IMakingLottoState> {
           />
         )
       })
-    } else if (this.props.numberMode === 'RUN_DOWN') {
+    } else if (this.state.gameType === 'RUN_DOWN') {
       const setOfNumber = [0, 1, 2]
 
       return setOfNumber.map((num) => {
@@ -126,16 +121,31 @@ class MakingLotto extends Component<IIMakingLottoProps, IMakingLottoState> {
   handleOnAddNumber = () => {
     const lottoNumber: ILottoNumber = {
       number: this.state.numberSet,
-      type: this.props.numberMode,
+      type: this.state.gameType,
     }
     this.props.onClickAddNumber(lottoNumber)
     this.setState({ numberSet: '' })
   }
 
+  handleOnSwitchLottoTypeChanged = (currentTab: ILottoType) => {
+    this.setState({ gameType: currentTab })
+  }
+
   render() {
+
+    const switchsLottoTypes: ISwitchItem<ILottoType>[] = [
+      { label: constants.lotto3, value: 'THREE_UP' },
+      { label: constants.lotto2, value: 'TWO_DOWN' },
+      // { label: constants.lottoRun, value: 'run' },
+    ]
 
     return (
       <>
+        <div className="row mt-3 mb-4">
+          <div className="col">
+            <Switch type="outline" tabs={switchsLottoTypes} handleOnChangeTab={this.handleOnSwitchLottoTypeChanged} />
+          </div>
+        </div>
         <div className="row mb-4">
           <div className="col d-flex flex-row">
             <div className="leading-making-lotto-panel">

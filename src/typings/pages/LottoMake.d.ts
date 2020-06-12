@@ -20,7 +20,6 @@ declare interface IMakingLottoActionProps {
 
 declare interface IMakingLottoState {
   activeModeSwitch: string
-  activeLottoGameModeSwitch: ILottoType
   numberList: ILottoNumber[]
   defaultGameValue: string
 }
@@ -29,4 +28,13 @@ declare interface ISummaryLottoModalProps {
   lottoList: ILottoNumber[]
   onClickBet(data: ILottoNumber[]): void
   onClickClose(data: ILottoNumber[]): void
+}
+
+declare interface IMakingLottoComponentProps {
+  onClickAddNumber(lottoNumber: ILottoNumber): void
+}
+
+declare interface IMakingLottoComponentState {
+  numberSet: string
+  gameType: ILottoType
 }

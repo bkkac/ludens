@@ -24,9 +24,6 @@ const constants = {
   numsumLabel: 'ยิงเลข',
   yeegeLabel: 'ยี่กี',
   makeLabel: 'แทง',
-  lotto3: 'สามตัว',
-  lotto2: 'สองตัว',
-  lottoRun: 'เลขวิ่ง',
   back: '< ย้อนกลับ',
   cannotBet: 'ไม่สามารถแทงได้',
   betSuccess: 'คุณได้ทำรายการเสร็จสมบูรณ์',
@@ -57,7 +54,6 @@ class LottoMakeContainer extends Component<
 
   state: IMakingLottoState = {
     activeModeSwitch: 'lotto',
-    activeLottoGameModeSwitch: 'THREE_UP',
     numberList: [],
     defaultGameValue: '100',
   }
@@ -108,10 +104,6 @@ class LottoMakeContainer extends Component<
 
   handleOnSwitchChanged = (currentTab: string) => {
     this.setState({ activeModeSwitch: currentTab })
-  }
-
-  handleOnSwitchLottoTypeChanged = (currentTab: ILottoType) => {
-    this.setState({ activeLottoGameModeSwitch: currentTab })
   }
 
   handleOnAddLottoNumber = (lottoNumber: ILottoNumber) => {
@@ -173,12 +165,6 @@ class LottoMakeContainer extends Component<
       { label: constants.numsumLabel, value: 'sum' },
     ]
 
-    const switchsLottoMode: ISwitchItem<ILottoType>[] = [
-      { label: constants.lotto3, value: 'THREE_UP' },
-      { label: constants.lotto2, value: 'TWO_UP' },
-      // { label: constants.lottoRun, value: 'run' },
-    ]
-
     const ViewLottoListButton = this.renderViewLottoListButton
 
     return (
@@ -204,15 +190,9 @@ class LottoMakeContainer extends Component<
               <Switch tabs={switchsMode} handleOnChangeTab={this.handleOnSwitchChanged} />
             </div>
           </div>
-          <div className="row mt-3 mb-4">
-            <div className="col">
-              <Switch type="outline" tabs={switchsLottoMode} handleOnChangeTab={this.handleOnSwitchLottoTypeChanged} />
-            </div>
-          </div>
           <div className="row">
             <div className="col">
               <MakingLotto
-                numberMode={this.state.activeLottoGameModeSwitch}
                 onClickAddNumber={this.handleOnAddLottoNumber}
               />
             </div>
