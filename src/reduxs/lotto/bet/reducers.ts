@@ -25,8 +25,8 @@ const getYeegeGameListReducer = (
       return {
         ...state,
         isFetching: false,
-        error: action.payload.message,
-        code: action.payload.code,
+        error: action.payload.response?.data.devMessage,
+        code: action.payload.response?.status,
       }
     default:
       return state

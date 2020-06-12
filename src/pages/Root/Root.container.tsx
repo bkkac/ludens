@@ -17,6 +17,7 @@ import routes from 'configs/routes'
 import { Loader } from '../Loader'
 import { THEME_MODE } from 'constants/variables'
 import { LudensContext } from 'configs/context'
+import event from 'constants/event'
 
 const constants = {
   textRunning: 'ยินดีต้อนรับสู่ to ThailandBet',
@@ -121,7 +122,8 @@ class RootContainer extends Component<IRootProps & IRootActionProps & DefaultPro
           <TextRunning text={constants.textRunning} />
           <PageElement />
         </Router>
-        <Modal.Core />
+        <Modal.Core event={event.MODAL} />
+        <Modal.Core event={event.MODAL_OVER} />
         <Loader />
       </LudensContext.Provider>
     )

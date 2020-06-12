@@ -17,7 +17,7 @@ const makingBetLottoSuccessAction = createAction(
 
 const makingBetLottoFailureAction = createAction(
   MAKING_BET_LOTTO_FAILURE,
-  resolve => (error: AxiosError) => resolve(error))
+  resolve => (error: AxiosError<APISuccessResponse<any>>) => resolve(error))
 
 const makingBetLottoCancelAction = createAction(MAKING_BET_LOTTO_CANCEL)
 

@@ -4,7 +4,15 @@ import event from 'constants/event'
 import ModalCore from 'react-bootstrap/Modal'
 import './modal.style.scss'
 
-class Modal extends Component<{}, IModalState> {
+type DefaultProps = Readonly<typeof defaultProps>
+
+const defaultProps: IModalProps = {
+  event: event.MODAL,
+}
+
+class Modal extends Component<IModalProps & DefaultProps, IModalState> {
+
+  static defaultProps = defaultProps
 
   state: IModalState = {
     show: false,
@@ -13,11 +21,11 @@ class Modal extends Component<{}, IModalState> {
   }
 
   componentDidMount() {
-    Emitter.on(event.MODAL, this.onEventSubscribed)
+    Emitter.on(this.props.event, this.onEventSubscribed)
   }
 
   componentWillUnmount() {
-    Emitter.off(event.MODAL)
+    Emitter.off(this.props.event)
   }
 
   onEventSubscribed = ({ state, component, extraProps }: IModalShowProps | IModalHideProps) => {

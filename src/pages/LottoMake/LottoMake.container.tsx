@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { RouteComponentProps } from 'react-router-dom'
 import {
+  Modal,
   ALink,
   Switch,
   Breadcrumb,
@@ -18,6 +19,7 @@ import DocumentIcon3x from 'assets/images/lotto/document/document@3x.png'
 import response from 'constants/response'
 
 const constants = {
+  ok: 'ตกลง',
   lottoLabel: 'แทงหวย',
   numsumLabel: 'ยิงเลข',
   yeegeLabel: 'ยี่กี',
@@ -26,6 +28,8 @@ const constants = {
   lotto2: 'สองตัว',
   lottoRun: 'เลขวิ่ง',
   back: '< ย้อนกลับ',
+  cannotBet: 'ไม่สามารถแทงได้',
+  betSuccess: 'คุณได้ทำรายการเสร็จสมบูรณ์',
 }
 
 const slugNames: { [P in IGamePath]: ILottoGameType } = {
@@ -63,7 +67,24 @@ class LottoMakeContainer extends Component<
       && !this.props.makingBetLottoIsFetching) {
       this.props.loader(false)
       if (this.props.makingBetLottoCode === response.OK) {
-        // Handle this
+        Modal.success.show({
+          action: () => {
+            this.setState({ numberList: [] }, () => {
+              Modal.success.hide()
+              summaryLottoModal.hide()
+              this.handleOnClickBreadcrumb(`/lotto/${this.props.match.params.type}`)
+            })
+          },
+          actionText: constants.ok,
+          description: constants.betSuccess,
+        })
+      } else if (this.props.makingBetLottoCode === response.BAD_REQUEST) {
+        Modal.error.show({
+          action: Modal.error.hide,
+          actionText: constants.ok,
+          title: constants.cannotBet,
+          description: this.props.makingBetLottoError,
+        })
       }
     }
   }
@@ -165,7 +186,12 @@ class LottoMakeContainer extends Component<
         <div className="container lotto-make-container">
           <div className="row mb-3">
             <div className="col">
-              <ALink text={constants.back} color="#ff9b96" bold onClick={this.props.history.goBack} />
+              <ALink
+                text={constants.back}
+                color="#ff9b96"
+                bold
+                onClick={() => this.handleOnClickBreadcrumb(`/lotto/${this.props.match.params.type}`)}
+              />
             </div>
           </div>
           <div className="row">
