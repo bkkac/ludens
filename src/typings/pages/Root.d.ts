@@ -1,5 +1,6 @@
 declare interface IRootProps {
   accessToken: string
+  wallet: IWallet
 }
 
 declare interface IRootActionProps {
@@ -9,4 +10,5 @@ declare interface IRootActionProps {
 
 declare interface IRootStates {
   themeMode: 'dark-mode' | 'light-mode' | string
+  isShownWallet: boolean
 }

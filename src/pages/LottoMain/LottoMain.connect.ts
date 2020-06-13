@@ -5,8 +5,6 @@ import loaderAction from 'reduxs/loader/actions'
 import LottoMainContainer from './LottoMain.container'
 
 const mapStateToProps = (state: RootReducers): IMainLottoProps => ({
-  user: state.ludens.user.me.data!,
-  wallet: state.ludens.user.wallet,
 })
 
 const mapDispatchToProos = (dispatch: Dispatch<RootAction>): IMainLottoActionProps => bindActionCreators({

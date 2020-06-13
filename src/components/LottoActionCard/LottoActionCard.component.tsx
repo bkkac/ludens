@@ -62,7 +62,9 @@ const LottoActionCard: SFC<ILottoActionCard & DefaultProps> = (props) => {
   }
 
   useEffect(() => {
-    countingdown()
+    if (countdownTime !== 'N/A') {
+      countingdown()
+    }
     return clearLocalInterval
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
@@ -85,7 +87,9 @@ const LottoActionCard: SFC<ILottoActionCard & DefaultProps> = (props) => {
     onClick!()
   }
 
-  const countdownTimeString = `${number.padNumber(String(remain.hours), 2)}:${number.padNumber(String(remain.minutes), 2)}:${number.padNumber(String(remain.seconds), 2)}`
+  const countdownTimeString = (countdownTime !== 'N/A')
+    ? `${number.padNumber(String(remain.hours), 2)}:${number.padNumber(String(remain.minutes), 2)}:${number.padNumber(String(remain.seconds), 2)}`
+    : '24 ชม.'
 
   return (
     <div className={`lotto-action-card-container ${status}`} onClick={handleOnClick}>

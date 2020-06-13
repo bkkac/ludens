@@ -66,10 +66,12 @@ class MainContainer extends Component<IMainProps & IMainActionProps & DefaultPro
   componentDidMount() {
     this.props.getUser()
     this.context.theme.changeMode(THEME_MODE.LIGHT)
+    this.context.wallet.changeShown(false)
   }
 
   componentWillUnmount() {
     this.context.theme.changeMode(THEME_MODE.DARK)
+    this.context.wallet.changeShown(true)
   }
 
   onPressAddingCredit = () => this.props.history.push('/deposit')

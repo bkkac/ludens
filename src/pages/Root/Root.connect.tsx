@@ -8,6 +8,7 @@ import socketAction from 'reduxs/socket/actions'
 
 const mapStateToProps = (state: RootReducers): IRootProps => ({
   accessToken: state.ludens.user.token.accessToken!,
+  wallet: state.ludens.user.wallet,
 })
 
 const mapDispatchToProos = (dispatch: Dispatch<RootAction>): IRootActionProps => bindActionCreators({

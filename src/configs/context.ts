@@ -7,4 +7,8 @@ export const LudensContext = createContext({
     mode: THEME_MODE.DARK,
     changeMode(_: string) { noop() },
   },
+  wallet: {
+    shown: true,
+    changeShown(_: boolean) { noop() },
+  },
 })
