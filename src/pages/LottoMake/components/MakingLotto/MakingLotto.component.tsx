@@ -149,7 +149,7 @@ class MakingLotto extends Component<IMakingLottoComponentProps, IMakingLottoComp
         <div className="row mb-4">
           <div className="col d-flex flex-row">
             <div className="leading-making-lotto-panel">
-              <div className="button-making-lotto">
+              <div className="button-making-lotto disabled">
                 <FontAwesomeIcon icon={faCircleNotch} className="plus-icon-button" />
                 {constants.numSet}
               </div>

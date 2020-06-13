@@ -99,6 +99,11 @@ class LottoMakeContainer extends Component<
         })
       }
     }
+
+    if (prevProps.playYeegeIsFetching !== this.props.playYeegeIsFetching
+      && !this.props.playYeegeIsFetching) {
+      this.props.loader(false)
+    }
   }
 
   getGameSlugFromGamePath = () => {
@@ -151,6 +156,7 @@ class LottoMakeContainer extends Component<
   }
 
   handleOnPlayYeegeGame = (gameNumber: string) => {
+    this.props.loader(true)
     this.props.playYeege({
       number: gameNumber,
       round: this.props.location.state.selectedLottoGame.round,

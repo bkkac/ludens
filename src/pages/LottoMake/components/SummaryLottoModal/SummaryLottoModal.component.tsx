@@ -4,7 +4,7 @@ import {
   ButtonIcon,
   ResponsiveIcon,
 } from 'components'
-import { groupBy, keys, noop, reduce, sum } from 'lodash'
+import { groupBy, keys, noop, reduce, sum, filter } from 'lodash'
 import { number } from 'utils'
 import './summaryLottoModal.style.scss'
 
@@ -58,9 +58,15 @@ const SummaryLottoModal: SFC<ISummaryLottoModalProps & DefaultProps> = ({
     onClickClose(betList)
   }
 
-  const calculateBenefitValue = (betValueString: string) => {
-    const betValue = Number(number.castToInteger(betValueString))
-    return number.castToMoney(betValue)
+  const handleOnRemove = (seq: number) => {
+    const newBetList: ILottoNumber[] = filter<ILottoNumber>(betList, (_, index) => index !== seq)
+    setBetList(newBetList)
+  }
+
+  const calculateBenefitValue = (betValueString: string = '0') => {
+    const betValue = Number(number.castToInteger(betValueString)) || 0
+    const calculatedBenefit = 1.2 * betValue // TODO: Temp
+    return number.castToMoney(calculatedBenefit)
   }
 
   const calculateTotalValue = () => {
@@ -72,20 +78,24 @@ const SummaryLottoModal: SFC<ISummaryLottoModalProps & DefaultProps> = ({
   }
 
   const RenderLottoList = () => {
-    const groupingLottoListObject: { [name in ILottoType]?: ILottoNumber[] } = groupBy<ILottoNumber>(betList, 'type')
+    const groupingLottoListObject: { [name in ILottoType]?: (ILottoNumber & { seq?: number })[] }
+      = groupBy<(ILottoNumber & { seq?: number })>(betList.map((bet, betIndex) => ({ ...bet, seq: betIndex })), 'type')
     const GroupingLottoListComponent = keys(groupingLottoListObject).map((lottos, lottosIndex) => {
       const LottoListComponent = groupingLottoListObject[lottos as ILottoType]?.map((lotto, lottoIndex) => {
         return (
           <div className="row lotto-row" key={`lotto-${lotto.type}-${lottoIndex}`}>
             <div className="col lotto-wrapper">
-              <div>{lotto.number}</div>
-              <div>{lotto.value}</div>
-              <div>
-                <span>{constants.win}</span>
-                <span>{calculateBenefitValue(lotto.value || '0')}</span>
+              <div className="lotto-number-text">{lotto.number}</div>
+              <div className="lotto-value-wrapper">
+                <div className="lotto-value-container">
+                  {lotto.value}
+                </div>
               </div>
-              <div>
-                <div className="delete-lotto-button-container">
+              <div className="lotto-rate-text">x 0.2</div>
+              <div className="lotto-win-label">{constants.win}</div>
+              <div className="lotto-benefit-text">{calculateBenefitValue(lotto.value || '0')}</div>
+              <div className="lotto-remove-wrapper">
+                <div className="delete-lotto-button-container" onClick={() => handleOnRemove(lotto.seq!)}>
                   <ResponsiveIcon
                     icon={{ x1: CloseIcon, x2: CloseIcon2x, x3: CloseIcon3x }}
                     className="delete-lotto-button-icon"
@@ -125,7 +135,11 @@ const SummaryLottoModal: SFC<ISummaryLottoModalProps & DefaultProps> = ({
         <div className="row summary-lotto-row mx-4">
           <div className="col summary-lotto-wrapper">
             <div className="leading-summary pl-2">{constants.defaultValue}</div>
-            <div className="trailing-summary pl-2">{100}</div>
+            <div className="trailing-summary-wrapper">
+              <div className="trailing-summary-value-container">
+                {100}
+              </div>
+            </div>
           </div>
         </div>
         <div className="row summary-lotto-row mx-4">

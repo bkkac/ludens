@@ -4,13 +4,16 @@ import {
   catchError,
   exhaustMap,
   takeUntil,
+  mergeMap,
   filter,
-  map,
 } from 'rxjs/operators'
+import moment from 'moment'
 import { isActionOf } from 'typesafe-actions'
 import { fetchYeegePlay } from './services'
 import actions from './actions'
+import sumAction from '../sum/actions'
 import { RootAction } from 'typings/reduxs/Actions'
+import { AxiosResponse } from 'axios'
 
 const getYeegeGameListEpic: Epic<RootAction, RootAction, RootReducers> = (action$, store) =>
   action$.pipe(
@@ -18,7 +21,14 @@ const getYeegeGameListEpic: Epic<RootAction, RootAction, RootReducers> = (action
     exhaustMap(action =>
       from(fetchYeegePlay(action.payload))
         .pipe(
-          map(actions.playYeegeSuccessAction),
+          mergeMap((response: AxiosResponse<APISuccessResponse<IYeegePlay>>) => of(
+            actions.playYeegeSuccessAction(response),
+            // TODO: Temporary
+            sumAction.getYeegeSumAction({
+              date: moment(response.data.data.createAt).format('DDMMYYYY'),
+              round: response.data.data.round!,
+            })
+          )),
           catchError(error => of(actions.playYeegeFailureAction(error))),
           takeUntil(action$.pipe(filter(isActionOf(actions.playYeegeCancelAction))))
         ),

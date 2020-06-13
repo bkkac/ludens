@@ -30,6 +30,66 @@
       flex-direction: row;
       align-items: center;
       justify-content: space-between;
+
+      .lotto-number-text {
+        font-family: "SukhumvitSet-Bold";
+        font-size: 24px;
+        line-height: 1.13;
+        letter-spacing: normal;
+        text-align: left;
+        color: #ffffff;
+        width: 55px;
+      }
+
+      .lotto-value-wrapper {
+        flex: 1;
+        padding: 4px;
+        display: flex;
+        .lotto-value-container {
+          flex: 1;
+          background-color: white;
+          border-radius: 8px;
+          padding: 4px;
+          padding-right: 8px;
+
+          text-align: right;
+          font-family: "SukhumvitSet-Bold";
+          font-size: 16px;
+          line-height: 1.69;
+          color: #777777;
+        }
+      }
+
+      .lotto-rate-text {
+        font-family: "SukhumvitSet-Bold";
+        font-size: 10px;
+        line-height: 2.7;
+        text-align: left;
+        color: #ffffff;
+        width: 55px;
+      }
+
+      .lotto-win-label {
+        font-family: "SukhumvitSet-Bold";
+        font-size: 12px;
+        line-height: 2.25;
+        text-align: center;
+        color: #ffffff;
+        width: 55px;
+      }
+
+      .lotto-benefit-text {
+        font-family: "SukhumvitSet-Bold";
+        font-size: 16px;
+        line-height: 1.69;
+        text-align: left;
+        color: #ffffff;
+        width: 100px;
+      }
+
+      .lotto-remove-wrapper {
+        width: 30px;
+      }
     }
 
     &:nth-child(even) {
@@ -75,6 +135,29 @@
         display: flex;
         align-items: center;
       }
+
+      .trailing-summary-wrapper {
+        flex: 1;
+        height: 100%;
+        background-color: #b9e4df;
+        
+        padding: 4px;
+        display: flex;
+
+        .trailing-summary-value-container {
+          flex: 1;
+          background-color: white;
+          border-radius: 8px;
+          padding: 4px;
+          padding-right: 8px;
+
+          text-align: left;
+          font-family: "SukhumvitSet-Bold";
+          font-size: 16px;
+          line-height: 1.69;
+          color: #777777;
+        }
+      }
     }
 
     &:nth-child(even) {
@@ -88,6 +171,7 @@
   height: 30px;
   border-radius: 8px;
   outline: hidden;
+  cursor: pointer;
 
   .delete-lotto-button-icon {
     width: 30px;
