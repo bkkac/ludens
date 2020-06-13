@@ -1,3 +1,7 @@
+declare interface IModalProps {
+  event: string
+}
+
 declare interface IModalState {
   show: boolean
   extraProps: Object<any>

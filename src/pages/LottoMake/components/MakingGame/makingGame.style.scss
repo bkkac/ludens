@@ -1,0 +1,69 @@
+.making-game-container {
+  border-radius: 16px;
+  box-shadow: 3px 3px 10px 0 #00000029;
+  background-color: #fcfcfc;
+  overflow: hidden;
+
+  .making-game-title {
+    font-family: "SukhumvitSet-Bold";
+    font-size: 20px;
+    line-height: 1.5;
+    text-align: left;
+    color: #7777779a;
+  }
+
+  .making-game-result {
+    font-family: "SukhumvitSet-Bold";
+    font-size: 48px;
+    line-height: 0.56;
+    text-align: left;
+    color: #777777;
+  }
+
+  .making-game-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background-color: #88b8f64d;
+    font-family: "SukhumvitSet-Bold";
+    font-size: 18px;
+    line-height: 1.5;
+    text-align: center;
+    color: #065bc9;
+    height: 50px;
+    transition: all 124ms ease-in;
+    cursor: pointer;
+
+    &:hover {
+      background-color: #7fa7db4d;
+    }
+  }
+}
+
+.input-game-container {
+  background-color: #3587f1;
+
+  .input-game-core {
+    height: 50px;
+    width: 100%;
+    background-color: #3587f1;
+    border: none;
+    font-family: "SukhumvitSet-Bold";
+    font-size: 20px;
+    line-height: 1.5;
+    text-align: right;
+    color: transparent;
+    text-shadow: 0 0 0 #ffffffcc;
+    padding-left: 12px;
+    padding-right: 12px;
+
+    &::placeholder {
+      color: #ffffffcc;
+    }
+
+    &:focus {
+      outline: none;
+    }
+  }
+}

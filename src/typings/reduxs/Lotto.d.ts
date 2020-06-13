@@ -1,15 +1,11 @@
-declare interface ILottoListState {
-  isFetching?: boolean
-  data?: ILotto[]
-  error?: string
-  code?: number | string
-}
-
 declare interface IYeegeState {
-  game: ReducerState<any>
+  game: ReducerState<IYeegeGame[]>
+  sum: ReducerState<string>
+  play: ReducerState<IYeegePlay>
 }
 
 declare interface ILottoState {
-  list: ILottoListState
+  list: ReducerState<ILotto[]>
   yeege: IYeegeState
+  bet: ReducerState<ILottoNumberBet[]>
 }

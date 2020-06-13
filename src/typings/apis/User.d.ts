@@ -5,6 +5,7 @@ declare interface IUser {
   userBankId?: number
   createAt?: string
   updatedAt?: string
+  phoneNumber?: string
   
   bank?: IBank
   wallet?: IWallet

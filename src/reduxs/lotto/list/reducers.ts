@@ -3,7 +3,10 @@ import { RootAction } from 'typings/reduxs/Actions'
 import { initialState } from './constants'
 import actions from './actions'
 
-const getLottoListReducer = (state: ILottoListState = initialState, action: RootAction): ILottoListState => {
+const getLottoListReducer = (
+  state: ReducerState<ILotto[]> = initialState,
+  action: RootAction
+): ReducerState<ILotto[]> => {
   switch (action.type) {
     case getType(actions.getLottoListAction):
       return {

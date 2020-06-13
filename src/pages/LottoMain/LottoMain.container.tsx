@@ -3,15 +3,14 @@ import { RouteComponentProps } from 'react-router-dom'
 import {
   ALink,
   Breadcrumb,
-  UsernameText,
   LottoActionCard,
-  CreditAmountCard,
 } from 'components'
 import './lottoMain.style.scss'
+import { noop } from 'lodash'
 
 const constants = {
   back: '< ย้อนกลับ',
-  makingLotto: 'แทงหวย',
+  lottoLabel: 'แทงหวย',
 }
 // Temporary
 declare interface ILottoList {
@@ -19,7 +18,17 @@ declare interface ILottoList {
   subLotto: ILottoActionCard[]
 }
 
-class LottoMainContainer extends Component<RouteComponentProps> {
+type DefaultProps = Readonly<typeof defaultProps>
+
+const defaultProps: IMainLottoProps & IMainLottoActionProps = {
+  loader() { noop() },
+}
+
+class LottoMainContainer extends Component<
+  IMainLottoProps & IMainLottoActionProps & DefaultProps & RouteComponentProps<{}>,
+  IMainLottoState> {
+
+  static defaultProps = defaultProps
 
   renderLottoList = (lottos: ILottoList[]) => lottos.map((lotto, index) => {
     const SubLotto = lotto.subLotto.map((subLotto, subIndex) => (
@@ -49,24 +58,24 @@ class LottoMainContainer extends Component<RouteComponentProps> {
   }
 
   render() {
-    const money = 100
-    const username = 'Biwswalker'
-    const navigates: IBreadcrumbItem[] = [{ label: constants.makingLotto, active: true }]
-
     const lottos: ILottoList[] = [
       {
         name: 'หวยยี่กี',
         subLotto: [
           {
-            name: 'ยี่กี', status: 'OPEN', countdownTime: '00:10:50',
+            name: 'ยี่กี', status: 'OPEN', countdownTime: 'N/A',
             rangeTimeLabel: 'เปิดรับ', rangeTime: '88 รอบ',
           },
           {
-            name: 'ยี่กี (พื่นบ้าน)', status: 'OPEN', countdownTime: '01:10:50',
+            name: 'ยี่กี (พื้นบ้าน)', status: 'CLOSE', countdownTime: 'N/A',
             rangeTimeLabel: 'เปิดรับ', rangeTime: '88 รอบ',
           },
         ],
       },
+    ]
+
+    const navigates: IBreadcrumbItem[] = [
+      { label: constants.lottoLabel, active: true },
     ]
 
     return (
@@ -78,17 +87,7 @@ class LottoMainContainer extends Component<RouteComponentProps> {
         </div>
         <div className="row">
           <div className="col">
-            <Breadcrumb items={navigates} handleOnClickItem={this.handleOnClickBreadcrumb} />
-          </div>
-        </div>
-        <div className="row mt-3">
-          <div className="col d-flex justify-content-center">
-            <UsernameText username={username} />
-          </div>
-        </div>
-        <div className="row mt-2 mb-5">
-          <div className="col d-flex justify-content-center">
-            <CreditAmountCard creditAmount={money} />
+            <Breadcrumb items={navigates} />
           </div>
         </div>
         <div className="row mt-3">

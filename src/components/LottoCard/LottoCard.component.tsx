@@ -30,7 +30,7 @@ const LottoCard: SFC<ILottoCard & DefaultProps> = (props) => {
   // const dateDisplay = moment(replace(updateTime, /\s/g, '')).format('Do MMM YY')
   const dateDisplay = moment(updateTime, 'YYYY-MM-DD').format('Do MMM YY')
 
-  const NumberComponent = ({ name, numbers }: ILottoNumber) => {
+  const NumberComponent = ({ name, numbers }: ILottoResult) => {
     const Numbers = numbers!.map((num, index) => (
       <div className="row" key={`number-${num}-${index}`}>
         <div className="col text-center lotto">{num}</div>
@@ -49,10 +49,10 @@ const LottoCard: SFC<ILottoCard & DefaultProps> = (props) => {
   const LottoNumbersFormat = () => {
     switch (type) {
       case 'GOVN':
-        const govSet1 = get(lotto, '0', { name: '', numbers: '' }) as ILottoNumber
-        const govSet2 = get(lotto, '1', { name: '', numbers: '' }) as ILottoNumber
-        const govSet3 = get(lotto, '2', { name: '', numbers: '' }) as ILottoNumber
-        const govSet4 = get(lotto, '3', { name: '', numbers: '' }) as ILottoNumber
+        const govSet1 = get(lotto, '0', { name: '', numbers: '' }) as ILottoResult
+        const govSet2 = get(lotto, '1', { name: '', numbers: '' }) as ILottoResult
+        const govSet3 = get(lotto, '2', { name: '', numbers: '' }) as ILottoResult
+        const govSet4 = get(lotto, '3', { name: '', numbers: '' }) as ILottoResult
 
         return (
           <>
@@ -88,7 +88,7 @@ const LottoCard: SFC<ILottoCard & DefaultProps> = (props) => {
       case 'FOREIGN_BROKER':
       case 'YEEGE':
         const LottoList = lotto.map(({ name, lotto: lottoNumber = [] }, index) => {
-          const Numbers = lottoNumber.map(({ name: numberName, numbers: numberSet }: ILottoNumber) => (
+          const Numbers = lottoNumber.map(({ name: numberName, numbers: numberSet }: ILottoResult) => (
             <div className="col" key={`${numberName}-${index}`}>
               <NumberComponent name={numberName} numbers={numberSet} />
             </div>

@@ -3,12 +3,10 @@ import { RouteComponentProps } from 'react-router-dom'
 import {
   ALink,
   Breadcrumb,
-  UsernameText,
   LottoActionCard,
-  CreditAmountCard,
 } from 'components'
 import response from 'constants/response'
-import { isEmpty } from 'lodash'
+import { isEmpty, noop } from 'lodash'
 import moment from 'moment'
 import './lottoSub.style.scss'
 
@@ -21,9 +19,22 @@ const lottoTypes: { [name: string]: string } = {
   yeege: 'ยี่กี',
 }
 
+type DefaultProps = Readonly<typeof defaultProps>
+
+const defaultProps: ISubLottoProps & ISubLottoActionProps = {
+  getYeegeGameList() { noop() },
+  loader() { noop() },
+  getYeegeGameListCode: 0,
+  getYeegeGameListError: '',
+  getYeegeGameListIsFetching: false,
+  yeegeGameList: [],
+}
+
 class LottoSubContainer extends Component<
-  ISubLottoProps & ISubLottoActionProps & RouteComponentProps<{ type: string }>,
+  ISubLottoProps & ISubLottoActionProps & DefaultProps & RouteComponentProps<{ type: string }>,
   ISubLottoState> {
+
+  static defaultProps = defaultProps
 
   componentDidMount() {
     this.props.loader(true)
@@ -39,24 +50,24 @@ class LottoSubContainer extends Component<
     }
   }
 
-  handleOnClickBreadcrumb = (path: string) => {
-    this.props.history.replace(path)
+  handleOnClickPlay = (game: IYeegeGame) => {
+    this.props.history.replace('/lotto/making/yeege', { selectedLottoGame: game })
   }
 
-  handleOnClickPlay = (path: string) => {
-    this.props.history.replace('/lotto/making/yeege')
+  handleOnClickBreadcrumb = (path: string) => {
+    this.props.history.replace(path)
   }
 
   renderSubLottoList = () => {
     if (!isEmpty(this.props.yeegeGameList)) {
       const ListComponent = this.props.yeegeGameList.map((yeege: IYeegeGame, index) => {
         const yeegeRound = `รอบที่ ${yeege.round}`
-        const rangeLabel = 'ปิดรับ'
-        const rangeTime = moment(yeege.endTime).format('DD MMM YY HH:mm')
+        const rangeLabel = 'เวลาที่ปิดรับ'
+        const rangeTime = moment(yeege.endTime).add(-7, 'hour').format('DD MMM YY HH:mm') // TODO: Temporary
         return (
           <div className="col-6 my-2" key={`sub-${yeege.round}-${index}`}>
             <LottoActionCard
-              onClick={() => this.handleOnClickPlay('')}
+              onClick={() => this.handleOnClickPlay(yeege)}
               name={yeegeRound}
               status={yeege.status}
               countdownTime={yeege.endTime}
@@ -72,8 +83,6 @@ class LottoSubContainer extends Component<
   }
 
   render() {
-    const money = 100
-    const username = 'Biwswalker'
     const navigates: IBreadcrumbItem[] = [
       { label: constants.lottoLabel, path: '/lotto' },
       { label: lottoTypes[this.props.match.params.type] || '', active: true },
@@ -89,16 +98,6 @@ class LottoSubContainer extends Component<
         <div className="row">
           <div className="col">
             <Breadcrumb items={navigates} handleOnClickItem={this.handleOnClickBreadcrumb} />
-          </div>
-        </div>
-        <div className="row mt-3">
-          <div className="col d-flex justify-content-center">
-            <UsernameText username={username} />
-          </div>
-        </div>
-        <div className="row mt-2 mb-4">
-          <div className="col d-flex justify-content-center">
-            <CreditAmountCard creditAmount={money} />
           </div>
         </div>
         <div className="row mt-3">

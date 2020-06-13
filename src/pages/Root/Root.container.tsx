@@ -17,6 +17,7 @@ import routes from 'configs/routes'
 import { Loader } from '../Loader'
 import { THEME_MODE } from 'constants/variables'
 import { LudensContext } from 'configs/context'
+import event from 'constants/event'
 
 const constants = {
   textRunning: 'ยินดีต้อนรับสู่ to ThailandBet',
@@ -25,6 +26,7 @@ const constants = {
 type DefaultProps = Readonly<typeof defaultProps>
 
 const defaultProps: IRootProps & IRootActionProps = {
+  wallet: { money: 0 },
   accessToken: '',
   loader() { noop() },
   connectSocket() { noop() },
@@ -36,6 +38,7 @@ class RootContainer extends Component<IRootProps & IRootActionProps & DefaultPro
 
   state: IRootStates = {
     themeMode: THEME_MODE.DARK,
+    isShownWallet: true,
   }
 
   componentDidMount() {
@@ -47,6 +50,10 @@ class RootContainer extends Component<IRootProps & IRootActionProps & DefaultPro
 
   changeThemeMode = (mode: string) => this.setState({
     themeMode: mode,
+  })
+
+  changeShowWallet = (shown: boolean) => this.setState({
+    isShownWallet: shown,
   })
 
   onPressLogo = () => {
@@ -102,7 +109,15 @@ class RootContainer extends Component<IRootProps & IRootActionProps & DefaultPro
 
   renderNavbar = () => (
     <LudensContext.Consumer>
-      {({ theme }) => <Navbar mode={theme.mode} onPressesLogo={this.onPressLogo} />}
+      {({ theme, wallet }) => (
+        <Navbar
+          mode={theme.mode}
+          isDisplayWallet={wallet.shown}
+          wallet={this.props.wallet}
+          onPressesLogo={this.onPressLogo}
+          isAuthorized={!isEmpty(this.props.accessToken)}
+        />
+      )}
     </LudensContext.Consumer>
   )
 
@@ -112,6 +127,7 @@ class RootContainer extends Component<IRootProps & IRootActionProps & DefaultPro
 
     const contextProviderValues = {
       theme: { mode: this.state.themeMode, changeMode: this.changeThemeMode },
+      wallet: { shown: this.state.isShownWallet, changeShown: this.changeShowWallet },
     }
 
     return (
@@ -121,7 +137,8 @@ class RootContainer extends Component<IRootProps & IRootActionProps & DefaultPro
           <TextRunning text={constants.textRunning} />
           <PageElement />
         </Router>
-        <Modal.Core />
+        <Modal.Core event={event.MODAL} />
+        <Modal.Core event={event.MODAL_OVER} />
         <Loader />
       </LudensContext.Provider>
     )

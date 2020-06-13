@@ -11,7 +11,7 @@ const success = {
     const modalProps: ModalProps = {
       size: 'sm',
     }
-    return emiter.emit(event.MODAL, {
+    return emiter.emit(event.MODAL_OVER, {
       state: 'show',
       extraProps: modalProps,
       component: (
@@ -24,7 +24,7 @@ const success = {
       ),
     })
   },
-  hide: () => emiter.emit(event.MODAL, { state: 'hide' }),
+  hide: () => emiter.emit(event.MODAL_OVER, { state: 'hide' }),
 }
 
 const error = {
@@ -32,7 +32,7 @@ const error = {
     const modalProps: ModalProps = {
       size: 'sm',
     }
-    return emiter.emit(event.MODAL, {
+    return emiter.emit(event.MODAL_OVER, {
       state: 'show',
       extraProps: modalProps,
       component: (
@@ -45,7 +45,7 @@ const error = {
       ),
     })
   },
-  hide: () => emiter.emit(event.MODAL, { state: 'hide' }),
+  hide: () => emiter.emit(event.MODAL_OVER, { state: 'hide' }),
 }
 
 export default {

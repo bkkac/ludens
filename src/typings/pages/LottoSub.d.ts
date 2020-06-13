@@ -3,7 +3,6 @@ declare interface ISubLottoProps {
   getYeegeGameListError: string
   getYeegeGameListCode: number | string
   yeegeGameList: IYeegeGame[]
-  user: IUser
 }
 
 declare interface ISubLottoActionProps {
