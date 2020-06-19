@@ -6,7 +6,7 @@ import {
   Switch,
   ResponsiveIcon,
 } from 'components'
-import { noop } from 'lodash'
+import { noop, replace } from 'lodash'
 import moment from 'moment'
 import { number } from 'utils'
 import { MakingLotto, MakingGame, summaryLottoModal } from './components'
@@ -61,16 +61,32 @@ class LottoMakeContainer extends Component<
 
   static defaultProps = defaultProps
 
+  intervalId: NodeJS.Timeout | null = null
+
   state: IMakingLottoState = {
     activeModeSwitch: 'lotto',
     numberList: [],
     defaultGameValue: '100',
+    remainingTime: {
+      hours: 0,
+      minutes: 0,
+      seconds: 0,
+    },
+    lottoStatus: 'OPEN',
   }
 
   componentDidMount() {
     this.props.getYeegeSum({
       date: moment().format('DDMMYYYY'),
       round: this.props.location.state.selectedLottoGame.round,
+    })
+    this.setState({ lottoStatus: this.props.location.state.selectedLottoGame.status }, () => {
+      if (this.props.location.state.selectedLottoGame.status === 'OPEN') {
+        this.countingdown()
+      } else {
+        // this.props.loader(true)
+        // TODO: integrate get lotto result
+      }
     })
   }
 
@@ -104,6 +120,42 @@ class LottoMakeContainer extends Component<
       && !this.props.playYeegeIsFetching) {
       this.props.loader(false)
     }
+  }
+
+  componentWillUnmount() {
+    this.clearLocalInterval()
+  }
+
+  clearLocalInterval = () => {
+    this.setState({ lottoStatus: 'CLOSE' })
+    if (this.intervalId !== null) {
+      clearInterval(this.intervalId)
+    }
+  }
+
+  countingdown = () => {
+    const endedTime = this.props.location.state.selectedLottoGame.endTime
+    const momentEndAt = moment(replace(endedTime!, /\s/g, ''))
+    const momentEndTime = momentEndAt.clone().add(-7, 'hour')
+    this.intervalId = setInterval(() => {
+      const duration = moment.duration(momentEndTime.diff(moment()))
+      const hours = duration.hours()
+      const minutes = duration.minutes()
+      const seconds = duration.seconds()
+
+      if (hours <= 0 && minutes <= 0 && seconds < 0) {
+        this.clearLocalInterval()
+        // this.props.loader(true)
+        // TODO: integrate get lotto result
+      } else if (isNaN(hours) || isNaN(minutes) || isNaN(seconds)) {
+        this.setState({ remainingTime: { hours: 0, minutes: 0, seconds: 0 } }, () => {
+          this.clearLocalInterval()
+        })
+      } else {
+        this.setState({ remainingTime: { hours, minutes, seconds } })
+      }
+
+    }, 1000);
   }
 
   getGameSlugFromGamePath = () => {
@@ -185,14 +237,20 @@ class LottoMakeContainer extends Component<
   renderGameMode = () => {
     switch (this.state.activeModeSwitch) {
       case 'lotto':
-        return (<MakingLotto onClickAddNumber={this.handleOnAddLottoNumber} />)
+        if (this.state.lottoStatus === 'OPEN') {
+          return (<MakingLotto onClickAddNumber={this.handleOnAddLottoNumber} />)
+        }
+        return (<div />)
       case 'game':
-        return (
-          <MakingGame
-            onClickAddNumber={this.handleOnPlayYeegeGame}
-            yeegeSum={this.props.yeegeSum}
-          />
-        )
+        if (this.state.lottoStatus === 'OPEN') {
+          return (
+            <MakingGame
+              onClickAddNumber={this.handleOnPlayYeegeGame}
+              yeegeSum={this.props.yeegeSum}
+            />
+          )
+        }
+        return (<div />)
       default:
         return (<></>)
     }
@@ -207,6 +265,8 @@ class LottoMakeContainer extends Component<
     const ViewLottoListButton = this.renderViewLottoListButton
     const GameModeComponent = this.renderGameMode
 
+    const remainingTime = `${number.padNumber(String(this.state.remainingTime.hours), 2)} : ${number.padNumber(String(this.state.remainingTime.minutes), 2)} : ${number.padNumber(String(this.state.remainingTime.seconds), 2)}`
+
     return (
       <>
         <div className="container lotto-make-container">
@@ -218,6 +278,11 @@ class LottoMakeContainer extends Component<
                 bold
                 onClick={() => this.handleOnClickBreadcrumb(`/lotto/${this.props.match.params.type}`)}
               />
+            </div>
+          </div>
+          <div className="row mb-3">
+            <div className="col d-flex justify-content-center">
+              <div className="remaining-time-lotto">{remainingTime}</div>
             </div>
           </div>
           <div className="row mt-4">

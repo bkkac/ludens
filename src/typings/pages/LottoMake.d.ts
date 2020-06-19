@@ -32,6 +32,12 @@ declare interface IMakingLottoState {
   activeModeSwitch: string
   numberList: ILottoNumber[]
   defaultGameValue: string
+  remainingTime: {
+    hours: number
+    minutes: number
+    seconds: number
+  }
+  lottoStatus: TLottoAvailableStatus
 }
 
 declare interface ISummaryLottoModalProps {
