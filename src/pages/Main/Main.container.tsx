@@ -119,6 +119,7 @@ class MainContainer extends Component<IMainProps & IMainActionProps & DefaultPro
             </div>
             <div className="col-xl-2 col-md-4 col-6 mb-4">
               <ButtonMenu
+                onClick={() => this.onNavigateTo('/credit-info')}
                 text={constants.gotoCredit}
                 icon={{ x1: CreditIcon, x2: CreditIcon2x, x3: CreditIcon3x }}
               />

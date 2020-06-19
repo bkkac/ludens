@@ -66,6 +66,13 @@ const routes: IRoutes[] = [
     private: true,
   },
   {
+    exact: true,
+    name: 'credit-info',
+    path: '/credit-info',
+    component: pages.CreditInfo,
+    private: true,
+  },
+  {
     name: '404',
     path: '*',
     component: pages.ComingSoon,

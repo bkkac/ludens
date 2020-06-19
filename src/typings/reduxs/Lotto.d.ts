@@ -4,8 +4,13 @@ declare interface IYeegeState {
   play: ReducerState<IYeegePlay>
 }
 
+declare interface IBetHistoryState {
+  list: ReducerState<IBet[]>
+}
+
 declare interface ILottoState {
   list: ReducerState<ILotto[]>
   yeege: IYeegeState
-  bet: ReducerState<ILottoNumberBet[]>
+  bet: ReducerState<IBet[]>
+  me: IBetHistoryState
 }

@@ -12,13 +12,13 @@ import {
 import moment from 'moment'
 import { number } from 'utils'
 import response from 'constants/response'
-import { ALink, Modal, TransactionItem } from 'components'
+import { ALink, Modal } from 'components'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlus, faMinus } from '@fortawesome/free-solid-svg-icons'
-import './transactionList.style.scss'
+import './creditInfo.style.scss'
 
 const constants = {
-  titleText: 'ฝาก - ถอน',
+  titleText: 'ข้อมูลเครดิต',
   remainingLabel: 'เครดิตคงเหลือ',
   deposit: 'ฝาก',
   withdraw: 'ถอน',
@@ -29,35 +29,36 @@ const constants = {
 
 type DefaultProps = Readonly<typeof defaultProps>
 
-const defaultProps: ITransactionListProps & ITransactionListActionProps = {
-  getTransactionList() { noop() },
-  getTransactionListCode: 0,
-  getTransactionListError: '',
-  getTransactionListIsFetching: false,
-  transactionList: [],
+const defaultProps: ICreditInfoProps & ICreditInfoActionProps = {
+  getCreditInfoList() { noop() },
+  getCreditInfoListCode: 0,
+  getCreditInfoListError: '',
+  getCreditInfoListIsFetching: false,
+  creditInfo: [],
   wallet: {},
   loader() { noop() },
   getUser() { noop() },
 }
 
 class TransactionListContainer extends
-  Component<ITransactionListProps & ITransactionListActionProps & DefaultProps & RouteComponentProps> {
+  Component<ICreditInfoProps & ICreditInfoActionProps & DefaultProps & RouteComponentProps> {
 
   componentDidMount() {
     this.props.loader(true)
     this.props.getUser()
-    this.props.getTransactionList()
+    this.props.getCreditInfoList()
   }
 
-  componentDidUpdate(prevProps: ITransactionListProps) {
-    if (prevProps.getTransactionListIsFetching !== this.props.getTransactionListIsFetching
-      && !this.props.getTransactionListIsFetching) {
+  componentDidUpdate(prevProps: ICreditInfoProps) {
+    if (prevProps.getCreditInfoListIsFetching !== this.props.getCreditInfoListIsFetching
+      && !this.props.getCreditInfoListIsFetching) {
       this.props.loader(false)
-      if (this.props.getTransactionListCode !== response.OK
-        && this.props.getTransactionListCode !== response.NOT_FOUND) {
+      console.log(this.props.creditInfo)
+      if (this.props.getCreditInfoListCode !== response.OK
+        && this.props.getCreditInfoListCode !== response.NOT_FOUND) {
         Modal.error.show({
           action: Modal.error.hide,
-          description: this.props.getTransactionListError,
+          description: this.props.getCreditInfoListError,
           actionText: constants.ok,
         })
       }
@@ -76,33 +77,23 @@ class TransactionListContainer extends
     this.props.history.push('/withdraw')
   }
 
-  onPressTransactionDetail = (transaction: ITransaction) => {
-    this.props.history.push('/transaction/detail', { transaction })
+  onPressTransactionDetail = (credit: ICredit) => {
+    this.props.history.push('/credit-info/detail', { credit })
   }
 
   renderTransactionList = () => {
-    const transactionGroupList: Dictionary<ITransaction[]> = groupBy<ITransaction>(
-      this.props.transactionList.map(transaction =>
-        ({ ...transaction, createdAt: moment(transaction.updatedAt).format('YYYYMMDD') })),
-      'createdAt')
+    const creditGroupList: Dictionary<ICredit[]> = groupBy<ICredit>(
+      this.props.creditInfo.map(credit => ({ ...credit, groupTime: moment(credit.createdAt).format('YYYYMMDD') })),
+      'groupTime')
 
-    if (isEmpty(transactionGroupList)) { return <></> }
+    if (isEmpty(creditGroupList)) { return <></> }
 
-    return reverse(keys(transactionGroupList).sort()).map((key, index) => {
-      const TransactionDay = reverse(sortBy(
-        transactionGroupList[key].map(ts => ({ ...ts, updatedAt: moment(ts.updatedAt).format('YYYYMMDDHHmmss') })),
-        ['createdAt', 'updatedAt']))
+    return reverse(keys(creditGroupList).sort()).map((key, index) => {
+      const CreditPerDay = reverse(sortBy(creditGroupList[key], ['createdAt']))
         .map((transaction, transactionIndex) => {
+          const displayTime = moment(transaction.createdAt).format('DD MMM YYYY HH:mm')
           return (
-            <TransactionItem
-              onClick={() => this.onPressTransactionDetail(transaction)}
-              containerClassName="mt-2"
-              key={`${transaction.type}-${transaction.createdAt}-${transactionIndex}`}
-              money={transaction.money}
-              status={transaction.status}
-              time={transaction.updatedAt}
-              type={transaction.type}
-            />
+            <div key={`transaction-${transactionIndex}`}>{displayTime}</div>
           )
         })
 
@@ -111,7 +102,7 @@ class TransactionListContainer extends
         <div className="row mt-5" key={`${key}-${index}`}>
           <div className="col px-5">
             <div className="display-date-text">{dayString}</div>
-            {TransactionDay}
+            {CreditPerDay}
           </div>
         </div>
       )

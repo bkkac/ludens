@@ -1,0 +1,93 @@
+.transaction-list-container {
+  padding-top: 112px;
+  position: relative;
+
+  .transaction-list-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 380px;
+    border-bottom-left-radius: 80px;
+    border-bottom-right-radius: 30px;
+    background-image: linear-gradient(to bottom, #3587f1, #065bc9);
+  }
+
+  .transaction-list-title-text {
+    font-family: "SukhumvitSet-Bold";
+    font-size: 24px;
+    line-height: 1.13;
+    text-align: left;
+    color: #fcfcfc;
+  }
+
+  .remaining-label {
+    width: 100px;
+    height: 20px;
+    border-radius: 10px;
+    background-color: #065bc9;
+
+    font-family: "SukhumvitSet-Bold";
+    font-size: 12px;
+    line-height: 20px;
+    text-align: center;
+    color: #fcfcfc;
+  }
+
+  .credit-amount-text {
+    font-family: "SukhumvitSet-Bold";
+    font-size: 40px;
+    line-height: 58px;
+    text-align: center;
+    color: #fcfcfc;
+  }
+
+  .updated-time-text {
+    font-family: "SukhumvitSet-Medium";
+    font-size: 12px;
+    line-height: 20px;
+    text-align: center;
+    color: #88b8f6;
+  }
+
+  .credit-panel-action-wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+
+    .temprary-button-wrapper {
+      display: flex;
+      width: 116px;
+      height: 32px;
+      border-radius: 16px;
+      background-color: #88b8f6;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+
+      &:hover {
+        background-color: #2d88ff;
+      }
+
+      .temp-icon-button {
+        height: unset !important;
+        margin-right: 10px;
+      }
+
+      .temp-text-button {
+        font-family: "SukhumvitSet-Bold";
+        font-size: 16px;
+        line-height: 1.69;
+        text-align: right;
+        color: #ffffff;
+      }
+    }
+  }
+
+  .display-date-text {
+    font-family: "SukhumvitSet-Medium";
+    font-size: 16px;
+    line-height: 1.69;
+    color: #777777;
+  }
+}

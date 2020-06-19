@@ -3,34 +3,32 @@ import { RootAction } from 'typings/reduxs/Actions'
 import { initialState } from './constants'
 import actions from './actions'
 
-const getYeegeGameListReducer = (
-  state: ReducerState<IBet[]> = initialState,
+const getCreditInfoListReducer = (
+  state: ReducerState<ICredit[]> = initialState,
   action: RootAction
-): ReducerState<any> => {
+): ReducerState<ICredit[]> => {
   switch (action.type) {
-    case getType(actions.makingBetLottoAction):
+    case getType(actions.getCreditInfoListAction):
       return {
         ...state,
         isFetching: true,
       }
-    case getType(actions.makingBetLottoSuccessAction):
+    case getType(actions.getCreditInfoListSuccessAction):
       return {
-        ...state,
         isFetching: false,
         data: action.payload.data.data,
         code: action.payload.status,
       }
 
-    case getType(actions.makingBetLottoFailureAction):
+    case getType(actions.getCreditInfoListFailureAction):
       return {
-        ...state,
         isFetching: false,
-        error: action.payload.response?.data.devMessage,
-        code: action.payload.response?.status,
+        error: action.payload.message,
+        code: action.payload.code,
       }
     default:
       return state
   }
 }
 
-export default getYeegeGameListReducer
+export default getCreditInfoListReducer

@@ -3,17 +3,17 @@ import { RootAction } from 'typings/reduxs/Actions'
 import { initialState } from './constants'
 import actions from './actions'
 
-const getYeegeGameListReducer = (
+const getBetHistoryReducer = (
   state: ReducerState<IBet[]> = initialState,
   action: RootAction
-): ReducerState<any> => {
+): ReducerState<IBet[]> => {
   switch (action.type) {
-    case getType(actions.makingBetLottoAction):
+    case getType(actions.getBetHistoryAction):
       return {
         ...state,
         isFetching: true,
       }
-    case getType(actions.makingBetLottoSuccessAction):
+    case getType(actions.getBetHistorySuccessAction):
       return {
         ...state,
         isFetching: false,
@@ -21,7 +21,7 @@ const getYeegeGameListReducer = (
         code: action.payload.status,
       }
 
-    case getType(actions.makingBetLottoFailureAction):
+    case getType(actions.getBetHistoryFailureAction):
       return {
         ...state,
         isFetching: false,
@@ -33,4 +33,4 @@ const getYeegeGameListReducer = (
   }
 }
 
-export default getYeegeGameListReducer
+export default getBetHistoryReducer

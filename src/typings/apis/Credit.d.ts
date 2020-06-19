@@ -1,32 +1,30 @@
-declare interface IDepositRequest {
+declare type TCreditType = | 'WALLET' | 'BET'
+declare type ICreditWalletType = | 'DEPOSIT' | 'WITHDRAW'
+
+declare interface ICreditWallet {
+  money: number
+  type: ICreditWalletType
+  status: TFinanceStatus
+  slug: null
+  updatedAt: string
+}
+
+declare interface ICreditBet {
   money: string
-  depositTime: string
-  webBankId: number
-  description: string
+  type: TLottoType
+  status: TBetStatus
+  slug: string
+  updatedAt: string
 }
 
-declare interface IWithdrawRequest {
-  money: string
-  description: string
+declare interface ICredit {
+  groupType: 'WALLET'
+  createdAt: string
+  list: ICreditWallet[]
 }
 
-declare interface IWallet {
-  id?: number
-  money?: number
-  createdAt?: string
-  updatedAt?: string
-  updatedTime?: string
-}
-
-declare interface ITransactionRequest {
-  id?: number
-  money?: number
-  createdAt?: string
-  userBank?: IBank
-  webBank?: IBank
-}
-
-declare interface ISignTransactionRequest {
-  webBankId: number
-  money: string
+declare interface ICredit {
+  groupType: 'BET'
+  createdAt: string
+  list: ICreditBet[]
 }

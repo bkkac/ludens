@@ -1,5 +1,4 @@
-declare type ILottoType = | 'THREE_UP' | 'THREE_TOAST' | 'TWO_UP' | 'TWO_DOWN' | 'RUN_UP' | 'RUN_DOWN'
-declare type ILottoGameType = | 'LOTTER_YEGEE'
+declare type TLottoGameType = | 'LOTTER_YEGEE'
 declare type IGamePath = | 'yeege'
 
 declare interface IMakingLottoParam {
@@ -10,7 +9,7 @@ declare interface IMakingLottoProps {
   makingBetLottoIsFetching: boolean
   makingBetLottoError: string
   makingBetLottoCode: number | string
-  makingBetLottoResult: ILottoNumberBet[]
+  makingBetLottoResult: IBet[]
   playYeegeIsFetching: boolean
   playYeegeError: string
   playYeegeCode: number | string
@@ -52,7 +51,7 @@ declare interface IMakingLottoComponentProps {
 
 declare interface IMakingLottoComponentState {
   numberSet: string
-  gameType: ILottoType
+  gameType: TLottoType
 }
 
 declare interface IMakingGameComponentProps {

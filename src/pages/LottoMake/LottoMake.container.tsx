@@ -28,7 +28,7 @@ const constants = {
   betSuccess: 'คุณได้ทำรายการเสร็จสมบูรณ์',
 }
 
-const slugNames: { [P in IGamePath]: ILottoGameType } = {
+const slugNames: { [P in IGamePath]: TLottoGameType } = {
   yeege: 'LOTTER_YEGEE',
 }
 
@@ -159,7 +159,7 @@ class LottoMakeContainer extends Component<
   }
 
   getGameSlugFromGamePath = () => {
-    const generateSlug = (slugName: ILottoGameType) => {
+    const generateSlug = (slugName: TLottoGameType) => {
       const currentTime = moment().format('DDMMYYYYHHmm')
       return `${slugName}_${currentTime}${number.padNumber(this.props.location.state.selectedLottoGame.round, 3)}`
     }

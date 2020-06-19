@@ -13,7 +13,7 @@ const makingBetLottoAction = createAction(
 
 const makingBetLottoSuccessAction = createAction(
   MAKING_BET_LOTTO_SUCCESS,
-  resolve => (data: AxiosResponse<APISuccessResponse<ILottoNumberBet[]>>) => resolve(data))
+  resolve => (data: AxiosResponse<APISuccessResponse<IBet[]>>) => resolve(data))
 
 const makingBetLottoFailureAction = createAction(
   MAKING_BET_LOTTO_FAILURE,
