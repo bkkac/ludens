@@ -81,7 +81,7 @@ const DepositStep1:
         <div className="deposit-form-wrapper mb-5">
           <div className="row">
             <div className="col">
-              <ALink text={constants.backText} color="#ff9b96" bold onClick={onPressBack} />
+              <ALink color="#ff9b96" bold onClick={onPressBack}>{constants.backText}</ALink>
             </div>
           </div>
           <div className="row">

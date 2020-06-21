@@ -1,0 +1,104 @@
+.credit-info-item-container {
+  cursor: pointer;
+
+  .credit-info-item-wrapper {
+    .transaction-leading-wrapper {
+      flex: 1;
+    }
+
+    .transaction-name-text {
+      font-family: "SukhumvitSet-Thin";
+      font-size: 18px;
+      line-height: 18px;
+      text-align: left;
+      color: #ffffff;
+    }
+
+    .transaction-time-text {
+      font-family: "SukhumvitSet-Thin";
+      font-size: 12px;
+      line-height: 12px;
+      text-align: left;
+      color: rgba($color: #ffffff, $alpha: 0.7);
+    }
+
+    .transaction-badge-wrapper {
+      margin-left: 8px;
+    }
+
+    .transaction-amount-text {
+      text-align: right;
+      font-family: "SukhumvitSet-Medium";
+      font-size: 18px;
+      line-height: 18px;
+      color: #ffffff;
+    }
+
+    .transaction-chevron-right-icon {
+      padding: 0 0 0 16px;
+
+      .chevron-right-icon {
+        color: rgba($color: #ffffff, $alpha: 0.3);
+        transition: all 254ms ease-in-out;
+        transform: rotate(0);
+
+        &.expanded {
+          transform: rotate(90deg);
+        }
+      }
+
+    }
+  }
+
+  .transaction-description-container {
+    background-color: #222529;
+    color: white;
+
+    height: auto;
+    max-height: 0;
+    overflow: hidden;
+    overflow-y: scroll;
+    box-sizing: border-box;
+    transition: all 512ms ease-in-out;
+    width: 100%;
+
+    &.expanded {
+      max-height: 400px;
+    }
+
+    .transaction-description-wrapper {
+      padding: 20px;
+      padding-top: 8px;
+    }
+  }
+
+  .transaction-description-row {
+    padding: 8px 26px 8px 0;
+    flex: 1;
+
+    .transaction-description-name-text {
+      flex: 1;
+      text-align: left;
+      font-family: "SukhumvitSet-Medium";
+      font-size: 14px;
+      line-height: 14px;
+      color: #ffffff;
+
+      .transaction-description-lotto-number {
+        padding-top: 4px;
+        font-family: "SukhumvitSet-Bold";
+        font-size: 18px;
+        line-height: 18px;
+        color: rgba($color: #ffffff, $alpha: 0.6);
+      }
+    }
+
+    .transaction-description-amount {
+      text-align: right;
+      font-family: "SukhumvitSet-Medium";
+      font-size: 14px;
+      line-height: 14px;
+      color: rgba($color: #ffffff, $alpha: 0.6);
+    }
+  }
+}

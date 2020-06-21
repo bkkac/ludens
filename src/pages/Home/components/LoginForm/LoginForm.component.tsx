@@ -78,7 +78,9 @@ function LoginForm(props: FormikProps<ILogin> & ILoginFormProps) {
             />
           </div>
           <div className="col align-self-end text-right">
-            <ALink text={constants.alinkForgot} onClick={onPressNavigateToForgotPassword} />
+            <ALink onClick={onPressNavigateToForgotPassword}>
+              {constants.alinkForgot}
+            </ALink>
           </div>
         </div>
         <div className="row">
@@ -90,10 +92,11 @@ function LoginForm(props: FormikProps<ILogin> & ILoginFormProps) {
           <div className="col text-center pt-1">
             <ALink
               onClick={onPressNavigateToRegister}
-              text={constants.alinkRegister}
               color="#88b8f6"
               bold
-            />
+            >
+              {constants.alinkRegister}
+            </ALink>
           </div>
         </div>
       </div>

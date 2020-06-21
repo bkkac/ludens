@@ -104,7 +104,7 @@ class MainContainer extends Component<IMainProps & IMainActionProps & DefaultPro
           <div className="row">
             <div className="col">
               <div className="credit-button-wrapper">
-                <div className="condition-text-label"><ALink text={constants.conditionText} /></div>
+                <div className="condition-text-label"><ALink>{constants.conditionText}</ALink></div>
                 <div className="crefit-text-label" onClick={this.onPressAddingCredit}>{constants.creditText}</div>
               </div>
             </div>

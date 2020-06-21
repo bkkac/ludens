@@ -273,11 +273,12 @@ class LottoMakeContainer extends Component<
           <div className="row mb-3">
             <div className="col">
               <ALink
-                text={constants.back}
                 color="#ff9b96"
                 bold
                 onClick={() => this.handleOnClickBreadcrumb(`/lotto/${this.props.match.params.type}`)}
-              />
+              >
+                {constants.back}
+              </ALink>
             </div>
           </div>
           <div className="row mb-3">

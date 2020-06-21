@@ -82,7 +82,9 @@ class LottoMainContainer extends Component<
       <div className="container lotto-main-container">
         <div className="row mb-3">
           <div className="col">
-            <ALink text={constants.back} color="#ff9b96" bold onClick={() => this.props.history.replace('/main')} />
+            <ALink color="#ff9b96" bold onClick={() => this.props.history.replace('/main')}>
+              {constants.back}
+            </ALink>
           </div>
         </div>
         <div className="row">

@@ -133,7 +133,10 @@ class TransactionListContainer extends
         <div className="transaction-list-background" />
         <div className="container ">
           <div className="row">
-            <div className="col"><ALink text={constants.back} color="#ff9b96" bold onClick={this.onPressBack} /></div>
+            <div className="col">
+              <ALink color="#ff9b96" bold onClick={this.onPressBack}>
+                {constants.back}
+              </ALink></div>
           </div>
           <div className="row mt-4">
             <div className="col">

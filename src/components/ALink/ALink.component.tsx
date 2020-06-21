@@ -5,7 +5,6 @@ import './aLink.style.scss'
 type DefaultProps = Readonly<typeof defaultProps>
 
 const defaultProps: IALink = {
-  text: '',
   fontSize: 14,
   bold: false,
   color: '#777777',
@@ -16,12 +15,12 @@ const defaultProps: IALink = {
 const ALink: SFC<IALink & DefaultProps> = (props) => {
 
   const {
-    text,
     bold,
     color,
     onClick,
     disabled,
     fontSize,
+    children,
   } = props
 
   const disabledClass = disabled ? 'disabled' : ''
@@ -33,7 +32,7 @@ const ALink: SFC<IALink & DefaultProps> = (props) => {
 
   const handleOnClick = () => disabled ? noop() : onClick!()
 
-  return (<span onClick={handleOnClick} className={wrapperClass} style={style}>{text}</span>)
+  return (<span onClick={handleOnClick} className={wrapperClass} style={style}>{children}</span>)
 }
 
 ALink.defaultProps = defaultProps

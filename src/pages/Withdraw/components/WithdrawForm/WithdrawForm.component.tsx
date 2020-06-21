@@ -66,7 +66,9 @@ const WithdrawForm:
         <div className="withdraw-form-wrapper mb-5">
           <div className="row">
             <div className="col">
-              <ALink text={constants.backText} color="#ff9b96" bold onClick={onPressBack} />
+              <ALink color="#ff9b96" bold onClick={onPressBack}>
+                {constants.backText}
+              </ALink>
             </div>
           </div>
           <div className="row">
@@ -140,10 +142,11 @@ const WithdrawForm:
             <div className="col text-center">
               <ALink
                 onClick={onPressCancel}
-                text={constants.buttonCancel}
                 fontSize={18}
                 color="#bb130a"
-              />
+              >
+                {constants.buttonCancel}
+              </ALink>
             </div>
           </div>
         </div>

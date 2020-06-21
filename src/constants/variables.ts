@@ -1,6 +1,7 @@
 export const THEME_MODE = {
   DARK: 'dark-mode',
   LIGHT: 'light-mode',
+  DARKER: 'darker-mode',
 }
 
 export const EBANK = {
