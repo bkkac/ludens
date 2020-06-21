@@ -1,4 +1,3 @@
-import kasikorn from './KBANK.png'
 import KBANK from './KBANK.png'
 import BAY from './BAY.png'
 import KTB from './KTB.png'
@@ -16,9 +15,9 @@ import GSB from './GSB.png'
 import ISBT from './ISBT.png'
 
 const collectBank: IImageSet = {
-  kasikorn: {
-    Icon: kasikorn,
-    key: 'KBANK',
+  KRUNGSRI: {
+    Icon: BAY,
+    key: 'KRUNGSRI',
   },
   BBL: {
     Icon: BBL,

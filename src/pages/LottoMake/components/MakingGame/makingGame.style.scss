@@ -38,6 +38,16 @@
     &:hover {
       background-color: #7fa7db4d;
     }
+
+    &.disabled {
+      cursor: unset;
+      background-color: #cccccc;
+      color: white;
+
+      &:hover {
+        background-color: #cccccc;
+      }
+    }
   }
 }
 

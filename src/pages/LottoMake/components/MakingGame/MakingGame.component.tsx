@@ -59,7 +59,7 @@ class MakingGame extends Component<IMakingGameComponentProps, IMakingGameCompone
   handleOnClickNumberPad = (num: number) => {
     if (num === -1) {
       return this.setState({ numberSet: this.state.numberSet.slice(0, -1) })
-    }
+    } else if(this.state.numberSet.length >= 5) { return }
     const newValue = this.state.numberSet.concat(String(num))
     return this.setState({ numberSet: newValue })
   }
@@ -87,7 +87,10 @@ class MakingGame extends Component<IMakingGameComponentProps, IMakingGameCompone
                 />
               </div>
               <div className="col-4" style={{ padding: 0 }}>
-                <div className="making-game-button" onClick={this.handleOnClickAddNumber}>
+                <div
+                  className={`making-game-button ${this.state.numberSet.length === 5 ? '' : 'disabled'}`}
+                  onClick={this.handleOnClickAddNumber}
+                >
                   {constants.addNumber}
                 </div>
               </div>

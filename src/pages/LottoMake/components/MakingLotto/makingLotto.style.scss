@@ -56,11 +56,13 @@
 }
 
 .input-cell-container {
+
   .input-cell-core {
     width: 40px;
     height: 64px;
     border-radius: 4px;
     border: solid 1px #7777774d;
+    padding: 0 !important;
 
     -webkit-text-stroke: 1px #7070701a;
     font-family: "SukhumvitSet-Bold";

@@ -127,7 +127,7 @@ class LottoMakeContainer extends Component<
   }
 
   clearLocalInterval = () => {
-    this.setState({ lottoStatus: 'CLOSE' })
+    this.setState({ lottoStatus: 'CLOSE', numberList: [] })
     if (this.intervalId !== null) {
       clearInterval(this.intervalId)
     }
