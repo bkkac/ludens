@@ -26,6 +26,7 @@ const constants = {
   back: '< ย้อนกลับ',
   cannotBet: 'ไม่สามารถแทงได้',
   betSuccess: 'คุณได้ทำรายการเสร็จสมบูรณ์',
+  makingGameLabel: 'ผลรวม (ยิงเลข)',
 }
 
 const slugNames: { [P in IGamePath]: TLottoGameType } = {
@@ -292,9 +293,15 @@ class LottoMakeContainer extends Component<
               </ALink>
             </div>
           </div>
-          <div className="row mb-3">
-            <div className="col d-flex justify-content-center">
-              <div className="remaining-time-lotto">{remainingTime}</div>
+          <div className="row mb-3 mx-2">
+            <div className="col d-flex flex-column yeege-sum-lotto-container p-3">
+              <div className="yeege-sum-lotto-title d-flex flex-row align-items-center">
+                {constants.makingGameLabel}
+                <div className="d-flex justify-content-center">
+                  <div className="remaining-time-lotto">{remainingTime}</div>
+                </div>
+              </div>
+              <div className="yeege-sum-lotto-result mt-3">{this.props.yeegeSum || '0'}</div>
             </div>
           </div>
           <div className="row mt-4">

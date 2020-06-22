@@ -7,7 +7,6 @@ import {
 import './makingGame.style.scss'
 
 const constants = {
-  makingGameLabel: 'ผลรวม (ยิงเลข)',
   addNumber: 'เพิ่มเลข',
   sampleGamePlaceHoder: 'กรอกตัวเลข 5 หลัก',
   nameList: 'รายชื่อผลรวม',
@@ -90,9 +89,7 @@ class MakingGame extends Component<IMakingGameComponentProps, IMakingGameCompone
       <>
         <div className="row mt-3 mb-4 mx-1">
           <div className="col making-game-container">
-            <div className="making-game-title mt-3">{constants.makingGameLabel}</div>
-            <div className="making-game-result mt-3">{this.props.yeegeSum || '0'}</div>
-            <div className="row mt-4">
+            <div className="row">
               <div className="col-8" style={{ padding: 0 }}>
                 <InputGameComponent
                   name="gameNumber"

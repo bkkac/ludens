@@ -11,4 +11,5 @@ declare interface ILottoActionCard {
   rangeTime?: string
   icon?: string | IIconSet
   onClick?(): void
+  timesupText?: string
 }
