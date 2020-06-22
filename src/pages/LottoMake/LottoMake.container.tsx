@@ -39,6 +39,7 @@ const defaultProps: IMakingLottoProps & IMakingLottoActionProps = {
   makingBetLotto() { noop() },
   getYeegeSum() { noop() },
   playYeege() { noop() },
+  getPlayedYeegeList() { noop() },
   makingBetLottoCode: 0,
   makingBetLottoError: '',
   makingBetLottoIsFetching: false,
@@ -51,6 +52,10 @@ const defaultProps: IMakingLottoProps & IMakingLottoActionProps = {
   getYeegeSumError: '',
   getYeegeSumCode: 0,
   yeegeSum: '0',
+  getPlayedYeegeListIsFetching: false,
+  getPlayedYeegeListError: '',
+  getPlayedYeegeListCode: '0',
+  playedYeegeList: [],
 }
 
 class LottoMakeContainer extends Component<
@@ -77,6 +82,10 @@ class LottoMakeContainer extends Component<
 
   componentDidMount() {
     this.props.getYeegeSum({
+      date: moment().format('DDMMYYYY'),
+      round: this.props.location.state.selectedLottoGame.round,
+    })
+    this.props.getPlayedYeegeList({
       date: moment().format('DDMMYYYY'),
       round: this.props.location.state.selectedLottoGame.round,
     })
@@ -245,8 +254,10 @@ class LottoMakeContainer extends Component<
         if (this.state.lottoStatus === 'OPEN') {
           return (
             <MakingGame
+              playedYeegeList={this.props.playedYeegeList}
               onClickAddNumber={this.handleOnPlayYeegeGame}
               yeegeSum={this.props.yeegeSum}
+
             />
           )
         }

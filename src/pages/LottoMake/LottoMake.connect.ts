@@ -18,9 +18,14 @@ const mapStateToProps = (state: RootReducers): IMakingLottoProps => ({
   getYeegeSumError: state.ludens.lotto.yeege.sum.error!,
   getYeegeSumCode: state.ludens.lotto.yeege.sum.code!,
   yeegeSum: state.ludens.lotto.yeege.sum.data!,
+  getPlayedYeegeListIsFetching: state.ludens.lotto.yeege.playedList.isFetching!,
+  getPlayedYeegeListError: state.ludens.lotto.yeege.playedList.error!,
+  getPlayedYeegeListCode: state.ludens.lotto.yeege.playedList.code!,
+  playedYeegeList: state.ludens.lotto.yeege.playedList.data!,
 })
 
 const mapDispatchToProos = (dispatch: Dispatch<RootAction>): IMakingLottoActionProps => bindActionCreators({
+  getPlayedYeegeList: lotterAction.getPlayedYeegeListAction,
   makingBetLotto: lotterAction.makingBetLottoAction,
   getYeegeSum: lotterAction.getYeegeSumAction,
   playYeege: lotterAction.playYeegeAction,

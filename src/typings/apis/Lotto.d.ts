@@ -43,8 +43,8 @@ declare interface IYeegePlay {
   id?: number
   number?: number
   round?: string
-  createAt?: string
-  user?: IUser
+  createdAt?: string
+  userId?: IUser
 }
 
 declare interface IBet {

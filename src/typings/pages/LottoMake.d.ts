@@ -18,9 +18,14 @@ declare interface IMakingLottoProps {
   getYeegeSumError: string
   getYeegeSumCode: number | string
   yeegeSum: string
+  getPlayedYeegeListIsFetching: boolean
+  getPlayedYeegeListError: string
+  getPlayedYeegeListCode: number | string
+  playedYeegeList: IYeegePlay[]
 }
 
 declare interface IMakingLottoActionProps {
+  getPlayedYeegeList(data: IGetYeegeSum): void
   makingBetLotto(data: ILottoNumber[]): void
   getYeegeSum(data: IGetYeegeSum): void
   playYeege(data: IYeegePlayRequest): void
@@ -56,6 +61,7 @@ declare interface IMakingLottoComponentState {
 
 declare interface IMakingGameComponentProps {
   yeegeSum: string
+  playedYeegeList: IYeegePlay[]
   onClickAddNumber(gameNumber: string): void
 }
 
