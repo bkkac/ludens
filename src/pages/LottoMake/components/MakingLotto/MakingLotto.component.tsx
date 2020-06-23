@@ -141,13 +141,13 @@ class MakingLotto extends Component<IMakingLottoComponentProps, IMakingLottoComp
     this.setState({ numberSet: '' })
   }
 
-  handleOnSwitchLottoTypeChanged = (currentTab: TLottoType) => {
+  handleOnSwitchLottoTypeChanged = (currentTab: TLottoGameType) => {
     this.setState({ gameType: currentTab, numberSet: '' })
   }
 
   render() {
 
-    const switchsLottoTypes: ISwitchItem<TLottoType>[] = [
+    const switchsLottoTypes: ISwitchItem<TLottoGameType>[] = [
       { label: constants.lotto3, value: 'THREE_UP' },
       { label: constants.lotto2, value: 'TWO_DOWN' },
       // { label: constants.lottoRun, value: 'run' },

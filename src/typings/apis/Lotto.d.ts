@@ -1,5 +1,5 @@
-declare type TLottoType = | 'THREE_UP' | 'THREE_TOAST' | 'TWO_UP' | 'TWO_DOWN' | 'RUN_UP' | 'RUN_DOWN'
-
+declare type TLottoGameType = | 'THREE_UP' | 'THREE_TOAST' | 'TWO_UP' | 'TWO_DOWN' | 'RUN_UP' | 'RUN_DOWN'
+declare type TLottoType = | 'YEGEE' | 'GOVERNMENT'
 declare interface ILottoResult {
   name: string
   numbers?: string[]
@@ -24,7 +24,7 @@ declare interface IYeegeGame {
 
 declare interface ILottoNumber {
   number: string
-  type: TLottoType
+  type: TLottoGameType
   value?: string
   slug?: string
 }

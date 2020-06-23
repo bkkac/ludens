@@ -130,6 +130,11 @@ const DepositStep2:
         onCancelPresses!()
       }
 
+      const handleOnPressBankAccount = (bankNumber: string) => {
+        document.execCommand(bankNumber)
+        // TODO: Coppy
+      }
+
       const remainingDepositTime = `${number.padNumber(String(remain.minutes), 2)} : ${number.padNumber(String(remain.seconds), 2)}`
 
       return (
@@ -166,7 +171,7 @@ const DepositStep2:
             </div>
             <div className="row">
               <div className="col d-flex justify-content-center">
-                <BankNumberCard bank={extraProps?.requestedTransaction.webBank!} />
+                <BankNumberCard bank={extraProps?.requestedTransaction.webBank!} onClick={handleOnPressBankAccount} />
               </div>
             </div>
             <div className="row mt-5">

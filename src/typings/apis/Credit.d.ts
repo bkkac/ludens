@@ -1,16 +1,21 @@
-declare type TCreditType = | 'WALLET' | 'BET'
+declare type TCreditFinanceType = | 'FINANCE_DEPOSIT' | 'FINANCE_WITHDRAW'
+declare type TCreditLottoType = | 'BET_LOTTER_YEGEE' | 'BET_LOTTER_GOVERNMENT'
+
 declare type ICreditWalletType = | 'DEPOSIT' | 'WITHDRAW'
 
 declare interface ICreditDetail {
   money: string | number
-  type: ICreditWalletType | TLottoType
+  number: string
+  type: ICreditWalletType | TLottoGameType
   status: TFinanceStatus | TBetStatus
-  slug: string | null
   updatedAt: string
 }
 
 declare interface ICredit {
-  groupType: TCreditType
+  groupType: TCreditFinanceType | TCreditLottoType | ''
   createdAt: string
+  money: number
+  slug: string | null
+  status: TFinanceStatus | TBetStatus | ''
   list: ICreditDetail[]
 }

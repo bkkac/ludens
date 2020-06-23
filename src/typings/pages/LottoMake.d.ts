@@ -1,4 +1,3 @@
-declare type TLottoGameType = | 'LOTTER_YEGEE'
 declare type IGamePath = | 'yeege'
 
 declare interface IMakingLottoParam {
@@ -56,7 +55,7 @@ declare interface IMakingLottoComponentProps {
 
 declare interface IMakingLottoComponentState {
   numberSet: string
-  gameType: TLottoType
+  gameType: TLottoGameType
 }
 
 declare interface IMakingGameComponentProps {

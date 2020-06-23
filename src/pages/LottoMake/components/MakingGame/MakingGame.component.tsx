@@ -66,6 +66,7 @@ class MakingGame extends Component<IMakingGameComponentProps, IMakingGameCompone
   }
 
   handleOnClickAddNumber = () => {
+    if (this.state.numberSet.length < 5) { return }
     this.props.onClickAddNumber(this.state.numberSet)
     this.setState({
       numberSet: '',

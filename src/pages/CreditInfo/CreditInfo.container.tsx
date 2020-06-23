@@ -3,6 +3,7 @@ import { RouteComponentProps } from 'react-router-dom'
 import { LudensContext } from 'configs/context'
 import { THEME_MODE } from 'constants/variables'
 import {
+  map,
   noop,
   keys,
   sortBy,
@@ -107,14 +108,15 @@ class TransactionListContainer extends
 
   renderTransactionList = () => {
     const creditGroupList: Dictionary<ICredit[]> = groupBy<ICredit>(
-      this.props.creditInfo.map(credit => ({ ...credit, groupTime: moment(credit.createdAt).format('YYYYMMDD') })),
+      map(this.props.creditInfo, credit => ({ ...credit, groupTime: moment(credit.createdAt).format('YYYYMMDD') })),
       'groupTime')
 
     if (isEmpty(creditGroupList)) { return <></> }
 
     return reverse(keys(creditGroupList).sort()).map((key, index) => {
-      const CreditPerDay = reverse(sortBy(creditGroupList[key], ['createdAt']))
-        .map((transaction, transactionIndex) => (<TransactionItemCollapsible credit={transaction} key={`credit-info-item-${transactionIndex}`} />))
+      const CreditPerDay = map(
+        reverse(sortBy(creditGroupList[key], ['createdAt'])),
+        (transaction, transactionIndex) => (<TransactionItemCollapsible credit={transaction} key={`credit-info-items-${transactionIndex}`} />))
 
       const dateMoment = moment(key, 'YYYYMMDD')
       const isToDay = dateMoment.clone().diff(moment(), 'day')

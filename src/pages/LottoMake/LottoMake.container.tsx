@@ -27,10 +27,11 @@ const constants = {
   cannotBet: 'ไม่สามารถแทงได้',
   betSuccess: 'คุณได้ทำรายการเสร็จสมบูรณ์',
   makingGameLabel: 'ผลรวม (ยิงเลข)',
+  timeups: 'หมดเวลา',
 }
 
-const slugNames: { [P in IGamePath]: TLottoGameType } = {
-  yeege: 'LOTTER_YEGEE',
+const slugNames: { [P in IGamePath]: TLottoType } = {
+  yeege: 'YEGEE',
 }
 
 type DefaultProps = Readonly<typeof defaultProps>
@@ -169,9 +170,9 @@ class LottoMakeContainer extends Component<
   }
 
   getGameSlugFromGamePath = () => {
-    const generateSlug = (slugName: TLottoGameType) => {
+    const generateSlug = (slugName: TLottoType) => {
       const currentTime = moment().format('DDMMYYYYHHmm')
-      return `${slugName}_${currentTime}${number.padNumber(this.props.location.state.selectedLottoGame.round, 3)}`
+      return `LOTTER_${slugName}_${currentTime}${number.padNumber(this.props.location.state.selectedLottoGame.round, 3)}`
     }
     switch (this.props.match.params.type) {
       case 'yeege':
@@ -277,7 +278,11 @@ class LottoMakeContainer extends Component<
     const ViewLottoListButton = this.renderViewLottoListButton
     const GameModeComponent = this.renderGameMode
 
-    const remainingTime = `${number.padNumber(String(this.state.remainingTime.hours), 2)} : ${number.padNumber(String(this.state.remainingTime.minutes), 2)} : ${number.padNumber(String(this.state.remainingTime.seconds), 2)}`
+    const remainingTime = (this.state.remainingTime.hours < 1
+      && this.state.remainingTime.minutes < 1
+      && this.state.remainingTime.hours < 1)
+      ? constants.timeups
+      : `${number.padNumber(String(this.state.remainingTime.hours), 2)} : ${number.padNumber(String(this.state.remainingTime.minutes), 2)} : ${number.padNumber(String(this.state.remainingTime.seconds), 2)}`
 
     return (
       <>
