@@ -183,7 +183,7 @@ const TransactionItemCollapsible: SFC<ITransactionItemCollapsible & DefaultProps
           </div>
           <div className="transaction-time-text py-2">{displayTime} {round}</div>
         </div>
-        <div className="transaction-amount-text">
+        <div className="transaction-amount-text" style={{ color: getStatus().color }}>
           {number.castToMoney(Number(credit.money))}
         </div>
         <div className="d-flex transaction-chevron-right-icon">

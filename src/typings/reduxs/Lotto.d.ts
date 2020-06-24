@@ -9,9 +9,14 @@ declare interface IBetHistoryState {
   list: ReducerState<IBet[]>
 }
 
+declare interface IBetState {
+  make: ReducerState<IBet[]>
+  result: ReducerState<IBetResult[]>
+}
+
 declare interface ILottoState {
   list: ReducerState<ILotto[]>
   yeege: IYeegeState
-  bet: ReducerState<IBet[]>
+  bet: IBetState
   me: IBetHistoryState
 }

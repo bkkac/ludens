@@ -21,14 +21,21 @@ declare interface IMakingLottoProps {
   getPlayedYeegeListError: string
   getPlayedYeegeListCode: number | string
   playedYeegeList: IYeegePlay[]
+  getBetResultIsFetching: boolean
+  getBetResultError: string
+  getBetResultCode: number | string
+  betResults: IBetResult[]
 }
 
 declare interface IMakingLottoActionProps {
   getPlayedYeegeList(data: IGetYeegeSum): void
   makingBetLotto(data: ILottoNumber[]): void
   getYeegeSum(data: IGetYeegeSum): void
+  getBetResult(data: IBetResultRequest): void
   playYeege(data: IYeegePlayRequest): void
   loader(state: boolean): void
+  clearBetResult(): void
+  clearYeegeSum(): void
 }
 
 declare interface IMakingLottoState {

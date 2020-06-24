@@ -39,6 +39,12 @@ declare interface IYeegePlayRequest {
   round: string
 }
 
+declare interface IBetResultRequest {
+  date: string
+  type: string
+  round: string
+}
+
 declare interface IYeegePlay {
   id?: number
   number?: number
@@ -58,4 +64,12 @@ declare interface IBet {
   slug?: string
   createdAt: string
   updatedAt: string
+}
+
+declare interface IBetResult {
+  id: string
+  value: string
+  valueType: string
+  slug: string
+  createdAt: string
 }

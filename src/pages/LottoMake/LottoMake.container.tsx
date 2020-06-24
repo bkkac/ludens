@@ -9,7 +9,7 @@ import {
 import { noop, replace } from 'lodash'
 import moment from 'moment'
 import { number } from 'utils'
-import { MakingLotto, MakingGame, summaryLottoModal } from './components'
+import { MakingLotto, MakingGame, summaryLottoModal, BetResult } from './components'
 import './lottoMake.style.scss'
 
 import DocumentIcon from 'assets/images/lotto/document/document.png'
@@ -42,6 +42,9 @@ const defaultProps: IMakingLottoProps & IMakingLottoActionProps = {
   getYeegeSum() { noop() },
   playYeege() { noop() },
   getPlayedYeegeList() { noop() },
+  getBetResult() { noop() },
+  clearBetResult() { noop() },
+  clearYeegeSum() { noop() },
   makingBetLottoCode: 0,
   makingBetLottoError: '',
   makingBetLottoIsFetching: false,
@@ -58,6 +61,10 @@ const defaultProps: IMakingLottoProps & IMakingLottoActionProps = {
   getPlayedYeegeListError: '',
   getPlayedYeegeListCode: '0',
   playedYeegeList: [],
+  getBetResultIsFetching: false,
+  getBetResultError: '',
+  getBetResultCode: '0',
+  betResults: [],
 }
 
 class LottoMakeContainer extends Component<
@@ -83,20 +90,27 @@ class LottoMakeContainer extends Component<
   }
 
   componentDidMount() {
+    const game = this.props.location.state.selectedLottoGame
+    const gemeDate = moment(game.createdAt).format('DDMMYYYY')
+    const gameRound = number.padNumber(game.round, 3)
     this.props.getYeegeSum({
-      date: moment().format('DDMMYYYY'),
+      date: gemeDate,
       round: this.props.location.state.selectedLottoGame.round,
     })
     this.props.getPlayedYeegeList({
-      date: moment().format('DDMMYYYY'),
+      date: gemeDate,
       round: this.props.location.state.selectedLottoGame.round,
     })
     this.setState({ lottoStatus: this.props.location.state.selectedLottoGame.status }, () => {
       if (this.props.location.state.selectedLottoGame.status === 'OPEN') {
         this.countingdown()
       } else {
-        // this.props.loader(true)
-        // TODO: integrate get lotto result
+        this.props.loader(true)
+        this.props.getBetResult({
+          date: gemeDate,
+          round: gameRound,
+          type: 'LOTTER_YEGEE',
+        })
       }
     })
   }
@@ -131,10 +145,17 @@ class LottoMakeContainer extends Component<
       && !this.props.playYeegeIsFetching) {
       this.props.loader(false)
     }
+
+    if (prevProps.getBetResultIsFetching !== this.props.getBetResultIsFetching
+      && !this.props.getBetResultIsFetching) {
+      this.props.loader(false)
+    }
   }
 
   componentWillUnmount() {
     this.clearLocalInterval()
+    this.props.clearBetResult()
+    this.props.clearYeegeSum()
   }
 
   clearLocalInterval = () => {
@@ -246,6 +267,15 @@ class LottoMakeContainer extends Component<
   }
 
   renderGameMode = () => {
+    if (this.props.location.state.selectedLottoGame.status === 'CLOSE') {
+      return (
+        <BetResult
+          reound={number.padNumber(this.props.location.state.selectedLottoGame.round, 3)}
+          results={this.props.betResults}
+          playedYeegeList={this.props.playedYeegeList}
+        />
+      )
+    }
     switch (this.state.activeModeSwitch) {
       case 'lotto':
         if (this.state.lottoStatus === 'OPEN') {
@@ -311,7 +341,10 @@ class LottoMakeContainer extends Component<
           </div>
           <div className="row mt-4">
             <div className="col">
-              <Switch tabs={switchsMode} handleOnChangeTab={this.handleOnSwitchChanged} />
+              {this.props.location.state.selectedLottoGame.status === 'OPEN'
+                ? <Switch tabs={switchsMode} handleOnChangeTab={this.handleOnSwitchChanged} />
+                : <></>
+              }
             </div>
           </div>
           <div className="row">
