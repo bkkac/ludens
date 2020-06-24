@@ -13,8 +13,9 @@ declare interface RootReducers {
     register: IRegisterState
     loader: boolean
     auth: IAuthState
-    credit: ICreditState
+    finance: IFinanceState
     bank: IBankState
+    credit: ICreditState
     socket: ISocketState
   }
 }

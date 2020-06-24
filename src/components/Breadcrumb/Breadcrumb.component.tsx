@@ -20,11 +20,12 @@ const Breadcrumb: SFC<IBreadcrumbProps & DefaultProps> = (props) => {
             bold
             color={item.active ? '#777777' : '#74605c'}
             fontSize={20}
-            text={item.label}
             disabled={item.active}
             key={`${item.label}-${index}`}
             onClick={() => props.handleOnClickItem!(item.path)}
-          />
+          >
+            {item.label}
+          </ALink>
           <span className="breadcrumb-slash">{item.active ? '' : ' / '}</span>
         </ Fragment>
       )

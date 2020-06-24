@@ -63,7 +63,7 @@ class LottoSubContainer extends Component<
       const ListComponent = this.props.yeegeGameList.map((yeege: IYeegeGame, index) => {
         const yeegeRound = `รอบที่ ${yeege.round}`
         const rangeLabel = 'เวลาที่ปิดรับ'
-        const rangeTime = moment(yeege.endTime).add(-7, 'hour').format('DD MMM YY HH:mm') // TODO: Temporary
+        const rangeTime = moment(yeege.endTime).add(-7, 'hour').format('DD MMM YY HH:mm')
         return (
           <div className="col-6 my-2" key={`sub-${yeege.round}-${index}`}>
             <LottoActionCard
@@ -92,7 +92,9 @@ class LottoSubContainer extends Component<
       <div className="container lotto-sub-container">
         <div className="row mb-3">
           <div className="col">
-            <ALink text={constants.back} color="#ff9b96" bold onClick={() => this.props.history.replace('/lotto')} />
+            <ALink color="#ff9b96" bold onClick={() => this.props.history.replace('/lotto')}>
+              {constants.back}
+            </ALink>
           </div>
         </div>
         <div className="row">

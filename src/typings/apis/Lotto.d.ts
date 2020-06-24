@@ -1,3 +1,5 @@
+declare type TLottoGameType = | 'THREE_UP' | 'THREE_TOAST' | 'TWO_UP' | 'TWO_DOWN' | 'RUN_UP' | 'RUN_DOWN'
+declare type TLottoType = | 'YEGEE' | 'GOVERNMENT'
 declare interface ILottoResult {
   name: string
   numbers?: string[]
@@ -22,21 +24,9 @@ declare interface IYeegeGame {
 
 declare interface ILottoNumber {
   number: string
-  type: ILottoType
+  type: TLottoGameType
   value?: string
   slug?: string
-}
-
-declare interface ILottoNumberBet {
-  number: string
-  type: ILottoType
-  value?: string
-  slug?: string
-  result: string
-  status: TLottoMakedStatus
-  createdAt: string
-  updateAt: string
-  userId: number
 }
 
 declare interface IGetYeegeSum {
@@ -49,10 +39,37 @@ declare interface IYeegePlayRequest {
   round: string
 }
 
+declare interface IBetResultRequest {
+  date: string
+  type: string
+  round: string
+}
+
 declare interface IYeegePlay {
   id?: number
   number?: number
   round?: string
-  createAt?: string
-  user?: IUser
+  createdAt?: string
+  userId?: IUser
+}
+
+declare interface IBet {
+  id?: number
+  userId: number
+  number: string
+  type: TLot
+  value?: string
+  result: string
+  status: TBetStatus
+  slug?: string
+  createdAt: string
+  updatedAt: string
+}
+
+declare interface IBetResult {
+  id: string
+  value: string
+  valueType: string
+  slug: string
+  createdAt: string
 }

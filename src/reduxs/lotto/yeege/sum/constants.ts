@@ -9,6 +9,8 @@ export const UPDATE_YEEGE_SUM_REQUEST = 'UPDATE_YEEGE_SUM_REQUEST'
 export const UPDATE_YEEGE_SUM_SUCCESS = 'UPDATE_YEEGE_SUM_SUCCESS'
 export const UPDATE_YEEGE_SUM_FAILURE = 'UPDATE_YEEGE_SUM_FAILURE'
 
+export const CLEAR_YEEGE_SUM = 'CLEAR_YEEGE_SUM'
+
 export const initialState: ReducerState<string> = {
   isFetching: false,
   code: 0,

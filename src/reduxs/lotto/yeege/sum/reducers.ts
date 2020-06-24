@@ -44,6 +44,9 @@ const getYeegeGameListReducer = (
       return {
         ...state,
       }
+
+    case getType(actions.clearYeegeSum):
+      return initialState
     default:
       return state
   }

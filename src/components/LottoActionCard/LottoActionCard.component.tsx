@@ -14,6 +14,7 @@ const defaultProps: ILottoActionCard = {
   countdownTime: '',
   rangeTimeLabel: '',
   rangeTime: '',
+  timesupText: 'หมดเวลา',
   onClick() { noop() },
 }
 
@@ -30,6 +31,7 @@ const LottoActionCard: SFC<ILottoActionCard & DefaultProps> = (props) => {
     rangeTimeLabel,
     rangeTime,
     onClick,
+    timesupText,
   } = props
 
   const [remain, setRemain] = useState({ hours: 0, minutes: 0, seconds: 0 })
@@ -83,12 +85,13 @@ const LottoActionCard: SFC<ILottoActionCard & DefaultProps> = (props) => {
   }
 
   const handleOnClick = () => {
-    if (status === 'CLOSE') { return }
     onClick!()
   }
 
   const countdownTimeString = (countdownTime !== 'N/A')
-    ? `${number.padNumber(String(remain.hours), 2)}:${number.padNumber(String(remain.minutes), 2)}:${number.padNumber(String(remain.seconds), 2)}`
+    ? (remain.hours < 1 && remain.seconds < 1 && remain.minutes < 1)
+      ? timesupText
+      : `${number.padNumber(String(remain.hours), 2)}:${number.padNumber(String(remain.minutes), 2)}:${number.padNumber(String(remain.seconds), 2)}`
     : '24 ชม.'
 
   return (

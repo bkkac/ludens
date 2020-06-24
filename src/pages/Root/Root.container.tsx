@@ -133,8 +133,8 @@ class RootContainer extends Component<IRootProps & IRootActionProps & DefaultPro
     return (
       <LudensContext.Provider value={contextProviderValues}>
         <Router>
-          <PageNavbar />
           <TextRunning text={constants.textRunning} />
+          <PageNavbar />
           <PageElement />
         </Router>
         <Modal.Core event={event.MODAL} />

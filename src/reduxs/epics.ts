@@ -4,10 +4,11 @@ import otp from './otp/epics'
 import register from './register/epics'
 import loader from './loader/epics'
 import auth from './auth/epics'
-import credit from './credit/epics'
+import finance from './finance/epics'
 import user from './user/epics'
 import bank from './bank/epics'
 import socket from './socket/epics'
+import credit from './credit/epics'
 
 export default combineEpics(
   ...user,
@@ -16,8 +17,9 @@ export default combineEpics(
   ...register,
   ...loader,
   ...auth,
-  ...credit,
+  ...finance,
   ...bank,
   ...socket,
+  ...credit,
 )
 

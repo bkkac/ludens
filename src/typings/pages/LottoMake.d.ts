@@ -1,5 +1,3 @@
-declare type ILottoType = | 'THREE_UP' | 'THREE_TOAST' | 'TWO_UP' | 'TWO_DOWN' | 'RUN_UP' | 'RUN_DOWN'
-declare type ILottoGameType = | 'LOTTER_YEGEE'
 declare type IGamePath = | 'yeege'
 
 declare interface IMakingLottoParam {
@@ -10,7 +8,7 @@ declare interface IMakingLottoProps {
   makingBetLottoIsFetching: boolean
   makingBetLottoError: string
   makingBetLottoCode: number | string
-  makingBetLottoResult: ILottoNumberBet[]
+  makingBetLottoResult: IBet[]
   playYeegeIsFetching: boolean
   playYeegeError: string
   playYeegeCode: number | string
@@ -19,19 +17,37 @@ declare interface IMakingLottoProps {
   getYeegeSumError: string
   getYeegeSumCode: number | string
   yeegeSum: string
+  getPlayedYeegeListIsFetching: boolean
+  getPlayedYeegeListError: string
+  getPlayedYeegeListCode: number | string
+  playedYeegeList: IYeegePlay[]
+  getBetResultIsFetching: boolean
+  getBetResultError: string
+  getBetResultCode: number | string
+  betResults: IBetResult[]
 }
 
 declare interface IMakingLottoActionProps {
+  getPlayedYeegeList(data: IGetYeegeSum): void
   makingBetLotto(data: ILottoNumber[]): void
   getYeegeSum(data: IGetYeegeSum): void
+  getBetResult(data: IBetResultRequest): void
   playYeege(data: IYeegePlayRequest): void
   loader(state: boolean): void
+  clearBetResult(): void
+  clearYeegeSum(): void
 }
 
 declare interface IMakingLottoState {
   activeModeSwitch: string
   numberList: ILottoNumber[]
   defaultGameValue: string
+  remainingTime: {
+    hours: number
+    minutes: number
+    seconds: number
+  }
+  lottoStatus: TLottoAvailableStatus
 }
 
 declare interface ISummaryLottoModalProps {
@@ -46,11 +62,12 @@ declare interface IMakingLottoComponentProps {
 
 declare interface IMakingLottoComponentState {
   numberSet: string
-  gameType: ILottoType
+  gameType: TLottoGameType
 }
 
 declare interface IMakingGameComponentProps {
   yeegeSum: string
+  playedYeegeList: IYeegePlay[]
   onClickAddNumber(gameNumber: string): void
 }
 

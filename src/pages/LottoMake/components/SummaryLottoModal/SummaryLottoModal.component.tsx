@@ -20,7 +20,7 @@ const constants = {
   totalToPay: 'จำนวนเงินทั้งหมด',
 }
 
-const lottoTypeNames: { [type in ILottoType]: string } = {
+const lottoTypeNames: { [type in TLottoGameType]: string } = {
   RUN_UP: 'วงบน',
   RUN_DOWN: 'วงลาง',
   THREE_TOAST: 'สามตวโตท',
@@ -78,10 +78,10 @@ const SummaryLottoModal: SFC<ISummaryLottoModalProps & DefaultProps> = ({
   }
 
   const RenderLottoList = () => {
-    const groupingLottoListObject: { [name in ILottoType]?: (ILottoNumber & { seq?: number })[] }
+    const groupingLottoListObject: { [name in TLottoGameType]?: (ILottoNumber & { seq?: number })[] }
       = groupBy<(ILottoNumber & { seq?: number })>(betList.map((bet, betIndex) => ({ ...bet, seq: betIndex })), 'type')
     const GroupingLottoListComponent = keys(groupingLottoListObject).map((lottos, lottosIndex) => {
-      const LottoListComponent = groupingLottoListObject[lottos as ILottoType]?.map((lotto, lottoIndex) => {
+      const LottoListComponent = groupingLottoListObject[lottos as TLottoGameType]?.map((lotto, lottoIndex) => {
         return (
           <div className="row lotto-row" key={`lotto-${lotto.type}-${lottoIndex}`}>
             <div className="col lotto-wrapper">
@@ -112,7 +112,7 @@ const SummaryLottoModal: SFC<ISummaryLottoModalProps & DefaultProps> = ({
         <div className="row mt-4" key={`lotto-type-${lottosIndex}`}>
           <div className="col">
             <div className="row">
-              <div className="col lotto-name-type">{lottoTypeNames[lottos as ILottoType]}</div>
+              <div className="col lotto-name-type">{lottoTypeNames[lottos as TLottoGameType]}</div>
             </div>
             <div className="row mt-2">
               <div className="col">

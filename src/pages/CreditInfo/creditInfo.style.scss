@@ -1,0 +1,160 @@
+.credit-info-list-container {
+  padding-top: 112px;
+  padding-bottom: 40px;
+  min-height: 100vh;
+  position: relative;
+  background-color: #222529;
+
+  .wallet-card-container {
+    flex: 1;
+    height: 200px;
+    max-width: 340px;
+    border-radius: 16px;
+    background-color: #282b2f;
+    padding: 32px 40px;
+
+    .wallet-card-name {
+      font-family: "SukhumvitSet-Bold";
+      font-size: 16px;
+      line-height: 16px;
+      text-align: left;
+      color: #ffffff;
+
+      span {
+        font-family: "SukhumvitSet-Thin";
+        color: #ffffff;
+      }
+
+      padding-right: 8px;
+      margin-right: 8px;
+      border-right: solid 1px rgba($color: #ffffff, $alpha: 0.1);
+    }
+
+    .wallet-card-credit-name {
+      font-family: "SukhumvitSet-Thin";
+      font-size: 14px;
+      line-height: 14px;
+      text-align: left;
+      color: rgba($color: #ffffff, $alpha: 0.4);
+    }
+
+    .card-number-wrapper {
+      flex: 1;
+      font-family: "SukhumvitSet-Medium";
+      font-size: 18px;
+      line-height: 18px;
+      text-align: left;
+      color: #ffffff;
+    }
+
+    .wallet-card-credit-balance-wrapper {
+      flex: 1;
+
+      .wallet-card-credit-balance {
+        font-family: "SukhumvitSet-Medium";
+        font-size: 22px;
+        line-height: 22px;
+        text-align: left;
+        color: #ffffff;
+      }
+
+      .wallet-card-credit-balance-label {
+        font-family: "SukhumvitSet-Thin";
+        font-size: 14px;
+        line-height: 14px;
+        text-align: left;
+        color: #ffffff;
+        margin-bottom: 8px;
+      }
+    }
+
+    .mastercard-icon {
+      width: 40px;
+      height: 40px;
+    }
+  }
+
+  // Wrapper Transaction BG
+  .credit-info-transaction-wrapper {
+    background-color: #282b2f;
+    border-radius: 12px;
+  }
+
+  .transaction-list-title-text {
+    font-family: "SukhumvitSet-Bold";
+    font-size: 24px;
+    line-height: 1.13;
+    text-align: left;
+    color: #fcfcfc;
+  }
+
+  .remaining-label {
+    width: 100px;
+    height: 20px;
+    border-radius: 10px;
+    background-color: #065bc9;
+
+    font-family: "SukhumvitSet-Bold";
+    font-size: 12px;
+    line-height: 20px;
+    text-align: center;
+    color: #fcfcfc;
+  }
+
+  .credit-amount-text {
+    font-family: "SukhumvitSet-Bold";
+    font-size: 40px;
+    line-height: 58px;
+    text-align: center;
+    color: #fcfcfc;
+  }
+
+  .updated-time-text {
+    font-family: "SukhumvitSet-Medium";
+    font-size: 12px;
+    line-height: 20px;
+    text-align: center;
+    color: rgba($color: #ffffff, $alpha: 0.3);
+  }
+
+  .credit-panel-action-wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+
+    .temprary-button-wrapper {
+      display: flex;
+      width: 116px;
+      height: 32px;
+      border-radius: 16px;
+      background-color: #3b4fe8;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+
+      &:hover {
+        background-color: #3446d0;
+      }
+
+      .temp-icon-button {
+        height: unset !important;
+        margin-right: 10px;
+      }
+
+      .temp-text-button {
+        font-family: "SukhumvitSet-Bold";
+        font-size: 16px;
+        line-height: 1.69;
+        text-align: right;
+        color: #ffffff;
+      }
+    }
+  }
+
+  .display-date-text {
+    font-family: "SukhumvitSet-Medium";
+    font-size: 18px;
+    line-height: 18px;
+    color: white;
+  }
+}

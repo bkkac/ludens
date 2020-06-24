@@ -53,7 +53,7 @@ const socketMiddleware = (store: MiddlewareAPI<Dispatch, RootReducers>) => (next
         socket.on('connect', onConnect(store))
         socket.on('disconnect', onDisconnect(store))
         socket.on('error', onError(store))
-        socket.on(`wallet_${store.getState().ludens.user.me.data?.id}`, onUpdateWallet(store))
+        socket.on(`wallet_1`, onUpdateWallet(store))
         socket.on('yegee_game', onUpdateYeegeGame(store))
         break;
       case getType(socketAction.disconnectSocketAction):

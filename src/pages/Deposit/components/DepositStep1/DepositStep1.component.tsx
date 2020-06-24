@@ -58,6 +58,7 @@ const DepositStep1:
 
     const RenderBankList = (): JSX.Element => {
       const RadioImages = extraProps?.banks.map((bank, index) => {
+        console.log(bank.type)
         return (
           <div className="col-3 col-sm-3 col-md-2 col-lg-1 mt-2" key={`bank-${index}-${bank.type}`}>
             <InputRadioImage
@@ -81,7 +82,7 @@ const DepositStep1:
         <div className="deposit-form-wrapper mb-5">
           <div className="row">
             <div className="col">
-              <ALink text={constants.backText} color="#ff9b96" bold onClick={onPressBack} />
+              <ALink color="#ff9b96" bold onClick={onPressBack}>{constants.backText}</ALink>
             </div>
           </div>
           <div className="row">

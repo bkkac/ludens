@@ -3,10 +3,11 @@ import otpAction from './otp/actions'
 import registerAction from './register/actions'
 import loaderAction from './loader/actions'
 import authAction from './auth/actions'
-import creditAction from './credit/actions'
+import financeAction from './finance/actions'
 import userAction from './user/actions'
 import bankAction from './bank/actions'
 import socketAction from './socket/actions'
+import creditAction from './credit/actions'
 
 export default {
   ...userAction,
@@ -15,7 +16,8 @@ export default {
   ...registerAction,
   ...loaderAction,
   ...authAction,
-  ...creditAction,
+  ...financeAction,
   ...bankAction,
   ...socketAction,
+  ...creditAction,
 }

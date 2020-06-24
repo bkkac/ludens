@@ -18,7 +18,7 @@ import { faPlus, faMinus } from '@fortawesome/free-solid-svg-icons'
 import './transactionList.style.scss'
 
 const constants = {
-  titleText: 'ข้อมูลเครดิต',
+  titleText: 'ฝาก - ถอน',
   remainingLabel: 'เครดิตคงเหลือ',
   deposit: 'ฝาก',
   withdraw: 'ถอน',
@@ -133,7 +133,10 @@ class TransactionListContainer extends
         <div className="transaction-list-background" />
         <div className="container ">
           <div className="row">
-            <div className="col"><ALink text={constants.back} color="#ff9b96" bold onClick={this.onPressBack} /></div>
+            <div className="col">
+              <ALink color="#ff9b96" bold onClick={this.onPressBack}>
+                {constants.back}
+              </ALink></div>
           </div>
           <div className="row mt-4">
             <div className="col">

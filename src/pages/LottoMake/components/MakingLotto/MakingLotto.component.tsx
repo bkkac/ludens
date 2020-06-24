@@ -53,6 +53,15 @@ class MakingLotto extends Component<IMakingLottoComponentProps, IMakingLottoComp
     gameType: 'THREE_UP',
   }
 
+  isDisabledAddNumberButton = () => {
+    if (this.state.gameType === 'THREE_UP') {
+      return this.state.numberSet.length < 3
+    } else if (this.state.gameType === 'TWO_DOWN') {
+      return this.state.numberSet.length < 2
+    }
+    return true
+  }
+
   renderInputCell = () => {
     if (this.state.gameType === 'TWO_DOWN') {
       const setOfNumber = [0, 1]
@@ -114,11 +123,16 @@ class MakingLotto extends Component<IMakingLottoComponentProps, IMakingLottoComp
     if (num === -1) {
       return this.setState({ numberSet: this.state.numberSet.slice(0, -1) })
     }
+    else if (this.state.gameType === 'THREE_UP' && this.state.numberSet.length >= 3) { return }
+    else if (this.state.gameType === 'TWO_DOWN' && this.state.numberSet.length >= 2) { return }
+
     const newValue = this.state.numberSet.concat(String(num))
     return this.setState({ numberSet: newValue })
   }
 
   handleOnAddNumber = () => {
+    if (this.isDisabledAddNumberButton()) { return }
+
     const lottoNumber: ILottoNumber = {
       number: this.state.numberSet,
       type: this.state.gameType,
@@ -127,13 +141,13 @@ class MakingLotto extends Component<IMakingLottoComponentProps, IMakingLottoComp
     this.setState({ numberSet: '' })
   }
 
-  handleOnSwitchLottoTypeChanged = (currentTab: ILottoType) => {
-    this.setState({ gameType: currentTab })
+  handleOnSwitchLottoTypeChanged = (currentTab: TLottoGameType) => {
+    this.setState({ gameType: currentTab, numberSet: '' })
   }
 
   render() {
 
-    const switchsLottoTypes: ISwitchItem<ILottoType>[] = [
+    const switchsLottoTypes: ISwitchItem<TLottoGameType>[] = [
       { label: constants.lotto3, value: 'THREE_UP' },
       { label: constants.lotto2, value: 'TWO_DOWN' },
       // { label: constants.lottoRun, value: 'run' },
@@ -158,7 +172,10 @@ class MakingLotto extends Component<IMakingLottoComponentProps, IMakingLottoComp
               {this.renderInputCell()}
             </div>
             <div className="trailing-making-lotto-panel">
-              <div className="button-making-lotto" onClick={this.handleOnAddNumber}>
+              <div
+                className={`button-making-lotto ${this.isDisabledAddNumberButton() ? 'disabled' : ''}`}
+                onClick={this.handleOnAddNumber}
+              >
                 <FontAwesomeIcon icon={faPlus} className="plus-icon-button" />
                 {constants.make}
               </div>

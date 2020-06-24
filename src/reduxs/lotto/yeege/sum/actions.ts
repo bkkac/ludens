@@ -7,6 +7,7 @@ import {
   UPDATE_YEEGE_SUM_REQUEST,
   UPDATE_YEEGE_SUM_SUCCESS,
   UPDATE_YEEGE_SUM_FAILURE,
+  CLEAR_YEEGE_SUM,
 } from './constants'
 import { AxiosResponse, AxiosError } from 'axios'
 
@@ -37,7 +38,10 @@ const updateYeegeSumFailureAction = createAction(
   UPDATE_YEEGE_SUM_FAILURE,
   resolve => (error: any) => resolve(error))
 
+  const clearYeegeSum = createAction(CLEAR_YEEGE_SUM)
+
 export default {
+  clearYeegeSum,
   getYeegeSumAction,
   getYeegeSumSuccessAction,
   getYeegeSumFailureAction,

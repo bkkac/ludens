@@ -1,4 +1,5 @@
 .navbar-container {
+  top: 26px;
   height: 56px;
   padding: 16px 0 16px 0;
   background-color: #fcfcfc;
@@ -82,6 +83,22 @@
       color: white;
     }
   }
+
+  &.darker-mode {
+    box-shadow: unset;
+    background-color: #222529;
+
+    .container > .leading-navbar-container > .name-container {
+      color: white;
+      span {
+        color: white;
+      }
+    }
+
+    .container > .trailing-navbar-container > .burger-container {
+      color: white;
+    }
+  }
 }
 
 .credit-badge-wrapper {
@@ -117,6 +134,15 @@
 
     .credit-badge-text {
       color: #1171ec;
+    }
+  }
+
+  &.darker-mode {
+    background-image: unset;
+    background-color: #2b2e32;
+
+    .credit-badge-text {
+      color: #8d8d8d;
     }
   }
 }

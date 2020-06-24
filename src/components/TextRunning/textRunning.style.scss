@@ -1,6 +1,6 @@
 .text-running-container {
   position: fixed;
-  top: 56px;
+  top: 0px;
   z-index: 1;
   width: 100%;
 
@@ -8,7 +8,7 @@
     height: 26px;
     overflow: hidden;
     position: relative;
-    background-color: #1171ec;
+    background-color: #2b2e32;
 
     &.light-mode {
       background-color: #bb130a;
@@ -16,6 +16,10 @@
 
     &.dark-mode {
       background-color: #1171ec;
+    }
+
+    &.darker-mode {
+      background-color: #2b2e32;
     }
   }
 

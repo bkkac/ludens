@@ -1,5 +1,5 @@
 import React, { SFC } from 'react'
-import { get } from 'lodash'
+import { get, noop } from 'lodash'
 import { ResponsiveIcon } from 'components'
 import BankImage from 'assets/images/global/bank'
 import './bankNumberCard.style.scss'
@@ -11,7 +11,7 @@ const constants = {
 
 type DefaultProps = Readonly<typeof defaultProps>
 
-const defaultProps: { bank: IBank } = {
+const defaultProps: IBankNumberCard = {
   bank: {
     id: 0,
     name: '',
@@ -22,12 +22,23 @@ const defaultProps: { bank: IBank } = {
   },
 }
 
-const BankNumberCard: SFC<{ bank: IBank } & DefaultProps> = (props) => {
-  const { bank } = props
+declare interface IBankNumberCard {
+  bank: IBank
+  onClick?(bankNumber: string): void
+}
+
+const BankNumberCard: SFC<IBankNumberCard & DefaultProps> = (props) => {
+  const { bank, onClick } = props
   const Image = get(BankImage, `${bank.type}.Icon`, '') as string
 
+  const isClickable = typeof onClick === 'function'
+
+  const handleOnClickContainer = () => {
+    return isClickable ? onClick!(bank.number || '') : noop()
+  }
+
   return (
-    <div className="bankcard-number-container">
+    <div className={`bankcard-number-container ${isClickable ? 'clickable' : ''}`} onClick={handleOnClickContainer}>
       <ResponsiveIcon
         alt="bank-image"
         className="bank-image"

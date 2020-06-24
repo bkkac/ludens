@@ -58,7 +58,9 @@ const RegisterStep1: SFC<FormikProps<IRegister> & IRegisterFormProps & DefaultPr
     <div className="register-step-1-form mb-5">
       <div className="row">
         <div className="col">
-          <ALink text={constants.backText} color="#ff9b96" bold onClick={onPressBackStep} />
+          <ALink color="#ff9b96" bold onClick={onPressBackStep}>
+            {constants.backText}
+          </ALink>
         </div>
       </div>
       <div className="row pt-4">

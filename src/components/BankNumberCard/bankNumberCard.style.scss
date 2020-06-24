@@ -11,6 +11,13 @@
   padding-left: 30px;
   padding-right: 30px;
   overflow: hidden;
+
+  &.clickable {
+    cursor: pointer;
+    &:hover {
+      background-color: #eeeeee;
+    }
+  }
   
   .bank-image {
     width: 60px;
@@ -42,6 +49,7 @@
     .bank-number-wrapper {
       display: flex;
       flex-direction: row;
+      align-items: center;
 
       .bank-number-title {
         font-family: "SukhumvitSet-Bold";
@@ -54,8 +62,8 @@
 
       .bank-number {
         font-family: "SukhumvitSet-Bold";
-        font-size: 14px;
-        line-height: 1.93;
+        font-size: 20px;
+        line-height: 20px;
         text-align: left;
         color: #3587f1;
       }

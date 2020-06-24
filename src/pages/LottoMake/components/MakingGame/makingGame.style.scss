@@ -4,22 +4,6 @@
   background-color: #fcfcfc;
   overflow: hidden;
 
-  .making-game-title {
-    font-family: "SukhumvitSet-Bold";
-    font-size: 20px;
-    line-height: 1.5;
-    text-align: left;
-    color: #7777779a;
-  }
-
-  .making-game-result {
-    font-family: "SukhumvitSet-Bold";
-    font-size: 48px;
-    line-height: 0.56;
-    text-align: left;
-    color: #777777;
-  }
-
   .making-game-button {
     display: flex;
     justify-content: center;
@@ -37,6 +21,53 @@
 
     &:hover {
       background-color: #7fa7db4d;
+    }
+
+    &.disabled {
+      cursor: unset;
+      background-color: #cccccc;
+      color: white;
+
+      &:hover {
+        background-color: #cccccc;
+      }
+    }
+  }
+}
+
+.played-game-container {
+  border-radius: 16px;
+  box-shadow: 3px 3px 10px 0 #00000029;
+  background-color: #fcfcfc;
+  overflow: hidden;
+
+  .played-game-title-wrapper {
+    height: 76px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+
+    .played-game-title {
+      font-family: "SukhumvitSet-Bold";
+      font-size: 24px;
+      line-height: 24px;
+      text-align: left;
+      color: #777777;
+    }
+  }
+
+  .played-game-row {
+    background-color: #fcfcfc;
+
+    font-family: "SukhumvitSet-Medium";
+    font-size: 16px;
+    line-height: 16px;
+    text-align: left;
+    color: #ada2a0;
+
+    &:nth-child(even) {
+      background-color: #efefef;
     }
   }
 }
