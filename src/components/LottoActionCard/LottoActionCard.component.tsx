@@ -44,9 +44,8 @@ const LottoActionCard: SFC<ILottoActionCard & DefaultProps> = (props) => {
 
   const countingdown = () => {
     const momentEndAt = moment(replace(countdownTime!, /\s/g, ''))
-    const momentEndTime = momentEndAt.clone().add(-7, 'hour') // TODO: Temporary
     intervalId = setInterval(() => {
-      const duration = moment.duration(momentEndTime.diff(moment()))
+      const duration = moment.duration(momentEndAt.diff(moment()))
       const hours = duration.hours()
       const minutes = duration.minutes()
       const seconds = duration.seconds()
