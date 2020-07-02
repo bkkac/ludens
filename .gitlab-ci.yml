@@ -1,0 +1,28 @@
+image: node:10
+
+before_script:
+  - echo "$AWS_SECRET_ACCESS_KEY_STAGING" >> ~/.ssh/front_key
+  - chmod 644 ~/.ssh/front_key
+  - npm install --unsafe-perm node-sass
+  - npm install
+
+cache:
+  paths:
+    - node_modules/
+
+stages:
+  - build
+  - deploy
+
+build:
+  stage: build
+  script: npm run build
+
+deploy_code:
+  stage: deploy
+  only:
+    - staging
+  script:
+    - ssh -i "~/.ssh/front_key" ubuntu@ec2-3-14-13-164.us-east-2.compute.amazonaws.com
+    - cd /var/www
+    - sudo touch ci_here
