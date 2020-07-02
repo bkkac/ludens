@@ -1,6 +1,7 @@
 image: node:10
 
 before_script:
+  - mkdir -p ~/.ssh    
   - echo "$AWS_SECRET_ACCESS_KEY_STAGING" >> ~/.ssh/front_key
   - chmod 644 ~/.ssh/front_key
   - npm install --unsafe-perm node-sass
