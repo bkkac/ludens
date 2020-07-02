@@ -168,9 +168,8 @@ class LottoMakeContainer extends Component<
   countingdown = () => {
     const endedTime = this.props.location.state.selectedLottoGame.endTime
     const momentEndAt = moment(replace(endedTime!, /\s/g, ''))
-    const momentEndTime = momentEndAt.clone().add(-7, 'hour')
     this.intervalId = setInterval(() => {
-      const duration = moment.duration(momentEndTime.diff(moment()))
+      const duration = moment.duration(momentEndAt.diff(moment()))
       const hours = duration.hours()
       const minutes = duration.minutes()
       const seconds = duration.seconds()
