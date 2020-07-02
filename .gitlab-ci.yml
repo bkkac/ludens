@@ -24,6 +24,6 @@ deploy_code:
   only:
     - staging
   script:
-    - ssh -i "~/.ssh/front_key" ubuntu@ec2-3-14-13-164.us-east-2.compute.amazonaws.com
+    - ssh -tt -i "~/.ssh/front_key" ubuntu@ec2-3-14-13-164.us-east-2.compute.amazonaws.com
     - cd /var/www
     - sudo touch ci_here
