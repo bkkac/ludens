@@ -38,7 +38,6 @@ const onUpdateYeegeGame = (handlerStore: MiddlewareAPI<Dispatch, RootReducers>) 
 
 const onUpdateYeegeSum = (handlerStore: MiddlewareAPI<Dispatch, RootReducers>) =>
   (response: any) => {
-    console.log('onUpdateYeegeSum...')
     const responseYeegeSum: APISuccessResponse<string> = (typeof response === 'string')
       ? JSON.parse(response) : response
     const transformed = transformer.camelcaseTransform(responseYeegeSum) as APISuccessResponse<string>
@@ -52,7 +51,6 @@ const onOffYeegeSum = (handlerStore: MiddlewareAPI<Dispatch, RootReducers>) =>
 
 const onUpdatePlayedYeegeList = (handlerStore: MiddlewareAPI<Dispatch, RootReducers>) =>
   (response: any) => {
-    console.log('onUpdatePlayedYeegeList...')
     const responsePlayedYeegeList: APISuccessResponse<IYeegePlay[]> = (typeof response === 'string')
       ? JSON.parse(response) : response
     const transformed = transformer.camelcaseTransform(responsePlayedYeegeList) as APISuccessResponse<IYeegePlay[]>
@@ -64,19 +62,22 @@ const onOffPlayedYeegeList = (handlerStore: MiddlewareAPI<Dispatch, RootReducers
     handlerStore.dispatch(lottoAction.clearPlayedYeegeList())
   }
 
+
+let socket: SocketIOClient.Socket | null = null
+
 const socketMiddleware = (store: MiddlewareAPI<Dispatch, RootReducers>) => (next: Dispatch) => (action: RootAction) => {
 
   if (store.getState().ludens.user.token.accessToken) {
-
-    const socket = io(project.environment[project.environmentName].socket, {
-      query: { token: store.getState().ludens.user.token.accessToken },
-    })
-
     switch (action.type) {
       case getType(socketAction.connectSocketAction):
+        socket = io(project.environment[project.environmentName].socket, {
+          query: { token: store.getState().ludens.user.token.accessToken },
+        })
+
         if (socket.connected) {
           socket.disconnect()
         }
+
         socket.connect()
         socket.on('connect', onConnect(store))
         socket.on('disconnect', onDisconnect(store))
@@ -85,23 +86,23 @@ const socketMiddleware = (store: MiddlewareAPI<Dispatch, RootReducers>) => (next
         socket.on('yegee_game', onUpdateYeegeGame(store))
         break;
       case getType(socketAction.disconnectSocketAction):
-        if (socket.connected) {
-          socket.disconnect()
+        if (socket) {
+          if (socket.connected) {
+            socket.disconnect()
+          }
         }
         break;
       case getType(lottoAction.listenYeegeSumSocket):
-        console.log(`yegee_play_sum_${action.payload.date}${action.payload.round}`)
-        socket.on(`yegee_play_sum_${action.payload.date}${action.payload.round}`, onUpdateYeegeSum(store))
+        socket?.on(`yegee_play_sum_${action.payload.date}${action.payload.round}`, onUpdateYeegeSum(store))
         break;
       case getType(lottoAction.unlistenYeegeSumSocket):
-        socket.off(`yegee_play_sum_${action.payload.date}${action.payload.round}`, onOffYeegeSum(store))
+        socket?.off(`yegee_play_sum_${action.payload.date}${action.payload.round}`, onOffYeegeSum(store))
         break;
       case getType(lottoAction.listenPlayedYeegeListSocket):
-        console.log(`yegee_play_list_${action.payload.date}${action.payload.round}`)
-        socket.on(`yegee_play_list_${action.payload.date}${action.payload.round}`, onUpdatePlayedYeegeList(store))
+        socket?.on(`yegee_play_list_${action.payload.date}${action.payload.round}`, onUpdatePlayedYeegeList(store))
         break;
       case getType(lottoAction.unlistenPlayedYeegeListSocket):
-        socket.off(`yegee_play_list_${action.payload.date}${action.payload.round}`, onOffPlayedYeegeList(store))
+        socket?.off(`yegee_play_list_${action.payload.date}${action.payload.round}`, onOffPlayedYeegeList(store))
         break;
       default:
         return next(action);
