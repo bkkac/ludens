@@ -9,7 +9,7 @@ const routes: IRoutes[] = [
   },
   {
     name: 'register',
-    path: '/register',
+    path: '/register/:affilate',
     component: pages.Register,
   },
   {
