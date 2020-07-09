@@ -30,8 +30,12 @@ const mapStateToProps = (state: RootReducers): IMakingLottoProps => ({
 
 const mapDispatchToProos = (dispatch: Dispatch<RootAction>): IMakingLottoActionProps => bindActionCreators({
   getPlayedYeegeList: lotterAction.getPlayedYeegeListAction,
+  listenPlayedYeegeList: lotterAction.listenPlayedYeegeListSocket,
+  unlistenPlayedYeegeList: lotterAction.unlistenPlayedYeegeListSocket,
   makingBetLotto: lotterAction.makingBetLottoAction,
   getYeegeSum: lotterAction.getYeegeSumAction,
+  listenYeegeSum: lotterAction.listenYeegeSumSocket,
+  unlistenYeegeSum: lotterAction.unlistenYeegeSumSocket,
   getBetResult: lotterAction.getBetResultAction,
   playYeege: lotterAction.playYeegeAction,
   loader: loaderAction.loadingAction,

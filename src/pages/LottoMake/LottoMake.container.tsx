@@ -40,8 +40,12 @@ const defaultProps: IMakingLottoProps & IMakingLottoActionProps = {
   loader() { noop() },
   makingBetLotto() { noop() },
   getYeegeSum() { noop() },
+  listenYeegeSum() { noop() },
+  unlistenYeegeSum() { noop() },
   playYeege() { noop() },
   getPlayedYeegeList() { noop() },
+  listenPlayedYeegeList() { noop() },
+  unlistenPlayedYeegeList() { noop() },
   getBetResult() { noop() },
   clearBetResult() { noop() },
   clearYeegeSum() { noop() },
@@ -91,14 +95,14 @@ class LottoMakeContainer extends Component<
 
   componentDidMount() {
     const game = this.props.location.state.selectedLottoGame
-    const gemeDate = moment(game.createdAt).format('DDMMYYYY')
+    const gameDate = moment(game.createdAt).format('DDMMYYYY')
     const gameRound = number.padNumber(game.round, 3)
     this.props.getYeegeSum({
-      date: gemeDate,
+      date: gameDate,
       round: this.props.location.state.selectedLottoGame.round,
     })
     this.props.getPlayedYeegeList({
-      date: gemeDate,
+      date: gameDate,
       round: this.props.location.state.selectedLottoGame.round,
     })
     this.setState({ lottoStatus: this.props.location.state.selectedLottoGame.status }, () => {
@@ -107,7 +111,7 @@ class LottoMakeContainer extends Component<
       } else {
         this.props.loader(true)
         this.props.getBetResult({
-          date: gemeDate,
+          date: gameDate,
           round: gameRound,
           type: 'LOTTER_YEGEE',
         })
@@ -150,12 +154,34 @@ class LottoMakeContainer extends Component<
       && !this.props.getBetResultIsFetching) {
       this.props.loader(false)
     }
+
+    if (prevProps.getYeegeSumIsFetching !== this.props.getYeegeSumIsFetching
+      && !this.props.getYeegeSumIsFetching) {
+      const game = this.props.location.state.selectedLottoGame
+      const gameDate = moment(game.createdAt).format('DDMMYYYY')
+      const gameRound = number.padNumber(game.round, 3)
+      this.props.listenYeegeSum({ date: gameDate, round: gameRound })
+    }
+
+    if (prevProps.getPlayedYeegeListIsFetching !== this.props.getPlayedYeegeListIsFetching
+      && !this.props.getPlayedYeegeListIsFetching) {
+      const game = this.props.location.state.selectedLottoGame
+      const gameDate = moment(game.createdAt).format('DDMMYYYY')
+      const gameRound = number.padNumber(game.round, 3)
+      this.props.listenPlayedYeegeList({ date: gameDate, round: gameRound })
+    }
   }
 
   componentWillUnmount() {
     this.clearLocalInterval()
     this.props.clearBetResult()
     this.props.clearYeegeSum()
+
+    const game = this.props.location.state.selectedLottoGame
+    const gameDate = moment(game.createdAt).format('DDMMYYYY')
+    const gameRound = number.padNumber(game.round, 3)
+    this.props.unlistenYeegeSum({ date: gameDate, round: gameRound})
+    this.props.unlistenPlayedYeegeList({ date: gameDate, round: gameRound})
   }
 
   clearLocalInterval = () => {

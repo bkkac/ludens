@@ -4,6 +4,8 @@ import {
   GET_YEEGE_SUM_SUCCESS,
   GET_YEEGE_SUM_FAILURE,
   GET_YEEGE_SUM_CANCEL,
+  LISTEN_YEEGE_SUM_SOCKET,
+  UNLISTEN_YEEGE_SUM_SOCKET,
   UPDATE_YEEGE_SUM_REQUEST,
   UPDATE_YEEGE_SUM_SUCCESS,
   UPDATE_YEEGE_SUM_FAILURE,
@@ -15,7 +17,6 @@ const getYeegeSumAction = createAction(
   GET_YEEGE_SUM_REQUEST,
   resolve => (data: IGetYeegeSum) => resolve(data))
 
-
 const getYeegeSumSuccessAction = createAction(
   GET_YEEGE_SUM_SUCCESS,
   resolve => (data: AxiosResponse<APISuccessResponse<string>>) => resolve(data))
@@ -25,6 +26,14 @@ const getYeegeSumFailureAction = createAction(
   resolve => (error: AxiosError<APISuccessResponse>) => resolve(error))
 
 const getYeegeSumCancelAction = createAction(GET_YEEGE_SUM_CANCEL)
+
+const listenYeegeSumSocket = createAction(
+  LISTEN_YEEGE_SUM_SOCKET,
+  resolve => (data: IGetYeegeSum) => resolve(data))
+
+const unlistenYeegeSumSocket = createAction(
+  UNLISTEN_YEEGE_SUM_SOCKET,
+  resolve => (data: IGetYeegeSum) => resolve(data))
 
 const updateYeegeSumAction = createAction(
   UPDATE_YEEGE_SUM_REQUEST,
@@ -38,7 +47,7 @@ const updateYeegeSumFailureAction = createAction(
   UPDATE_YEEGE_SUM_FAILURE,
   resolve => (error: any) => resolve(error))
 
-  const clearYeegeSum = createAction(CLEAR_YEEGE_SUM)
+const clearYeegeSum = createAction(CLEAR_YEEGE_SUM)
 
 export default {
   clearYeegeSum,
@@ -46,6 +55,8 @@ export default {
   getYeegeSumSuccessAction,
   getYeegeSumFailureAction,
   getYeegeSumCancelAction,
+  listenYeegeSumSocket,
+  unlistenYeegeSumSocket,
   updateYeegeSumAction,
   updateYeegeSumSuccessAction,
   updateYeegeSumFailureAction,

@@ -29,8 +29,12 @@ declare interface IMakingLottoProps {
 
 declare interface IMakingLottoActionProps {
   getPlayedYeegeList(data: IGetYeegeSum): void
+  listenPlayedYeegeList(data: IGetYeegeSum): void
+  unlistenPlayedYeegeList(data: IGetYeegeSum): void
   makingBetLotto(data: ILottoNumber[]): void
   getYeegeSum(data: IGetYeegeSum): void
+  listenYeegeSum(data: IGetYeegeSum): void
+  unlistenYeegeSum(data: IGetYeegeSum): void
   getBetResult(data: IBetResultRequest): void
   playYeege(data: IYeegePlayRequest): void
   loader(state: boolean): void
