@@ -6,6 +6,7 @@ import { RouteComponentProps } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faChevronLeft, faChevronRight, faDice, faLink, faCopy } from '@fortawesome/free-solid-svg-icons'
 import { number } from 'utils'
+import moment from 'moment'
 import './affilate.style.scss'
 
 const constants = {
@@ -21,8 +22,43 @@ const constants = {
    totalMaked: 'จำนวนแทงทั้งหมด',
 }
 
+type DefaultProps = Readonly<typeof defaultProps>
+
+const defaultProps: IAffilateProps & IAffilateActionProps = {
+   affilateUuid: '',
+   getAffilateSummary() { noop() },
+   getAffilateSummaryCode: 0,
+   getAffilateSummaryError: '',
+   getAffilateSummaryIsFetching: false,
+   getAffilateSummaryResult: {},
+   getAffilateMember() { noop() },
+   getAffilateMemberCode: 0,
+   getAffilateMemberError: '',
+   getAffilateMemberIsFetching: false,
+   getAffilateMemberResult: [],
+   loader() { noop() },
+}
+
 class AffilateContainer extends
-   Component<RouteComponentProps> {
+   Component<RouteComponentProps & DefaultProps & IAffilateProps & IAffilateActionProps> {
+
+   componentDidMount() {
+      this.props.loader(true)
+      this.props.getAffilateSummary()
+      this.props.getAffilateMember('22041885')
+   }
+
+   componentDidUpdate(prevProps: IAffilateProps) {
+      if (prevProps.getAffilateSummaryIsFetching !== this.props.getAffilateSummaryIsFetching
+         && !this.props.getAffilateSummaryIsFetching) {
+         this.props.loader(false)
+      }
+
+      if (prevProps.getAffilateMemberIsFetching !== this.props.getAffilateMemberIsFetching
+         && !this.props.getAffilateMemberIsFetching) {
+         this.props.loader(false)
+      }
+   }
 
    onPressBack = () => this.props.history.goBack()
 
@@ -31,22 +67,24 @@ class AffilateContainer extends
    onPressCopy = () => { noop() }
 
    render() {
-      const totalIncome = '0.00'
-      const totalMember = '0'
+      const { getAffilateSummaryResult, getAffilateMemberResult } = this.props
+      const totalIncome = getAffilateSummaryResult.totalIncome
+      const totalMember = getAffilateSummaryResult.totalRegistered
 
       const affiName = 'หวยออนไลน์'
-      const affiDivider = '0.8'
+      const affiDivider = getAffilateSummaryResult.lotter? getAffilateSummaryResult.lotter.rate! : ''
       const dividerPercent = `${constants.divider} ${affiDivider}%`
-      const income = '40.00'
+      const income = getAffilateSummaryResult.income
       const affiIncome = number.castToMoney(Number(income))
+      const link = `${window.location.host}/register/${this.props.affilateUuid}`
 
-      const link = 'www.thailandbet.com/afflilate/biwswalker/32423kj42kl34j2k3l4jl32kj42kl34jl2k3j4'
-
-      const memberName = 'biwswalker'
-      const createdAt = '10 พ.ค. 63'
-      const memberAt = `${constants.member} ${createdAt}`
-      const totalMaked = '400.00'
-      const totalMakedMoney = number.castToMoney(Number(totalMaked))
+      const memberList = getAffilateMemberResult.map((memberData) => {
+         return {
+            memberName: memberData.memberName,
+            totalMakedMoney: number.castToMoney(Number(memberData.totalBet)),
+            createdAt: moment(memberData.createdAt).format('DDMMYYYY'),
+         }
+      })
 
       return (
          <div className="affilate-container">
@@ -116,19 +154,24 @@ class AffilateContainer extends
                   <div className="col">
                      <div className="border-rounded secondary-bg p2">
                         <h3>{constants.member}</h3>
-                        <div className="m3-t d-flex flex-row align-items-center">
-                           <div className="flex">
-                              <h5>{memberName}</h5>
-                              <div className="subtitle-2 secondary-text">{memberAt}</div>
-                           </div>
-                           <div className="text-right">
-                              <div className="subtitle-2 secondary-text">{constants.totalMaked}</div>
-                              <h4>{totalMakedMoney}</h4>
-                           </div>
-                           <div className="p2-l">
-                              <FontAwesomeIcon icon={faChevronRight} className="primary-blue-text" />
-                           </div>
-                        </div>
+                        {
+                           memberList.map((member, index) => {
+                              return (
+                                 <div className="m3-t d-flex flex-row align-items-center" key={index}>
+                                    <div className="flex">
+                                       <h5>{member.memberName}</h5>
+                                       <div className="subtitle-2 secondary-text">{member.createdAt}</div>
+                                    </div>
+                                    <div className="text-right">
+                                       <div className="subtitle-2 secondary-text">{constants.totalMaked}</div>
+                                       <h4>{member.totalMakedMoney}</h4>
+                                    </div>
+                                    <div className="p2-l">
+                                       <FontAwesomeIcon icon={faChevronRight} className="primary-blue-text" />
+                                    </div>
+                                 </div>
+                              )
+                           })}
                      </div>
                   </div>
                </div>

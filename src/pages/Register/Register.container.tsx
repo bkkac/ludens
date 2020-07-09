@@ -49,7 +49,7 @@ class RegisterContainer extends
 
   componentDidUpdate(prevProps: IRegisterProps, prevState: IRegisterStates) {
     if (prevState.currentStep !== this.state.currentStep) {
-      this.registerContainerRef.current?.scrollIntoView({
+      this.registerContainerRef.current ?.scrollIntoView({
         behavior: 'smooth',
         block: 'start',
         inline: 'start',
@@ -111,27 +111,28 @@ class RegisterContainer extends
 
   onNextStepPresses = (currentStep: number, value?: IRegister) => {
     if (currentStep === 1) {
-      const phoneNumber = value?.phoneNumber!
+      const phoneNumber = value ?.phoneNumber!
       if (phoneNumber) {
         this.props.loading(true)
         this.props.requestOTP(phoneNumber)
       }
     } else if (currentStep === 2) {
-      const phoneNumber = value?.phoneNumber!
-      const otp = value?.otp!
+      const phoneNumber = value ?.phoneNumber!
+      const otp = value ?.otp!
       this.props.loading(true)
       this.props.validateOTP({ phoneNumber, otp })
     } else if (currentStep === 3) {
       const registerData: IRegisterRequest = {
-        username: value?.username!,
-        password: value?.password!,
-        password_confirm: value?.confirmPassword!,
+        username: value ?.username!,
+        password: value ?.password!,
+        password_confirm: value ?.confirmPassword!,
         bank: {
-          type: value?.bankType!,
-          name: `${value?.ownerName} ${value?.ownerSurname}`,
-          number: value?.bankNumber!,
+          type: value ?.bankType!,
+          name: `${value ?.ownerName} ${value ?.ownerSurname}`,
+          number: value ?.bankNumber!,
         },
-        phone_number: value?.phoneNumber!,
+        phone_number: value ?.phoneNumber!,
+        affilate_uuid: value ?.affilateRef!,
       }
       this.props.loading(true)
       this.props.register(registerData)
@@ -180,7 +181,7 @@ class RegisterContainer extends
 
     return (
       <Formik
-        initialValues={initialValues}
+        initialValues={{ ...initialValues, affilateRef: (this.props.match.params as { affilate: string }).affilate }}
         validationSchema={scheme}
         enableReinitialize
         onSubmit={this.onSubmitRegister}
