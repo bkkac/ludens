@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { noop } from 'lodash'
 import { LudensContext } from 'configs/context'
-import { THEME_MODE } from 'constants/variables'
 import { number } from 'utils'
 import { RouteComponentProps } from 'react-router-dom'
 import { ButtonMenu, ResponsiveIcon, ALink } from 'components'
@@ -65,12 +64,10 @@ class MainContainer extends Component<IMainProps & IMainActionProps & DefaultPro
 
   componentDidMount() {
     this.props.getUser()
-    this.context.theme.changeMode(THEME_MODE.LIGHT)
     this.context.wallet.changeShown(false)
   }
 
   componentWillUnmount() {
-    this.context.theme.changeMode(THEME_MODE.DARK)
     this.context.wallet.changeShown(true)
   }
 
@@ -133,6 +130,7 @@ class MainContainer extends Component<IMainProps & IMainActionProps & DefaultPro
             </div>
             <div className="col-xl-2 col-md-4 col-6 mb-4">
               <ButtonMenu
+                onClick={() => this.onNavigateTo('/affilate')}
                 text={constants.gotoAffli}
                 icon={{ x1: MegaphoneIcon, x2: MegaphoneIcon2x, x3: MegaphoneIcon3x }}
               />

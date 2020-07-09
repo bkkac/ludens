@@ -73,6 +73,13 @@ const routes: IRoutes[] = [
     private: true,
   },
   {
+    exact: true,
+    name: 'affilate',
+    path: '/affilate',
+    component: pages.Affilate,
+    private: true,
+  },
+  {
     name: '404',
     path: '*',
     component: pages.ComingSoon,

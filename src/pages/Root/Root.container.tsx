@@ -37,7 +37,7 @@ class RootContainer extends Component<IRootProps & IRootActionProps & DefaultPro
   static defaultProps = defaultProps
 
   state: IRootStates = {
-    themeMode: THEME_MODE.DARK,
+    themeMode: THEME_MODE.DARKER,
     isShownWallet: true,
   }
 

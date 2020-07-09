@@ -1,0 +1,115 @@
+@import "./colors.scss";
+
+.force-unset-headline {
+  margin: unset;
+  margin-block-start: unset;
+  margin-block-end: unset;
+  margin-inline-start: unset;
+  margin-inline-end: unset;
+  font-weight: unset;
+}
+
+h1 {
+  font-family: "SukhumvitSet-Light";
+  font-size: 34px;
+  line-height: 38px;
+  color: $primary-text;
+  @extend .force-unset-headline;
+}
+
+h2 {
+  font-family: "SukhumvitSet-Bold";
+  font-size: 24px;
+  line-height: 28px;
+  color: $primary-text;
+  @extend .force-unset-headline;
+}
+
+h3 {
+  font-family: "SukhumvitSet-Bold";
+  font-size: 20px;
+  line-height: 24px;
+  color: $primary-text;
+  @extend .force-unset-headline;
+}
+
+h4 {
+  font-family: "SukhumvitSet-SemiBold";
+  font-size: 16px;
+  line-height: 20px;
+  color: $primary-text;
+  @extend .force-unset-headline;
+}
+
+h5 {
+  font-family: "SukhumvitSet-SemiBold";
+  font-size: 14px;
+  line-height: 18px;
+  color: $primary-text;
+  @extend .force-unset-headline;
+}
+
+h6 {
+  font-family: "SukhumvitSet-Bold";
+  font-size: 12px;
+  line-height: 16px;
+  color: $primary-text;
+  @extend .force-unset-headline;
+}
+
+.body-1 {
+  font-family: "SukhumvitSet-Text";
+  font-size: 16px;
+  line-height: 18px;
+  color: $primary-text;
+}
+
+.body-1 {
+  font-family: "SukhumvitSet-Text";
+  font-size: 16px;
+  line-height: 18px;
+  color: $primary-text;
+}
+
+.body-2 {
+  font-family: "SukhumvitSet-Text";
+  font-size: 14px;
+  line-height: 16px;
+  color: $primary-text;
+}
+
+.subtitle-1 {
+  font-family: "SukhumvitSet-Text";
+  font-size: 14px;
+  line-height: 16px;
+  color: $primary-text;
+}
+
+.subtitle-2 {
+  font-family: "SukhumvitSet-Medium";
+  font-size: 12px;
+  line-height: 14px;
+  color: $primary-text;
+}
+
+.button-link-text {
+  font-family: "SukhumvitSet-SemiBold";
+  font-size: 14px;
+  line-height: 18px;
+  text-transform: uppercase;
+  align-items: center;
+  text-align: center;
+  color: $primary-text;
+  cursor: pointer;
+}
+
+.button-link-text-bold {
+  font-family: "SukhumvitSet-Bold";
+  font-size: 14px;
+  line-height: 18px;
+  text-transform: uppercase;
+  align-items: center;
+  text-align: center;
+  color: $primary-text;
+  cursor: pointer;
+}

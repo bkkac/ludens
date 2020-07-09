@@ -10,7 +10,7 @@ import './navbar.style.scss'
 type DefaultProps = Readonly<typeof defaultProps>
 
 const defaultProps: INavbarProps = {
-  mode: THEME_MODE.DARK,
+  mode: THEME_MODE.DARKER,
   isDisplayWallet: true,
   isAuthorized: false,
   wallet: {},

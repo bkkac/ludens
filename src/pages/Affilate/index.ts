@@ -1,3 +1,5 @@
+import Affilate from './Affilate.container'
+
 export {
-    // GG
+    Affilate,
 }

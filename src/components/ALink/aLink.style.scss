@@ -1,36 +1,14 @@
-.alink-wrapper {
-  font-family: "SukhumvitSet-Medium";
-  font-size: 14px;
-  line-height: 1.93;
-  text-align: left;
-  color: #777777;
-  cursor: pointer;
+@import "assets/stylesheets/colors";
 
-  &-bold {
-    font-family: "SukhumvitSet-Bold";
-    font-size: 14px;
-    line-height: 1.93;
-    text-align: left;
-    color: #777777;
-    cursor: pointer;
-
-    &:hover {
-      text-decoration: underline;
-      color: #777777;
-    }
-
-    &.disabled {
-      &:hover {
-        text-decoration: unset;
-      }
-    }
-  }
-
+.button-link-text,
+.button-link-text-bold {
   &:hover {
     text-decoration: underline;
   }
 
   &.disabled {
+    color: $secondary-text;
+    cursor: unset;
     &:hover {
       text-decoration: unset;
     }
