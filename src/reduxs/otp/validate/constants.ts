@@ -12,8 +12,6 @@ export const initialState: IOTPValidateState = {
   error: '',
 }
 
-const develop = 'dev'
-
 export const endpoint = {
-  validateOTP: `${project.environment[develop].api}/otp/validate`,
+  validateOTP: `${project.environment[project.environmentName].api}/otp/validate`,
 }

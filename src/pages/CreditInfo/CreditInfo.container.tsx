@@ -1,7 +1,5 @@
 import React, { Component } from 'react'
 import { RouteComponentProps } from 'react-router-dom'
-import { LudensContext } from 'configs/context'
-import { THEME_MODE } from 'constants/variables'
 import {
   map,
   noop,
@@ -62,10 +60,8 @@ const defaultProps: ICreditInfoProps & ICreditInfoActionProps = {
 class TransactionListContainer extends
   Component<ICreditInfoProps & ICreditInfoActionProps & DefaultProps & RouteComponentProps> {
 
-  static contextType = LudensContext
 
   componentDidMount() {
-    this.context.theme.changeMode(THEME_MODE.DARKER)
     this.props.loader(true)
     this.props.getUser()
     this.props.getCreditInfoList()
@@ -84,10 +80,6 @@ class TransactionListContainer extends
         })
       }
     }
-  }
-
-  componentWillUnmount() {
-    this.context.theme.changeMode(THEME_MODE.DARK)
   }
 
   onPressBack = () => {

@@ -12,8 +12,6 @@ export const initialState: ReducerState<ILotto[]> = {
   error: '',
 }
 
-const develop = 'dev'
-
 export const endpoint = {
-  getAllLotter: `${project.environment[develop].api}/lotter/all`,
+  getAllLotter: `${project.environment[project.environmentName].api}/lotter/all`,
 }

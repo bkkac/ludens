@@ -12,8 +12,6 @@ export const initialState: ReducerState<ICredit[]> = {
   error: '',
 }
 
-const develop = 'dev'
-
 export const endpoint = {
-  getCreditInfo: `${project.environment[develop].api}/credit/me`,
+  getCreditInfo: `${project.environment[project.environmentName].api}/credit/me`,
 }

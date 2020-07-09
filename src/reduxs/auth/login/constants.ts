@@ -12,8 +12,6 @@ export const initialState: ILoginState = {
   error: '',
 }
 
-const develop = 'dev'
-
 export const endpoint = {
-  login: `${project.environment[develop].api}/auth/login`,
+  login: `${project.environment[project.environmentName].api}/auth/login`,
 }

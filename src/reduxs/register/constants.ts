@@ -12,8 +12,6 @@ export const initialState: IRegisterState = {
   error: '',
 }
 
-const develop = 'dev'
-
 export const endpoint = {
-  register: `${project.environment[develop].api}/register`,
+  register: `${project.environment[project.environmentName].api}/register`,
 }

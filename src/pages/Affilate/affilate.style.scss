@@ -1,0 +1,25 @@
+@import "assets/stylesheets/colors";
+
+.affilate-container {
+    padding-top: 112px;
+    padding-bottom: 40px;
+    min-height: 100vh;
+    position: relative;
+    background-color: $primary-bg;
+}
+
+.copy-button-container {
+    width: 32px;
+    height: 32px;
+    border-radius: 16px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: $secondary-blue;
+    cursor: pointer;
+    transition: all 256ms ease-in-out;
+
+    &:hover {
+        background-color: $primary-blue;
+    }
+}
