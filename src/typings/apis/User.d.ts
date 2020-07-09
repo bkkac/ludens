@@ -10,5 +10,6 @@ declare interface IUser {
   bank?: IBank
   wallet?: IWallet
 
+  affilateMeUuid?: string
   updatedTime?: Date // Temp
 }
