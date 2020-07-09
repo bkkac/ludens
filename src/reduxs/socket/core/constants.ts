@@ -10,8 +10,6 @@ export const initialState: ICoreSocketState = {
   connected: false,
 }
 
-const develop = 'dev'
-
 export const endpoint = {
-  connectSocket: `${project.environment[develop].socket}`,
+  connectSocket: `${project.environment[project.environmentName].socket}`,
 }

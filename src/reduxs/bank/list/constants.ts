@@ -12,8 +12,6 @@ export const initialState: IBankListState = {
   error: '',
 }
 
-const develop = 'dev'
-
 export const endpoint = {
-  getBankList: `${project.environment[develop].api}/webbank/all`,
+  getBankList: `${project.environment[project.environmentName].api}/webbank/all`,
 }
