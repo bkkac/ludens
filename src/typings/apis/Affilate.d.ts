@@ -10,13 +10,13 @@ declare interface IAffilateSummary {
     totalIncome?: string
     income?: string
     totalBet?: string
-    lotter?: AffilateLotto
+    lotter?: IAffilateLotto
 }
 
 declare interface IAffilateMember {
-    createdAt: string
-    memberName: string
-    totalBet: string
-    totalLotter: string
-    totalGame: string
+    createdAt?: string
+    memberName?: string
+    totalBet?: string
+    totalLotter?: string
+    totalGame?: string
 }

@@ -1,4 +1,4 @@
-import Affilate from './Affilate.container'
+import Affilate from './Affilate.connect'
 
 export {
     Affilate,

@@ -1,4 +1,4 @@
 declare interface IAffilateState {
     summary: ReducerState<IAffilateSummary>
-    member: ReducerState<IAffilateMember>
+    member: ReducerState<IAffilateMember[]>
 }

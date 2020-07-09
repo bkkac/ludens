@@ -13,5 +13,5 @@ export const initialState: ReducerState<IAffilateMember[]> = {
 }
 
 export const endpoint = {
-  affilateMember: (date: string) => `${project.environment[project.environmentName].api}/finance/member?date=${date}`,
+  affilateMember: (date: string) => `${project.environment[project.environmentName].api}/affilate/member?date=${date}`,
 }
