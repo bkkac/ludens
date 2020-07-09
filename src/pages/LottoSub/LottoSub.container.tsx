@@ -63,7 +63,7 @@ class LottoSubContainer extends Component<
       const ListComponent = this.props.yeegeGameList.map((yeege: IYeegeGame, index) => {
         const yeegeRound = `รอบที่ ${yeege.round}`
         const rangeLabel = 'เวลาที่ปิดรับ'
-        const rangeTime = moment(yeege.endTime).format('DD MMM YY HH:mm')
+        const rangeTime = moment(yeege.endTime).add(-7, 'hour').format('DD MMM YY HH:mm')
         return (
           <div className="col-6 my-2" key={`sub-${yeege.round}-${index}`}>
             <LottoActionCard

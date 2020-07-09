@@ -25,9 +25,11 @@ declare interface IMakingLottoProps {
   getBetResultError: string
   getBetResultCode: number | string
   betResults: IBetResult[]
+  betRates: IBetRate[]
 }
 
 declare interface IMakingLottoActionProps {
+  getBetRate(): void
   getPlayedYeegeList(data: IGetYeegeSum): void
   listenPlayedYeegeList(data: IGetYeegeSum): void
   unlistenPlayedYeegeList(data: IGetYeegeSum): void
@@ -55,6 +57,7 @@ declare interface IMakingLottoState {
 }
 
 declare interface ISummaryLottoModalProps {
+  betRates: IBetRate[]
   lottoList: ILottoNumber[]
   onClickBet(data: ILottoNumber[]): void
   onClickClose(data: ILottoNumber[]): void
