@@ -26,9 +26,11 @@ const mapStateToProps = (state: RootReducers): IMakingLottoProps => ({
   getBetResultError: state.ludens.lotto.bet.result.error!,
   getBetResultCode: state.ludens.lotto.bet.result.code!,
   betResults: state.ludens.lotto.bet.result.data!,
+  betRates: state.ludens.lotto.bet.rate.data!,
 })
 
 const mapDispatchToProos = (dispatch: Dispatch<RootAction>): IMakingLottoActionProps => bindActionCreators({
+  getBetRate: lotterAction.getBetRateAction,
   getPlayedYeegeList: lotterAction.getPlayedYeegeListAction,
   listenPlayedYeegeList: lotterAction.listenPlayedYeegeListSocket,
   unlistenPlayedYeegeList: lotterAction.unlistenPlayedYeegeListSocket,

@@ -4,7 +4,7 @@ import {
   ButtonIcon,
   ResponsiveIcon,
 } from 'components'
-import { groupBy, keys, noop, reduce, sum, filter } from 'lodash'
+import { get, groupBy, keys, noop, reduce, sum, filter, split } from 'lodash'
 import { number } from 'utils'
 import './summaryLottoModal.style.scss'
 
@@ -13,7 +13,7 @@ import CloseIcon2x from 'assets/images/global/closePink/closePink@2x.png'
 import CloseIcon3x from 'assets/images/global/closePink/closePink@3x.png'
 
 const constants = {
-  lottoListTitle: 'รายหารแทง',
+  lottoListTitle: 'รายการแทง',
   win: 'ชนะ',
   makeLotto: 'แทงหวย',
   defaultValue: 'เดิมพันราคาเท่ากัน',
@@ -21,23 +21,25 @@ const constants = {
 }
 
 const lottoTypeNames: { [type in TLottoGameType]: string } = {
-  RUN_UP: 'วงบน',
-  RUN_DOWN: 'วงลาง',
-  THREE_TOAST: 'สามตวโตท',
-  THREE_UP: 'สามตวบน',
-  TWO_DOWN: 'สองตวลาง',
-  TWO_UP: 'สองตวบน',
+  RUN_UP: 'วิ่งบน',
+  RUN_DOWN: 'วิ่งล่าง',
+  THREE_TOAST: 'สามตัวโต้ท',
+  THREE_UP: 'สามตัวบน',
+  TWO_DOWN: 'สองตัวลาง',
+  TWO_UP: 'สองตัวบน',
 }
 
 type DefaultProps = Readonly<typeof defaultProps>
 
 const defaultProps: ISummaryLottoModalProps = {
+  betRates: [],
   lottoList: [],
   onClickBet() { noop() },
   onClickClose() { noop() },
 }
 
 const SummaryLottoModal: SFC<ISummaryLottoModalProps & DefaultProps> = ({
+  betRates,
   lottoList,
   onClickBet,
   onClickClose,
@@ -63,9 +65,9 @@ const SummaryLottoModal: SFC<ISummaryLottoModalProps & DefaultProps> = ({
     setBetList(newBetList)
   }
 
-  const calculateBenefitValue = (betValueString: string = '0') => {
+  const calculateBenefitValue = (betValueString: string = '0', rate: string = '0') => {
     const betValue = Number(number.castToInteger(betValueString)) || 0
-    const calculatedBenefit = 1.2 * betValue // TODO: Temp
+    const calculatedBenefit = Number(rate) * betValue // TODO: Temp
     return number.castToMoney(calculatedBenefit)
   }
 
@@ -82,6 +84,9 @@ const SummaryLottoModal: SFC<ISummaryLottoModalProps & DefaultProps> = ({
       = groupBy<(ILottoNumber & { seq?: number })>(betList.map((bet, betIndex) => ({ ...bet, seq: betIndex })), 'type')
     const GroupingLottoListComponent = keys(groupingLottoListObject).map((lottos, lottosIndex) => {
       const LottoListComponent = groupingLottoListObject[lottos as TLottoGameType]?.map((lotto, lottoIndex) => {
+        const lotterType = split(lotto.slug!, '_', 2).reduce((prev, curr) => `${prev}_${curr}`)
+        const betType = `${lotterType}_${lotto.type}`
+        const betRate: IBetRate = get(betRates.filter((rate) => rate.type === betType), '0', {})
         return (
           <div className="row lotto-row" key={`lotto-${lotto.type}-${lottoIndex}`}>
             <div className="col lotto-wrapper">
@@ -91,9 +96,9 @@ const SummaryLottoModal: SFC<ISummaryLottoModalProps & DefaultProps> = ({
                   {lotto.value}
                 </div>
               </div>
-              <div className="lotto-rate-text">x 0.2</div>
+              <div className="lotto-rate-text">x {betRate.rate}</div>
               <div className="lotto-win-label">{constants.win}</div>
-              <div className="lotto-benefit-text">{calculateBenefitValue(lotto.value || '0')}</div>
+              <div className="lotto-benefit-text">{calculateBenefitValue(lotto.value || '0', betRate.rate || '0')}</div>
               <div className="lotto-remove-wrapper">
                 <div className="delete-lotto-button-container" onClick={() => handleOnRemove(lotto.seq!)}>
                   <ResponsiveIcon
