@@ -20,7 +20,7 @@ import { LudensContext } from 'configs/context'
 import event from 'constants/event'
 
 const constants = {
-  textRunning: 'ยินดีต้อนรับสู่ to ThailandBet',
+  textRunning: 'ยินดีต้อนรับสู่ ThailandBet เว็บแทงหวยออนไลน์ ที่ดีที่สุด เดิมพันง่าย จ่ายเงินจริง เล่นได้ทุกที่ทุกเวลา หากต้องสร้างรายได้กับการเดิมพัน โปรดีที่สุด จ่ายชัว 100%',
 }
 
 type DefaultProps = Readonly<typeof defaultProps>

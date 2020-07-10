@@ -109,7 +109,7 @@ class AffilateContainer extends
                </div>
                <div className="row  m4-t">
                   <div className="col text-center">
-                     <ALink color={colors.PRIMARY_BLUE} onClick={this.onPressQAAffilate}>
+                     <ALink color={colors.PRIMARY_BLUE} >
                         {constants.howTo}
                      </ALink>
                   </div>
