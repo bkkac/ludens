@@ -179,6 +179,7 @@ class LottoMakeContainer extends Component<
     this.clearLocalInterval()
     this.props.clearBetResult()
     this.props.clearYeegeSum()
+    summaryLottoModal.hide()
 
     const game = this.props.location.state.selectedLottoGame
     const gameDate = moment(game.createdAt).format('DDMMYYYY')
@@ -188,7 +189,9 @@ class LottoMakeContainer extends Component<
   }
 
   clearLocalInterval = () => {
-    this.setState({ lottoStatus: 'CLOSE', numberList: [] })
+    this.setState({ lottoStatus: 'CLOSE', numberList: [] }, () => {
+      summaryLottoModal.hide()
+    })
     if (this.intervalId !== null) {
       clearInterval(this.intervalId)
     }
