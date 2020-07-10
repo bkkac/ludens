@@ -63,6 +63,10 @@ declare interface ISummaryLottoModalProps {
   onClickClose(data: ILottoNumber[]): void
 }
 
+declare interface ISummaryLottoModalState {
+  betList: ILottoNumber[]
+}
+
 declare interface IMakingLottoComponentProps {
   onClickAddNumber(lottoNumber: ILottoNumber): void
 }
