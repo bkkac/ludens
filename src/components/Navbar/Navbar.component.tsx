@@ -15,6 +15,7 @@ const defaultProps: INavbarProps = {
   isAuthorized: false,
   wallet: {},
   onPressesLogo() { noop() },
+  onPressesMenu() { noop() },
 }
 
 const Navbar: SFC<INavbarProps & DefaultProps> = ({
@@ -23,6 +24,7 @@ const Navbar: SFC<INavbarProps & DefaultProps> = ({
   isAuthorized,
   isDisplayWallet,
   onPressesLogo,
+  onPressesMenu,
 }) => {
 
   const CreditBadgeComponent = () => {
@@ -41,7 +43,7 @@ const Navbar: SFC<INavbarProps & DefaultProps> = ({
 
   const BurgerComponent = () => {
     if (isAuthorized) {
-      return (<FontAwesomeIcon icon={faBars} className="burger-container" />)
+      return (<FontAwesomeIcon icon={faBars} className="burger-container" onClick={onPressesMenu} />)
     }
     return <></>
   }

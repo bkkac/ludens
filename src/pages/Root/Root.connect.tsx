@@ -4,6 +4,7 @@ import { RootAction } from 'typings/reduxs/Actions'
 import { bindActionCreators, Dispatch } from 'redux'
 import loaderAction from 'reduxs/loader/actions'
 import socketAction from 'reduxs/socket/actions'
+import authAction from 'reduxs/auth/actions'
 
 
 const mapStateToProps = (state: RootReducers): IRootProps => ({
@@ -13,6 +14,7 @@ const mapStateToProps = (state: RootReducers): IRootProps => ({
 
 const mapDispatchToProos = (dispatch: Dispatch<RootAction>): IRootActionProps => bindActionCreators({
   loader: loaderAction.loadingAction,
+  logout: authAction.logoutAction,
   connectSocket: socketAction.connectSocketAction,
 }, dispatch)
 
