@@ -11,29 +11,37 @@
 
 h1 {
   font-family: "SukhumvitSet-Light";
-  font-size: 34px;
-  line-height: 38px;
+  font-size: 36px;
+  line-height: 40px;
   color: $primary-text;
   @extend .force-unset-headline;
 }
 
 h2 {
   font-family: "SukhumvitSet-Bold";
-  font-size: 24px;
-  line-height: 28px;
+  font-size: 26px;
+  line-height: 30px;
   color: $primary-text;
   @extend .force-unset-headline;
 }
 
 h3 {
   font-family: "SukhumvitSet-Bold";
-  font-size: 20px;
-  line-height: 24px;
+  font-size: 22px;
+  line-height: 26px;
   color: $primary-text;
   @extend .force-unset-headline;
 }
 
 h4 {
+  font-family: "SukhumvitSet-SemiBold";
+  font-size: 18px;
+  line-height: 22px;
+  color: $primary-text;
+  @extend .force-unset-headline;
+}
+
+h5 {
   font-family: "SukhumvitSet-SemiBold";
   font-size: 16px;
   line-height: 20px;
@@ -41,61 +49,46 @@ h4 {
   @extend .force-unset-headline;
 }
 
-h5 {
-  font-family: "SukhumvitSet-SemiBold";
+h6 {
+  font-family: "SukhumvitSet-Bold";
   font-size: 14px;
   line-height: 18px;
   color: $primary-text;
   @extend .force-unset-headline;
 }
 
-h6 {
-  font-family: "SukhumvitSet-Bold";
-  font-size: 12px;
-  line-height: 16px;
-  color: $primary-text;
-  @extend .force-unset-headline;
-}
-
 .body-1 {
   font-family: "SukhumvitSet-Text";
-  font-size: 16px;
-  line-height: 18px;
-  color: $primary-text;
-}
-
-.body-1 {
-  font-family: "SukhumvitSet-Text";
-  font-size: 16px;
-  line-height: 18px;
+  font-size: 18px;
+  line-height: 20px;
   color: $primary-text;
 }
 
 .body-2 {
   font-family: "SukhumvitSet-Text";
-  font-size: 14px;
-  line-height: 16px;
+  font-size: 16px;
+  line-height: 18px;
   color: $primary-text;
 }
 
 .subtitle-1 {
   font-family: "SukhumvitSet-Text";
-  font-size: 14px;
-  line-height: 16px;
+  font-size: 16px;
+  line-height: 18px;
   color: $primary-text;
 }
 
 .subtitle-2 {
   font-family: "SukhumvitSet-Medium";
-  font-size: 12px;
-  line-height: 14px;
+  font-size: 14px;
+  line-height: 16px;
   color: $primary-text;
 }
 
 .button-link-text {
   font-family: "SukhumvitSet-SemiBold";
-  font-size: 14px;
-  line-height: 18px;
+  font-size: 16px;
+  line-height: 20px;
   text-transform: uppercase;
   align-items: center;
   text-align: center;
@@ -105,8 +98,8 @@ h6 {
 
 .button-link-text-bold {
   font-family: "SukhumvitSet-Bold";
-  font-size: 14px;
-  line-height: 18px;
+  font-size: 16px;
+  line-height: 20px;
   text-transform: uppercase;
   align-items: center;
   text-align: center;

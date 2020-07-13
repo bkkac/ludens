@@ -6,7 +6,7 @@ import colors from 'constants/colors'
 type DefaultProps = Readonly<typeof defaultProps>
 
 const defaultProps: IALink = {
-  fontSize: 14,
+  fontSize: 16,
   bold: false,
   color: '#777777',
   disabled: false,
