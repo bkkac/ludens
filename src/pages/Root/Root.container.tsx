@@ -29,6 +29,7 @@ const defaultProps: IRootProps & IRootActionProps = {
   wallet: { money: 0 },
   accessToken: '',
   loader() { noop() },
+  logout() { noop() },
   connectSocket() { noop() },
 }
 
@@ -115,6 +116,7 @@ class RootContainer extends Component<IRootProps & IRootActionProps & DefaultPro
           isDisplayWallet={wallet.shown}
           wallet={this.props.wallet}
           onPressesLogo={this.onPressLogo}
+          onPressesMenu={this.props.logout}
           isAuthorized={!isEmpty(this.props.accessToken)}
         />
       )}
