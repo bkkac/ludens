@@ -11,7 +11,6 @@ cache:
 
 stages:
   - build
-  - deploy
 
 build:
   stage: build
@@ -21,12 +20,3 @@ build:
     - npm install --unsafe-perm node-sass
     - npm install
     - npm run build
-
-deploy_code:
-  stage: deploy
-  only:
-    - staging
-  script:
-    - ssh -tt -i "~/.ssh/front_key.pem" ubuntu@ec2-3-14-13-164.us-east-2.compute.amazonaws.com
-    - cd /var/www
-    - sudo touch ci_here
