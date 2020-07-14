@@ -8,4 +8,5 @@ export default {
     SECONDARY_RED: '#e46067',
     PRIMARY_BLUE: '#3b4fe8',
     SECONDARY_BLUE: '#6777f0',
+    PRIMARY_GREEN: '#6fcf97',
 }

@@ -1,3 +1,5 @@
+@import "assets/stylesheets/colors";
+
 .button-container {
   cursor: pointer;
   height: 44px;
@@ -8,38 +10,33 @@
 
   display: flex;
   align-items: center;
-  flex-direction: row;
-  justify-content: space-between;
+  justify-content: center;
 
   *:focus {
     outline: none;
   }
 
   &.normal {
-    box-shadow: 3px 6px 10px 0 #00000029;
-    -webkit-box-shadow: 3px 6px 10px 0 #00000029;
-    background-image: linear-gradient(179deg, #3587f1 5%, #065bc9 95%);
-    filter: brightness(1);
+    background-color: $primary-blue;
 
     &:hover {
-      filter: brightness(1.15);
+      background-color: $secondary-blue;
     }
   }
 
   &.outline {
-    border: solid 1px #1171ec;
-    background-color: #ffffff;
+    border: solid 1px $primary-blue;
+    background-color: transparent;
 
     .button-text {
-      color: #1171ec;
-      font-family: "SukhumvitSet-Bold";
+      color: $primary-blue;
     }
 
     &:hover {
-      background-color: #1171ec;
+      background-color: $primary-blue;
 
       .button-text {
-        color: #ffffff;
+        color: $primary-text;
       }
     }
   }
@@ -65,11 +62,7 @@
   }
 
   .button-text {
-    font-family: "SukhumvitSet-Medium";
-    font-size: 18px;
-    line-height: 1.5;
     text-align: center;
-    color: #fcfcfc;
   }
 
   &.disabled {
@@ -84,10 +77,10 @@
 
     &.outline {
       &:hover {
-        background-color: #ffffff;
+        background-color: transparent;
 
         .button-text {
-          color: #1171ec;
+          color: $primary-blue;
         }
       }
     }

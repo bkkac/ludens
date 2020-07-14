@@ -1,5 +1,7 @@
+@import 'assets/stylesheets/typography';
+@import 'assets/stylesheets/colors';
+
 .input-checkbox {
-  display: block;
   position: relative;
   padding-left: 24px;
   cursor: pointer;
@@ -20,7 +22,7 @@
     width: 0;
 
     &:checked ~ .checkbox-checkmark {
-      background-color: #065bc9;
+      background-color: $primary-blue;
     }
 
     &:checked ~ .checkbox-checkmark::after {
@@ -42,7 +44,7 @@
       top: 2px;
       width: 5px;
       height: 10px;
-      border: solid white;
+      border: solid $primary-blue;
       border-width: 0 3px 3px 0;
       -webkit-transform: rotate(45deg);
       -ms-transform: rotate(45deg);
@@ -55,9 +57,8 @@
   }
 
   .checkbox-label {
-    font-family: "SukhumvitSet-Medium";
-    font-size: 14px;
+    @extend .subtitle-1;
     text-align: left;
-    color: #777777;
+    color: $secondary-text;
   }
 }
