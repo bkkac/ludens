@@ -1,10 +1,5 @@
 image: node:10
 
-before_script:
-  - mkdir -p ~/.ssh    
-  - echo "$AWS_SECRET_ACCESS_KEY_STAGING" >> ~/.ssh/front_key.pem
-  - chmod 400 ~/.ssh/front_key.pem
-
 cache:
   paths:
     - node_modules/
@@ -30,7 +25,7 @@ deploy:
   before_script:
     - mkdir -p ~/.ssh
     - echo -e "$STAGE_SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
-    - chmod 600 ~/.ssh/id_rsa
+    - chmod 400 ~/.ssh/id_rsa
 
   script:
     - echo "Deploy project on server"
