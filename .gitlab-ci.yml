@@ -20,3 +20,20 @@ build:
     - npm install --unsafe-perm node-sass
     - npm install
     - npm run build
+
+deploy:
+  stage: deploy
+  only:
+    - staging
+  
+  before_script:
+    - mkdir -p ~/.ssh
+    - echo -e "$STAGE_SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
+    - chmod 600 ~/.ssh/id_rsa
+
+  script:
+    - echo "Deploy project on server"
+    - echo "$STAGE_DEPLOY_SERVER"
+    - ssh -i "~/.ssh/id_rsa" ubuntu@$STAGE_DEPLOY_SERVER
+    - cd /var/www
+    - sudo touch test
