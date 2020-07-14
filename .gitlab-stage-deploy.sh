@@ -9,4 +9,5 @@ for i in "${!array[@]}"; do
 done
 echo "Finish deploy"
 
-curl -X POST --data-urlencode "payload={\"channel\": \"#luden-develop\", \"username\": \"webhookbot\", \"text\": \":beer::beer: Staging Deployed :beer::beer: \nGo to test\", \"icon_emoji\": \":beer:\"}" https://hooks.slack.com/services/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
+curl -X POST --data-urlencode "payload={\"channel\": \"#luden-develop\", \"username\": \"beerBot\", \"text\": \":beer::beer: Staging Deployed :beer::beer: \nGo to test\", \"icon_emoji\": \":beer:\"}" https://hooks.slack.com/services/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
+curl -X POST --data-urlencode "payload={\"channel\": \"#luden-test\", \"username\": \"beerBot\", \"text\": \":beer::beer: Staging Deployed :beer::beer: \nGo to test\", \"icon_emoji\": \":beer:\"}" https://hooks.slack.com/services/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
