@@ -22,11 +22,19 @@ build:
     - npm install
     - npm run build
 
-deploy_code:
+deploy:
   stage: deploy
   only:
     - staging
+  
+  before_script:
+    - mkdir -p ~/.ssh
+    - echo -e "$STAGE_SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
+    - chmod 600 ~/.ssh/id_rsa
+
   script:
-    - ssh -tt -i "~/.ssh/front_key.pem" ubuntu@ec2-3-14-13-164.us-east-2.compute.amazonaws.com
+    - echo "Deploy project on server"
+    - echo "$STAGE_DEPLOY_SERVER"
+    - ssh -i "~/.ssh/id_rsa" ubuntu@$STAGE_DEPLOY_SERVER
     - cd /var/www
-    - sudo touch ci_here
+    - sudo touch test
