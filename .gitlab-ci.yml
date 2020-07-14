@@ -35,6 +35,7 @@ deploy:
   script:
     - echo "Deploy project on server"
     - echo "$STAGE_DEPLOY_SERVER"
-    - ssh -i "~/.ssh/id_rsa" ubuntu@"$STAGE_DEPLOY_SERVER"
+    - echo ubuntu@"$STAGE_DEPLOY_SERVER"
+    - ssh -tt -i "~/.ssh/id_rsa" ubuntu@"$STAGE_DEPLOY_SERVER"
     - cd /var/www
     - sudo touch test
