@@ -5,13 +5,17 @@ cache:
     - node_modules/
 
 stages:
+  - test
   - build
   - deploy
 
+test:
+  stage: test
+  script:
+    - echo "Testing!"
+
 build:
   stage: build
-  only: 
-    - develop
   script: 
     - npm install --unsafe-perm node-sass
     - npm install
@@ -30,8 +34,5 @@ deploy:
 
   script:
     - echo "Deploy project on server"
-    - echo "$STAGE_DEPLOY_SERVER"
     - echo ubuntu@"$STAGE_DEPLOY_SERVER"
-    - echo "$STAGE_SSH_PRIVATE_KEY"
     - bash .gitlab-stage-deploy.sh
-    # - ssh -tt -i "~/.ssh/id_rsa" ubuntu@"$STAGE_DEPLOY_SERVER"
