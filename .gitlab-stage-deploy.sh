@@ -8,3 +8,5 @@ for i in "${!array[@]}"; do
   ssh ubuntu@${array[i]} "cd  /var/www/luden && sudo git pull \"https://cheddotechnology:cheddotechnology123@gitlab.com/privatedevelopment/luden.git\" && sudo npm i && sudo npm run build && sudo rm -R ../html/* && sudo mv build/* ../html/ && sudo systemctl restart nginx"
 done
 echo "Finish deploy"
+
+curl -X POST --data-urlencode "payload={\"channel\": \"#luden-develop\", \"username\": \"webhookbot\", \"text\": \":beer::beer: Staging Deployed :beer::beer: \nGo to test\", \"icon_emoji\": \":beer:\"}" https://hooks.slack.com/services/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
