@@ -12,8 +12,6 @@ export const initialState: IDepositState = {
   error: '',
 }
 
-const develop = 'dev'
-
 export const endpoint = {
-  depositRequest: `${project.environment[develop].api}/finance/deposit`,
+  depositRequest: `${project.environment[project.environmentName].api}/finance/deposit`,
 }

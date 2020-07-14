@@ -7,4 +7,5 @@ declare interface ILoginState {
 
 declare interface IAuthState {
   login: ILoginState
+  logout: ReducerState
 }

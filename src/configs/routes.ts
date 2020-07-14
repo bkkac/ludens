@@ -9,7 +9,7 @@ const routes: IRoutes[] = [
   },
   {
     name: 'register',
-    path: '/register',
+    path: '/register/:affilate',
     component: pages.Register,
   },
   {
@@ -70,6 +70,13 @@ const routes: IRoutes[] = [
     name: 'credit-info',
     path: '/credit-info',
     component: pages.CreditInfo,
+    private: true,
+  },
+  {
+    exact: true,
+    name: 'affilate',
+    path: '/affilate',
+    component: pages.Affilate,
     private: true,
   },
   {

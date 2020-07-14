@@ -11,6 +11,7 @@ declare interface IBetHistoryState {
 
 declare interface IBetState {
   make: ReducerState<IBet[]>
+  rate: ReducerState<IBetRate[]>
   result: ReducerState<IBetResult[]>
 }
 

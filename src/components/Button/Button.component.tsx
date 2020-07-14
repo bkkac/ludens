@@ -32,9 +32,7 @@ const Button: SFC<IButton & DefaultProps> = (props) => {
       className={containerClass}
       onClick={disabled ? noop : onClick}
     >
-      {/* <div className="button-icon" /> */}
-      <div className="col px-1 button-text">{text}</div>
-      {/* <div className="buttosn-icon" /> */}
+      <div className="button-text p1-x"><h4>{text}</h4></div>
     </button>
   )
 }

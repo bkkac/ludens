@@ -27,6 +27,18 @@ const getYeegeGameListReducer = (
         error: action.payload.response?.data.devMessage,
         code: action.payload.response?.data.code,
       }
+    case getType(actions.updatePlayedYeegeListAction):
+      return {
+        ...state,
+      }
+    case getType(actions.updatePlayedYeegeListSuccessAction):
+      return {
+        ...state,
+        isFetching: false,
+        data: action.payload,
+      }
+    case getType(actions.clearPlayedYeegeList):
+      return initialState
     default:
       return state
   }

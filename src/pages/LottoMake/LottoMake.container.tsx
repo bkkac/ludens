@@ -40,11 +40,16 @@ const defaultProps: IMakingLottoProps & IMakingLottoActionProps = {
   loader() { noop() },
   makingBetLotto() { noop() },
   getYeegeSum() { noop() },
+  listenYeegeSum() { noop() },
+  unlistenYeegeSum() { noop() },
   playYeege() { noop() },
   getPlayedYeegeList() { noop() },
+  listenPlayedYeegeList() { noop() },
+  unlistenPlayedYeegeList() { noop() },
   getBetResult() { noop() },
   clearBetResult() { noop() },
   clearYeegeSum() { noop() },
+  getBetRate() { noop() },
   makingBetLottoCode: 0,
   makingBetLottoError: '',
   makingBetLottoIsFetching: false,
@@ -65,6 +70,7 @@ const defaultProps: IMakingLottoProps & IMakingLottoActionProps = {
   getBetResultError: '',
   getBetResultCode: '0',
   betResults: [],
+  betRates: [],
 }
 
 class LottoMakeContainer extends Component<
@@ -91,23 +97,24 @@ class LottoMakeContainer extends Component<
 
   componentDidMount() {
     const game = this.props.location.state.selectedLottoGame
-    const gemeDate = moment(game.createdAt).format('DDMMYYYY')
+    const gameDate = moment(game.createdAt).format('DDMMYYYY')
     const gameRound = number.padNumber(game.round, 3)
     this.props.getYeegeSum({
-      date: gemeDate,
+      date: gameDate,
       round: this.props.location.state.selectedLottoGame.round,
     })
     this.props.getPlayedYeegeList({
-      date: gemeDate,
+      date: gameDate,
       round: this.props.location.state.selectedLottoGame.round,
     })
+    this.props.getBetRate()
     this.setState({ lottoStatus: this.props.location.state.selectedLottoGame.status }, () => {
       if (this.props.location.state.selectedLottoGame.status === 'OPEN') {
         this.countingdown()
       } else {
         this.props.loader(true)
         this.props.getBetResult({
-          date: gemeDate,
+          date: gameDate,
           round: gameRound,
           type: 'LOTTER_YEGEE',
         })
@@ -150,16 +157,41 @@ class LottoMakeContainer extends Component<
       && !this.props.getBetResultIsFetching) {
       this.props.loader(false)
     }
+
+    if (prevProps.getYeegeSumIsFetching !== this.props.getYeegeSumIsFetching
+      && !this.props.getYeegeSumIsFetching) {
+      const game = this.props.location.state.selectedLottoGame
+      const gameDate = moment(game.createdAt).format('DDMMYYYY')
+      const gameRound = number.padNumber(game.round, 3)
+      this.props.listenYeegeSum({ date: gameDate, round: gameRound })
+    }
+
+    if (prevProps.getPlayedYeegeListIsFetching !== this.props.getPlayedYeegeListIsFetching
+      && !this.props.getPlayedYeegeListIsFetching) {
+      const game = this.props.location.state.selectedLottoGame
+      const gameDate = moment(game.createdAt).format('DDMMYYYY')
+      const gameRound = number.padNumber(game.round, 3)
+      this.props.listenPlayedYeegeList({ date: gameDate, round: gameRound })
+    }
   }
 
   componentWillUnmount() {
     this.clearLocalInterval()
     this.props.clearBetResult()
     this.props.clearYeegeSum()
+    summaryLottoModal.hide()
+
+    const game = this.props.location.state.selectedLottoGame
+    const gameDate = moment(game.createdAt).format('DDMMYYYY')
+    const gameRound = number.padNumber(game.round, 3)
+    this.props.unlistenYeegeSum({ date: gameDate, round: gameRound })
+    this.props.unlistenPlayedYeegeList({ date: gameDate, round: gameRound })
   }
 
   clearLocalInterval = () => {
-    this.setState({ lottoStatus: 'CLOSE', numberList: [] })
+    this.setState({ lottoStatus: 'CLOSE', numberList: [] }, () => {
+      summaryLottoModal.hide()
+    })
     if (this.intervalId !== null) {
       clearInterval(this.intervalId)
     }
@@ -168,8 +200,9 @@ class LottoMakeContainer extends Component<
   countingdown = () => {
     const endedTime = this.props.location.state.selectedLottoGame.endTime
     const momentEndAt = moment(replace(endedTime!, /\s/g, ''))
+    const momentEndAtTimezone = momentEndAt.clone().add(-7, 'hour')
     this.intervalId = setInterval(() => {
-      const duration = moment.duration(momentEndAt.diff(moment()))
+      const duration = moment.duration(momentEndAtTimezone.diff(moment()))
       const hours = duration.hours()
       const minutes = duration.minutes()
       const seconds = duration.seconds()
@@ -228,6 +261,7 @@ class LottoMakeContainer extends Component<
 
   handleOnWatchLottoNumberList = () => {
     summaryLottoModal.show({
+      betRates: this.props.betRates,
       lottoList: this.state.numberList,
       onClickBet: this.handleOnMakingBetLotto,
       onClickClose: (callbackLottoList: ILottoNumber[]) => {

@@ -1,11 +1,12 @@
 import React, { SFC } from 'react'
 import { noop } from 'lodash'
 import './aLink.style.scss'
+import colors from 'constants/colors'
 
 type DefaultProps = Readonly<typeof defaultProps>
 
 const defaultProps: IALink = {
-  fontSize: 14,
+  fontSize: 16,
   bold: false,
   color: '#777777',
   disabled: false,
@@ -24,9 +25,9 @@ const ALink: SFC<IALink & DefaultProps> = (props) => {
   } = props
 
   const disabledClass = disabled ? 'disabled' : ''
-  const wrapperClass = bold ? `alink-wrapper-bold ${disabledClass}` : `alink-wrapper ${disabledClass}`
+  const wrapperClass = bold ? `button-link-text-bold ${disabledClass}` : `button-link-text ${disabledClass}`
   const style = {
-    color,
+    color: disabled ? colors.SECONDARY_TEXT : color,
     fontSize,
   }
 

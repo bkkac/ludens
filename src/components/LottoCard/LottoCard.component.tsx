@@ -2,6 +2,7 @@ import React, { SFC } from 'react'
 import { Badge } from 'components'
 import moment from 'moment'
 import { get } from 'lodash'
+import colors from 'constants/colors'
 import ThaiFlagIcon from 'assets/images/flags/thailand.png'
 import './lottoCard.style.scss'
 
@@ -33,13 +34,15 @@ const LottoCard: SFC<ILottoCard & DefaultProps> = (props) => {
   const NumberComponent = ({ name, numbers }: ILottoResult) => {
     const Numbers = numbers!.map((num, index) => (
       <div className="row" key={`number-${num}-${index}`}>
-        <div className="col text-center lotto">{num}</div>
+        <div className="col text-center"><h1 className="lotto secondary-blue-text">{num}</h1></div>
       </div>
     ))
     return (
       <>
         <div className="row pt-1">
-          <div className="col text-center lotto-title">{name}</div>
+          <div className="col text-center lotto-title">
+            <h5 className="secondary-text">{name}</h5>
+          </div>
         </div>
         {Numbers}
       </>
@@ -107,15 +110,19 @@ const LottoCard: SFC<ILottoCard & DefaultProps> = (props) => {
   }
 
   return (
-    <div className="col-12 lotto-card-container">
-      <div className="row mb-2">
-        <div className="col text-left d-flex flex-row align-items-center lotto-name">
-          {lottoName}
-          <img alt="thailand" src={ThaiFlagIcon} className="flag-icon" />
+    <div className="col-12">
+      <div className="lotto-card-container secondary-bg p3">
+        <div className="row mb-2">
+          <div className="col text-left d-flex flex-row align-items-center">
+            <h3>{lottoName}</h3>
+            <img alt="thailand" src={ThaiFlagIcon} className="flag-icon" />
+          </div>
+          <div className="col-auto text-right m-auto">
+            <Badge text={dateDisplay} backgroundColor={colors.PRIMARY_GREEN} />
+            </div>
         </div>
-        <div className="col-auto text-right m-auto"><Badge text={dateDisplay} /></div>
+        <LottoNumbersFormat />
       </div>
-      <LottoNumbersFormat />
     </div>
   )
 }

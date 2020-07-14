@@ -18,8 +18,6 @@ export const initialState: IOTPRequestState = {
   error: '',
 }
 
-const develop = 'dev'
-
 export const endpoint = {
-  getOTP: `${project.environment[develop].api}/otp`,
+  getOTP: `${project.environment[project.environmentName].api}/otp`,
 }

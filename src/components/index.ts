@@ -14,6 +14,7 @@ import { ButtonIcon } from './ButtonIcon'
 import { InputNumber } from './InputNumber'
 import { TextRunning } from './TextRunning'
 import { UsernameText } from './UsernameText'
+import { InputTextIcon } from './InputTextIcon'
 import { InputCheckbox } from './InputCheckbox'
 import { ResponsiveIcon } from './ResponsiveIcon'
 import { BankNumberCard } from './BankNumberCard'
@@ -41,6 +42,7 @@ export {
   TextRunning,
   UsernameText,
   InputCheckbox,
+  InputTextIcon,
   ResponsiveIcon,
   BankNumberCard,
   LottoActionCard,

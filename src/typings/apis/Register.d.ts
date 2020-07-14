@@ -8,4 +8,5 @@ declare interface IRegisterRequest {
     number: string
   }
   phone_number: string
+  affilate_uuid: string
 }
