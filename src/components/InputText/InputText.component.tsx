@@ -1,22 +1,21 @@
 import React, { Component, ComponentClass } from 'react'
 import { noop } from 'lodash'
-import { isEmpty } from 'lodash'
 import './inputText.style.scss'
 
 type DefaultProps = Readonly<typeof defaultProps>
 
 const defaultProps: IInputTextProps = {
-  error: false,
-  type: 'text',
   placeholder: '',
+  type: 'text',
   name: '',
-  icon: '',
   value: '',
-  disabled: false,
   errorMessage: '',
+  error: false,
+  disabled: false,
+  useNumberpad: false,
+  hiddenErrorBlock: false,
   onBlur() { noop() },
   onChange() { noop() },
-  useNumberpad: false,
 }
 
 const InputText = class extends Component<IInputTextProps & DefaultProps> {
@@ -29,22 +28,23 @@ const InputText = class extends Component<IInputTextProps & DefaultProps> {
       value,
       onBlur,
       onChange,
-      icon,
       type,
       error,
+      hiddenErrorBlock,
+      useNumberpad,
       errorMessage,
       placeholder,
-      useNumberpad,
       disabled,
     } = this.props
 
-    const RenderIcon = () => isEmpty(icon)
-      ? <></>
-      : <img alt={`input-icon-${name}`} className="input-icon" src={icon} />
-
     const hasErrorClass = error ? 'error' : ''
+
+    const Message = () => hiddenErrorBlock
+      ? <></>
+      : <div className="input-error-message">{errorMessage}</div>
+
     return (
-      <div className={`col input-text ${hasErrorClass}`}>
+      <div className={`input-text ${hasErrorClass}`}>
         <input
           disabled={disabled}
           name={name}
@@ -55,16 +55,9 @@ const InputText = class extends Component<IInputTextProps & DefaultProps> {
           onChange={onChange}
           className="input-core"
           placeholder={placeholder}
-          style={{ paddingLeft: isEmpty(icon) ? 11 : 32 }}
         />
-        <div className="input-placehoder-wrapper d-flex">
-          <RenderIcon />
-          <div className="input-placehoder-label-wrapper">
-            <div className="input-placehoder-label">{placeholder}</div>
-          </div>
-        </div>
         <div className="input-underline" />
-        <div className="input-error-message">{errorMessage}</div>
+        <Message />
       </div>
     )
   }

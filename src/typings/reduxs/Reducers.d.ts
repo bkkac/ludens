@@ -17,5 +17,6 @@ declare interface RootReducers {
     bank: IBankState
     credit: ICreditState
     socket: ISocketState
+    affilate: IAffilateState
   }
 }

@@ -12,8 +12,6 @@ export const initialState: IWithdrawState = {
   error: '',
 }
 
-const develop = 'dev'
-
 export const endpoint = {
-  withdrawRequest: `${project.environment[develop].api}/finance/withdraw`,
+  withdrawRequest: `${project.environment[project.environmentName].api}/finance/withdraw`,
 }

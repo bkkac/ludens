@@ -10,6 +10,7 @@ import { Main } from './Main'
 import { LottoMain } from './LottoMain'
 import { LottoSub } from './LottoSub'
 import { LottoMake } from './LottoMake'
+import { Affilate } from './Affilate'
 
 export default {
   Home,
@@ -18,6 +19,7 @@ export default {
   Withdraw,
   Register,
   LottoSub,
+  Affilate,
   LottoMain,
   LottoMake,
   CreditInfo,

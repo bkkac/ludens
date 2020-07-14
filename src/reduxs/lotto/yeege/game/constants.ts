@@ -16,8 +16,6 @@ export const initialState: ReducerState<IYeegeGame[]> = {
   error: '',
 }
 
-const develop = 'dev'
-
 export const endpoint = {
-  getAllYeegeGame: `${project.environment[develop].api}/lotter/yegee/play/game`,
+  getAllYeegeGame: `${project.environment[project.environmentName].api}/lotter/yegee/play/game`,
 }

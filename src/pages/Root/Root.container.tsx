@@ -20,7 +20,7 @@ import { LudensContext } from 'configs/context'
 import event from 'constants/event'
 
 const constants = {
-  textRunning: 'ยินดีต้อนรับสู่ to ThailandBet',
+  textRunning: 'ยินดีต้อนรับสู่ ThailandBet เว็บแทงหวยออนไลน์ ที่ดีที่สุด เดิมพันง่าย จ่ายเงินจริง เล่นได้ทุกที่ทุกเวลา หากต้องสร้างรายได้กับการเดิมพัน โปรดีที่สุด จ่ายชัว 100%',
 }
 
 type DefaultProps = Readonly<typeof defaultProps>
@@ -29,6 +29,7 @@ const defaultProps: IRootProps & IRootActionProps = {
   wallet: { money: 0 },
   accessToken: '',
   loader() { noop() },
+  logout() { noop() },
   connectSocket() { noop() },
 }
 
@@ -37,7 +38,7 @@ class RootContainer extends Component<IRootProps & IRootActionProps & DefaultPro
   static defaultProps = defaultProps
 
   state: IRootStates = {
-    themeMode: THEME_MODE.DARK,
+    themeMode: THEME_MODE.DARKER,
     isShownWallet: true,
   }
 
@@ -115,6 +116,7 @@ class RootContainer extends Component<IRootProps & IRootActionProps & DefaultPro
           isDisplayWallet={wallet.shown}
           wallet={this.props.wallet}
           onPressesLogo={this.onPressLogo}
+          onPressesMenu={this.props.logout}
           isAuthorized={!isEmpty(this.props.accessToken)}
         />
       )}

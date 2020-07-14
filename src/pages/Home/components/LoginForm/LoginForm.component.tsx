@@ -2,12 +2,12 @@ import React from 'react'
 import { FormikProps, Form } from 'formik'
 import {
   InputCheckbox,
-  InputText,
+  InputTextIcon,
   Button,
   ALink,
 } from 'components'
-import UserIcon from 'assets/images/home/user.png'
-import KeyIcon from 'assets/images/home/key.png'
+import colors from 'constants/colors'
+import { faUser, faKey } from '@fortawesome/free-solid-svg-icons'
 import './loginForm.style.scss'
 
 const constants = {
@@ -43,31 +43,35 @@ function LoginForm(props: FormikProps<ILogin> & ILoginFormProps) {
     <Form>
       <div className="login-from-container pb-4">
         <div className="row">
-          <InputText
-            name="username"
-            icon={UserIcon}
-            onBlur={handleBlur}
-            onChange={handleChange}
-            value={values.username}
-            errorMessage={errors.username}
-            placeholder={constants.placeholderUsername}
-            error={!!errors.username && touched.username}
-          />
+          <div className="col">
+            <InputTextIcon
+              icon={faUser}
+              name="username"
+              onBlur={handleBlur}
+              onChange={handleChange}
+              value={values.username}
+              errorMessage={errors.username}
+              placeholder={constants.placeholderUsername}
+              error={!!errors.username && touched.username}
+            />
+          </div>
         </div>
         <div className="row">
-          <InputText
-            name="password"
-            type="password"
-            icon={KeyIcon}
-            onBlur={handleBlur}
-            onChange={handleChange}
-            value={values.password}
-            errorMessage={errors.password}
-            placeholder={constants.placeholderPassword}
-            error={!!errors.password && touched.password}
-          />
+          <div className="col">
+            <InputTextIcon
+              icon={faKey}
+              name="password"
+              type="password"
+              onBlur={handleBlur}
+              onChange={handleChange}
+              value={values.password}
+              errorMessage={errors.password}
+              placeholder={constants.placeholderPassword}
+              error={!!errors.password && touched.password}
+            />
+          </div>
         </div>
-        <div className="row">
+        <div className="row m2-t">
           <div className="col align-self-start">
             <InputCheckbox
               name="remember"
@@ -90,11 +94,7 @@ function LoginForm(props: FormikProps<ILogin> & ILoginFormProps) {
         </div>
         <div className="row">
           <div className="col text-center pt-1">
-            <ALink
-              onClick={onPressNavigateToRegister}
-              color="#88b8f6"
-              bold
-            >
+            <ALink onClick={onPressNavigateToRegister} color={colors.PRIMARY_TEXT}>
               {constants.alinkRegister}
             </ALink>
           </div>

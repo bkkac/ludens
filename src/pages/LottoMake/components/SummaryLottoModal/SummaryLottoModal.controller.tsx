@@ -6,6 +6,7 @@ import SummaryLottoModalComponent from './SummaryLottoModal.component'
 
 const summaryLottoModalController = {
   show: ({
+    betRates,
     lottoList,
     onClickBet,
     onClickClose,
@@ -19,6 +20,7 @@ const summaryLottoModalController = {
       extraProps: modalProps,
       component: (
         <SummaryLottoModalComponent
+          betRates={betRates}
           lottoList={lottoList}
           onClickBet={onClickBet}
           onClickClose={onClickClose}

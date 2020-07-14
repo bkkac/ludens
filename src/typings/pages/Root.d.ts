@@ -6,6 +6,7 @@ declare interface IRootProps {
 declare interface IRootActionProps {
   loader(state: boolean): void
   connectSocket(): void
+  logout?(): void
 }
 
 declare interface IRootStates {

@@ -1,18 +1,12 @@
 .lotto-card-container {
   padding-top: 20px;
   padding-bottom: 20px;
+  border-radius: 12px;
 
-  .lotto-name {
-    font-family: "SukhumvitSet-Bold";
-    font-size: 24px;
-    line-height: 37px;
-    color: #3e3e3e;
-
-    .flag-icon {
-      width: 24px;
-      height: 24px;
-      margin-left: 12px;
-    }
+  .flag-icon {
+    width: 24px;
+    height: 24px;
+    margin-left: 12px;
   }
 
   .lotto-title {
@@ -37,10 +31,8 @@
   }
 
   .lotto {
-    font-family: "SukhumvitSet-Bold";
     font-size: 40px;
     line-height: 50px;
     letter-spacing: 3px;
-    color: #065bc9;
   }
 }

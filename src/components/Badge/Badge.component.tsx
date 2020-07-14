@@ -23,7 +23,7 @@ const Badge: SFC<IBadge & DefaultProps> = (props) => {
   }
 
   return (
-    <span className="badge-container" style={style}>{text}</span>
+    <div className="badge-container" style={style}><h6>{text}</h6></div>
   )
 }
 

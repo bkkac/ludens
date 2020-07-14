@@ -12,8 +12,6 @@ export const initialState: ReducerState<ITransaction[]> = {
   error: '',
 }
 
-const develop = 'dev'
-
 export const endpoint = {
-  getTransactionList: `${project.environment[develop].api}/finance/me`,
+  getTransactionList: `${project.environment[project.environmentName].api}/finance/me`,
 }

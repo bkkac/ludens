@@ -1,4 +1,5 @@
 import React, { SFC } from 'react'
+import { map } from 'lodash'
 import { LottoCard } from 'components'
 import './lottoList.style.scss'
 
@@ -10,16 +11,16 @@ const defaultProps: ILottoListProps = {
 
 const LottoList: SFC<ILottoListProps & DefaultProps> = (props) => {
 
-  const LottoCardComponents = props.data.map((lotto, index) => (
-    <div key={`lotto-card-${index}`} className="container card-section-wrapper mb-4">
+  const LottoCardComponents = map(props.data, (lotto, index) => (
+    <div key={`lotto-card-${index}`} className="container card-section-wrapper m3-b">
       {/* <div className="container"> */}
-        <LottoCard type={lotto.code as LottoType} data={lotto} />
+      <LottoCard type={lotto.code as LottoType} data={lotto} />
       {/* </div> */}
     </div>
   ))
 
   return (
-    <div className="lotto-list-container">
+    <div className="lotto-list-container p4-t">
       {LottoCardComponents}
     </div>
   )

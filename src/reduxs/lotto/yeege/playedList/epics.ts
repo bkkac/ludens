@@ -25,6 +25,13 @@ const getYeegeGameListEpic: Epic<RootAction, RootAction, RootReducers> = (action
     )
   )
 
+const updateYeegeGameListEpic: Epic<RootAction, RootAction, RootReducers> = (action$, store) =>
+  action$.pipe(
+    filter(isActionOf(actions.updatePlayedYeegeListAction)),
+    map((action) => actions.updatePlayedYeegeListSuccessAction(action.payload))
+  )
+
 export default [
   getYeegeGameListEpic,
+  updateYeegeGameListEpic,
 ]

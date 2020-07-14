@@ -1,0 +1,70 @@
+$primary-bg: #222529;
+$secondary-bg: #282b2f;
+$tertiary-bg: #2b2e32;
+
+$primary-text: #fcfcfc;
+$secondary-text: #8d8d8d;
+
+$primary-red: #dd3d45;
+$secondary-red: #e46067;
+
+$primary-blue: #3b4fe8;
+$secondary-blue: #6777f0;
+
+$primary-green: #6fcf97;
+
+.primary-bg {
+    background-color: $primary-bg !important;
+}
+
+.secondary-bg {
+    background-color: $secondary-bg !important;
+}
+
+.tertiary-bg {
+    background-color: $tertiary-bg !important;
+}
+
+.primary-red-bg {
+    background-color: $primary-red !important;
+}
+
+.secondary-red-bg {
+    background-color: $secondary-red !important;
+}
+
+.primary-blue-bg {
+    background-color: $primary-blue !important;
+}
+
+.secondary-blue-bg {
+    background-color: $secondary-blue !important;
+}
+
+.primary-text {
+    color: $primary-text !important;
+}
+
+.secondary-text {
+    color: $secondary-text !important;
+}
+
+.primary-red-text {
+    color: $primary-red !important;
+}
+
+.secondary-red-text {
+    color: $secondary-red !important;
+}
+
+.primary-blue-text {
+    color: $primary-blue !important;
+}
+
+.secondary-blue-text {
+    color: $secondary-blue !important;
+}
+
+.primary-green-text {
+    color: $primary-green !important;
+}

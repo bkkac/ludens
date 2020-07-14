@@ -97,29 +97,30 @@ class HomeContainer extends Component<IHomeProps & IHomeActionProps & DefaultPro
     const RenderLoginFormComponent = this.renderLoginForm
     const RenderLottoListComponent = this.renderLottoList
     return (
-      <>
-        <div className="login-container">
+      <div className="home-container primary-bg">
+        <div className="login-container primary-bg">
           <div className="container">
-            <div className="d-flex flex-column justify-content-center align-items-center mb-3">
+            <div className="d-flex flex-column justify-content-center align-items-center m3-b">
               <img alt="thailand bet logo" src={ThailandIcon} className="login-logo" />
-              <div className="login-app-name">THAILAND<span>BET</span></div>
+              <h3>Thailand<span>BET</span></h3>
             </div>
             <RenderLoginFormComponent />
           </div>
         </div>
-        <div className="my-4">
-          <div className="container">
-            <div className="row">
-              <div className="col">
-                <div className="ad-image" />
-              </div>
+        <div className="primary-bg">
+          <div className="row">
+            <div className="col">
+              <img alt="banner" src="https://3.bp.blogspot.com/-gLYDJEWOLgI/XoaKoqR6PyI/AAAAAAAACcI/6ki30_y8rFIIUbERmxdP9iPA3vNk-ANTgCLcBGAsYHQ/s1600/3.gif" className="ad-image" />
+              <img alt="banner" src="https://4.bp.blogspot.com/-u7vnBFj6HwA/XwSPXMu8VHI/AAAAAAAACno/gYCuwaK9dNMI8KA3_q54BTqGIhR9vx68QCLcBGAsYHQ/s1600/1.gif" className="ad-image" />
             </div>
           </div>
         </div>
-        <div className="mb-4">
-          <RenderLottoListComponent />
+        <div className="pb-4 primary-bg">
+          <div className="container">
+            <RenderLottoListComponent />
+          </div>
         </div>
-      </>
+      </div>
     )
   }
 }
