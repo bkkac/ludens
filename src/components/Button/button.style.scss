@@ -2,8 +2,8 @@
 
 .button-container {
   cursor: pointer;
-  height: 44px;
-  border-radius: 22px;
+  height: 40px;
+  border-radius: 20px;
   transition: all 256ms ease-in-out;
   border: none;
   outline: none;
@@ -47,8 +47,8 @@
   }
 
   &.medium {
-    height: 44px;
-    border-radius: 22px;
+    height: 40px;
+    border-radius: 20px;
   }
 
   &.large {
