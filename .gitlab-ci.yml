@@ -1,32 +1,38 @@
 image: node:10
 
-before_script:
-  - mkdir -p ~/.ssh    
-  - echo "$AWS_SECRET_ACCESS_KEY_STAGING" >> ~/.ssh/front_key.pem
-  - chmod 400 ~/.ssh/front_key.pem
-
 cache:
   paths:
     - node_modules/
 
 stages:
+  - test
   - build
   - deploy
 
+test:
+  stage: test
+  script:
+    - echo "Testing!"
+
 build:
   stage: build
-  only: 
-    - develop
   script: 
     - npm install --unsafe-perm node-sass
     - npm install
     - npm run build
 
-deploy_code:
+deploy:
   stage: deploy
   only:
     - staging
+  
+  before_script:
+    - mkdir -p ~/.ssh
+    - echo -e "$STAGE_SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
+    - chmod 600 ~/.ssh/id_rsa
+    - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
+
   script:
-    - ssh -tt -i "~/.ssh/front_key.pem" ubuntu@ec2-3-14-13-164.us-east-2.compute.amazonaws.com
-    - cd /var/www
-    - sudo touch ci_here
+    - echo "Deploy project on server"
+    - echo ubuntu@"$STAGE_DEPLOY_SERVER"
+    - bash .gitlab-stage-deploy.sh

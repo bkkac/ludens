@@ -15,7 +15,7 @@ const constants = {
   placeholderPassword: 'รหัสผ่าน',
   alinkRemember: 'จดจำรหัสผ่าน',
   alinkForgot: 'ลืมรหัสผ่าน',
-  alinkRegister: 'สมัครสมาชิค',
+  alinkRegister: 'สมัครสมาชิก',
   buttonLogin: 'เข้าสู่ระบบ',
 }
 
