@@ -13,11 +13,11 @@ const loginAction = createAction(
 
 const loginSuccessAction = createAction(
   LOGIN_SUCCESS,
-  resolve => (data: AxiosResponse<APISuccessResponse<string>>) => resolve(data))
+  resolve => (data: AxiosResponse<APISuccessResponse<{ token: string }>>) => resolve(data))
 
 const loginFailureAction = createAction(
   LOGIN_FAILURE,
-  resolve => (error: AxiosError) => resolve(error))
+  resolve => (error: AxiosError<APISuccessResponse>) => resolve(error))
 
 const loginCancelAction = createAction(LOGIN_CANCEL)
 
