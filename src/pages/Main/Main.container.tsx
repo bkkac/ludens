@@ -1,37 +1,16 @@
 import React, { Component } from 'react'
 import { noop } from 'lodash'
 import { LudensContext } from 'configs/context'
-import { number } from 'utils'
 import { RouteComponentProps } from 'react-router-dom'
-import { ButtonMenu, ResponsiveIcon, ALink } from 'components'
+import colors from 'constants/colors'
+import { ButtonMenu, ALink, CreditCard } from 'components'
 
-import WalletIcon from 'assets/images/global/wallet/wallet.png'
-import WalletIcon2x from 'assets/images/global/wallet/wallet@2x.png'
-import WalletIcon3x from 'assets/images/global/wallet/wallet@3x.png'
-
-import TicketIcon from 'assets/images/main/ticket/ticket.png'
-import TicketIcon2x from 'assets/images/main/ticket/ticket@2x.png'
-import TicketIcon3x from 'assets/images/main/ticket/ticket@3x.png'
-
-import CreditIcon from 'assets/images/main/credit/credit.png'
-import CreditIcon2x from 'assets/images/main/credit/credit@2x.png'
-import CreditIcon3x from 'assets/images/main/credit/credit@3x.png'
-
-import PurseIcon from 'assets/images/main/purse/purse.png'
-import PurseIcon2x from 'assets/images/main/purse/purse@2x.png'
-import PurseIcon3x from 'assets/images/main/purse/purse@3x.png'
-
-import MegaphoneIcon from 'assets/images/main/megaphone/megaphone.png'
-import MegaphoneIcon2x from 'assets/images/main/megaphone/megaphone@2x.png'
-import MegaphoneIcon3x from 'assets/images/main/megaphone/megaphone@3x.png'
-
-import ProblemIcon from 'assets/images/main/problem/problem.png'
-import ProblemIcon2x from 'assets/images/main/problem/problem@2x.png'
-import ProblemIcon3x from 'assets/images/main/problem/problem@3x.png'
-
-import ContactIcon from 'assets/images/main/contacts/contacts.png'
-import ContactIcon2x from 'assets/images/main/contacts/contacts@2x.png'
-import ContactIcon3x from 'assets/images/main/contacts/contacts@3x.png'
+import CreditIcon from 'assets/images/main/credit/credit-card.svg'
+import WalletIcon from 'assets/images/main/wallet/wallet.svg'
+import LottoIcon from 'assets/images/main/lotto/lotto.svg'
+import ContactIcon from 'assets/images/main/contacts/contacts.svg'
+import ProblemIcon from 'assets/images/main/problem/problem.svg'
+import MegaphoneIcon from 'assets/images/main/megaphone/megaphone.svg'
 
 import './main.style.scss'
 
@@ -76,76 +55,83 @@ class MainContainer extends Component<IMainProps & IMainActionProps & DefaultPro
   onNavigateTo = (path: string) => this.props.history.push(path)
 
   render() {
-    const creditTotal = this.props.wallet.money || 0
-    const credit = number.castToMoney(creditTotal)
-
     return (
-      <div className="main-container">
-        <div className="main-background" />
+      <div className="main-container primary-bg">
         <div className="container ">
           <div className="row">
-            <div className="col">
-              <div className="d-flex flex-row">
-                <ResponsiveIcon
-                  icon={{ x1: WalletIcon, x2: WalletIcon2x, x3: WalletIcon3x }}
-                  className="wallet-icon-main"
-                  alt="wallet-icon"
-                />
-                <div className="credit-total-container">
-                  <div className="credit-label">{constants.creditLabel}</div>
-                  <div className="credit-total-text">{credit}</div>
+            <div className="col-12 col-sm-12 col-md-12 col-lg-4">
+              <div className="row">
+                <div className="col d-flex justify-content-center">
+                  <CreditCard credit={this.props.wallet.money || 0} onClick={() => this.onNavigateTo('/credit-info')} />
+                </div>
+              </div>
+              <div className="row m2-t m4-b">
+                <div className="col text-center">
+                  <ALink color={colors.PRIMARY_TEXT} underline>{constants.conditionText}</ALink>
                 </div>
               </div>
             </div>
-          </div>
-          <div className="row">
-            <div className="col">
-              <div className="credit-button-wrapper">
-                <div className="condition-text-label"><ALink>{constants.conditionText}</ALink></div>
-                <div className="crefit-text-label" onClick={this.onPressAddingCredit}>{constants.creditText}</div>
+            <div className="col-xs-12 col-sm-12 col-md-12 col-lg-8">
+              <div className="row">
+                <div className="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-6">
+                  <div className="row">
+                    <div className="col-12 col-sm-12 col-md-5 col-lg-5 col-xl-5">
+                      <div className="row">
+                        <div className="col-6 col-md-12 m3-b d-flex">
+                          <ButtonMenu
+                            onClick={() => this.onNavigateTo('/credit-info')}
+                            text={constants.gotoCredit}
+                            icon={CreditIcon}
+                          />
+                        </div>
+                        <div className="col-6 col-md-12 m3-b d-flex">
+                          <ButtonMenu
+                            onClick={() => this.onNavigateTo('/transaction')}
+                            text={constants.gotoWD}
+                            icon={WalletIcon}
+                          />
+                        </div>
+                      </div>
+                    </div>
+                    <div className="col-6 col-sm-6 col-md-7 col-lg-7 col-xl-7 m3-b d-flex">
+                      <ButtonMenu
+                        onClick={() => this.onNavigateTo('/lotto')}
+                        text={constants.gotoLotto}
+                        icon={LottoIcon}
+                      />
+                    </div>
+                    <div className="col-6 d-md-none m3-b d-flex">
+                      <ButtonMenu
+                        text={constants.gotoContact}
+                        icon={ContactIcon}
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div className="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-6">
+                  <div className="row">
+                    <div className="d-none d-sm-none d-md-flex col-md-3 col-lg-3 col-xl-6 m3-b">
+                      <ButtonMenu
+                        text={constants.gotoContact}
+                        icon={ContactIcon}
+                      />
+                    </div>
+                    <div className="col-6 col-md-3 col-lg-3 m3-b col-xl-6 d-flex">
+                      <ButtonMenu
+                        text={constants.gotoHowto}
+                        icon={ProblemIcon}
+                      />
+                    </div>
+                    <div className="col-6 col-md-6 col-lg-6 col-xl-12 m3-b d-flex">
+                      <ButtonMenu
+                        onClick={() => this.onNavigateTo('/affilate')}
+                        text={constants.gotoAffli}
+                        icon={MegaphoneIcon}
+                      />
+                    </div>
+                  </div>
+                </div>
               </div>
-            </div>
-          </div>
-          <div className="row">
-            <div className="col-xl-2 col-md-4 col-6 mb-4 justify-center">
-              <ButtonMenu
-                onClick={() => this.onNavigateTo('/lotto')}
-                text={constants.gotoLotto}
-                icon={{ x1: TicketIcon, x2: TicketIcon2x, x3: TicketIcon3x }}
-              />
-            </div>
-            <div className="col-xl-2 col-md-4 col-6 mb-4">
-              <ButtonMenu
-                onClick={() => this.onNavigateTo('/credit-info')}
-                text={constants.gotoCredit}
-                icon={{ x1: CreditIcon, x2: CreditIcon2x, x3: CreditIcon3x }}
-              />
-            </div>
-            <div className="col-xl-2 col-md-4 col-6 mb-4">
-              <ButtonMenu
-                onClick={() => this.onNavigateTo('/transaction')}
-                text={constants.gotoWD}
-                icon={{ x1: PurseIcon, x2: PurseIcon2x, x3: PurseIcon3x }}
-              />
-            </div>
-            <div className="col-xl-2 col-md-4 col-6 mb-4">
-              <ButtonMenu
-                onClick={() => this.onNavigateTo('/affilate')}
-                text={constants.gotoAffli}
-                icon={{ x1: MegaphoneIcon, x2: MegaphoneIcon2x, x3: MegaphoneIcon3x }}
-              />
-            </div>
-            <div className="col-xl-2 col-md-4 col-6 mb-4">
-              <ButtonMenu
-                text={constants.gotoHowto}
-                icon={{ x1: ProblemIcon, x2: ProblemIcon2x, x3: ProblemIcon3x }}
-              />
-            </div>
-            <div className="col-xl-2 col-md-4 col-6 mb-4">
-              <ButtonMenu
-                text={constants.gotoContact}
-                icon={{ x1: ContactIcon, x2: ContactIcon2x, x3: ContactIcon3x }}
-              />
             </div>
           </div>
         </div>

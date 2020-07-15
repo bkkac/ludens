@@ -11,12 +11,11 @@ import {
   Dictionary,
 } from 'lodash'
 import moment from 'moment'
-import { number } from 'utils'
 import response from 'constants/response'
 import {
   ALink,
   Modal,
-  ResponsiveIcon,
+  CreditCard,
   TransactionItemCollapsible,
 } from 'components'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -25,7 +24,6 @@ import {
   faMinus,
   faChevronLeft,
 } from '@fortawesome/free-solid-svg-icons'
-import MastercardIcon from 'assets/images/global/mastercard/mastercard.svg'
 import './creditInfo.style.scss'
 
 const constants = {
@@ -134,9 +132,6 @@ class TransactionListContainer extends
     const updatedTime = moment(time).format('lll') || ''
     const updatedTimeText = `${constants.latedUpdate} ${updatedTime}`
 
-    const total = this.props.wallet.money || 0
-    const credit = number.castToMoney(total, true)
-
     const TransactionList = this.renderTransactionList()
 
     return (
@@ -151,25 +146,10 @@ class TransactionListContainer extends
             </div>
           </div>
           <div className="row">
-            <div className="col-12 col-sm-12 col-md-6 col-lg-4  mt-3">
+            <div className="col-12 col-sm-12 col-md-6 col-lg-4 mt-3">
               <div className="row">
                 <div className="col d-flex justify-content-center">
-                  <div className="wallet-card-container d-flex flex-column">
-                    <div className="d-flex flex-row align-items-center">
-                      <div className="wallet-card-name">{constants.thailand}<span>{constants.bet}</span></div>
-                      <div className="wallet-card-credit-name">{constants.credit}</div>
-                    </div>
-                    <div className="d-flex align-items-center card-number-wrapper">
-                      {constants.cardNumber}
-                    </div>
-                    <div className="d-flex flex-row align-items-end">
-                      <div className="d-flex flex-column wallet-card-credit-balance-wrapper">
-                        <div className="wallet-card-credit-balance-label">{constants.remainingLabel}</div>
-                        <div className="wallet-card-credit-balance">{credit}</div>
-                      </div>
-                      <ResponsiveIcon icon={MastercardIcon} className="mastercard-icon" alt="mastercard-icon" />
-                    </div>
-                  </div>
+                  <CreditCard credit={this.props.wallet.money || 0} />
                 </div>
               </div>
               <div className="row mt-2">
@@ -199,7 +179,7 @@ class TransactionListContainer extends
             <div className="col-xs-12 col-sm-12 col-md-6 col-lg-8  mt-3 credit-info-transaction-wrapper">
               <div className="row mt-4">
                 <div className="col">
-                  <div className="transaction-list-title-text">{constants.titleText}</div>
+                  <h3>{constants.titleText}</h3>
                 </div>
               </div>
               <div className="row mt-3">
