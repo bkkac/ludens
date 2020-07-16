@@ -1,21 +1,21 @@
+@import "assets/stylesheets/colors";
+
 .button-menu-container {
-  padding: 20px;
+  padding: 12px;
   cursor: pointer;
   position: relative;
   z-index: 0;
   transition: all 256ms ease-in-out;
 
-  min-height: 137px;
-  border-radius: 16px;
-  box-shadow: 0 3px 10px 0 #00000029;
-  background-color: #ffffff;
+  min-height: 92px;
+  border-radius: 24px;
+  background-color: $primary-text;
 
   &.disabled {
     cursor: unset;
-    background-color: #ececec;
-    
+    background-color: $secondary-text;
+
     &:hover {
-      box-shadow: 0 3px 10px 0 #00000029;
       &:before {
         opacity: 0;
       }
@@ -36,16 +36,14 @@
     opacity: 0;
     content: "";
     z-index: -1;
-    border-radius: 16px;
+    border-radius: 24px;
     transition: all 256ms ease-in-out;
-    background: -moz-linear-gradient(to bottom, #ffffff, #cbe2ff);
-    background: -webkit-linear-gradient(to bottom, #ffffff, #cbe2ff);
-    background: linear-gradient(to bottom, #ffffff, #cbe2ff);
+    background: -moz-linear-gradient(to bottom, $primary-text, rgba($color: $secondary-bg, $alpha: .28));
+    background: -webkit-linear-gradient(to bottom, $primary-text, rgba($color: $secondary-bg, $alpha: .28));
+    background: linear-gradient(to bottom, $primary-text, rgba($color: $secondary-bg, $alpha: .28));
   }
 
   &:hover {
-    box-shadow: 0 3px 10px 0 #00000067;
-
     &:before {
       opacity: 1;
     }
@@ -57,40 +55,26 @@
     .icon-button-menu {
       transform: translateY(2px);
     }
+  }
 
-    .chevron-icon-container {
-      transform: translateY(2px);
+  .icon-wrapper {
+    flex: 2;
+    .icon-button-menu {
+      transition: all 256ms linear;
+      width: 60px;
+      height: 60px;
+      object-fit: fill;
     }
   }
 
-  .icon-button-menu {
-    transition: all 256ms linear;
-    width: 80px;
-    height: 60px;
-    object-fit: none;
-  }
-
-  .chevron-icon-container {
-    transition: all 256ms linear;
-    flex: 1;
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-
-    .chevron-icon-button {
-      font-size: 22px;
-      color: #adadad;
-      margin-left: 4px;
-    }
+  .chevron-icon-button {
+    font-size: 16px;
+    margin-left: 4px;
   }
 
   .title-text-button {
     transition: all 256ms linear;
     margin-top: 16px;
-    font-family: "SukhumvitSet-Bold";
-    font-size: 20px;
-    line-height: 1.35;
-    text-align: left;
-    color: #777777;
+    color: $primary-bg;
   }
 }

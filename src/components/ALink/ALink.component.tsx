@@ -10,6 +10,7 @@ const defaultProps: IALink = {
   bold: false,
   color: '#777777',
   disabled: false,
+  underline: false,
   onClick() { noop() },
 }
 
@@ -21,11 +22,13 @@ const ALink: SFC<IALink & DefaultProps> = (props) => {
     onClick,
     disabled,
     fontSize,
+    underline,
     children,
   } = props
 
   const disabledClass = disabled ? 'disabled' : ''
-  const wrapperClass = bold ? `button-link-text-bold ${disabledClass}` : `button-link-text ${disabledClass}`
+  const underlineClass = underline ? 'underline' : ''
+  const wrapperClass = bold ? `button-link-text-bold ${disabledClass} ${underlineClass}` : `button-link-text ${disabledClass} ${underlineClass}`
   const style = {
     color: disabled ? colors.SECONDARY_TEXT : color,
     fontSize,

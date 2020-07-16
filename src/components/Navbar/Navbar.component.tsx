@@ -53,7 +53,7 @@ const Navbar: SFC<INavbarProps & DefaultProps> = ({
       <div className="container">
         <div className="leading-navbar-container" onClick={onPressesLogo}>
           <img src={ThaiFlagIcon} alt="thailand" className="logo-container" />
-          <div className="name-container">THAILAND<span>BET</span></div>
+          <div className="name-container d-none d-sm-none d-md-block">THAILAND<span>BET</span></div>
         </div>
         <div className="trailing-navbar-container">
           <CreditBadgeComponent />

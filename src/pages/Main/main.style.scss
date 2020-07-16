@@ -1,17 +1,7 @@
 .main-container {
+  min-height: 100vh;
   padding-top: 112px;
   position: relative;
-
-  .main-background {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 315px;
-    border-bottom-left-radius: 80px;
-    border-bottom-right-radius: 30px;
-    background-image: linear-gradient(to bottom, #3587f1, #065bc9);
-  }
 
   .wallet-icon-main {
     width: 48px;
@@ -35,40 +25,6 @@
       line-height: 32px;
       text-align: left;
       color: #ffffff;
-    }
-  }
-
-  .credit-button-wrapper {
-    display: inline-flex;
-    align-items: center;
-    height: 40px;
-    border-radius: 20px;
-    background-color: #fcfcfc;
-    margin-bottom: 44px;
-    margin-top: 20px;
-
-    .condition-text-label {
-      margin-left: 20px;
-      margin-right: 8px;
-    }
-
-    .crefit-text-label {
-      cursor: pointer;
-      font-family: "SukhumvitSet-Medium";
-      font-size: 18px;
-      line-height: 1.5;
-      text-align: center;
-      color: #fcfcfc;
-
-      height: 40px;
-      padding: 6px 32px 6px 32px;
-      border-radius: 20px;
-      background-color: #065bc9;
-      transition: all 256ms linear;
-
-      &:hover {
-        background-color: #064eac;
-      }
     }
   }
 }
