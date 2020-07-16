@@ -3,5 +3,6 @@ declare interface IALink {
   bold?: boolean
   color?: string
   disabled?: boolean
+  underline?: boolean
   onClick?(): Void
 }

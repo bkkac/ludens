@@ -13,4 +13,11 @@
       text-decoration: unset;
     }
   }
+  
+  &.underline {
+    text-decoration: underline;
+    &:hover {
+      text-decoration: unset;
+    }
+  }  
 }
