@@ -9,6 +9,7 @@ import { NumberPad } from './NumberPad'
 import { InputText } from './InputText'
 import { LottoCard } from './LottoCard'
 import { Breadcrumb } from './Breadcrumb'
+import { CreditCard } from './CreditCard'
 import { ButtonMenu } from './ButtonMenu'
 import { ButtonIcon } from './ButtonIcon'
 import { InputNumber } from './InputNumber'
@@ -36,6 +37,7 @@ export {
   InputText,
   LottoCard,
   Breadcrumb,
+  CreditCard,
   ButtonMenu,
   ButtonIcon,
   InputNumber,
