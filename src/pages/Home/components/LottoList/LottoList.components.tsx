@@ -12,10 +12,8 @@ const defaultProps: ILottoListProps = {
 const LottoList: SFC<ILottoListProps & DefaultProps> = (props) => {
 
   const LottoCardComponents = map(props.data, (lotto, index) => (
-    <div key={`lotto-card-${index}`} className="container card-section-wrapper m3-b">
-      {/* <div className="container"> */}
-      <LottoCard type={lotto.code as LottoType} data={lotto} />
-      {/* </div> */}
+    <div key={`lotto-card-${index}`} className="container m3-b">
+      <LottoCard lotto={lotto} />
     </div>
   ))
 
