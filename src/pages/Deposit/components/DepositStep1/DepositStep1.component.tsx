@@ -58,7 +58,6 @@ const DepositStep1:
 
     const RenderBankList = (): JSX.Element => {
       const RadioImages = extraProps?.banks.map((bank, index) => {
-        console.log(bank.type)
         return (
           <div className="col-3 col-sm-3 col-md-2 col-lg-1 mt-2" key={`bank-${index}-${bank.type}`}>
             <InputRadioImage

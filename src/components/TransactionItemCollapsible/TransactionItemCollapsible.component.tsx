@@ -3,6 +3,7 @@ import { number } from 'utils'
 import moment from 'moment'
 import { split, groupBy, Dictionary, isEmpty, map, keys } from 'lodash'
 import { Badge } from 'components'
+import { LOTTO_TYPE, LOTTO_GAME_TYPE, TRANSACTION_TYPE } from 'constants/variables'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faChevronRight } from '@fortawesome/free-solid-svg-icons'
 import './transactionItemCollapsible.style.scss'
@@ -13,22 +14,6 @@ const statusName: { [status in TBetStatus | TFinanceStatus]: { name: string; col
   FAIL: { name: 'ไม่สำเร็จ', color: '#dd3d45' },
   WINNER: { name: 'ได้', color: '#66c6b9' },
   LOSER: { name: 'เสีย', color: '#dd3d45' },
-}
-
-const creditTypeNames: { [type in TLottoGameType | ICreditWalletType]: string } = {
-  RUN_UP: 'วิ่งบน',
-  RUN_DOWN: 'วิ่งลาง',
-  THREE_TOAST: 'สามตัวโต้ท',
-  THREE_UP: 'สามตัวบน',
-  TWO_DOWN: 'สองตัวล่าง',
-  TWO_UP: 'สองตัวบน',
-  DEPOSIT: 'ฝากเครดิต',
-  WITHDRAW: 'ถอนเครดิต',
-}
-
-const lottoTypeNames: { [type in TLottoType]: string } = {
-  GOVERNMENT: 'รัฐบาล',
-  YEGEE: 'ยี่กี',
 }
 
 const creditInfoType: { [name: string]: string } = {
@@ -83,7 +68,7 @@ const TransactionItemCollapsible: SFC<ITransactionItemCollapsible & DefaultProps
   }
 
   const { name, type, subType } = getGroupType()
-  const displayName = `${creditInfoType[type]}${lottoTypeNames[subType as TLottoType] || ''}`
+  const displayName = `${creditInfoType[type]}${LOTTO_TYPE[subType as TLottoType] || ''}`
 
   const displayTime = moment(credit.createdAt).format('DD MMM YYYY HH:mm')
   const round = (subType === 'YEGEE')
@@ -112,7 +97,11 @@ const TransactionItemCollapsible: SFC<ITransactionItemCollapsible & DefaultProps
             key={`transaction-description-amount-${creditIndex}`}
           >
             <div className="transaction-description-name-text">
-              {creditTypeNames[cred.type]}
+              {
+                cred.type === 'DEPOSIT' || cred.type === 'WITHDRAW'
+                  ? TRANSACTION_TYPE[cred.type]
+                  : LOTTO_GAME_TYPE[cred.type]
+              }
               {' '}
               <span className="transaction-description-lotto-number">{cred.number}</span>
               {' '}
@@ -161,7 +150,7 @@ const TransactionItemCollapsible: SFC<ITransactionItemCollapsible & DefaultProps
           <Fragment key={`transaction-description-amount-${keyIndex}`}>
             <div className="row mt-3">
               <div className="col transaction-description-name-text">
-                {creditTypeNames[key as TLottoGameType]}
+                {LOTTO_GAME_TYPE[key as TLottoGameType]}
               </div>
             </div>
             {DetailComponents}
