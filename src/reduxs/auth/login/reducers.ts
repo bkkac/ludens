@@ -20,7 +20,7 @@ const loginReducer = (state: ILoginState = initialState, action: RootAction): IL
     case getType(actions.loginFailureAction):
       return {
         isFetching: false,
-        error: action.payload.message,
+        error: action.payload.response?.data.devMessage,
         code: action.payload.code,
       }
     default:

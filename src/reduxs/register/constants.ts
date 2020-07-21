@@ -5,7 +5,7 @@ export const REGISTER_SUCCESS = 'REGISTER_SUCCESS'
 export const REGISTER_FAILURE = 'REGISTER_FAILURE'
 export const REGISTER_CANCEL = 'REGISTER_CANCEL'
 
-export const initialState: IRegisterState = {
+export const initialState: ReducerState = {
   isFetching: false,
   code: 0,
   data: {},

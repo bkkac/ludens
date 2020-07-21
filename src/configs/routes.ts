@@ -9,7 +9,12 @@ const routes: IRoutes[] = [
   },
   {
     name: 'register',
-    path: '/register/:affilate',
+    path: '/register',
+    component: pages.Register,
+  },
+  {
+    name: 'register-affiliate',
+    path: '/register-affiliate/:affiliate',
     component: pages.Register,
   },
   {
@@ -74,9 +79,9 @@ const routes: IRoutes[] = [
   },
   {
     exact: true,
-    name: 'affilate',
-    path: '/affilate',
-    component: pages.Affilate,
+    name: 'affiliate',
+    path: '/affiliate',
+    component: pages.Affiliate,
     private: true,
   },
   {

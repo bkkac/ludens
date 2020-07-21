@@ -82,19 +82,19 @@ function LoginForm(props: FormikProps<ILogin> & ILoginFormProps) {
             />
           </div>
           <div className="col align-self-end text-right">
-            <ALink onClick={onPressNavigateToForgotPassword}>
+            <ALink id="goto-forgot-password" onClick={onPressNavigateToForgotPassword}>
               {constants.alinkForgot}
             </ALink>
           </div>
         </div>
         <div className="row">
           <div className="col">
-            <Button buttonType="submit" text={constants.buttonLogin} />
+            <Button id="login-submit-button" buttonType="submit" text={constants.buttonLogin} />
           </div>
         </div>
         <div className="row">
           <div className="col text-center pt-1">
-            <ALink onClick={onPressNavigateToRegister} color={colors.PRIMARY_TEXT}>
+            <ALink id="goto-register" onClick={onPressNavigateToRegister} color={colors.PRIMARY_TEXT}>
               {constants.alinkRegister}
             </ALink>
           </div>

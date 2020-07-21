@@ -1,12 +1,8 @@
 declare interface IRegisterRequest {
   username: string
   password: string
-  password_confirm: string
-  bank: {
-    type: string
-    name: string
-    number: string
-  }
-  phone_number: string
-  affilate_uuid: string
+  passwordConfirm: string
+  bank: IBank
+  phoneNumber: string
+  affilateUuid: string | null
 }

@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, createRef, RefObject } from 'react'
 import { noop } from 'lodash'
 import { Formik, FormikProps } from 'formik'
 import { RouteComponentProps } from 'react-router-dom'
@@ -33,9 +33,17 @@ const defaultProps: IHomeProps & IHomeActionProps = {
 class HomeContainer extends Component<IHomeProps & IHomeActionProps & DefaultProps & RouteComponentProps, {}> {
 
   static defaultProps = defaultProps
+  homeContainerRef: RefObject<HTMLDivElement> = createRef()
 
   componentDidMount() {
     this.props.getLottoList()
+    if (this.homeContainerRef.current) {
+      this.homeContainerRef.current?.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start',
+        inline: 'start',
+      })
+    }
   }
 
   componentDidUpdate(prevProps: IHomeProps) {
@@ -97,7 +105,7 @@ class HomeContainer extends Component<IHomeProps & IHomeActionProps & DefaultPro
     const RenderLoginFormComponent = this.renderLoginForm
     const RenderLottoListComponent = this.renderLottoList
     return (
-      <div className="home-container primary-bg">
+      <div className="home-container primary-bg" ref={this.homeContainerRef}>
         <div className="login-container primary-bg">
           <div className="container">
             <div className="d-flex flex-column justify-content-center align-items-center m3-b">

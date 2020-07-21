@@ -1,4 +1,5 @@
 declare interface IALink {
+  id: string
   fontSize?: number
   bold?: boolean
   color?: string

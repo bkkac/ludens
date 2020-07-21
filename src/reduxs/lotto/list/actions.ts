@@ -11,7 +11,7 @@ const getLottoListAction = createAction(GET_LOTTO_LIST_REQUEST)
 
 const getLottoListSuccessAction = createAction(
   GET_LOTTO_LIST_SUCCESS,
-  resolve => (data: AxiosResponse<APISuccessResponse<ILotto[]>>) => resolve(data))
+  resolve => (data: AxiosResponse<APIResponse<ILotto[]>>) => resolve(data))
 
 const getLottoListFailureAction = createAction(
   GET_LOTTO_LIST_FAILURE,

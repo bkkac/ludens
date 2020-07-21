@@ -37,7 +37,7 @@ const ErrorModal: SFC<IErrorModal & DefaultProps> = (props) => {
         {props.description}
       </div>
       <div className="footer-wrapper-error-modal">
-        <Button onClick={props.action} text={props.actionText!} />
+        <Button id="error-ok-button" onClick={props.action} text={props.actionText!} />
       </div>
     </div>
   )

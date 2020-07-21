@@ -1,0 +1,67 @@
+@import "assets/stylesheets/colors";
+
+.input-select-container {
+    width: 100%;
+    position: relative;
+    user-select: none;
+    outline: none;
+    cursor: pointer;
+
+    .selected-wrapper {
+        background-color: $secondary-bg;
+        border-radius: 8px;
+        height: 64px;
+        padding: 0;
+        margin: 0;
+        display: flex;
+        align-items: center;
+
+        li {
+            list-style: none;
+            padding-right: 16px;
+            flex: 1;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+
+            .input-selected-wrapper {
+                flex: 1;
+                
+                h4 {
+                    padding-left: 18px;
+                }
+            }
+
+            .chevron-right-icon {
+                color: $primary-blue;
+                transition: all 254ms ease-in-out;
+                transform: rotate(0);
+
+                &.expanded {
+                    transform: rotate(90deg);
+                }
+            }
+        }
+    }
+
+    .selector-wrapper {
+        list-style: none;
+        position: absolute;
+        display: none;
+        top: 60px;
+        left: 0;
+        z-index: 1;
+        width: 100%;
+        margin: 0;
+        padding: 0;
+        max-height: 240px;
+        border-bottom-left-radius: 8px;
+        border-bottom-right-radius: 8px;
+        background-color: $secondary-bg;
+        overflow: scroll;
+
+        &.opened {
+            display: block;
+        }
+    }
+}

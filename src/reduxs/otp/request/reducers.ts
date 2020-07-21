@@ -20,7 +20,7 @@ const getOTPReducer = (state: IOTPRequestState = initialState, action: RootActio
     case getType(actions.getOTPFailureAction):
       return {
         isFetching: false,
-        error: action.payload.message,
+        error: action.payload.response?.data.data,
         code: action.payload.code,
       }
     default:

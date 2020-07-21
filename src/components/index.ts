@@ -12,8 +12,10 @@ import { Breadcrumb } from './Breadcrumb'
 import { CreditCard } from './CreditCard'
 import { ButtonMenu } from './ButtonMenu'
 import { ButtonIcon } from './ButtonIcon'
+import { InputSelect } from './InputSelect'
 import { InputNumber } from './InputNumber'
 import { TextRunning } from './TextRunning'
+import { SelectorItem } from './SelectorItem'
 import { UsernameText } from './UsernameText'
 import { InputTextIcon } from './InputTextIcon'
 import { InputCheckbox } from './InputCheckbox'
@@ -40,8 +42,10 @@ export {
   CreditCard,
   ButtonMenu,
   ButtonIcon,
+  InputSelect,
   InputNumber,
   TextRunning,
+  SelectorItem,
   UsernameText,
   InputCheckbox,
   InputTextIcon,

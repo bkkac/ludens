@@ -353,6 +353,7 @@ class LottoMakeContainer extends Component<
           <div className="row mb-3">
             <div className="col">
               <ALink
+                id="backto-previus-page"
                 color="#ff9b96"
                 bold
                 onClick={() => this.handleOnClickBreadcrumb(`/lotto/${this.props.match.params.type}`)}

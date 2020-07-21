@@ -14,11 +14,11 @@ const getBetResultAction = createAction(
 
 const getBetResultSuccessAction = createAction(
   GET_BET_RESULT_SUCCESS,
-  resolve => (data: AxiosResponse<APISuccessResponse<IBetResult[]>>) => resolve(data))
+  resolve => (data: AxiosResponse<APIResponse<IBetResult[]>>) => resolve(data))
 
 const getBetResultFailureAction = createAction(
   GET_BET_RESULT_FAILURE,
-  resolve => (error: AxiosError<APISuccessResponse>) => resolve(error))
+  resolve => (error: AxiosError<APIResponse>) => resolve(error))
 
 const getBetResultCancelAction = createAction(GET_BET_RESULT_CANCEL)
 

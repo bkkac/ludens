@@ -179,7 +179,7 @@ class SummaryLottoModal extends Component<ISummaryLottoModalProps & DefaultProps
                 <span className="summary-lotto-modal-title">{constants.lottoListTitle}</span>
               </div>
               <div className="col d-flex justify-content-end">
-                <ButtonIcon type="close" onClick={this.handleOnClickClose} />
+                <ButtonIcon id="close-summary-lotto-button" type="close" onClick={this.handleOnClickClose} />
               </div>
             </div>
             <LottoListComponent />
@@ -190,7 +190,7 @@ class SummaryLottoModal extends Component<ISummaryLottoModalProps & DefaultProps
             </div>
             <div className="row mt-3">
               <div className="col">
-                <Button onClick={this.handleOnClickBet} text={constants.makeLotto} />
+                <Button id="maked-lotto-submit-button" onClick={this.handleOnClickBet} text={constants.makeLotto} />
               </div>
             </div>
           </div>
