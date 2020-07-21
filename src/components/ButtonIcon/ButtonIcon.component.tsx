@@ -15,11 +15,13 @@ const iconSet: { [typed in IButtonIconType]: string | IIconSet } = {
 type DefaultProps = Readonly<typeof defaultProps>
 
 const defaultProps: IButtonIcon = {
+  id: '',
   type: 'close',
   onClick() { noop() },
 }
 
 const ButtonIcon: SFC<IButtonIcon & DefaultProps> = ({
+  id,
   type,
   onClick,
   customIcon,
@@ -35,7 +37,7 @@ const ButtonIcon: SFC<IButtonIcon & DefaultProps> = ({
   }
 
   return (
-    <div className="icon-button-container" onClick={onClick}>
+    <div className="icon-button-container" onClick={onClick} id={id}>
       <ResponsiveIcon icon={icon()} className="icon-button" alt="icon-button-alt" />
     </div>
   )

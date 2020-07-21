@@ -11,11 +11,11 @@ const affilateSummaryAction = createAction(AFFILATE_SUMMARY_REQUEST)
 
 const affilateSummarySuccessAction = createAction(
   AFFILATE_SUMMARY_SUCCESS,
-  resolve => (data: AxiosResponse<APISuccessResponse<IAffilateSummary>>) => resolve(data))
+  resolve => (data: AxiosResponse<APIResponse<IAffilateSummary>>) => resolve(data))
 
 const affilateSummaryFailureAction = createAction(
   AFFILATE_SUMMARY_FAILURE,
-  resolve => (error: AxiosError<APISuccessResponse>) => resolve(error))
+  resolve => (error: AxiosError<APIResponse>) => resolve(error))
 
 const affilateSummaryCancelAction = createAction(AFFILATE_SUMMARY_CANCEL)
 

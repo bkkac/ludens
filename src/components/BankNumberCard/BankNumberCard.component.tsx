@@ -16,7 +16,6 @@ const defaultProps: IBankNumberCard = {
     id: 0,
     name: '',
     number: '',
-    type: '',
     createdAt: '',
     updatedAt: '',
   },

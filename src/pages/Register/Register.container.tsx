@@ -16,7 +16,7 @@ import './register.style.scss'
 const constants = {
   ok: 'ตกลง',
   login: 'เข้าสู่ระบบ',
-  registerSuccess: 'สมัครสมาชิคสำเร็จ!',
+  registerSuccess: 'สมัครสมาชิกสำเร็จ!',
 }
 
 type DefaultProps = Readonly<typeof defaultProps>
@@ -39,7 +39,10 @@ const defaultProps: IRegisterProps & IRegisterActionProps = {
   loading() { noop() },
 }
 class RegisterContainer extends
-  Component<IRegisterProps & IRegisterActionProps & DefaultProps & RouteComponentProps, IRegisterStates> {
+  Component<
+  IRegisterProps & IRegisterActionProps & DefaultProps & RouteComponentProps<{ affiliate: string }>,
+  IRegisterStates
+  > {
 
   registerContainerRef: RefObject<HTMLDivElement> = createRef()
 
@@ -49,7 +52,7 @@ class RegisterContainer extends
 
   componentDidUpdate(prevProps: IRegisterProps, prevState: IRegisterStates) {
     if (prevState.currentStep !== this.state.currentStep) {
-      this.registerContainerRef.current ?.scrollIntoView({
+      this.registerContainerRef.current?.scrollIntoView({
         behavior: 'smooth',
         block: 'start',
         inline: 'start',
@@ -103,6 +106,18 @@ class RegisterContainer extends
         }
       }
     }
+
+    // Extra OTP request
+    if (prevProps.requestOTPIsFetching !== this.props.requestOTPIsFetching && !this.props.requestOTPIsFetching) {
+      this.props.loading(false)
+      if (this.props.requestOTPCode !== response.OK) {
+        Modal.error.show({
+          action: Modal.error.hide,
+          description: this.props.requestOTPError,
+          actionText: constants.ok,
+        })
+      }
+    }
   }
 
   onSubmitRegister = (_: IRegister) => {
@@ -111,28 +126,28 @@ class RegisterContainer extends
 
   onNextStepPresses = (currentStep: number, value?: IRegister) => {
     if (currentStep === 1) {
-      const phoneNumber = value ?.phoneNumber!
+      const phoneNumber = value?.phoneNumber!
       if (phoneNumber) {
         this.props.loading(true)
         this.props.requestOTP(phoneNumber)
       }
     } else if (currentStep === 2) {
-      const phoneNumber = value ?.phoneNumber!
-      const otp = value ?.otp!
+      const phoneNumber = value?.phoneNumber!
+      const otp = value?.otp!
       this.props.loading(true)
       this.props.validateOTP({ phoneNumber, otp })
     } else if (currentStep === 3) {
       const registerData: IRegisterRequest = {
-        username: value ?.username!,
-        password: value ?.password!,
-        password_confirm: value ?.confirmPassword!,
+        username: value?.username!,
+        password: value?.password!,
+        passwordConfirm: value?.confirmPassword!,
         bank: {
-          type: value ?.bankType!,
-          name: `${value ?.ownerName} ${value ?.ownerSurname}`,
-          number: value ?.bankNumber!,
+          type: value?.bankType! as TBankType,
+          name: value?.ownerName!,
+          number: value?.bankNumber!,
         },
-        phone_number: value ?.phoneNumber!,
-        affilate_uuid: value ?.affilateRef!,
+        phoneNumber: value?.phoneNumber!,
+        affilateUuid: value?.affilateRef || null,
       }
       this.props.loading(true)
       this.props.register(registerData)
@@ -181,7 +196,7 @@ class RegisterContainer extends
 
     return (
       <Formik
-        initialValues={{ ...initialValues, affilateRef: (this.props.match.params as { affilate: string }).affilate }}
+        initialValues={{ ...initialValues, affilateRef: this.props.match.params.affiliate }}
         validationSchema={scheme}
         enableReinitialize
         onSubmit={this.onSubmitRegister}
@@ -194,7 +209,7 @@ class RegisterContainer extends
   render() {
     const RegisterComponent = this.renderRegisterForm
     return (
-      <div className="container register-container" ref={this.registerContainerRef}>
+      <div className="register-container primary-bg" ref={this.registerContainerRef}>
         <RegisterComponent />
       </div>
     )

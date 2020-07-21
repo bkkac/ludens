@@ -18,11 +18,11 @@ const getPlayedYeegeListAction = createAction(
 
 const getPlayedYeegeListSuccessAction = createAction(
   GET_PLAYED_YEEGE_LIST_SUCCESS,
-  resolve => (data: AxiosResponse<APISuccessResponse<IYeegePlay[]>>) => resolve(data))
+  resolve => (data: AxiosResponse<APIResponse<IYeegePlay[]>>) => resolve(data))
 
 const getPlayedYeegeListFailureAction = createAction(
   GET_PLAYED_YEEGE_LIST_FAILURE,
-  resolve => (error: AxiosError<APISuccessResponse>) => resolve(error))
+  resolve => (error: AxiosError<APIResponse>) => resolve(error))
 
 const getPlayedYeegeListCancelAction = createAction(GET_PLAYED_YEEGE_LIST_CANCEL)
 

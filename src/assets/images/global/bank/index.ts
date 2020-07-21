@@ -15,10 +15,6 @@ import GSB from './GSB.png'
 import ISBT from './ISBT.png'
 
 const collectBank: IImageSet = {
-  KRUNGSRI: {
-    Icon: BAY,
-    key: 'KRUNGSRI',
-  },
   BBL: {
     Icon: BBL,
     key: 'BBL',

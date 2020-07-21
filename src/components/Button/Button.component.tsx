@@ -5,6 +5,7 @@ import './button.style.scss'
 type DefaultProps = Readonly<typeof defaultProps>
 
 const defaultProps: IButton = {
+  id: '',
   text: '',
   onClick() { noop() },
   type: 'normal',
@@ -16,6 +17,7 @@ const defaultProps: IButton = {
 const Button: SFC<IButton & DefaultProps> = (props) => {
 
   const {
+    id,
     text,
     onClick,
     type,
@@ -28,6 +30,7 @@ const Button: SFC<IButton & DefaultProps> = (props) => {
 
   return (
     <button
+      id={id}
       type={buttonType}
       className={containerClass}
       onClick={disabled ? noop : onClick}

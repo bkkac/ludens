@@ -17,6 +17,7 @@ const Breadcrumb: SFC<IBreadcrumbProps & DefaultProps> = (props) => {
       return (
         <Fragment key={`${item.path}-${index}`}>
           <ALink
+            id={`breadcrumb-${index}`}
             bold
             color={item.active ? '#777777' : '#74605c'}
             fontSize={20}

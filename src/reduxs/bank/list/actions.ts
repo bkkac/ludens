@@ -11,7 +11,7 @@ const getBankListAction = createAction(GET_BANK_LIST_REQUEST)
 
 const getBankListSuccessAction = createAction(
   GET_BANK_LIST_SUCCESS,
-  resolve => (data: AxiosResponse<APISuccessResponse<IBank[]>>) => resolve(data))
+  resolve => (data: AxiosResponse<APIResponse<IBank[]>>) => resolve(data))
 
 const getBankListFailureAction = createAction(
   GET_BANK_LIST_FAILURE,

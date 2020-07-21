@@ -3,6 +3,7 @@ type ButtonSize = 'small' | 'medium' | 'large'
 type ButtonType = 'submit' | 'reset' | 'button'
 
 declare interface IButton {
+  id: string
   text: string
   onClick?(): Void
   type?: ButtonStyle

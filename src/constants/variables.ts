@@ -1,10 +1,13 @@
+import { values as _values } from 'lodash'
+import ImageBankSet from 'assets/images/global/bank'
+
 export const THEME_MODE = {
   DARK: 'dark-mode',
   LIGHT: 'light-mode',
   DARKER: 'darker-mode',
 }
 
-export const EBANK = {
+export const EBANK: { [key in TBankType]: string } = {
   BBL: 'BBL', // กรุงเทพ
   KBANK: 'KBANK', // กสิกร
   KTB: 'KTB', // กรุงไทย
@@ -21,6 +24,30 @@ export const EBANK = {
   GSB: 'GSB', // ออมสิน
   ISBT: 'ISBT', // อิสลามแห่งประเทศไทย
 }
+
+export const BANK_NAME: { [key in TBankType]: string } = {
+  BBL: 'ธนาคารกรุงเทพ',
+  KBANK: 'ธนาคารกสิกร',
+  KTB: 'ธนาคารกรุงไทย',
+  TMB: 'ธนาคารทหารไทย',
+  SCB: 'ธนาคารไทยพาณิชย์',
+  BAY: 'ธนาคารกรุงศรีอยุธยา',
+  KKP: 'ธนาคารเกียรตินาคิน',
+  CIMBT: 'ธนาคารซีไอเอ็มบีไทย',
+  TISCO: 'ธนาคารทิสโก้',
+  TBANK: 'ธนาคารธนชาต',
+  UOBT: 'ธนาคารยูโอบี',
+  TCD: 'ธนาคารไทยเครดิตเพื่อรายย่อย',
+  ICBCT: 'ธนาคารไอซีบีซี (ไทย)',
+  GSB: 'ธนาคารออมสิน',
+  ISBT: 'ธนาคารอิสลามแห่งประเทศไทย',
+}
+
+export const BANKS: ICBank[] = _values(ImageBankSet).map(item => ({
+  value: item.key,
+  name: BANK_NAME[item.key],
+  Icon: item.Icon,
+}))
 
 export const TRANSACTION_TYPE: { [type in TTransactionType]: string } = {
   DEPOSIT: 'ฝากเครดิต',

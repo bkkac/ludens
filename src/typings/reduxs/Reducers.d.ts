@@ -10,7 +10,7 @@ declare interface RootReducers {
     user: IUserState
     lotto: ILottoState
     otp: IOTPState
-    register: IRegisterState
+    register: ReducerState<any>
     loader: boolean
     auth: IAuthState
     finance: IFinanceState

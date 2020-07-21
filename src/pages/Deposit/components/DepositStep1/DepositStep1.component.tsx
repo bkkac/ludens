@@ -81,7 +81,7 @@ const DepositStep1:
         <div className="deposit-form-wrapper mb-5">
           <div className="row">
             <div className="col">
-              <ALink color="#ff9b96" bold onClick={onPressBack}>{constants.backText}</ALink>
+              <ALink id="backto-previus-page" color="#ff9b96" bold onClick={onPressBack}>{constants.backText}</ALink>
             </div>
           </div>
           <div className="row">
@@ -124,6 +124,7 @@ const DepositStep1:
           <div className="row pt-4">
             <div className="col">
               <Button
+                id="deposit-step-1-submit-button"
                 disabled={!!errors.webBankId || isEmpty(values.webBankId)
                   || !!errors.money || isEmpty(values.money)}
                 text={constants.buttonNextStep}

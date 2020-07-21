@@ -47,6 +47,7 @@ const InputText = class extends Component<IInputTextProps & DefaultProps> {
       <div className={`input-text ${hasErrorClass}`}>
         <input
           disabled={disabled}
+          id={name}
           name={name}
           type={type}
           value={value}

@@ -21,7 +21,7 @@ const loginEpic: Epic<RootAction, RootAction, RootReducers> = (action$, store, d
     exhaustMap(action =>
       from(fetchLogin(action.payload))
         .pipe(
-          mergeMap((response: AxiosResponse<APISuccessResponse<{ token: string }>>) => of(
+          mergeMap((response: AxiosResponse<APIResponse<{ token: string }>>) => of(
             actions.loginSuccessAction(response),
             userActions.persistedUserAction({ token: response.data.data.token }),
             userActions.getMeAction(),

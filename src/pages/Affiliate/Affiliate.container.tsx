@@ -7,7 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faChevronLeft, faChevronRight, faDice, faLink, faCopy } from '@fortawesome/free-solid-svg-icons'
 import { number } from 'utils'
 import moment from 'moment'
-import './affilate.style.scss'
+import './affiliate.style.scss'
 
 const constants = {
    back: 'ย้อนกลับ',
@@ -76,7 +76,7 @@ class AffilateContainer extends
       const dividerPercent = `${constants.divider} ${affiDivider}%`
       const income = getAffilateSummaryResult.income
       const affiIncome = number.castToMoney(Number(income))
-      const link = `${window.location.host}/register/${this.props.affilateUuid}`
+      const link = `${window.location.host}/register-affiliate/${this.props.affilateUuid}`
 
       const memberList = getAffilateMemberResult.map((memberData) => {
          return {
@@ -91,7 +91,7 @@ class AffilateContainer extends
             <div className="container">
                <div className="row">
                   <div className="col">
-                     <ALink color="#dd3d45" bold onClick={this.onPressBack}>
+                     <ALink id="backto-previus-page" color="#dd3d45" bold onClick={this.onPressBack}>
                         <FontAwesomeIcon icon={faChevronLeft} className="mr-1" />
                         {constants.back}
                      </ALink>
@@ -109,7 +109,7 @@ class AffilateContainer extends
                </div>
                <div className="row  m4-t">
                   <div className="col text-center">
-                     <ALink color={colors.PRIMARY_BLUE} >
+                     <ALink id="goto-qa-howto-aff" color={colors.PRIMARY_BLUE} >
                         {constants.howTo}
                      </ALink>
                   </div>

@@ -19,7 +19,7 @@ const getMeEpic: Epic<RootAction, RootAction, RootReducers> = (action$, store, d
     exhaustMap(_ =>
       from(fetchGetMe())
         .pipe(
-          mergeMap((response: AxiosResponse<APISuccessResponse<IUser>>) => of(
+          mergeMap((response: AxiosResponse<APIResponse<IUser>>) => of(
             actions.getMeSuccessAction(response),
             actions.walletUpdateRequestSocketAction(response.data.data.wallet!)
           )),
