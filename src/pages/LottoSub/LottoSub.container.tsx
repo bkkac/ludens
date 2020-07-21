@@ -92,7 +92,7 @@ class LottoSubContainer extends Component<
       <div className="container lotto-sub-container">
         <div className="row mb-3">
           <div className="col">
-            <ALink color="#ff9b96" bold onClick={() => this.props.history.replace('/lotto')}>
+            <ALink id="backto-previus-page" color="#ff9b96" bold onClick={() => this.props.history.replace('/lotto')}>
               {constants.back}
             </ALink>
           </div>

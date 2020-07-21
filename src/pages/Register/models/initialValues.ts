@@ -8,7 +8,6 @@ const initialValue: IRegister = {
   bankType: '',
   bankNumber: '',
   ownerName: '',
-  ownerSurname: '',
 }
 
 export default initialValue

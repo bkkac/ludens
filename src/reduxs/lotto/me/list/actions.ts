@@ -11,11 +11,11 @@ const getBetHistoryAction = createAction(GET_BET_HISTORY_REQUEST)
 
 const getBetHistorySuccessAction = createAction(
   GET_BET_HISTORY_SUCCESS,
-  resolve => (data: AxiosResponse<APISuccessResponse<IBet[]>>) => resolve(data))
+  resolve => (data: AxiosResponse<APIResponse<IBet[]>>) => resolve(data))
 
 const getBetHistoryFailureAction = createAction(
   GET_BET_HISTORY_FAILURE,
-  resolve => (error: AxiosError<APISuccessResponse<any>>) => resolve(error))
+  resolve => (error: AxiosError<APIResponse<any>>) => resolve(error))
 
 const getBetHistoryCancelAction = createAction(GET_BET_HISTORY_CANCEL)
 

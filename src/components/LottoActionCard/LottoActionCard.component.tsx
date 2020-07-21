@@ -21,8 +21,6 @@ const defaultProps: ILottoActionCard = {
 
 const LottoActionCard: SFC<ILottoActionCard & DefaultProps> = (props) => {
 
-  let intervalId: NodeJS.Timeout | null = null
-
   const {
     name,
     icon,
@@ -33,6 +31,8 @@ const LottoActionCard: SFC<ILottoActionCard & DefaultProps> = (props) => {
     onClick,
     timesupText,
   } = props
+
+  let intervalId: NodeJS.Timeout | null = null
 
   const [remain, setRemain] = useState({ hours: 0, minutes: 0, seconds: 0 })
 

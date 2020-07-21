@@ -13,11 +13,11 @@ const depositRequestAction = createAction(
 
 const depositRequestSuccessAction = createAction(
   DEPOSIT_SUCCESS,
-  resolve => (data: AxiosResponse<APISuccessResponse<any>>) => resolve(data))
+  resolve => (data: AxiosResponse<APIResponse<any>>) => resolve(data))
 
 const depositRequestFailureAction = createAction(
   DEPOSIT_FAILURE,
-  resolve => (error: AxiosError<APISuccessResponse<any>>) => resolve(error))
+  resolve => (error: AxiosError<APIResponse<any>>) => resolve(error))
 
 const depositRequestCancelAction = createAction(DEPOSIT_CANCEL)
 

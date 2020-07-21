@@ -1,22 +1,10 @@
-.register-step-3-form {
-  .header-title {
-    font-family: "SukhumvitSet-Bold";
-    font-size: 20px;
-    line-height: 1.35;
-    color: #777777;
+@import "assets/stylesheets/typography";
+@import 'assets/stylesheets/colors';
 
-    span {
-      &::before {
-        content: "(";
-      }
-      &::after {
-        content: ")";
-      }
-      margin-left: 8px;
-      font-size: 12px;
-      line-height: 2.25;
-      color: #bb130a;
-    }
+.register-step-3-form {
+  span.header-remark {
+    @extend .subtitle-2;
+    margin-left: 8px;
   }
 
   .select-bank-header {
@@ -27,14 +15,12 @@
   }
 
   .select-bank-error-message {
-    margin-top: 8px;
-    min-height: 27px;
-    font-family: "SukhumvitSet-Medium";
+    @extend .subtitle-2;
+    padding-top: 4px;
+    min-height: 24px;
     text-align: left;
     pointer-events: none;
-    font-size: 12px;
-    line-height: 2.25;
-    color: #ff9b96;
+    color: $secondary-red;
     visibility: hidden;
   }
 }

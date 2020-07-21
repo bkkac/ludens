@@ -22,25 +22,25 @@ const onError = (handlerStore: MiddlewareAPI<Dispatch, RootReducers>) => (error:
 
 const onUpdateWallet = (handlerStore: MiddlewareAPI<Dispatch, RootReducers>) =>
   (response: any) => {
-    const responseWallet: APISuccessResponse<IWallet> = (typeof response === 'string')
+    const responseWallet: APIResponse<IWallet> = (typeof response === 'string')
       ? JSON.parse(response) : response
-    const transformed = transformer.camelcaseTransform(responseWallet) as APISuccessResponse<IWallet>
+    const transformed = transformer.camelcaseTransform(responseWallet) as APIResponse<IWallet>
     handlerStore.dispatch(userAction.walletUpdateRequestSocketAction(transformed.data))
   }
 
 const onUpdateYeegeGame = (handlerStore: MiddlewareAPI<Dispatch, RootReducers>) =>
   (response: any) => {
-    const responseYeegeGameList: APISuccessResponse<IYeegeGame[]> = (typeof response === 'string')
+    const responseYeegeGameList: APIResponse<IYeegeGame[]> = (typeof response === 'string')
       ? JSON.parse(response) : response
-    const transformed = transformer.camelcaseTransform(responseYeegeGameList) as APISuccessResponse<IYeegeGame[]>
+    const transformed = transformer.camelcaseTransform(responseYeegeGameList) as APIResponse<IYeegeGame[]>
     handlerStore.dispatch(lottoAction.updateYeegeGameListAction(transformed.data))
   }
 
 const onUpdateYeegeSum = (handlerStore: MiddlewareAPI<Dispatch, RootReducers>) =>
   (response: any) => {
-    const responseYeegeSum: APISuccessResponse<string> = (typeof response === 'string')
+    const responseYeegeSum: APIResponse<string> = (typeof response === 'string')
       ? JSON.parse(response) : response
-    const transformed = transformer.camelcaseTransform(responseYeegeSum) as APISuccessResponse<string>
+    const transformed = transformer.camelcaseTransform(responseYeegeSum) as APIResponse<string>
     handlerStore.dispatch(lottoAction.updateYeegeSumAction(transformed.data))
   }
 
@@ -51,9 +51,9 @@ const onOffYeegeSum = (handlerStore: MiddlewareAPI<Dispatch, RootReducers>) =>
 
 const onUpdatePlayedYeegeList = (handlerStore: MiddlewareAPI<Dispatch, RootReducers>) =>
   (response: any) => {
-    const responsePlayedYeegeList: APISuccessResponse<IYeegePlay[]> = (typeof response === 'string')
+    const responsePlayedYeegeList: APIResponse<IYeegePlay[]> = (typeof response === 'string')
       ? JSON.parse(response) : response
-    const transformed = transformer.camelcaseTransform(responsePlayedYeegeList) as APISuccessResponse<IYeegePlay[]>
+    const transformed = transformer.camelcaseTransform(responsePlayedYeegeList) as APIResponse<IYeegePlay[]>
     handlerStore.dispatch(lottoAction.updatePlayedYeegeListAction(transformed.data))
   }
 

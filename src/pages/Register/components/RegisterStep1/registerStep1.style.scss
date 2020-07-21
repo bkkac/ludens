@@ -1,21 +1,8 @@
-.register-step-1-form {
-  .header-title {
-    font-family: "SukhumvitSet-Bold";
-    font-size: 20px;
-    line-height: 1.35;
-    color: #777777;
+@import "assets/stylesheets/typography";
 
-    span {
-      &::before {
-        content: '(';
-      }
-      &::after {
-        content: ')';
-      }
-      margin-left: 8px;
-      font-size: 12px;
-      line-height: 2.25;
-      color: #bb130a;
-    }
+.register-step-1-form {
+  span.header-remark {
+    @extend .subtitle-2;
+    margin-left: 8px;
   }
 }

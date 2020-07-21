@@ -1,4 +1,4 @@
-declare interface APISuccessResponse<T = any> {
+declare interface APIResponse<T = any> {
   data: T
   code: number
   devMessage: string

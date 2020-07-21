@@ -6,6 +6,7 @@ import colors from 'constants/colors'
 type DefaultProps = Readonly<typeof defaultProps>
 
 const defaultProps: IALink = {
+  id: '',
   fontSize: 16,
   bold: false,
   color: '#777777',
@@ -17,6 +18,7 @@ const defaultProps: IALink = {
 const ALink: SFC<IALink & DefaultProps> = (props) => {
 
   const {
+    id,
     bold,
     color,
     onClick,
@@ -36,7 +38,7 @@ const ALink: SFC<IALink & DefaultProps> = (props) => {
 
   const handleOnClick = () => disabled ? noop() : onClick!()
 
-  return (<span onClick={handleOnClick} className={wrapperClass} style={style}>{children}</span>)
+  return (<span id={id} onClick={handleOnClick} className={wrapperClass} style={style}>{children}</span>)
 }
 
 ALink.defaultProps = defaultProps

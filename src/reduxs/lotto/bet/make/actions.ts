@@ -13,11 +13,11 @@ const makingBetLottoAction = createAction(
 
 const makingBetLottoSuccessAction = createAction(
   MAKING_BET_LOTTO_SUCCESS,
-  resolve => (data: AxiosResponse<APISuccessResponse<IBet[]>>) => resolve(data))
+  resolve => (data: AxiosResponse<APIResponse<IBet[]>>) => resolve(data))
 
 const makingBetLottoFailureAction = createAction(
   MAKING_BET_LOTTO_FAILURE,
-  resolve => (error: AxiosError<APISuccessResponse<any>>) => resolve(error))
+  resolve => (error: AxiosError<APIResponse<any>>) => resolve(error))
 
 const makingBetLottoCancelAction = createAction(MAKING_BET_LOTTO_CANCEL)
 

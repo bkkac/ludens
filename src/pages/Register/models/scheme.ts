@@ -14,8 +14,7 @@ const constants = {
   passwordMustEqual: 'กรุณากรอกรหัสผ่านให้เหมือนกัน',
   bankType: 'กรุญาเลือกธนาคาร',
   bankNumber: 'กรุณากรอกหมายเลขบัญชีธนาคาร',
-  ownerName: 'กรุญากรอกชื่อเจ้าของบัญชี',
-  ownerSurname: 'กรุญากรอกนามสกุล',
+  ownerName: 'กรุณากรอกชื่อ - นามสกุลเจ้าของบัญชี',
 }
 
 const scheme: ObjectSchema<IRegister> = object().shape({
@@ -44,7 +43,6 @@ const scheme: ObjectSchema<IRegister> = object().shape({
   bankType: string().required(constants.bankType),
   bankNumber: string().required(constants.bankNumber),
   ownerName: string().required(constants.ownerName),
-  ownerSurname: string().required(constants.ownerSurname),
 })
 
 export default scheme

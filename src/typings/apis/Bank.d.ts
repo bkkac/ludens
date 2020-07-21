@@ -1,4 +1,4 @@
-type BANK_TYPE =
+declare type TBankType =
   | 'BBL' // กรุงเทพ
   | 'KBANK' // กสิกร
   | 'KTB' // กรุงไทย
@@ -14,11 +14,10 @@ type BANK_TYPE =
   | 'ICBCT' // ไอซีบีซี (ไทย)
   | 'GSB' // ออมสิน
   | 'ISBT' // อิสลามแห่งประเทศไทย
-  | ''
 
 declare interface IBank {
   id?: number
-  type?: BANK_TYPE
+  type?: TBankType
   name?: string
   number?: string
   createdAt?: string

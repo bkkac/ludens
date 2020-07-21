@@ -13,11 +13,11 @@ const registerAction = createAction(
 
 const registerSuccessAction = createAction(
   REGISTER_SUCCESS,
-  resolve => (data: AxiosResponse<APISuccessResponse<any>>) => resolve(data))
+  resolve => (data: AxiosResponse<APIResponse>) => resolve(data))
 
 const registerFailureAction = createAction(
   REGISTER_FAILURE,
-  resolve => (error: AxiosError) => resolve(error))
+  resolve => (error: AxiosError<APIResponse>) => resolve(error))
 
 const registerCancelAction = createAction(REGISTER_CANCEL)
 

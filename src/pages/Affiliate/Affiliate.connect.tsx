@@ -3,7 +3,7 @@ import { Dispatch, bindActionCreators } from 'redux'
 import { RootAction } from 'typings/reduxs/Actions'
 import loaderAction from 'reduxs/loader/actions'
 import affilateAction from 'reduxs/affilate/actions'
-import AffilateContainer from './Affilate.container'
+import AffiliateContainer from './Affiliate.container'
 
 const mapStateToProps = (state: RootReducers): IAffilateProps => {
     return {
@@ -27,4 +27,4 @@ const mapDispatchToProos = (dispatch: Dispatch<RootAction>): IAffilateActionProp
     getAffilateMember: affilateAction.affilateMemberAction,
 }, dispatch)
 
-export default connect(mapStateToProps, mapDispatchToProos)(AffilateContainer)
+export default connect(mapStateToProps, mapDispatchToProos)(AffiliateContainer)

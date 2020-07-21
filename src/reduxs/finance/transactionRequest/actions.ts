@@ -15,11 +15,11 @@ const getTransactionRequestAction = createAction(GET_TRANSACTION_REQUEST)
 
 const getTransactionRequestSuccessAction = createAction(
   GET_TRANSACTION_REQUEST_SUCCESS,
-  resolve => (data: AxiosResponse<APISuccessResponse<ITransactionRequest>>) => resolve(data))
+  resolve => (data: AxiosResponse<APIResponse<ITransactionRequest>>) => resolve(data))
 
 const getTransactionRequestFailureAction = createAction(
   GET_TRANSACTION_REQUEST_FAILURE,
-  resolve => (error: AxiosError<APISuccessResponse<any>>) => resolve(error))
+  resolve => (error: AxiosError<APIResponse<any>>) => resolve(error))
 
 const getTransactionRequestCancelAction = createAction(GET_TRANSACTION_REQUEST_CANCEL)
 
@@ -29,11 +29,11 @@ const signTransactionRequestAction = createAction(
 
 const signTransactionRequestSuccessAction = createAction(
   SIGN_TRANSACTION_REQUEST_SUCCESS,
-  resolve => (data: AxiosResponse<APISuccessResponse<ITransactionRequest>>) => resolve(data))
+  resolve => (data: AxiosResponse<APIResponse<ITransactionRequest>>) => resolve(data))
 
 const signTransactionRequestFailureAction = createAction(
   SIGN_TRANSACTION_REQUEST_FAILURE,
-  resolve => (error: AxiosError<APISuccessResponse<any>>) => resolve(error))
+  resolve => (error: AxiosError<APIResponse<any>>) => resolve(error))
 
 const signTransactionRequestCancelAction = createAction(SIGN_TRANSACTION_REQUEST_CANCEL)
 

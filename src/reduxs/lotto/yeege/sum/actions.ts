@@ -19,11 +19,11 @@ const getYeegeSumAction = createAction(
 
 const getYeegeSumSuccessAction = createAction(
   GET_YEEGE_SUM_SUCCESS,
-  resolve => (data: AxiosResponse<APISuccessResponse<string>>) => resolve(data))
+  resolve => (data: AxiosResponse<APIResponse<string>>) => resolve(data))
 
 const getYeegeSumFailureAction = createAction(
   GET_YEEGE_SUM_FAILURE,
-  resolve => (error: AxiosError<APISuccessResponse>) => resolve(error))
+  resolve => (error: AxiosError<APIResponse>) => resolve(error))
 
 const getYeegeSumCancelAction = createAction(GET_YEEGE_SUM_CANCEL)
 

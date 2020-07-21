@@ -139,7 +139,7 @@ class TransactionListContainer extends
         <div className="container">
           <div className="row">
             <div className="col">
-              <ALink color="#dd3d45" bold onClick={this.onPressBack}>
+              <ALink id="backto-previus-page" color="#dd3d45" bold onClick={this.onPressBack}>
                 <FontAwesomeIcon icon={faChevronLeft} />
                 {constants.back}
               </ALink>
