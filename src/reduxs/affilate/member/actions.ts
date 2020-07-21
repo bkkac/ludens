@@ -14,11 +14,11 @@ const affilateMemberAction = createAction(
 
 const affilateMemberSuccessAction = createAction(
   AFFILATE_MEMBER_SUCCESS,
-  resolve => (data: AxiosResponse<APISuccessResponse<IAffilateMember[]>>) => resolve(data))
+  resolve => (data: AxiosResponse<APIResponse<IAffilateMember[]>>) => resolve(data))
 
 const affilateMemberFailureAction = createAction(
   AFFILATE_MEMBER_FAILURE,
-  resolve => (error: AxiosError<APISuccessResponse>) => resolve(error))
+  resolve => (error: AxiosError<APIResponse>) => resolve(error))
 
 const affilateMemberCancelAction = createAction(AFFILATE_MEMBER_CANCEL)
 

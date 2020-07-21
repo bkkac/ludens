@@ -11,11 +11,11 @@ const logoutAction = createAction(LOGOUT_REQUEST)
 
 const logoutSuccessAction = createAction(
   LOGOUT_SUCCESS,
-  resolve => (data: AxiosResponse<APISuccessResponse>) => resolve(data))
+  resolve => (data: AxiosResponse<APIResponse>) => resolve(data))
 
 const logoutFailureAction = createAction(
   LOGOUT_FAILURE,
-  resolve => (error: AxiosError<APISuccessResponse>) => resolve(error))
+  resolve => (error: AxiosError<APIResponse>) => resolve(error))
 
 const logoutCancelAction = createAction(LOGOUT_CANCEL)
 

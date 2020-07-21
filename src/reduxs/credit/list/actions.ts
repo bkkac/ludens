@@ -11,11 +11,11 @@ const getCreditInfoListAction = createAction(GET_CREDIT_INFO_LIST_REQUEST)
 
 const getCreditInfoListSuccessAction = createAction(
   GET_CREDIT_INFO_LIST_SUCCESS,
-  resolve => (data: AxiosResponse<APISuccessResponse<ICredit[]>>) => resolve(data))
+  resolve => (data: AxiosResponse<APIResponse<ICredit[]>>) => resolve(data))
 
 const getCreditInfoListFailureAction = createAction(
   GET_CREDIT_INFO_LIST_FAILURE,
-  resolve => (error: AxiosError<APISuccessResponse>) => resolve(error))
+  resolve => (error: AxiosError<APIResponse>) => resolve(error))
 
 const getCreditInfoListCancelAction = createAction(GET_CREDIT_INFO_LIST_CANCEL)
 

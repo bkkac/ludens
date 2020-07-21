@@ -1,4 +1,5 @@
 import React, { SFC } from 'react'
+import { isEmpty } from 'lodash'
 
 type DefaultProps = Readonly<typeof defaultProps>
 
@@ -15,7 +16,9 @@ const ResponsiveIcon: SFC<IResponsiveIcon & DefaultProps> = ({
 }) => {
 
   if (typeof icon === 'string') {
-    return <img alt={alt} className={className} src={icon} />
+    if (!isEmpty(icon)) {
+      return <img alt={alt} className={className} src={icon} />
+    }
   } else if (typeof icon === 'object') {
     return (
       <img

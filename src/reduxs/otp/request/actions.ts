@@ -13,11 +13,11 @@ const getOTPAction = createAction(
 
 const getOTPSuccessAction = createAction(
   GET_OTP_SUCCESS,
-  resolve => (data: AxiosResponse<APISuccessResponse<IOTP>>) => resolve(data))
+  resolve => (data: AxiosResponse<APIResponse<IOTP>>) => resolve(data))
 
 const getOTPFailureAction = createAction(
   GET_OTP_FAILURE,
-  resolve => (error: AxiosError) => resolve(error))
+  resolve => (error: AxiosError<APIResponse>) => resolve(error))
 
 const getOTPCancelAction = createAction(GET_OTP_CANCEL)
 

@@ -6,12 +6,14 @@ import './buttonMenu.style.scss'
 type DefaultProps = Readonly<typeof defaultProps>
 
 const defaultProps: IButtonMenu = {
+  id: '',
   icon: '',
   text: '',
   onClick: undefined,
 }
 
 const ButtonMenu: SFC<IButtonMenu & DefaultProps> = ({
+  id,
   icon,
   text,
   onClick,
@@ -23,7 +25,11 @@ const ButtonMenu: SFC<IButtonMenu & DefaultProps> = ({
   const disabledClass = (typeof onClick === 'undefined') ? 'disabled' : ''
 
   return (
-    <div className={`d-flex flex flex-column justify-content-center align-items-center button-menu-container ${disabledClass}`} onClick={onClickHandler}>
+    <div
+      id={id}
+      className={`d-flex flex flex-column justify-content-center align-items-center button-menu-container ${disabledClass}`}
+      onClick={onClickHandler}
+    >
       <div className="icon-wrapper d-flex align-items-end">
         <ResponsiveIcon icon={icon!} className="icon-button-menu" alt="button-menu" />
       </div>

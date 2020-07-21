@@ -13,11 +13,11 @@ const withdrawRequestAction = createAction(
 
 const withdrawRequestSuccessAction = createAction(
   WITHDRAW_SUCCESS,
-  resolve => (data: AxiosResponse<APISuccessResponse<any>>) => resolve(data))
+  resolve => (data: AxiosResponse<APIResponse<any>>) => resolve(data))
 
 const withdrawRequestFailureAction = createAction(
   WITHDRAW_FAILURE,
-  resolve => (error: AxiosError<APISuccessResponse<any>>) => resolve(error))
+  resolve => (error: AxiosError<APIResponse<any>>) => resolve(error))
 
 const withdrawRequestCancelAction = createAction(WITHDRAW_CANCEL)
 

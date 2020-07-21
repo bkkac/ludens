@@ -11,7 +11,7 @@ const getMeAction = createAction(GET_ME_REQUEST)
 
 const getMeSuccessAction = createAction(
   GET_ME_SUCCESS,
-  resolve => (data: AxiosResponse<APISuccessResponse<IUser>>) => resolve(data))
+  resolve => (data: AxiosResponse<APIResponse<IUser>>) => resolve(data))
 
 const getMeFailureAction = createAction(
   GET_ME_FAILURE,

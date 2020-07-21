@@ -67,7 +67,9 @@ class MainContainer extends Component<IMainProps & IMainActionProps & DefaultPro
               </div>
               <div className="row m2-t m4-b">
                 <div className="col text-center">
-                  <ALink color={colors.PRIMARY_TEXT} underline>{constants.conditionText}</ALink>
+                  <ALink id="goto-privacy-condition" color={colors.PRIMARY_TEXT} underline>
+                    {constants.conditionText}
+                  </ALink>
                 </div>
               </div>
             </div>
@@ -79,6 +81,7 @@ class MainContainer extends Component<IMainProps & IMainActionProps & DefaultPro
                       <div className="row">
                         <div className="col-6 col-md-12 m3-b d-flex">
                           <ButtonMenu
+                            id="goto-credit-info-button"
                             onClick={() => this.onNavigateTo('/credit-info')}
                             text={constants.gotoCredit}
                             icon={CreditIcon}
@@ -86,6 +89,7 @@ class MainContainer extends Component<IMainProps & IMainActionProps & DefaultPro
                         </div>
                         <div className="col-6 col-md-12 m3-b d-flex">
                           <ButtonMenu
+                            id="goto-transaction-button"
                             onClick={() => this.onNavigateTo('/transaction')}
                             text={constants.gotoWD}
                             icon={WalletIcon}
@@ -95,6 +99,7 @@ class MainContainer extends Component<IMainProps & IMainActionProps & DefaultPro
                     </div>
                     <div className="col-6 col-sm-6 col-md-7 col-lg-7 col-xl-7 m3-b d-flex">
                       <ButtonMenu
+                        id="goto-lotto-button"
                         onClick={() => this.onNavigateTo('/lotto')}
                         text={constants.gotoLotto}
                         icon={LottoIcon}
@@ -102,6 +107,7 @@ class MainContainer extends Component<IMainProps & IMainActionProps & DefaultPro
                     </div>
                     <div className="col-6 d-md-none m3-b d-flex">
                       <ButtonMenu
+                        id="goto-contact-button"
                         text={constants.gotoContact}
                         icon={ContactIcon}
                       />
@@ -112,19 +118,22 @@ class MainContainer extends Component<IMainProps & IMainActionProps & DefaultPro
                   <div className="row">
                     <div className="d-none d-sm-none d-md-flex col-md-3 col-lg-3 col-xl-6 m3-b">
                       <ButtonMenu
+                        id="goto-contact-button"
                         text={constants.gotoContact}
                         icon={ContactIcon}
                       />
                     </div>
                     <div className="col-6 col-md-3 col-lg-3 m3-b col-xl-6 d-flex">
                       <ButtonMenu
+                        id="goto-howto-button"
                         text={constants.gotoHowto}
                         icon={ProblemIcon}
                       />
                     </div>
                     <div className="col-6 col-md-6 col-lg-6 col-xl-12 m3-b d-flex">
                       <ButtonMenu
-                        onClick={() => this.onNavigateTo('/affilate')}
+                        id="goto-affilate-button"
+                        onClick={() => this.onNavigateTo('/affiliate')}
                         text={constants.gotoAffli}
                         icon={MegaphoneIcon}
                       />

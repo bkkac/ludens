@@ -8,5 +8,4 @@ declare interface IRegister {
   bankType: string,
   bankNumber: string,
   ownerName: string,
-  ownerSurname: string,
 }

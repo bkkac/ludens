@@ -3,7 +3,7 @@ import { RootAction } from 'typings/reduxs/Actions'
 import { initialState } from './constants'
 import actions from './actions'
 
-const registerReducer = (state: IRegisterState = initialState, action: RootAction): IRegisterState => {
+const registerReducer = (state: ReducerState = initialState, action: RootAction): ReducerState => {
   switch (action.type) {
     case getType(actions.registerAction):
       return {
@@ -20,7 +20,7 @@ const registerReducer = (state: IRegisterState = initialState, action: RootActio
     case getType(actions.registerFailureAction):
       return {
         isFetching: false,
-        error: action.payload.message,
+        error: action.payload.response?.data.devMessage,
         code: action.payload.code,
       }
     default:

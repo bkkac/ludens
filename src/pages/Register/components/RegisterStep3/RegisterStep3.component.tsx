@@ -1,28 +1,36 @@
 import React, { SFC } from 'react'
-import { noop, isEmpty, isEqual, values as _values } from 'lodash'
 import {
-  InputRadioImage,
+  noop,
+  isEmpty,
+} from 'lodash'
+import {
+  SelectorItem,
+  InputSelect,
   InputText,
   Button,
   ALink,
 } from 'components'
 import { FormikProps } from 'formik'
-import ImageBankSet from 'assets/images/global/bank'
+import colors from 'constants/colors'
+import { BANKS } from 'constants/variables'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faChevronLeft } from '@fortawesome/free-solid-svg-icons'
 import './registerStep3.style.scss'
 
 const constants = {
-  title: 'ข้อมูลผู้ใช้',
-  subTitle: 'Step 3',
-  backText: '< ย้อนกลับ',
-  placeholderUsername: 'ยูสเซอร์เนม(ชื่อผู้ใช้)*',
-  placeholderPassword: 'รหัสผ่าน*',
-  placeholderConfirmPassword: 'ยืนยันรหัสผ่าน*',
-  placeholderAffilate: 'รหัสคนชวน',
-  selectBankText: 'เลือกธนาคาร',
-  placeholderBankNumber: 'หมายเลขบัญชี*',
-  placeholderOwnerName: 'ชื่อเจ้าของบัญชี*',
-  placeholderOwnerSurname: 'นามสกุล*',
-  buttonConfirm: 'สมัครสมาชิค',
+  title: 'สมัครสมาชิก',
+  subTitle: 'ขั้นตอนสุดท้าย',
+  backText: 'กลับ',
+  remarkText: '* คือ จำเป็นต้องกรอก',
+  placeholderUsername: 'ชื่อผู้ใช้ *',
+  placeholderPassword: 'รหัสผ่าน *',
+  placeholderConfirmPassword: 'ยืนยันรหัสผ่าน *',
+  placeholderAffilate: 'รหัสคนชวน ',
+  placeholderInput: (type: string) => `ระบุ${type}`.slice(0, -1),
+  selectBankText: 'เลือกธนาคาร *',
+  placeholderBankNumber: 'หมายเลขบัญชีธนาคาร *',
+  placeholderOwnerName: 'ชื่อ - นามสกุลบัญชีธนาคาร *',
+  buttonConfirm: 'สมัครสมาชิก',
 }
 
 type DefaultProps = Readonly<typeof defaultProps>
@@ -45,6 +53,7 @@ const RegisterStep3: SFC<FormikProps<IRegister> & IRegisterFormProps & DefaultPr
     handleChange,
     handleBlur,
     setValues,
+    setFieldValue,
     setErrors,
     setTouched,
   } = props
@@ -60,7 +69,6 @@ const RegisterStep3: SFC<FormikProps<IRegister> & IRegisterFormProps & DefaultPr
       bankType: '',
       bankNumber: '',
       ownerName: '',
-      ownerSurname: '',
     })
     setErrors({
       ...errors,
@@ -72,7 +80,6 @@ const RegisterStep3: SFC<FormikProps<IRegister> & IRegisterFormProps & DefaultPr
       bankType: '',
       bankNumber: '',
       ownerName: '',
-      ownerSurname: '',
     })
     setTouched({
       ...touched,
@@ -84,7 +91,6 @@ const RegisterStep3: SFC<FormikProps<IRegister> & IRegisterFormProps & DefaultPr
       bankType: false,
       bankNumber: false,
       ownerName: false,
-      ownerSurname: false,
     })
   }
 
@@ -93,131 +99,145 @@ const RegisterStep3: SFC<FormikProps<IRegister> & IRegisterFormProps & DefaultPr
     onBackStep!(CURRENT_STEP)
   }
 
-  const RenderBankList = (): JSX.Element => {
-    const RadioImages = _values(ImageBankSet).map((bank, index) => {
-      return (
-        <div className="col-3 col-sm-3 col-md-2 col-lg-1 mt-2" key={`bank-${index}-${bank.key}`}>
-          <InputRadioImage
-            image={bank.Icon}
-            name="bankType"
-            alt={bank.key}
-            value={bank.key}
-            onBlur={handleBlur}
-            onChange={handleChange}
-            checked={isEqual(values.bankType, bank.key)}
-          />
-        </div>
-      )
-    })
-    return (<>{RadioImages}</>)
-  }
+  const renderBankOption = ({ item, ...selectProps }: IInputDefaultSelectProps<ICBank>): JSX.Element =>
+    (<SelectorItem icon={item.Icon} title={item.name} {...selectProps} />)
 
   return (
-    <div className="register-step-3-form mb-5">
+    <div className="register-step-3-form container">
       <div className="row">
         <div className="col">
-          <ALink color="#ff9b96" bold onClick={onPressBackStep}>
+          <ALink id="backto-previus-page" color={colors.PRIMARY_RED} bold onClick={onPressBackStep}>
+            <FontAwesomeIcon icon={faChevronLeft} className="m1-r" />
             {constants.backText}
           </ALink>
         </div>
       </div>
-      <div className="row pt-4">
-        <div className="col header-title">
-          {constants.title}
-          <span>{constants.subTitle}</span>
+      <div className="row p3-t">
+        <div className="col">
+          <h3>
+            {constants.title}
+            <span className="header-remark secondary-red-text">{constants.subTitle}</span>
+          </h3>
         </div>
       </div>
-      <div className="row pt-4">
-        <InputText
-          name="username"
-          value={values.username}
-          onBlur={handleBlur}
-          onChange={handleChange}
-          errorMessage={errors.username}
-          error={!!errors.username && touched.username}
-          placeholder={constants.placeholderUsername}
-        />
+      <div className="row p2-t">
+        <div className="col">
+          <h6 className="subtitle-2 secondary-red-text">{constants.remarkText}</h6>
+        </div>
       </div>
-      <div className="row pt-1">
-        <InputText
-          type="password"
-          name="password"
-          value={values.password}
-          onBlur={handleBlur}
-          onChange={handleChange}
-          errorMessage={errors.password}
-          error={!!errors.password && touched.password}
-          placeholder={constants.placeholderPassword}
-        />
+      <div className="row p3-t">
+        <div className="col">
+          <h6 className="subtitle-2">{constants.placeholderUsername}</h6>
+          <InputText
+            name="username"
+            value={values.username}
+            onBlur={handleBlur}
+            onChange={handleChange}
+            errorMessage={errors.username}
+            error={!!errors.username && touched.username}
+            placeholder={constants.placeholderInput(constants.placeholderUsername)}
+          />
+        </div>
       </div>
-      <div className="row pt-1">
-        <InputText
-          name="confirmPassword"
-          value={values.confirmPassword}
-          onBlur={handleBlur}
-          onChange={handleChange}
-          type="password"
-          errorMessage={errors.confirmPassword}
-          error={!!errors.confirmPassword && touched.confirmPassword}
-          placeholder={constants.placeholderConfirmPassword}
-        />
+      <div className="row p1-t">
+        <div className="col">
+          <h6 className="subtitle-2">{constants.placeholderPassword}</h6>
+          <InputText
+            type="password"
+            name="password"
+            value={values.password}
+            onBlur={handleBlur}
+            onChange={handleChange}
+            errorMessage={errors.password}
+            error={!!errors.password && touched.password}
+            placeholder={constants.placeholderInput(constants.placeholderPassword)}
+          />
+        </div>
       </div>
-      <div className="row pt-1">
-        <InputText
-          name="affilateRef"
-          value={values.affilateRef}
-          onBlur={handleBlur}
-          onChange={handleChange}
-          errorMessage={errors.affilateRef}
-          error={!!errors.affilateRef && touched.affilateRef}
-          placeholder={constants.placeholderAffilate}
-        />
+      <div className="row p1-t">
+        <div className="col">
+          <h6 className="subtitle-2">{constants.placeholderConfirmPassword}</h6>
+          <InputText
+            name="confirmPassword"
+            value={values.confirmPassword}
+            onBlur={handleBlur}
+            onChange={handleChange}
+            type="password"
+            errorMessage={errors.confirmPassword}
+            error={!!errors.confirmPassword && touched.confirmPassword}
+            placeholder={constants.placeholderInput(constants.placeholderConfirmPassword)}
+          />
+        </div>
+      </div>
+      <div className="row p1-t">
+        <div className="col">
+          <h6 className="subtitle-2">{constants.placeholderAffilate}</h6>
+          <InputText
+            name="affilateRef"
+            value={values.affilateRef}
+            onBlur={handleBlur}
+            onChange={handleChange}
+            errorMessage={errors.affilateRef}
+            error={!!errors.affilateRef && touched.affilateRef}
+            placeholder={constants.placeholderInput(constants.placeholderAffilate)}
+          />
+        </div>
       </div>
 
-      <div className="row pt-4">
-        <div className="col select-bank-header">{constants.selectBankText}</div>
-        <div className="select-bank-error-message">{isEmpty(errors.bankType) ? '' : errors.bankType}</div>
+      <div className="row p2-t">
+        <div className="col">
+          <h6 className="subtitle-2">{constants.selectBankText}</h6>
+        </div>
       </div>
-      <div className="row pt-3">
-        <RenderBankList />
+      <div className="row p1-t">
+        <div className="col">
+          <InputSelect<ICBank>
+            name="bankType"
+            items={BANKS}
+            valueKey="value"
+            value={values.bankType}
+            onChange={(selected, name) => {
+              setFieldValue(name, selected.value)
+            }}
+            placeholder={constants.placeholderInput(constants.selectBankText)}
+            RenderSelected={renderBankOption}
+          />
+          <div className="select-bank-error-message">{isEmpty(errors.bankType) ? '' : errors.bankType}</div>
+        </div>
       </div>
-      <div className="row pt-4">
-        <InputText
-          name="bankNumber"
-          value={values.bankNumber}
-          onBlur={handleBlur}
-          onChange={handleChange}
-          errorMessage={errors.bankNumber}
-          error={!!errors.bankNumber && touched.bankNumber}
-          placeholder={constants.placeholderBankNumber}
-        />
+      <div className="row p1-t">
+        <div className="col">
+          <h6 className="subtitle-2">{constants.placeholderBankNumber}</h6>
+          <InputText
+            name="bankNumber"
+            value={values.bankNumber}
+            onBlur={handleBlur}
+            onChange={handleChange}
+            errorMessage={errors.bankNumber}
+            error={!!errors.bankNumber && touched.bankNumber}
+            placeholder={constants.placeholderInput(constants.placeholderBankNumber)}
+          />
+        </div>
       </div>
-      <div className="row pt-1">
-        <InputText
-          name="ownerName"
-          value={values.ownerName}
-          onBlur={handleBlur}
-          onChange={handleChange}
-          errorMessage={errors.ownerName}
-          error={!!errors.ownerName && touched.ownerName}
-          placeholder={constants.placeholderOwnerName}
-        />
-      </div>
-      <div className="row pt-1">
-        <InputText
-          name="ownerSurname"
-          value={values.ownerSurname}
-          onBlur={handleBlur}
-          onChange={handleChange}
-          errorMessage={errors.ownerSurname}
-          error={!!errors.ownerSurname && touched.ownerSurname}
-          placeholder={constants.placeholderOwnerSurname}
-        />
+      <div className="row p1-t">
+        <div className="col">
+          <h6 className="subtitle-2">{constants.placeholderOwnerName}</h6>
+          <InputText
+            name="ownerName"
+            value={values.ownerName}
+            onBlur={handleBlur}
+            onChange={handleChange}
+            errorMessage={errors.ownerName}
+            error={!!errors.ownerName && touched.ownerName}
+            placeholder={constants.placeholderInput(constants.placeholderOwnerName)}
+          />
+        </div>
       </div>
 
       <div className="row pt-4">
         <div className="col">
           <Button
+            id="register-final-submit-button"
             disabled={!isValid}
             text={constants.buttonConfirm}
             onClick={() => onConfirmPresses!(CURRENT_STEP, values)}

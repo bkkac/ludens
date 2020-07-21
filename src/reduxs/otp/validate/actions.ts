@@ -13,11 +13,11 @@ const validateOTPAction = createAction(
 
 const validateOTPSuccessAction = createAction(
   VALIDATE_OTP_SUCCESS,
-  resolve => (data: AxiosResponse<APISuccessResponse<boolean>>) => resolve(data))
+  resolve => (data: AxiosResponse<APIResponse<boolean>>) => resolve(data))
 
 const validateOTPFailureAction = createAction(
   VALIDATE_OTP_FAILURE,
-  resolve => (error: AxiosError) => resolve(error))
+  resolve => (error: AxiosError<APIResponse>) => resolve(error))
 
 const validateOTPCancelAction = createAction(VALIDATE_OTP_CANCEL)
 
