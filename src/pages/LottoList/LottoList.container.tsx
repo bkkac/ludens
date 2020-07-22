@@ -19,38 +19,18 @@ const constants = {
   closedLabel: 'เวลาที่ปิดรับ: ',
   openedYeegeLabel: 'เปิดรับ: ',
   closedStatusLabel: 'ปิดรับแทง',
+  waitingStatusLabel: 'รอเปิดรับแทง',
   openedYeegeStatusLabel: '24 ชม.',
   round: 'รอบ',
 }
 
 type DefaultProps = Readonly<typeof defaultProps>
 
-const lottos: ILottoSchedule[] = [
-  {
-    id: 1,
-    code: 'LOTTER_YEGEE',
-    mode: 'AUTOMATIC',
-    status: 'OPEN',
-    startTime: '',
-    endTime: '',
-    updatedAt: '',
-  },
-  {
-    id: 2,
-    code: 'LOTTER_GOVN',
-    mode: 'AUTOMATIC',
-    status: 'CLOSE',
-    startTime: '',
-    endTime: '',
-    updatedAt: '',
-  },
-]
-
 const defaultProps: ILottoListProps & ILottoListActionProps = {
   getLottoScheduleIsFetching: false,
   getLottoScheduleCode: 0,
   getLottoScheduleError: '',
-  lottoSchedule: lottos, // TODO: replace when api integrated
+  lottoSchedule: [],
   loader() { noop() },
   getLottoSchedule() { noop() },
 }
@@ -79,7 +59,7 @@ class LottoListContainer extends Component<
       ? `88 ${constants.round}`
       : isEmpty(lotto.endTime)
         ? '-'
-        : moment(lotto.endTime).add(-7, 'hour').format('DD MMM YY HH:mm')
+        : moment(lotto.endTime).add(-7, 'hour').format('DD MMM YY')
     const isCountingDown = (lotto.code === 'LOTTER_YEGEE')
       ? false
       : (lotto.status === 'OPEN')
@@ -89,8 +69,9 @@ class LottoListContainer extends Component<
       : undefined
 
     return (
-      <div className="col-12 col-md-6 col-lg-4 m1-t" key={`lotto-${lotto.code}-${index}`}>
+      <div className="col-12 col-md-6 col-lg-4 m2-t" key={`lotto-${lotto.code}-${index}`}>
         <LottoActionCard
+          id={`lotto-${lotto.code}`}
           onClick={navigate}
           title={LOTTO_SLUG_NAME[lotto.code]}
           subTitle={subtitle}
@@ -98,6 +79,7 @@ class LottoListContainer extends Component<
           status={lotto.status}
           isCountingdown={isCountingDown}
           closedStatusText={constants.closedStatusLabel}
+          waitingStatusText={constants.waitingStatusLabel}
           openedStatusText={constants.openedYeegeStatusLabel}
           description={description}
           expire={lotto.endTime}
@@ -116,7 +98,7 @@ class LottoListContainer extends Component<
     ]
 
     return (
-      <div className="lotto-list-container primary-bg">
+      <div className="lotto-list-container primary-bg p4-b">
         <div className="container">
           <div className="row">
             <div className="col">
