@@ -53,7 +53,7 @@ declare interface IMakingLottoState {
     minutes: number
     seconds: number
   }
-  lottoStatus: TLottoAvailableStatus
+  lottoStatus: TGameStatus
 }
 
 declare interface ISummaryLottoModalProps {

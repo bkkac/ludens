@@ -9,7 +9,7 @@ const defaultProps: IALink = {
   id: '',
   fontSize: 16,
   bold: false,
-  color: '#777777',
+  color: colors.SECONDARY_TEXT,
   disabled: false,
   underline: false,
   onClick() { noop() },

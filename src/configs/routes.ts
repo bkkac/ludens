@@ -53,14 +53,14 @@ const routes: IRoutes[] = [
     exact: true,
     name: 'lotto',
     path: '/lotto',
-    component: pages.LottoMain,
+    component: pages.LottoList,
     private: true,
   },
   {
     exact: true,
     name: 'lotto',
     path: '/lotto/:type',
-    component: pages.LottoSub,
+    component: pages.LottoListChrildren,
     private: true,
   },
   {
