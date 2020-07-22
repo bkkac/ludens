@@ -9,12 +9,14 @@ import './lottoActionCard.style.scss'
 type DefaultProps = Readonly<typeof defaultProps>
 
 const defaultProps: ILottoActionCard = {
+  id: '',
   title: '',
   subTitle: '',
   isCountingdown: false,
   expire: '',
   status: 'UNKNOWN',
   openedStatusText: '',
+  waitingStatusText: '',
   closedStatusText: '',
   description: '',
   backgroundColor: colors.SECONDARY_BG,
@@ -24,12 +26,14 @@ const defaultProps: ILottoActionCard = {
 const LottoActionCard: SFC<ILottoActionCard & DefaultProps> = (props) => {
 
   const {
+    id,
     title,
     subTitle,
     isCountingdown,
     expire,
     status,
     openedStatusText,
+    waitingStatusText,
     closedStatusText,
     backgroundColor,
     description,
@@ -102,6 +106,8 @@ const LottoActionCard: SFC<ILottoActionCard & DefaultProps> = (props) => {
       return `${number.padNumber(String(remain.hours), 2)}:${number.padNumber(String(remain.minutes), 2)}:${number.padNumber(String(remain.seconds), 2)}`
     } else if (status === 'OPEN') {
       return openedStatusText || ''
+    } else if (status === 'WAIT') {
+      return waitingStatusText || ''
     } else if (status === 'CLOSE') {
       return closedStatusText || ''
     }
@@ -113,6 +119,7 @@ const LottoActionCard: SFC<ILottoActionCard & DefaultProps> = (props) => {
       className={`lotto-action-card-container ${typeof onClick === 'function' ? '' : 'disabled'} ${status}`}
       style={{ backgroundColor }}
       onClick={handleOnClick}
+      id={id}
     >
       <div className="sub-background" />
       <div className="lotto-action-text-wrapper">

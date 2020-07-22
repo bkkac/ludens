@@ -29,15 +29,21 @@ const LottoResultCard: SFC<ILottoResultCard & DefaultProps> = (props) => {
 
   const dateDisplay = moment(replace(createdAt, /\s/g, '')).format('Do MMM YY')
 
-  const NumberComponent = ({ lottoNumber }: { lottoNumber: ILottoResult }) => (
+  const NumberComponent = ({ lottoNumber, type }: { lottoNumber: ILottoResult; type: TLottoType }) => (
     <>
       <div className="row pt-1">
         <div className="col text-center lotto-title">
-          <h5 className="secondary-text">{LOTTO_GAME_TYPE[lottoNumber.type]}</h5>
+          <h5 className="secondary-text" id={`lotto-name-${type}-${lottoNumber.type}`}>
+            {LOTTO_GAME_TYPE[lottoNumber.type]}
+          </h5>
         </div>
       </div>
       <div className="row">
-        <div className="col text-center"><h1 className="lotto secondary-blue-text">{lottoNumber.numbers}</h1></div>
+        <div className="col text-center">
+          <h1 className="lotto secondary-blue-text" id={`lotto-number-${type}-${lottoNumber.type}`}>
+            {lottoNumber.numbers}
+          </h1>
+        </div>
       </div>
     </>
   )
@@ -47,14 +53,14 @@ const LottoResultCard: SFC<ILottoResultCard & DefaultProps> = (props) => {
       case 'GOVN':
         return (
           <>
-            <NumberComponent lottoNumber={lottos[0] || {}} />
-            <NumberComponent lottoNumber={lottos[1] || {}} />
+            <NumberComponent type={code} lottoNumber={lottos[0] || {}} />
+            <NumberComponent type={code} lottoNumber={lottos[1] || {}} />
             <div className="row">
               <div className="col">
-                <NumberComponent lottoNumber={lottos[2] || {}} />
+                <NumberComponent type={code} lottoNumber={lottos[2] || {}} />
               </div>
               <div className="col">
-                <NumberComponent lottoNumber={lottos[3] || {}} />
+                <NumberComponent type={code} lottoNumber={lottos[3] || {}} />
               </div>
             </div>
           </>
@@ -65,7 +71,7 @@ const LottoResultCard: SFC<ILottoResultCard & DefaultProps> = (props) => {
           <div className="row">
             {lottos.map((lottoResult, index) => (
               <div className="col" key={`bank-${lottoResult.type}-${index}`}>
-                <NumberComponent lottoNumber={lottoResult} />
+                <NumberComponent type={code} lottoNumber={lottoResult} />
               </div>
             ))}
           </div>
@@ -73,7 +79,7 @@ const LottoResultCard: SFC<ILottoResultCard & DefaultProps> = (props) => {
       case 'LAO_SUITE':
         return (
           <>{lottos.map((lottoResult, index) =>
-            <NumberComponent key={`lao-${lottoResult.type}-${index}`} lottoNumber={lottoResult} />)}</>
+            <NumberComponent type={code} key={`lao-${lottoResult.type}-${index}`} lottoNumber={lottoResult} />)}</>
         )
       case 'TH_SHARE_AFTERNOON':
       case 'TH_SHARE_EVENING':
