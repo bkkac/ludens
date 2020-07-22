@@ -87,6 +87,38 @@ export const LOTTO_TYPE: { [type in TLottoType]: string } = {
   YEGEE: 'ยี่กี',
 }
 
+export const LOTTO_SLUG_NAME: { [type in TLottoSlug]: string } = {
+  LOTTER_YEGEE: 'หวยยี่กี',
+  LOTTER_GOVN: 'หวยรัฐบาล',
+  LOTTER_BAAC: 'หวยธกส',
+  LOTTER_GSB: 'หวยออมสิน',
+  LOTTER_LAO_SUITE: 'หวยลาว (เลขชุด)',
+  LOTTER_TH_SHARE_MORNING: 'หวยหุ้นไทยเช้า',
+  LOTTER_TH_SHARE_MIDDAY: 'หวยหุ้นไทยเที่ยง',
+  LOTTER_TH_SHARE_AFTERNOON: 'หวยหุ้นไทยบ่าย',
+  LOTTER_TH_SHARE_EVENING: 'หวยหุ้นไทยเย็น',
+  LOTTER_NAT_SHARE_DOWNJON: 'หวยหุ้นดาวน์โจน',
+  LOTTER_NAT_SHARE_EGYPT: 'หวยหุ้นต่างประเทศอียิปต์',
+  LOTTER_NAT_SHARE_GERMANY: 'หวยหุ้นต่างประเทศเยอรมัน',
+  LOTTER_NAT_SHARE_NIKAII_MORNING: 'หวยหุ้นนิเคอิรอบเช้า',
+  LOTTER_NAT_SHARE_NIKAII_AFTERNOON: 'หวยหุ้นนิเคอิรอบบ่าย',
+  LOTTER_NAT_SHARE_CHINA_MORNING: 'หวยหุ้นจีนรอบเช้า',
+  LOTTER_NAT_SHARE_CHINA_AFTERNOON: 'หวยหุ้นจีนรอบบ่าย',
+  LOTTER_NAT_SHARE_TAIWAN: 'หวยหุ้นไต้หวัน',
+  LOTTER_NAT_SHARE_KOREA: 'หวยหุ้นเกาหลี',
+  LOTTER_NAT_SHARE_SINGAPORE: 'หวยหุ้นสิงค์โปร',
+  LOTTER_NAT_SHARE_INDIA: 'หวยหุ้นอินเดีย',
+  LOTTER_NAT_SHARE_HANOI_SPECIAL: 'หวยหุ้นฮานอยพิเศษ',
+  LOTTER_NAT_SHARE_MALAY: 'หวยหุ้นมาเลย์',
+  LOTTER_NAT_SHARE_VIETNAM_HANOI: 'หวยหุ้นเวียดนาม / ฮานอย',
+  LOTTER_NAT_SHARE_VIETNAM_HANOI_VIP: 'หวยหุ้นเวียดนาม / ฮานอย VIP',
+  LOTTER_NAT_SHARE_HANOI_4D: 'หวยหุ้นฮานอย (4D)',
+  LOTTER_NAT_SHARE_RUSSIA: 'หวยหุ้นรัสเซีย',
+  LOTTER_NAT_SHARE_ENGLISH: 'หวยหุ้นอังกฤษ',
+  LOTTER_NAT_SHARE_HUNGSENG_MORNING: 'หวยหุ้นฮั่งเส็งรอบเช้า',
+  LOTTER_NAT_SHARE_HUNGSENG_AFTERNOON: 'หวยหุ้นฮั่งเส็งรอบบ่าย',
+}
+
 export const LOTTO_GAME_TYPE: { [type in TLottoGameType]: string } = {
   TWO_UP: 'สองตัวบน',
   TWO_DOWN: 'สองตัวล่าง',

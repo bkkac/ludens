@@ -1,6 +1,7 @@
 import React, { SFC, useState, useEffect } from 'react'
-import { isEmpty, noop, replace, isNaN } from 'lodash'
-import { ResponsiveIcon } from 'components'
+import { replace, isNaN } from 'lodash'
+import { ResponsiveIcon, Badge } from 'components'
+import colors from 'constants/colors'
 import moment from 'moment'
 import { number } from 'utils'
 import './lottoActionCard.style.scss'
@@ -8,28 +9,32 @@ import './lottoActionCard.style.scss'
 type DefaultProps = Readonly<typeof defaultProps>
 
 const defaultProps: ILottoActionCard = {
-  name: '',
+  title: '',
+  subTitle: '',
+  isCountingdown: false,
+  expire: '',
+  status: 'UNKNOWN',
+  openedStatusText: '',
+  closedStatusText: '',
+  description: '',
+  backgroundColor: colors.SECONDARY_BG,
   icon: '',
-  status: 'CLOSE',
-  countdownTime: '',
-  rangeTimeLabel: '',
-  rangeTime: '',
-  timesupText: 'หมดเวลา',
-  onClick() { noop() },
 }
-
 
 const LottoActionCard: SFC<ILottoActionCard & DefaultProps> = (props) => {
 
   const {
-    name,
-    icon,
+    title,
+    subTitle,
+    isCountingdown,
+    expire,
     status,
-    countdownTime,
-    rangeTimeLabel,
-    rangeTime,
+    openedStatusText,
+    closedStatusText,
+    backgroundColor,
+    description,
+    icon,
     onClick,
-    timesupText,
   } = props
 
   let intervalId: NodeJS.Timeout | null = null
@@ -43,74 +48,81 @@ const LottoActionCard: SFC<ILottoActionCard & DefaultProps> = (props) => {
   }
 
   const countingdown = () => {
-    const momentEndAt = moment(replace(countdownTime!, /\s/g, ''))
-    const momentEndAtTimezone = momentEndAt.clone().add(-7, 'hour')
-    intervalId = setInterval(() => {
-      const duration = moment.duration(momentEndAtTimezone.diff(moment()))
-      const hours = duration.hours()
-      const minutes = duration.minutes()
-      const seconds = duration.seconds()
+    clearLocalInterval()
 
-      if (hours <= 0 && minutes <= 0 && seconds < 0) {
-        clearLocalInterval()
-      } else if (isNaN(hours) || isNaN(minutes) || isNaN(seconds)) {
-        setRemain({ hours: 0, minutes: 0, seconds: 0 })
-        clearLocalInterval()
-      } else {
-        setRemain({ hours, minutes, seconds })
-      }
+    if (isCountingdown) {
+      const expireMoment = moment(replace(expire!, /\s/g, ''))
+      const expireWithCastTimezone = expireMoment.clone().add(-7, 'hour')
+      intervalId = setInterval(() => {
+        const duration = moment.duration(expireWithCastTimezone.diff(moment()))
+        const hours = duration.hours()
+        const minutes = duration.minutes()
+        const seconds = duration.seconds()
 
-    }, 1000);
+        if ((hours <= 0 && minutes <= 0 && seconds <= 0)
+          || isNaN(hours) || isNaN(minutes) || isNaN(seconds)) {
+          setRemain({ hours: 0, minutes: 0, seconds: 0 })
+          clearLocalInterval()
+        } else {
+          setRemain({ hours, minutes, seconds })
+        }
+      }, 1000);
+    }
   }
 
   useEffect(() => {
-    if (countdownTime !== 'N/A') {
+    if (isCountingdown) {
       countingdown()
     }
     return clearLocalInterval
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [isCountingdown])
 
-  const ClosedTimeBadge = (badgeProps: IClosedTimeBadge) => (
-    <div className={`closed-time-badge ${badgeProps.status}`} >
-      <span className="closed-time-badge-text">
-        {badgeProps.text}
-      </span>
-    </div>
-  )
-
-  const FlagIcon = () => {
-    if (!isEmpty(icon)) { return <ResponsiveIcon icon={icon!} alt="flag-icon" className="lotto-action-card-flag" /> }
+  const BadgeComponent = ({ text }: { text: string }) => {
+    if (status === 'OPEN') {
+      return <Badge text={text} backgroundColor={colors.PRIMARY_GREEN} color={colors.PRIMARY_TEXT} />
+    } else if (status === 'CLOSE') {
+      return <Badge text={text} backgroundColor={colors.SECONDARY_RED} color={colors.PRIMARY_TEXT} />
+    } else if (status === 'WAIT') {
+      return <Badge text={text} backgroundColor={colors.SECONDARY_BLUE} color={colors.PRIMARY_TEXT} />
+    } else if (status === 'UNKNOWN') {
+      return <Badge text={text} backgroundColor={colors.PRIMARY_BG} color={colors.PRIMARY_TEXT} />
+    }
     return <></>
   }
 
   const handleOnClick = () => {
-    onClick!()
+    if (typeof onClick === 'function') {
+      onClick()
+    }
   }
 
-  const countdownTimeString = (countdownTime !== 'N/A')
-    ? (remain.hours < 1 && remain.seconds < 1 && remain.minutes < 1)
-      ? timesupText
-      : `${number.padNumber(String(remain.hours), 2)}:${number.padNumber(String(remain.minutes), 2)}:${number.padNumber(String(remain.seconds), 2)}`
-    : '24 ชม.'
+  const statusText = (): string => {
+    if (isCountingdown) {
+      return `${number.padNumber(String(remain.hours), 2)}:${number.padNumber(String(remain.minutes), 2)}:${number.padNumber(String(remain.seconds), 2)}`
+    } else if (status === 'OPEN') {
+      return openedStatusText || ''
+    } else if (status === 'CLOSE') {
+      return closedStatusText || ''
+    }
+    return '-'
+  }
 
   return (
-    <div className={`lotto-action-card-container ${status}`} onClick={handleOnClick}>
-      <div className="row">
-        <div className="my-1 col-12 col-sm-12 col-md-6 lotto-action-name">
-          {name} <span><FlagIcon /></span>
-        </div>
-        <div className="my-1 col-12 col-sm-12 col-md-6 d-flex justify-content-start justify-content-md-end justify-content-lg-end justify-content-xl-end">
-          <ClosedTimeBadge status={status} text={countdownTimeString} />
-        </div>
+    <div
+      className={`lotto-action-card-container ${typeof onClick === 'function' ? '' : 'disabled'} ${status}`}
+      style={{ backgroundColor }}
+      onClick={handleOnClick}
+    >
+      <div className="sub-background" />
+      <div className="lotto-action-text-wrapper">
+        <h3 className="flex">
+          {title}
+          <span><ResponsiveIcon icon={icon!} alt="flag" className="lotto-action-card-flag" /></span>
+        </h3>
+        <BadgeComponent text={statusText()} />
       </div>
-      <div className="row mt-2">
-        <div className="col d-flex flex-column text-left flex-sm-column flex-md-row lotto-status-label justify-content-start justify-content-md-end justify-content-lg-end justify-content-xl-end">
-          {rangeTimeLabel}
-          <div className="lotto-status-time pl-md-3">{rangeTime}</div>
-        </div>
-      </div>
-      <div className={`lotto-status-bar ${status}`} />
+      <h6 className="sub-title-label">{subTitle}<span className="subtitle-1 primary-text">{description}</span></h6>
     </div>
   )
 }

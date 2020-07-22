@@ -18,5 +18,6 @@ declare interface RootReducers {
     credit: ICreditState
     socket: ISocketState
     affilate: IAffilateState
+    config: IConfig
   }
 }
