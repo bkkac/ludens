@@ -92,8 +92,10 @@ class Withdraw extends Component<IWithdrawProps & IWithdrawActionProps & Default
   render() {
     const WithdrawFormComponent = this.renderWithdrawForm
     return (
-      <div className="withdraw-container container">
-        <WithdrawFormComponent />
+      <div className="withdraw-container primary-bg">
+        <div className="container">
+          <WithdrawFormComponent />
+        </div>
       </div>
     )
   }

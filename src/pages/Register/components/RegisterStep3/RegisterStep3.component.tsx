@@ -127,7 +127,7 @@ const RegisterStep3: SFC<FormikProps<IRegister> & IRegisterFormProps & DefaultPr
       </div>
       <div className="row p3-t">
         <div className="col">
-          <h6 className="subtitle-2">{constants.placeholderUsername}</h6>
+          <h6 className="subtitle-2 secondary-blue-text">{constants.placeholderUsername}</h6>
           <InputText
             name="username"
             value={values.username}
@@ -141,7 +141,7 @@ const RegisterStep3: SFC<FormikProps<IRegister> & IRegisterFormProps & DefaultPr
       </div>
       <div className="row p1-t">
         <div className="col">
-          <h6 className="subtitle-2">{constants.placeholderPassword}</h6>
+          <h6 className="subtitle-2 secondary-blue-text">{constants.placeholderPassword}</h6>
           <InputText
             type="password"
             name="password"
@@ -156,7 +156,7 @@ const RegisterStep3: SFC<FormikProps<IRegister> & IRegisterFormProps & DefaultPr
       </div>
       <div className="row p1-t">
         <div className="col">
-          <h6 className="subtitle-2">{constants.placeholderConfirmPassword}</h6>
+          <h6 className="subtitle-2 secondary-blue-text">{constants.placeholderConfirmPassword}</h6>
           <InputText
             name="confirmPassword"
             value={values.confirmPassword}
@@ -171,7 +171,7 @@ const RegisterStep3: SFC<FormikProps<IRegister> & IRegisterFormProps & DefaultPr
       </div>
       <div className="row p1-t">
         <div className="col">
-          <h6 className="subtitle-2">{constants.placeholderAffilate}</h6>
+          <h6 className="subtitle-2 secondary-blue-text">{constants.placeholderAffilate}</h6>
           <InputText
             name="affilateRef"
             value={values.affilateRef}
@@ -186,7 +186,7 @@ const RegisterStep3: SFC<FormikProps<IRegister> & IRegisterFormProps & DefaultPr
 
       <div className="row p2-t">
         <div className="col">
-          <h6 className="subtitle-2">{constants.selectBankText}</h6>
+          <h6 className="subtitle-2 secondary-blue-text">{constants.selectBankText}</h6>
         </div>
       </div>
       <div className="row p1-t">
@@ -207,7 +207,7 @@ const RegisterStep3: SFC<FormikProps<IRegister> & IRegisterFormProps & DefaultPr
       </div>
       <div className="row p1-t">
         <div className="col">
-          <h6 className="subtitle-2">{constants.placeholderBankNumber}</h6>
+          <h6 className="subtitle-2  secondary-blue-text">{constants.placeholderBankNumber}</h6>
           <InputText
             name="bankNumber"
             value={values.bankNumber}
@@ -221,7 +221,7 @@ const RegisterStep3: SFC<FormikProps<IRegister> & IRegisterFormProps & DefaultPr
       </div>
       <div className="row p1-t">
         <div className="col">
-          <h6 className="subtitle-2">{constants.placeholderOwnerName}</h6>
+          <h6 className="subtitle-2  secondary-blue-text">{constants.placeholderOwnerName}</h6>
           <InputText
             name="ownerName"
             value={values.ownerName}
