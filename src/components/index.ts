@@ -24,7 +24,6 @@ import { LottoResultCard } from './LottoResultCard'
 import { LottoActionCard } from './LottoActionCard'
 import { InputRadioImage } from './InputRadioImage'
 import { TransactionItem } from './TransactionItem'
-import { CreditAmountCard } from './CreditAmountCard'
 import { TransactionItemCollapsible } from './TransactionItemCollapsible'
 
 export {
@@ -54,6 +53,5 @@ export {
   LottoActionCard,
   InputRadioImage,
   TransactionItem,
-  CreditAmountCard,
   TransactionItemCollapsible,
 }
