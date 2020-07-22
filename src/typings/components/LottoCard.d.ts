@@ -1,3 +1,3 @@
-declare interface ILottoCard {
+declare interface ILottoResultCard {
   lotto: ILotto
 }

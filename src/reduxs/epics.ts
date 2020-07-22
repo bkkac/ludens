@@ -10,6 +10,7 @@ import bank from './bank/epics'
 import socket from './socket/epics'
 import credit from './credit/epics'
 import affilate from './affilate/epics'
+import config from './config/epics'
 
 export default combineEpics(
   ...user,
@@ -23,5 +24,6 @@ export default combineEpics(
   ...socket,
   ...credit,
   ...affilate,
+  ...config,
 )
 

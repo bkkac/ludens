@@ -7,8 +7,8 @@ import { Register } from './Register'
 import { Withdraw } from './Withdraw'
 import { Deposit } from './Deposit'
 import { Main } from './Main'
-import { LottoMain } from './LottoMain'
-import { LottoSub } from './LottoSub'
+import { LottoList } from './LottoList'
+import { LottoListChrildren } from './LottoListChrildren'
 import { LottoMake } from './LottoMake'
 import { Affiliate } from './Affiliate'
 
@@ -18,12 +18,12 @@ export default {
   Deposit,
   Withdraw,
   Register,
-  LottoSub,
   Affiliate,
-  LottoMain,
+  LottoList,
   LottoMake,
   CreditInfo,
   ComingSoon,
   TransactionList,
   TransactionDetail,
+  LottoListChrildren,
 }

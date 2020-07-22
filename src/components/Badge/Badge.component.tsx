@@ -1,12 +1,13 @@
 import React, { SFC } from 'react'
+import colors from 'constants/colors'
 import './badge.style.scss'
 
 type DefaultProps = Readonly<typeof defaultProps>
 
 const defaultProps: IBadge = {
   text: '',
-  color: '#ffffff',
-  backgroundColor: '#66c6b9',
+  color: colors.SECONDARY_TEXT,
+  backgroundColor: colors.SECONDARY_BG,
 }
 
 const Badge: SFC<IBadge & DefaultProps> = (props) => {
