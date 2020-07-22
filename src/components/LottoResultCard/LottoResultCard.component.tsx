@@ -5,11 +5,11 @@ import { replace } from 'lodash'
 import colors from 'constants/colors'
 import { LOTTO_GAME_TYPE, LOTTO_TYPE } from 'constants/variables'
 import ThaiFlagIcon from 'assets/images/flags/thailand.png'
-import './lottoCard.style.scss'
+import './lottoResultCard.style.scss'
 
 type DefaultProps = Readonly<typeof defaultProps>
 
-const defaultProps: ILottoCard = {
+const defaultProps: ILottoResultCard = {
   lotto: {
     code: 'GOVN',
     createdAt: '',
@@ -17,7 +17,7 @@ const defaultProps: ILottoCard = {
   },
 }
 
-const LottoCard: SFC<ILottoCard & DefaultProps> = (props) => {
+const LottoResultCard: SFC<ILottoResultCard & DefaultProps> = (props) => {
 
   const { lotto } = props
 
@@ -104,4 +104,4 @@ const LottoCard: SFC<ILottoCard & DefaultProps> = (props) => {
   )
 }
 
-export default LottoCard
+export default LottoResultCard

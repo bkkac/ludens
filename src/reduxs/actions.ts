@@ -9,6 +9,7 @@ import bankAction from './bank/actions'
 import socketAction from './socket/actions'
 import creditAction from './credit/actions'
 import affilateAction from './affilate/actions'
+import config from './config/actions'
 
 export default {
   ...userAction,
@@ -22,4 +23,5 @@ export default {
   ...socketAction,
   ...creditAction,
   ...affilateAction,
+  ...config,
 }

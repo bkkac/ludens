@@ -7,7 +7,6 @@ import { Button } from './Button'
 import { Switch } from './Switch'
 import { NumberPad } from './NumberPad'
 import { InputText } from './InputText'
-import { LottoCard } from './LottoCard'
 import { Breadcrumb } from './Breadcrumb'
 import { CreditCard } from './CreditCard'
 import { ButtonMenu } from './ButtonMenu'
@@ -21,6 +20,7 @@ import { InputTextIcon } from './InputTextIcon'
 import { InputCheckbox } from './InputCheckbox'
 import { ResponsiveIcon } from './ResponsiveIcon'
 import { BankNumberCard } from './BankNumberCard'
+import { LottoResultCard } from './LottoResultCard'
 import { LottoActionCard } from './LottoActionCard'
 import { InputRadioImage } from './InputRadioImage'
 import { TransactionItem } from './TransactionItem'
@@ -37,7 +37,6 @@ export {
   Switch,
   NumberPad,
   InputText,
-  LottoCard,
   Breadcrumb,
   CreditCard,
   ButtonMenu,
@@ -51,6 +50,7 @@ export {
   InputTextIcon,
   ResponsiveIcon,
   BankNumberCard,
+  LottoResultCard,
   LottoActionCard,
   InputRadioImage,
   TransactionItem,

@@ -21,6 +21,6 @@ declare interface ILoginFormProps {
   onNavigateToForgotPassword?(): viod
 }
 
-declare interface ILottoListProps {
+declare interface ILottoProps {
   data: ReadonlyArray<ILotto>
 }

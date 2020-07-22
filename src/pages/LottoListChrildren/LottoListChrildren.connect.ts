@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 import { Dispatch, bindActionCreators } from 'redux'
 import { RootAction } from 'typings/reduxs/Actions'
-import LottoSubContainer from './LottoSub.container'
+import LottoListChrildrenContainer from './LottoListChrildren.container'
 import lotterAction from 'reduxs/lotto/actions'
 import loaderAction from 'reduxs/loader/actions'
 
@@ -17,4 +17,4 @@ const mapDispatchToProos = (dispatch: Dispatch<RootAction>): ISubLottoActionProp
   loader: loaderAction.loadingAction,
 }, dispatch)
 
-export default connect(mapStateToProps, mapDispatchToProos)(LottoSubContainer)
+export default connect(mapStateToProps, mapDispatchToProos)(LottoListChrildrenContainer)

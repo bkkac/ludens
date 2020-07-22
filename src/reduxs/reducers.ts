@@ -11,6 +11,7 @@ import bank from './bank/reducers'
 import socket from './socket/reducers'
 import credit from './credit/reducers'
 import affilate from './affilate/reducers'
+import config from './config/reducers'
 import storage from 'redux-persist/lib/storage'
 import { persistReducer } from 'redux-persist'
 
@@ -37,6 +38,7 @@ const rootReducers = {
   socket,
   credit,
   affilate,
+  config,
 }
 
 export default persistReducer(
