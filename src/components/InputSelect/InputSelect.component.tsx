@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { isEmpty, map, noop, find } from 'lodash'
+import colors from 'constants/colors'
 import { SelectorItem } from 'components'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faChevronRight } from '@fortawesome/free-solid-svg-icons'
@@ -9,6 +10,8 @@ const defaultProps: IInputSelectProps = {
 	placeholder: 'เลือก',
 	value: '',
 	name: '',
+	backgroundColor: colors.SECONDARY_BG,
+	backgroundHoverColor: colors.PRIMARY_BG,
 	onChange() { noop() },
 }
 
@@ -23,7 +26,8 @@ class InputSelectComponent<T = string, K = string> extends Component<IInputSelec
 	}
 
 	componentDidMount() {
-		if (!isEmpty(this.props.value) && typeof this.props.value !== 'undefined') {
+		if (typeof this.props.value !== 'undefined'
+			&& ((typeof this.props.value === 'number' && this.props.value > 0) || !isEmpty(this.props.value))) {
 			const defalutValue: T | undefined = find<T>(this.props.items, [this.props.valueKey || '', this.props.value])
 			this.setState({ isSelected: true, selectedValue: defalutValue || '' })
 		}
@@ -44,12 +48,19 @@ class InputSelectComponent<T = string, K = string> extends Component<IInputSelec
 	}
 
 	renderDisplaySelectedValues = () => {
-		const { placeholder, RenderSelected } = this.props
+		const { placeholder, RenderSelected, backgroundColor, backgroundHoverColor } = this.props
 		const { isSelected, selectedValue } = this.state
 
 		if (isSelected) {
 			if (typeof RenderSelected !== 'undefined' && typeof selectedValue !== 'string') {
-				return <RenderSelected item={selectedValue} isDisplaying />
+				return (
+					<RenderSelected
+						item={selectedValue}
+						isDisplaying
+						backgroundColor={backgroundColor}
+						backgroundHoverColor={backgroundHoverColor}
+					/>
+				)
 			}
 			return (<h5 className="secondary-text">{selectedValue}</h5>)
 		}
@@ -58,20 +69,24 @@ class InputSelectComponent<T = string, K = string> extends Component<IInputSelec
 	}
 
 	renderItems = () => {
-		const { items, RenderSelected, name } = this.props
+		const { items, RenderSelected, name, backgroundColor, backgroundHoverColor } = this.props
 
 		const Items = map(items, (item, index) => {
 			const key = `${name}-${index}`
 			if (typeof RenderSelected !== 'undefined') {
 				return (
 					<li onClick={() => this.handleOnClickItem(item)} key={key} id={key}>
-						<RenderSelected item={item} />
+						<RenderSelected item={item} backgroundColor={backgroundColor} backgroundHoverColor={backgroundHoverColor} />
 					</li>
 				)
 			}
 			return (
 				<li onClick={() => this.handleOnClickItem(item)} key={key} id={key}>
-					<SelectorItem title={String(item) || ''} />
+					<SelectorItem
+						title={String(item) || ''}
+						backgroundColor={backgroundColor}
+						backgroundHoverColor={backgroundHoverColor}
+					/>
 				</li>
 			)
 		})
@@ -80,7 +95,7 @@ class InputSelectComponent<T = string, K = string> extends Component<IInputSelec
 	}
 
 	render() {
-		const { name } = this.props
+		const { name, backgroundColor } = this.props
 		const { isExpand } = this.state
 		const DisplaySelectedValuesComponent = this.renderDisplaySelectedValues
 		const ItemsComponent = this.renderItems
@@ -92,6 +107,7 @@ class InputSelectComponent<T = string, K = string> extends Component<IInputSelec
 			>
 				<ul
 					id={name}
+					style={{ backgroundColor }}
 					className="selected-wrapper"
 					onClick={this.handleOpenSelector}
 					onBlur={this.handleOnBlurSelector}
@@ -106,7 +122,7 @@ class InputSelectComponent<T = string, K = string> extends Component<IInputSelec
 						/>
 					</li>
 				</ul>
-				<ul className={`selector-wrapper ${isExpand ? 'opened' : ''}`}>
+				<ul className={`selector-wrapper ${isExpand ? 'opened' : ''}`} style={{ backgroundColor }}>
 					<ItemsComponent />
 				</ul>
 			</div>

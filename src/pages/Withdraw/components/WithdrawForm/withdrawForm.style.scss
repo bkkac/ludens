@@ -1,38 +1,19 @@
+@import "assets/stylesheets/typography";
+
 .withdraw-form-wrapper {
-  .transfer-to-icon {
-    width: 32px;
-    height: 32px;
-    object-fit: contain;
-  }
+  border-radius: 8px;
+  padding: 16px;
+}
 
-  .withdraw-title {
-    padding-top: 20px;
-    font-family: "SukhumvitSet-Bold";
-    font-size: 24px;
-    line-height: 1.13;
-    color: #777777;
-  }
+.vertical-chevron-icon {
+  @extend h2;
+  height: 200px;
+  align-items: center;
+  justify-content: center;
+}
 
-  .withdraw-description-text {
-    font-family: "SukhumvitSet-Bold";
-    font-size: 14px;
-    line-height: 1.93;
-    color: #bb130a;
-  }
-
-  .input-header-title {
-    font-family: "SukhumvitSet-Bold";
-    font-size: 18px;
-    line-height: 1.5;
-    color: #777777;
-
-    span {
-      padding-left: 4px;
-      font-family: "SukhumvitSet-Medium";
-      font-size: 12px;
-      line-height: 2.25;
-      text-align: left;
-      color: #bb130a;
-    }
-  }
+.horizontal-chevron-icon {
+  @extend h2;
+  align-items: center;
+  justify-content: center;
 }
