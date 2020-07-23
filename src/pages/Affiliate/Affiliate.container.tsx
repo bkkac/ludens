@@ -22,6 +22,7 @@ const constants = {
    member: 'สมาชิก',
    totalMaked: 'จำนวนแทงทั้งหมด',
    prefixMemberCreatedAt: 'เป็นสมาชิก',
+   multipy2Percent: 100,
 }
 
 type DefaultProps = Readonly<typeof defaultProps>
@@ -72,7 +73,7 @@ class AffilateContainer extends
       copy(link)
       // TODO: Create popup show copied. state
       console.log('copied.')
-    }
+   }
 
    render() {
       const { getAffilateSummaryResult, getAffilateMemberResult } = this.props
@@ -80,7 +81,8 @@ class AffilateContainer extends
       const totalMember = getAffilateSummaryResult.totalRegistered
 
       const affiName = 'หวยออนไลน์'
-      const affiDivider = getAffilateSummaryResult.lotter ? getAffilateSummaryResult.lotter.rate! : ''
+      const affiDivider = getAffilateSummaryResult.lotter ?
+         (Number(getAffilateSummaryResult.lotter.rate!) * constants.multipy2Percent) : ''
       const dividerPercent = `${constants.divider} ${affiDivider}%`
       const income = getAffilateSummaryResult.income
       const affiIncome = number.castToMoney(Number(income))
