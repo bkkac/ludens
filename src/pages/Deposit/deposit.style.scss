@@ -1,3 +1,36 @@
+@import "assets/stylesheets/typography";
+
 .deposit-container {
   padding-top: 112px;
+  min-height: 100vh;
+}
+
+.deposit-form-wrapper {
+  border-radius: 8px;
+}
+
+.vertical-chevron-icon {
+  @extend h2;
+  height: 120px;
+  align-items: center;
+  justify-content: center;
+}
+
+.horizontal-chevron-icon {
+  @extend h2;
+  align-items: center;
+  justify-content: center;
+}
+
+.copy-able-wrapper {
+  overflow: hidden;
+  display: flex;
+  flex-direction: row;
+  border-radius: 8px;
+
+  .copy-button-wrapper {
+    min-width: 100px;
+    margin: auto;
+    text-align: center;
+  }
 }

@@ -33,6 +33,15 @@ class InputSelectComponent<T = string, K = string> extends Component<IInputSelec
 		}
 	}
 
+	componentDidUpdate(prevProps: IInputSelectProps<T, K>) {
+		if (typeof this.props.value !== 'undefined' && prevProps.value !== this.props.value
+			&& ((typeof this.props.value === 'number' && this.props.value > 0)
+				|| !isEmpty(this.props.value))) {
+			const defalutValue: T | undefined = find<T>(this.props.items, [this.props.valueKey || '', this.props.value])
+			this.setState({ isSelected: true, selectedValue: defalutValue || '' })
+		}
+	}
+
 	handleOpenSelector = () => {
 		this.setState({ isExpand: !this.state.isExpand })
 	}

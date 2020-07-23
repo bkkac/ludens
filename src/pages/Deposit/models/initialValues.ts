@@ -2,7 +2,7 @@ const initialValues: IDepositForm = {
   depositHours: '',
   depositMinutes: '',
   description: '',
-  webBankId: '',
+  webBankId: 0,
   money: '',
 }
 
