@@ -103,7 +103,7 @@ const TransactionItemCollapsible: SFC<ITransactionItemCollapsible & DefaultProps
                   : LOTTO_GAME_TYPE[cred.type]
               }
               {' '}
-              <span className="transaction-description-lotto-number">{cred.number}</span>
+              <span className="transaction-description-lotto-number">{cred.numbers}</span>
               {' '}
               (<span style={{ color: statusName[cred.status].color }}>{statusName[cred.status].name}</span>)
             </div>
@@ -137,7 +137,7 @@ const TransactionItemCollapsible: SFC<ITransactionItemCollapsible & DefaultProps
               key={`transaction-description-detail-${detailIndex}`}
             >
               <div className="transaction-description-name-text">
-                <span className="transaction-description-lotto-number">{detail.number}</span>
+                <span className="transaction-description-lotto-number">{detail.numbers}</span>
                 {' '}
             (<span style={{ color: statusName[detail.status].color }}>{subCreditStatus()}</span>)
           </div>

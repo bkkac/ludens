@@ -7,6 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faChevronLeft, faChevronRight, faDice, faLink, faCopy } from '@fortawesome/free-solid-svg-icons'
 import { number } from 'utils'
 import moment from 'moment'
+import copy from 'copy-to-clipboard'
 import './affiliate.style.scss'
 
 const constants = {
@@ -20,6 +21,8 @@ const constants = {
    recommendedLink: 'ลิ้งแนะนำ',
    member: 'สมาชิก',
    totalMaked: 'จำนวนแทงทั้งหมด',
+   prefixMemberCreatedAt: 'เป็นสมาชิก',
+   multipy2Percent: 100,
 }
 
 type DefaultProps = Readonly<typeof defaultProps>
@@ -41,6 +44,8 @@ const defaultProps: IAffilateProps & IAffilateActionProps = {
 
 class AffilateContainer extends
    Component<RouteComponentProps & DefaultProps & IAffilateProps & IAffilateActionProps> {
+
+   static defaultProps = defaultProps
 
    componentDidMount() {
       this.props.loader(true)
@@ -64,7 +69,11 @@ class AffilateContainer extends
 
    onPressQAAffilate = () => this.props.history.push('/qa')
 
-   onPressCopy = () => { noop() }
+   onPressCopy = (link: string) => {
+      copy(link)
+      // TODO: Create popup show copied. state
+      console.log('copied.')
+   }
 
    render() {
       const { getAffilateSummaryResult, getAffilateMemberResult } = this.props
@@ -72,17 +81,17 @@ class AffilateContainer extends
       const totalMember = getAffilateSummaryResult.totalRegistered
 
       const affiName = 'หวยออนไลน์'
-      const affiDivider = getAffilateSummaryResult.lotter? getAffilateSummaryResult.lotter.rate! : ''
+      const affiDivider = getAffilateSummaryResult.lotter ?
+         (Number(getAffilateSummaryResult.lotter.rate!) * constants.multipy2Percent) : ''
       const dividerPercent = `${constants.divider} ${affiDivider}%`
       const income = getAffilateSummaryResult.income
       const affiIncome = number.castToMoney(Number(income))
       const link = `${window.location.host}/register-affiliate/${this.props.affilateUuid}`
-
       const memberList = getAffilateMemberResult.map((memberData) => {
          return {
             memberName: memberData.memberName,
             totalMakedMoney: number.castToMoney(Number(memberData.totalBet)),
-            createdAt: moment(memberData.createdAt).format('DDMMYYYY'),
+            createdAt: moment(memberData.createdAt).add('years', 543).format('Do MMMM YY'),
          }
       })
 
@@ -104,7 +113,7 @@ class AffilateContainer extends
                   </div>
                   <div className="col text-center">
                      <h2 className="secondary-blue-text">{totalMember}</h2>
-                     <h4 className="m1-t">{constants.totalIncome}</h4>
+                     <h4 className="m1-t">{constants.totalMember}</h4>
                   </div>
                </div>
                <div className="row  m4-t">
@@ -143,7 +152,7 @@ class AffilateContainer extends
                                  <div className="subtitle-1 primary-text">{link}</div>
                               </div>
                            </div>
-                           <div className="copy-button-container" onClick={this.onPressCopy}>
+                           <div className="copy-button-container" onClick={() => this.onPressCopy(link)}>
                               <FontAwesomeIcon icon={faCopy} className="primary-text" />
                            </div>
                         </div>
@@ -160,7 +169,9 @@ class AffilateContainer extends
                                  <div className="m3-t d-flex flex-row align-items-center" key={index}>
                                     <div className="flex">
                                        <h5>{member.memberName}</h5>
-                                       <div className="subtitle-2 secondary-text">{member.createdAt}</div>
+                                       <div className="subtitle-2 secondary-text">
+                                          {constants.prefixMemberCreatedAt} {member.createdAt}
+                                       </div>
                                     </div>
                                     <div className="text-right">
                                        <div className="subtitle-2 secondary-text">{constants.totalMaked}</div>

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { noop, isEmpty } from 'lodash'
+import { noop, isEmpty, get } from 'lodash'
 import { FormikProps, Formik } from 'formik'
 import { RouteComponentProps } from 'react-router-dom'
 import response from 'constants/response'
@@ -51,9 +51,9 @@ class DepositContainer extends
   }
 
   componentDidMount() {
-    this.props.loader(true)
     this.props.getBankList()
     this.props.getTransactionRequest()
+    this.props.loader(true)
   }
 
   componentDidUpdate(prevProps: IDepositProps) {
@@ -83,15 +83,18 @@ class DepositContainer extends
       this.props.loader(false)
       if (this.props.transactionRequestCode === response.OK) {
         if (!isEmpty(this.props.transactionRequest)) {
+          const { money, webBank } = this.props.transactionRequest
           this.setState({
             currentStep: 2,
             initialFormValue: {
               ...this.state.initialFormValue,
-              money: String(this.props.transactionRequest.money),
-              webBankId: String(this.props.transactionRequest.webBank?.id),
+              money: String(money),
+              webBankId: webBank?.id || 0,
             },
           })
         }
+      } else if (this.props.depositRequestCode === response.GONE) {
+        // TODO: when before transaction timeout
       } else if (this.props.transactionRequestCode === response.NOT_FOUND) {
         // TODO: when never transaction request before
       } else {
@@ -110,7 +113,7 @@ class DepositContainer extends
       money: castedValue.money,
       depositTime: date.convertTimeToMoment(castedValue.depositHours, castedValue.depositMinutes).toISOString(),
       description: castedValue.description || '-',
-      webBankId: Number(castedValue.webBankId),
+      webBankId: castedValue.webBankId,
     }
     this.props.loader(true)
     this.props.depositRequest(depositRequestValues)
@@ -120,7 +123,7 @@ class DepositContainer extends
     const castedValue = scheme.cast(values)
     this.props.loader(true)
     this.props.signTransactionRequest({
-      webBankId: Number(castedValue.webBankId),
+      webBankId: castedValue.webBankId,
       money: castedValue.money,
     })
   }
@@ -139,16 +142,17 @@ class DepositContainer extends
   renderDepositForm = () => {
     const DepositFormComponent = (formProps: FormikProps<IDepositForm>) => {
       if (this.state.currentStep === 1) {
+        const { bankList, user } = this.props
+        const userBank: IBank = get(user, 'bank', {})
         return (
           <DepositStep1
             {...formProps}
-            extraProps={{ banks: this.props.bankList, userBank: this.props.user.bank! }}
+            extraProps={{ banks: bankList, userBank }}
             onBackStep={this.onBackStepHandler}
             onConfirmPresses={this.onNextStepHandler}
           />
         )
       } else if (this.state.currentStep === 2) {
-
         return (
           <DepositStep2
             {...formProps}
@@ -176,8 +180,10 @@ class DepositContainer extends
   render() {
     const DepositFormComponent = this.renderDepositForm
     return (
-      <div className="deposit-container container">
-        <DepositFormComponent />
+      <div className="deposit-container primary-bg p4-b">
+        <div className="container">
+          <DepositFormComponent />
+        </div>
       </div>
     )
   }

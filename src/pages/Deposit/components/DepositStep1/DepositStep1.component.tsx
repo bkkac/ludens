@@ -2,23 +2,28 @@ import React, { SFC } from 'react'
 import {
   ALink,
   Button,
+  InputSelect,
   InputNumber,
-  BankNumberCard,
-  InputRadioImage,
+  SelectorItem,
 } from 'components'
-import { noop, isEqual, isEmpty } from 'lodash'
+import { noop, isEmpty } from 'lodash'
 import { FormikProps, Form } from 'formik'
-import BankImageSet from 'assets/images/global/bank'
-import './depositStep1.style.scss'
+import ImageBankSet from 'assets/images/global/bank'
+import colors from 'constants/colors'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faChevronLeft, faChevronCircleRight, faChevronCircleDown } from '@fortawesome/free-solid-svg-icons'
 
 const constants = {
-  backText: '< ย้อนกลับ',
+  backText: 'กลับ',
   depositTitle: 'ฝาก',
+  depositSubTitle: 'ขั้นตอนที่ 1',
   depositDescription: '* กรุณาใช้บัญชีนี้โอนเงินเข้ามาเท่านั้น',
-  buttonNextStep: 'ต่อไป',
+  transferToLabel: 'โอนให้',
+  placeholderOriginBank: 'กรุณาเลือกบัญชีธนาคาร',
   selectBankText: 'เลือกธนาคารที่ต้องการโอนเข้า',
-  placeholdeAmount: 'ระบุจำนวนเงิน',
-  amountTitle: 'ระบุจำนวนเงินฝาก',
+  amountLabel: 'จำนวนเงินฝาก',
+  placeholdeAmount: 'ระบุจำนวนเงินฝาก',
+  buttonNextStep: 'ถัดไป',
 }
 
 type DefaultProps = Readonly<typeof defaultProps>
@@ -41,6 +46,7 @@ const DepositStep1:
       values,
       errors,
       touched,
+      setFieldValue,
       handleBlur,
       handleChange,
       onConfirmPresses,
@@ -56,84 +62,120 @@ const DepositStep1:
       onConfirmPresses!(values)
     }
 
-    const RenderBankList = (): JSX.Element => {
-      const RadioImages = extraProps?.banks.map((bank, index) => {
-        return (
-          <div className="col-3 col-sm-3 col-md-2 col-lg-1 mt-2" key={`bank-${index}-${bank.type}`}>
-            <InputRadioImage
-              image={BankImageSet[bank.type!].Icon}
-              name="webBankId"
-              alt={bank.type}
-              value={`${bank.id}`}
-              onBlur={handleBlur}
-              onChange={handleChange}
-              checked={isEqual(values.webBankId, `${bank.id}`)}
-            />
-          </div>
-        )
-      })
+    const defaultSelectorList: IBank[] = [extraProps?.userBank! || {}]
 
-      return (<>{RadioImages}</>)
-    }
+    const renderBankOption = ({ item, ...selectProps }: IInputDefaultSelectProps<IBank>): JSX.Element =>
+      (
+        <SelectorItem
+          icon={ImageBankSet[item.type!].Icon}
+          title={item.name || ''}
+          subTitle={item.number}
+          {...selectProps}
+        />
+      )
 
     return (
       <Form>
-        <div className="deposit-form-wrapper mb-5">
+        <div>
           <div className="row">
             <div className="col">
-              <ALink id="backto-previus-page" color="#ff9b96" bold onClick={onPressBack}>{constants.backText}</ALink>
+              <ALink id="backto-previus-page" color={colors.PRIMARY_RED} bold onClick={onPressBack}>
+                <FontAwesomeIcon icon={faChevronLeft} className="m1-r" />
+                {constants.backText}
+              </ALink>
             </div>
           </div>
-          <div className="row">
+          <div className="row m4-t">
             <div className="col">
-              <div className="deposit-title">{constants.depositTitle}</div>
+              <h2>
+                {constants.depositTitle}
+                <span className="subtitle-2 secondary-red-text m1-l">{constants.depositSubTitle}</span>
+              </h2>
             </div>
           </div>
-          <div className="row pt-4">
-            <div className="col d-flex justify-content-center">
-              <div className="deposit-description-text">{constants.depositDescription}</div>
+          <div className="row m2-t">
+            <div className="col-12 col-md-5 col-lg-4 mt-3">
+              <div className="deposit-form-wrapper secondary-bg p2">
+                <div className="row">
+                  <div className="col">
+                    <h6 className="subtitle-2 secondary-red-text m1-b">{constants.depositDescription}</h6>
+                    <InputSelect<IBank, number>
+                      name="userBank"
+                      backgroundColor={colors.PRIMARY_BG}
+                      backgroundHoverColor={colors.SECONDARY_BG}
+                      items={defaultSelectorList}
+                      valueKey="id"
+                      value={extraProps?.userBank.id}
+                      placeholder={constants.placeholderOriginBank}
+                      RenderSelected={renderBankOption}
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="col-12 col-md-1 col-lg-1 mt-3">
+              <div className="d-none d-md-flex vertical-chevron-icon">
+                <FontAwesomeIcon icon={faChevronCircleRight} className="secondary-blue-text" />
+              </div>
+              <div className="d-flex d-md-none horizontal-chevron-icon">
+                <FontAwesomeIcon icon={faChevronCircleDown} className="secondary-blue-text" />
+              </div>
+            </div>
+            <div className="col-12 col-md-6 col-lg-7 mt-3 ">
+              <div className="deposit-form-wrapper secondary-bg p2">
+                <div className="row">
+                  <div className="col">
+                    <h6 className="secondary-blue-text m1-b">{constants.transferToLabel}</h6>
+                    <InputSelect<IBank, number>
+                      name="webBankId"
+                      backgroundColor={colors.PRIMARY_BG}
+                      backgroundHoverColor={colors.SECONDARY_BG}
+                      items={extraProps?.banks}
+                      valueKey="id"
+                      value={values.webBankId}
+                      onChange={(selected, name) => setFieldValue(name, selected.id)}
+                      placeholder={constants.selectBankText}
+                      RenderSelected={renderBankOption}
+                    />
+                  </div>
+                </div>
+                <div className="row m3-t">
+                  <div className="col">
+                    <h6 className="secondary-blue-text m1-b">{constants.amountLabel}</h6>
+                    <InputNumber
+                      thousandSeparator
+                      decimalScale={0}
+                      name="money"
+                      onBlur={handleBlur}
+                      onChange={handleChange}
+                      value={values.money}
+                      errorMessage={errors.money}
+                      placeholder={constants.placeholdeAmount}
+                      error={!!errors.money && touched.money}
+                    />
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
-          <div className="row mt-1">
-            <div className="col d-flex justify-content-center">
-              <BankNumberCard bank={extraProps?.userBank!} />
-            </div>
-          </div>
-          <div className="row pt-5 flex-column">
-            <div className="col select-bank-header">{constants.selectBankText}</div>
-          </div>
-          <div className="row pt-3">
-            <RenderBankList />
-          </div>
-          <div className="row pt-5">
-            <div className="col select-bank-header">{constants.amountTitle}</div>
-          </div>
-          <div className="row">
-            <InputNumber
-              thousandSeparator
-              decimalScale={0}
-              name="money"
-              onBlur={handleBlur}
-              onChange={handleChange}
-              value={values.money}
-              errorMessage={errors.money}
-              placeholder={constants.placeholdeAmount}
-              error={!!errors.money && touched.money}
-            />
-          </div>
-          <div className="row pt-4">
-            <div className="col">
-              <Button
-                id="deposit-step-1-submit-button"
-                disabled={!!errors.webBankId || isEmpty(values.webBankId)
-                  || !!errors.money || isEmpty(values.money)}
-                text={constants.buttonNextStep}
-                onClick={handleNextStep}
-              />
+          <div className="row m2-t">
+            <div className="col-12 col-md-6 col-lg-5" />
+            <div className="col-12 col-md-6 col-lg-7 mt-3">
+              <div className="row">
+                <div className="col">
+                  <Button
+                    id="deposit-step-1-submit-button"
+                    disabled={!!errors.webBankId || values.webBankId <= 0
+                      || !!errors.money || isEmpty(values.money)}
+                    text={constants.buttonNextStep}
+                    onClick={handleNextStep}
+                  />
+                </div>
+              </div>
             </div>
           </div>
         </div>
-      </Form>
+      </Form >
     )
   }
 

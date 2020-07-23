@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 import LoaderContainer from './Loader.container'
 
-const mapStateToProps = (state: RootReducers): ILoader => ({
+const mapStateToProps = (state: RootReducers): ILoaderProps => ({
   isLoading: state.ludens.loader,
 })
 

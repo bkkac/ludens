@@ -5,7 +5,7 @@ declare type TTransactionType = | 'DEPOSIT' | 'WITHDRAW'
 
 declare interface ICreditDetail {
   money: string | number
-  number: string
+  numbers: string
   type: TTransactionType | TLottoGameType
   status: TFinanceStatus | TBetStatus
   updatedAt: string

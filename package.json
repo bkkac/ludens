@@ -8,6 +8,7 @@
     "@fortawesome/react-fontawesome": "0.1.9",
     "axios": "0.19.2",
     "bootstrap": "4.4.1",
+    "copy-to-clipboard": "3.3.1",
     "eventemitter3": "4.0.0",
     "formik": "2.1.4",
     "install": "0.13.0",
@@ -54,9 +55,6 @@
     ]
   },
   "devDependencies": {
-    "@types/socket.io-client": "1.4.33",
-    "@typescript-eslint/eslint-plugin": "2.26.0",
-    "@typescript-eslint/parser": "2.26.0",
     "@testing-library/jest-dom": "4.2.4",
     "@testing-library/react": "9.3.2",
     "@testing-library/user-event": "7.1.2",
@@ -69,7 +67,10 @@
     "@types/react-loadable": "5.5.3",
     "@types/react-redux": "7.1.7",
     "@types/react-router-dom": "5.1.4",
+    "@types/socket.io-client": "1.4.33",
     "@types/yup": "0.26.36",
+    "@typescript-eslint/eslint-plugin": "2.26.0",
+    "@typescript-eslint/parser": "2.26.0",
     "eslint": "6.8.0",
     "react-redux-typescript-scripts": "1.6.2",
     "redux-devtools-extension": "2.13.8",

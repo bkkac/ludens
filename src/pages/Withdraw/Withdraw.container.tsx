@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { noop } from 'lodash'
+import { noop, get } from 'lodash'
 import { FormikProps, Formik } from 'formik'
 import response from 'constants/response'
 import { Modal } from 'components'
@@ -68,10 +68,13 @@ class Withdraw extends Component<IWithdrawProps & IWithdrawActionProps & Default
   }
 
   renderWithdrawForm = () => {
+    const { user } = this.props
+    const bank: IBank = get(user, 'bank', {})
+    const wallet: IWallet = get(user, 'wallet', {})
     const WithdrawFormComponent = (formProps: FormikProps<IWithdraw>) => (
       <WithdrawForm
         {...formProps}
-        extraProps={{ userBank: this.props.user.bank!, wallet: this.props.user.wallet! }}
+        extraProps={{ userBank: bank, wallet }}
         onBackPresses={this.onCancelHandler}
         onCancelPresses={this.onCancelHandler}
       />
