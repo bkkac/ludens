@@ -20,6 +20,7 @@ const constants = {
    recommendedLink: 'ลิ้งแนะนำ',
    member: 'สมาชิก',
    totalMaked: 'จำนวนแทงทั้งหมด',
+   prefixMemberCreatedAt: 'เป็นสมาชิก',
 }
 
 type DefaultProps = Readonly<typeof defaultProps>
@@ -41,6 +42,8 @@ const defaultProps: IAffilateProps & IAffilateActionProps = {
 
 class AffilateContainer extends
    Component<RouteComponentProps & DefaultProps & IAffilateProps & IAffilateActionProps> {
+
+   static defaultProps = defaultProps
 
    componentDidMount() {
       this.props.loader(true)
@@ -72,17 +75,16 @@ class AffilateContainer extends
       const totalMember = getAffilateSummaryResult.totalRegistered
 
       const affiName = 'หวยออนไลน์'
-      const affiDivider = getAffilateSummaryResult.lotter? getAffilateSummaryResult.lotter.rate! : ''
+      const affiDivider = getAffilateSummaryResult.lotter ? getAffilateSummaryResult.lotter.rate! : ''
       const dividerPercent = `${constants.divider} ${affiDivider}%`
       const income = getAffilateSummaryResult.income
       const affiIncome = number.castToMoney(Number(income))
       const link = `${window.location.host}/register-affiliate/${this.props.affilateUuid}`
-
       const memberList = getAffilateMemberResult.map((memberData) => {
          return {
             memberName: memberData.memberName,
             totalMakedMoney: number.castToMoney(Number(memberData.totalBet)),
-            createdAt: moment(memberData.createdAt).format('DDMMYYYY'),
+            createdAt: moment(memberData.createdAt).add('years', 543).format('Do MMMM YY'),
          }
       })
 
@@ -104,7 +106,7 @@ class AffilateContainer extends
                   </div>
                   <div className="col text-center">
                      <h2 className="secondary-blue-text">{totalMember}</h2>
-                     <h4 className="m1-t">{constants.totalIncome}</h4>
+                     <h4 className="m1-t">{constants.totalMember}</h4>
                   </div>
                </div>
                <div className="row  m4-t">
@@ -160,7 +162,9 @@ class AffilateContainer extends
                                  <div className="m3-t d-flex flex-row align-items-center" key={index}>
                                     <div className="flex">
                                        <h5>{member.memberName}</h5>
-                                       <div className="subtitle-2 secondary-text">{member.createdAt}</div>
+                                       <div className="subtitle-2 secondary-text">
+                                          {constants.prefixMemberCreatedAt} {member.createdAt}
+                                       </div>
                                     </div>
                                     <div className="text-right">
                                        <div className="subtitle-2 secondary-text">{constants.totalMaked}</div>
