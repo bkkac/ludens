@@ -2,5 +2,6 @@ export default {
   OK: 200,
   NOT_FOUND: 404,
   BAD_REQUEST: 400,
+  GONE: 410,
   INTERNAL_SERVER_ERROR: 500,
 }
