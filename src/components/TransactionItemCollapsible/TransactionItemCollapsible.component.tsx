@@ -3,7 +3,7 @@ import { number } from 'utils'
 import moment from 'moment'
 import { split, groupBy, Dictionary, isEmpty, map, keys } from 'lodash'
 import { Badge } from 'components'
-import { LOTTO_TYPE, LOTTO_GAME_TYPE, TRANSACTION_TYPE } from 'constants/variables'
+import { LOTTO_TYPE, LOTTO_GAME_TYPE_NAME, TRANSACTION_TYPE } from 'constants/variables'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faChevronRight } from '@fortawesome/free-solid-svg-icons'
 import './transactionItemCollapsible.style.scss'
@@ -100,7 +100,7 @@ const TransactionItemCollapsible: SFC<ITransactionItemCollapsible & DefaultProps
               {
                 cred.type === 'DEPOSIT' || cred.type === 'WITHDRAW'
                   ? TRANSACTION_TYPE[cred.type]
-                  : LOTTO_GAME_TYPE[cred.type]
+                  : LOTTO_GAME_TYPE_NAME[cred.type]
               }
               {' '}
               <span className="transaction-description-lotto-number">{cred.number}</span>
@@ -150,7 +150,7 @@ const TransactionItemCollapsible: SFC<ITransactionItemCollapsible & DefaultProps
           <Fragment key={`transaction-description-amount-${keyIndex}`}>
             <div className="row mt-3">
               <div className="col transaction-description-name-text">
-                {LOTTO_GAME_TYPE[key as TLottoGameType]}
+                {LOTTO_GAME_TYPE_NAME[key as TLottoGameType]}
               </div>
             </div>
             {DetailComponents}
