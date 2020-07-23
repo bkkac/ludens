@@ -19,7 +19,6 @@ import { UsernameText } from './UsernameText'
 import { InputTextIcon } from './InputTextIcon'
 import { InputCheckbox } from './InputCheckbox'
 import { ResponsiveIcon } from './ResponsiveIcon'
-import { BankNumberCard } from './BankNumberCard'
 import { LottoResultCard } from './LottoResultCard'
 import { LottoActionCard } from './LottoActionCard'
 import { InputRadioImage } from './InputRadioImage'
@@ -48,7 +47,6 @@ export {
   InputCheckbox,
   InputTextIcon,
   ResponsiveIcon,
-  BankNumberCard,
   LottoResultCard,
   LottoActionCard,
   InputRadioImage,

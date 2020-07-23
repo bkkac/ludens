@@ -1,4 +1,4 @@
-import { string, object, ObjectSchema } from 'yup'
+import { string, object, ObjectSchema, number } from 'yup'
 
 const constants = {
   moneyRequired: 'กรุณากรอกจำนวนเงิน',
@@ -23,7 +23,7 @@ const scheme: ObjectSchema<IDepositForm> = object().shape({
     .maximumMoneyRequire(59, constants.depositMinutesMaximumRequired)
     .transformFixedDitgits(2),
   description: string(),
-  webBankId: string().required(constants.webBankRequired),
+  webBankId: number().required(constants.webBankRequired),
 })
 
 export default scheme

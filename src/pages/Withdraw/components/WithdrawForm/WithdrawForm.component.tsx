@@ -1,5 +1,5 @@
 import React, { SFC } from 'react'
-import { noop } from 'lodash'
+import { noop, isEmpty } from 'lodash'
 import { FormikProps, Form } from 'formik'
 import {
   ALink,
@@ -65,15 +65,20 @@ const WithdrawForm:
 
     const defaultSelectorList: IBank[] = [extraProps?.userBank! || {}]
 
-    const renderBankOption = ({ item, ...selectProps }: IInputDefaultSelectProps<IBank>): JSX.Element =>
-      (
+    const renderBankOption = ({ item, ...selectProps }: IInputDefaultSelectProps<IBank>): JSX.Element => {
+      const bankType = item.type
+      const Icon = (!isEmpty(bankType) && typeof bankType !== 'undefined')
+        ? ImageBankSet[bankType].Icon
+        : ''
+      return (
         <SelectorItem
-          icon={ImageBankSet[item.type!].Icon}
+          icon={Icon}
           title={item.name || ''}
           subTitle={item.number}
           {...selectProps}
         />
       )
+    }
 
     return (
       <Form>
@@ -125,7 +130,7 @@ const WithdrawForm:
                 </div>
                 <div className="row m2-t">
                   <div className="col">
-                    <h6 className="subtitle-2 secondary-blue-text">{constants.amountLabel}</h6>
+                    <h6 className="subtitle-2 secondary-blue-text m1-b">{constants.amountLabel}</h6>
                     <InputNumber
                       thousandSeparator
                       decimalScale={0}
@@ -141,7 +146,7 @@ const WithdrawForm:
                 </div>
                 <div className="row m1-t">
                   <div className="col">
-                    <h6 className="subtitle-2 secondary-blue-text">{constants.remarkLabel}</h6>
+                    <h6 className="subtitle-2 secondary-blue-text m1-b">{constants.remarkLabel}</h6>
                     <InputText
                       name="description"
                       onBlur={handleBlur}
