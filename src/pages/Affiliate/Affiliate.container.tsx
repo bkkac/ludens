@@ -7,6 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faChevronLeft, faChevronRight, faDice, faLink, faCopy } from '@fortawesome/free-solid-svg-icons'
 import { number } from 'utils'
 import moment from 'moment'
+import copy from 'copy-to-clipboard'
 import './affiliate.style.scss'
 
 const constants = {
@@ -67,7 +68,11 @@ class AffilateContainer extends
 
    onPressQAAffilate = () => this.props.history.push('/qa')
 
-   onPressCopy = () => { noop() }
+   onPressCopy = (link: string) => {
+      copy(link)
+      // TODO: Create popup show copied. state
+      console.log('copied.')
+    }
 
    render() {
       const { getAffilateSummaryResult, getAffilateMemberResult } = this.props
@@ -145,7 +150,7 @@ class AffilateContainer extends
                                  <div className="subtitle-1 primary-text">{link}</div>
                               </div>
                            </div>
-                           <div className="copy-button-container" onClick={this.onPressCopy}>
+                           <div className="copy-button-container" onClick={() => this.onPressCopy(link)}>
                               <FontAwesomeIcon icon={faCopy} className="primary-text" />
                            </div>
                         </div>
