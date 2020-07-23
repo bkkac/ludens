@@ -1,4 +1,4 @@
-import React, { SFC } from 'react'
+import React, { SFC, useEffect, useState } from 'react'
 import { Badge } from 'components'
 import moment from 'moment'
 import { replace } from 'lodash'
@@ -19,6 +19,8 @@ const defaultProps: ILottoResultCard = {
 
 const LottoResultCard: SFC<ILottoResultCard & DefaultProps> = (props) => {
 
+  const [round, setRound] = useState(0)
+
   const { lotto } = props
 
   const {
@@ -26,6 +28,12 @@ const LottoResultCard: SFC<ILottoResultCard & DefaultProps> = (props) => {
     createdAt,
     lotto: lottos,
   } = lotto
+
+  useEffect(() => {
+    if (code.includes('YEGEE')) {
+      setRound(Number(code.split('_')[1]))
+    }
+  },[code])
 
   const dateDisplay = moment(replace(createdAt, /\s/g, '')).format('Do MMM YY')
 
@@ -49,6 +57,9 @@ const LottoResultCard: SFC<ILottoResultCard & DefaultProps> = (props) => {
   )
 
   const LottoNumbersFormat = () => {
+    let currentCode = code
+    if (currentCode.includes('YEGEE')) currentCode = code.split('_')[0] as 'YEGEE'
+
     switch (code) {
       case 'GOVN':
         return (
@@ -66,6 +77,15 @@ const LottoResultCard: SFC<ILottoResultCard & DefaultProps> = (props) => {
           </>
         )
       case 'GSB':
+        return (
+          <div className="row">
+            {lottos.map((lottoResult, index) => (
+              <div className="col" key={`bank-${lottoResult.type}-${index}`}>
+                <NumberComponent type={code} lottoNumber={lottoResult} />
+              </div>
+            ))}
+          </div>
+        )
       case 'BAAC':
         return (
           <div className="row">
@@ -81,12 +101,50 @@ const LottoResultCard: SFC<ILottoResultCard & DefaultProps> = (props) => {
           <>{lottos.map((lottoResult, index) =>
             <NumberComponent type={code} key={`lao-${lottoResult.type}-${index}`} lottoNumber={lottoResult} />)}</>
         )
+      case 'TH_SHARE_MORNING':
+      case 'TH_SHARE_MIDDAY':
       case 'TH_SHARE_AFTERNOON':
       case 'TH_SHARE_EVENING':
-      case 'TH_SHARE_MIDDAY':
-      case 'TH_SHARE_MORNING':
+      case 'NAT_SHARE_DOWNJON':
+      case 'NAT_SHARE_EGYPT':
+      case 'NAT_SHARE_GERMANY':
+      case 'NAT_SHARE_NIKAII_MORNING':
+      case 'NAT_SHARE_NIKAII_AFTERNOON':
+      case 'NAT_SHARE_CHINA_MORNING':
+      case 'NAT_SHARE_CHINA_AFTERNOON':
+      case 'NAT_SHARE_TAIWAN':
+      case 'NAT_SHARE_KOREA':
+      case 'NAT_SHARE_SINGAPORE':
+      case 'NAT_SHARE_INDIA':
+      case 'NAT_SHARE_HANOI_SPECIAL':
+      case 'NAT_SHARE_MALAY':
+      case 'NAT_SHARE_VIETNAM_HANOI':
+      case 'NAT_SHARE_VIETNAM_HANOI_VIP':
+      case 'NAT_SHARE_HANOI_4D':
+      case 'NAT_SHARE_RUSSIA':
+      case 'NAT_SHARE_ENGLISH':
+      case 'NAT_SHARE_HUNGSENG_MORNING':
+      case 'NAT_SHARE_HUNGSENG_AFTERNOON':
+      case 'NAT_SHARE_LAO':
+        return (
+          <div className="row">
+            {lottos.map((lottoResult, index) => (
+              <div className="col" key={`bank-${lottoResult.type}-${index}`}>
+                <NumberComponent type={code} lottoNumber={lottoResult} />
+              </div>
+            ))}
+          </div>
+        )
       case 'YEGEE':
-        return <></>
+        return (
+          <div className="row">
+            {lottos.map((lottoResult, index) => (
+              <div className="col" key={`bank-${lottoResult.type}-${index}`}>
+                <NumberComponent type={code} lottoNumber={lottoResult} />
+              </div>
+            ))}
+          </div>
+        )
       default:
         return <></>
     }
@@ -97,7 +155,7 @@ const LottoResultCard: SFC<ILottoResultCard & DefaultProps> = (props) => {
       <div className="lotto-card-container secondary-bg p3">
         <div className="row mb-2">
           <div className="col text-left d-flex flex-row align-items-center">
-            <h3>{LOTTO_TYPE[lotto.code]}</h3>
+            <h3>{LOTTO_TYPE[lotto.code]}{round !== 0? ` รอบที่ ${round}`:``}</h3>
             <img alt="thailand" src={ThaiFlagIcon} className="flag-icon" />
           </div>
           <div className="col-auto text-right m-auto">
