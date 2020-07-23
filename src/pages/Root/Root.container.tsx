@@ -43,7 +43,6 @@ class RootContainer extends Component<IRootProps & IRootActionProps & DefaultPro
   }
 
   componentDidMount() {
-    this.props.loader(false)
     if (!isEmpty(this.props.accessToken)) {
       this.props.connectSocket()
     }
