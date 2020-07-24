@@ -33,7 +33,7 @@ const LottoResultCard: SFC<ILottoResultCard & DefaultProps> = (props) => {
     if (code.includes('YEGEE')) {
       setRound(Number(code.split('_')[1]))
     }
-  },[code])
+  }, [code])
 
   const dateDisplay = moment(replace(createdAt, /\s/g, '')).format('Do MMM YY')
 
@@ -96,7 +96,7 @@ const LottoResultCard: SFC<ILottoResultCard & DefaultProps> = (props) => {
             ))}
           </div>
         )
-      case 'LAO_SUITE':
+      case 'LAO':
         return (
           <>{lottos.map((lottoResult, index) =>
             <NumberComponent type={code} key={`lao-${lottoResult.type}-${index}`} lottoNumber={lottoResult} />)}</>
@@ -155,7 +155,7 @@ const LottoResultCard: SFC<ILottoResultCard & DefaultProps> = (props) => {
       <div className="lotto-card-container secondary-bg p3">
         <div className="row mb-2">
           <div className="col text-left d-flex flex-row align-items-center">
-            <h3>{LOTTO_TYPE[lotto.code]}{round !== 0? ` รอบที่ ${round}`:``}</h3>
+            <h3>{LOTTO_TYPE[lotto.code]}{round !== 0 ? ` รอบที่ ${round}` : ``}</h3>
             <img alt="thailand" src={ThaiFlagIcon} className="flag-icon" />
           </div>
           <div className="col-auto text-right m-auto">
