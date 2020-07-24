@@ -3,7 +3,7 @@ import { Badge } from 'components'
 import moment from 'moment'
 import { replace } from 'lodash'
 import colors from 'constants/colors'
-import { LOTTO_GAME_TYPE, LOTTO_TYPE } from 'constants/variables'
+import { LOTTO_GAME_TYPE_NAME, LOTTO_TYPE } from 'constants/variables'
 import ThaiFlagIcon from 'assets/images/flags/thailand.png'
 import './lottoResultCard.style.scss'
 
@@ -42,7 +42,7 @@ const LottoResultCard: SFC<ILottoResultCard & DefaultProps> = (props) => {
       <div className="row pt-1">
         <div className="col text-center lotto-title">
           <h5 className="secondary-text" id={`lotto-name-${type}-${lottoNumber.type}`}>
-            {LOTTO_GAME_TYPE[lottoNumber.type]}
+            {LOTTO_GAME_TYPE_NAME[lottoNumber.type]}
           </h5>
         </div>
       </div>

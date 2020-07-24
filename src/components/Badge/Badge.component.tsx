@@ -15,6 +15,7 @@ const Badge: SFC<IBadge & DefaultProps> = (props) => {
   const {
     text,
     color,
+    renderText,
     backgroundColor,
   } = props
 
@@ -23,8 +24,15 @@ const Badge: SFC<IBadge & DefaultProps> = (props) => {
     backgroundColor,
   }
 
+  const textRender = (): JSX.Element | string => {
+    if (typeof renderText === 'function') {
+      return renderText()
+    }
+    return text
+  }
+
   return (
-    <div className="badge-container" style={style}><h6>{text}</h6></div>
+    <div className="badge-container" style={style}><h6>{textRender()}</h6></div>
   )
 }
 
