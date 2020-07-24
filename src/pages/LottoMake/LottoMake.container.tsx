@@ -17,6 +17,7 @@ import {
   MakingLotto,
   MakingGame,
   BetResult,
+  PlayedUser,
 } from './components'
 import { Summary } from '../LottoPayment/components'
 import './lottoMake.style.scss'
@@ -257,7 +258,8 @@ class LottoMakeContainer extends Component<
 
   handleOnMakingBetLotto = (lottoList: ILottoNumber[]) => {
     this.props.loader(true)
-    this.props.makingBetLotto(lottoList)
+    const lottos = lottoList.map(lotto => ({ ...lotto, value: number.castToInteger(lotto.value)}))
+    this.props.makingBetLotto(lottos)
   }
 
   handleOnPlayYeegeGame = (gameNumber: string) => {
@@ -285,18 +287,10 @@ class LottoMakeContainer extends Component<
   }
 
   renderGameMode = () => {
-    // TODO: Implement this on got a layout
     const locationState: IMakingLottoRouteProps = this.props.location.state
     if (locationState.selectedLottoGame.status === 'CLOSE') {
-      return (
-        <BetResult
-          reound={number.padNumber(locationState.selectedLottoGame.round, 3)}
-          results={this.props.betResults}
-          playedYeegeList={this.props.playedYeegeList}
-        />
-      )
+      return (<BetResult results={this.props.betResults} />)
     }
-    // End
 
     if (this.state.lottoStatus === 'OPEN') {
       switch (this.state.activeModeSwitch) {
@@ -310,17 +304,35 @@ class LottoMakeContainer extends Component<
           )
         case 'GAME':
           return (
-            <MakingGame
-              playedYeegeList={this.props.playedYeegeList}
-              onClickAddNumber={this.handleOnPlayYeegeGame}
-              yeegeSum={this.props.yeegeSum}
-            />
+            <div>
+              <PlayedUser playedYeegeList={this.props.playedYeegeList} />
+              <MakingGame onClickAddNumber={this.handleOnPlayYeegeGame} />
+            </div>
           )
         default:
           return (<></>)
       }
     }
     return (<></>)
+  }
+
+  renderSummaryMode = () => {
+    const locationState: IMakingLottoRouteProps = this.props.location.state
+    if (locationState.selectedLottoGame.status === 'CLOSE') {
+      return (<PlayedUser playedYeegeList={this.props.playedYeegeList} />)
+    } else if (locationState.selectedLottoGame.status === 'OPEN') {
+      return (
+        <div className="d-none d-lg-block">
+          <Summary
+            betRates={this.props.betRates}
+            lottoList={this.state.numberList}
+            onClickBet={this.handleOnMakingBetLotto}
+            onBetListChanged={this.handleOnBetListChanged}
+          />
+        </div>
+      )
+    }
+    return <></>
   }
 
   handleOnBack = () => {
@@ -372,6 +384,7 @@ class LottoMakeContainer extends Component<
 
   render() {
     const GameModeComponent = this.renderGameMode
+    const SummaryModeComponent = this.renderSummaryMode
     const RenderYeegeGameComponent = this.renderYeegeGame
     const locationState: IMakingLottoRouteProps = this.props.location.state
     const game = locationState.selectedLottoGame
@@ -427,13 +440,8 @@ class LottoMakeContainer extends Component<
             <div className="col col-lg-7 m2-t">
               <GameModeComponent />
             </div>
-            <div className="d-none d-lg-block col-lg-5 m2-t">
-              <Summary
-                betRates={this.props.betRates}
-                lottoList={this.state.numberList}
-                onClickBet={this.handleOnMakingBetLotto}
-                onBetListChanged={this.handleOnBetListChanged}
-              />
+            <div className="col-lg-5 m2-t">
+              <SummaryModeComponent />
             </div>
           </div>
         </div>

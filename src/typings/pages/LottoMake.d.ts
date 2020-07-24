@@ -70,12 +70,18 @@ declare interface IMakingLottoComponentState {
 }
 
 declare interface IMakingGameComponentProps {
-  yeegeSum: string
-  playedYeegeList: IYeegePlay[]
   onClickAddNumber(gameNumber: string): void
 }
 
 declare interface IMakingGameComponentState {
   numberSet: string
   collapseState: boolean
+}
+
+declare interface IBetResultComponentProps {
+  results: IBetResult[]
+}
+
+declare interface IPlayedUsers {
+  playedYeegeList: IYeegePlay[]
 }

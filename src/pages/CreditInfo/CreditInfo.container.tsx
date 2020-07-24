@@ -176,15 +176,17 @@ class TransactionListContainer extends
                 </div>
               </div>
             </div>
-            <div className="col-xs-12 col-sm-12 col-md-6 col-lg-8  mt-3 credit-info-transaction-wrapper">
-              <div className="row mt-4">
-                <div className="col">
-                  <h3>{constants.titleText}</h3>
+            <div className="col-xs-12 col-sm-12 col-md-6 col-lg-8 mt-3">
+              <div className="credit-info-transaction-wrapper p2-x p2-t">
+                <div className="row">
+                  <div className="col">
+                    <h3>{constants.titleText}</h3>
+                  </div>
                 </div>
-              </div>
-              <div className="row mt-3">
-                <div className="col">
-                  {TransactionList}
+                <div className="row mt-3">
+                  <div className="col">
+                    {TransactionList}
+                  </div>
                 </div>
               </div>
             </div>
