@@ -11,6 +11,7 @@ import { LottoList } from './LottoList'
 import { LottoListChrildren } from './LottoListChrildren'
 import { LottoMake } from './LottoMake'
 import { Affiliate } from './Affiliate'
+import { LottoPayment } from './LottoPayment'
 
 export default {
   Home,
@@ -23,6 +24,7 @@ export default {
   LottoMake,
   CreditInfo,
   ComingSoon,
+  LottoPayment,
   TransactionList,
   TransactionDetail,
   LottoListChrildren,
