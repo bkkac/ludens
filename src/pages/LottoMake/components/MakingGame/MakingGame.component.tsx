@@ -1,47 +1,16 @@
-import React, { SFC, Component, ChangeEvent } from 'react'
-import NumberFormat, { NumberFormatProps } from 'react-number-format'
+import React, { Component, ChangeEvent } from 'react'
 import moment from 'moment'
 import {
   NumberPad,
+  Button,
 } from 'components'
 import './makingGame.style.scss'
+import { isEmpty } from 'lodash'
 
 const constants = {
-  addNumber: 'เพิ่มเลข',
+  addNumber: 'ยิงเลข',
   sampleGamePlaceHoder: 'กรอกตัวเลข 5 หลัก',
   nameList: 'รายชื่อผลรวม',
-}
-
-const InputGameComponent: SFC<IInputTextProps & NumberFormatProps> = (inputProps) => {
-
-  const InputComponent: SFC<IInputTextProps> = ({
-    name,
-    type,
-    value,
-    onBlur,
-    onChange,
-  }) => (
-      <div className="input-game-container">
-        <input
-          name={name}
-          type={type}
-          value={value}
-          placeholder={constants.sampleGamePlaceHoder}
-          onBlur={onBlur}
-          onChange={onChange}
-          className="input-game-core"
-        />
-      </div>
-    )
-
-  return (
-    <NumberFormat
-      {...inputProps}
-      format="#####"
-      decimalScale={0}
-      customInput={InputComponent}
-    />
-  )
 }
 
 class MakingGame extends Component<IMakingGameComponentProps, IMakingGameComponentState> {
@@ -85,45 +54,53 @@ class MakingGame extends Component<IMakingGameComponentProps, IMakingGameCompone
     )
   })
 
-  render() {
-    return (
-      <>
-        <div className="row mt-3 mb-4 mx-1">
-          <div className="col making-game-container">
-            <div className="row">
-              <div className="col-8" style={{ padding: 0 }}>
-                <InputGameComponent
-                  name="gameNumber"
-                  value={this.state.numberSet}
-                  onChange={this.onChangeNumberValue}
-                />
-              </div>
-              <div className="col-4" style={{ padding: 0 }}>
-                <div
-                  className={`making-game-button ${this.state.numberSet.length === 5 ? '' : 'disabled'}`}
-                  onClick={this.handleOnClickAddNumber}
-                >
-                  {constants.addNumber}
-                </div>
-              </div>
-            </div>
-            <div className="row">
-              <div className="col" style={{ padding: 0 }}>
-                <NumberPad onNumberPresses={this.handleOnClickNumberPad} />
-              </div>
-            </div>
-          </div>
-        </div>
+  renderMakingGameNumber = () => {
+    if (isEmpty(this.state.numberSet)) {
+      return <h3 className="placeholder-making-game-number secondary-text">{constants.sampleGamePlaceHoder}</h3>
+    }
 
-        <div className="row mt-3 mb-4 mx-1">
+    return <h2 className="making-game-number-text">{this.state.numberSet}</h2>
+  }
+
+  render() {
+    const MakingGameNumberComponent = this.renderMakingGameNumber
+
+    return (
+      <div>
+        <div className="row">
+          <div className="col">
+            {/* Collapse */}
+            {/* <div className="row mt-3 mb-4 mx-1">
           <div className="col played-game-container py-3">
             <div className="played-game-title-wrapper">
               <div className="played-game-title">{constants.nameList}</div>
             </div>
             {this.renderPlayedGame()}
           </div>
+        </div> */}
+          </div>
         </div>
-      </>
+        <div className="row m4-t">
+          <div className="col d-flex">
+            <div className="flex m-auto text-center">
+              <MakingGameNumberComponent />
+            </div>
+            <div className="add-number-action-wrapper">
+              <Button
+                id="add-number-game"
+                disabled={this.state.numberSet.length < 5}
+                text={constants.addNumber}
+                onClick={this.handleOnClickAddNumber}
+              />
+            </div>
+          </div>
+        </div>
+        <div className="row m3-t">
+          <div className="col">
+            <NumberPad onNumberPresses={this.handleOnClickNumberPad} />
+          </div>
+        </div>
+      </div>
     )
   }
 }

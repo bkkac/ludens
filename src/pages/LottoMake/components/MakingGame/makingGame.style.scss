@@ -1,38 +1,18 @@
-.making-game-container {
-  border-radius: 16px;
-  box-shadow: 3px 3px 10px 0 #00000029;
-  background-color: #fcfcfc;
-  overflow: hidden;
+.placeholder-making-game-number {
+  min-width: 210px;
+  opacity: 1;
+}
 
-  .making-game-button {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.making-game-number-text {
+  min-width: 210px;
+  letter-spacing: 5px;
+  font-size: 32px;
+  line-height: 32px;
+}
 
-    background-color: #88b8f64d;
-    font-family: "SukhumvitSet-Bold";
-    font-size: 18px;
-    line-height: 1.5;
-    text-align: center;
-    color: #065bc9;
-    height: 50px;
-    transition: all 124ms ease-in;
-    cursor: pointer;
-
-    &:hover {
-      background-color: #7fa7db4d;
-    }
-
-    &.disabled {
-      cursor: unset;
-      background-color: #cccccc;
-      color: white;
-
-      &:hover {
-        background-color: #cccccc;
-      }
-    }
-  }
+.add-number-action-wrapper {
+  width: 100%;
+  max-width: 160px;
 }
 
 .played-game-container {
