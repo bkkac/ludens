@@ -1,5 +1,3 @@
-declare type IGamePath = | 'yeege'
-
 declare interface IMakingLottoParam {
   selectedLottoGame: IYeegeGame
 }
@@ -68,10 +66,13 @@ declare interface ISummaryLottoModalState {
 }
 
 declare interface IMakingLottoComponentProps {
-  onClickAddNumber(lottoNumber: ILottoNumber): void
+  betRates: IBetRate[]
+  gameSlug: TLottoSlug
+  onAddedNumber(lottoNumber: ILottoNumber): void
 }
 
 declare interface IMakingLottoComponentState {
+  animated: boolean
   numberSet: string
   gameType: TLottoGameType
 }

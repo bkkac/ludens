@@ -7,7 +7,7 @@ import {
 } from 'components'
 import { get, groupBy, keys, noop, reduce, sum, filter, split } from 'lodash'
 import { number } from 'utils'
-import { LOTTO_GAME_TYPE } from 'constants/variables'
+import { LOTTO_GAME_TYPE_NAME } from 'constants/variables'
 import './summaryLottoModal.style.scss'
 
 import CloseIcon from 'assets/images/global/closePink/closePink.png'
@@ -126,7 +126,7 @@ class SummaryLottoModal extends Component<ISummaryLottoModalProps & DefaultProps
         <div className="row mt-4" key={`lotto-type-${lottosIndex}`}>
           <div className="col">
             <div className="row">
-              <div className="col lotto-name-type">{LOTTO_GAME_TYPE[lottos as TLottoGameType]}</div>
+              <div className="col lotto-name-type">{LOTTO_GAME_TYPE_NAME[lottos as TLottoGameType]}</div>
             </div>
             <div className="row mt-2">
               <div className="col">

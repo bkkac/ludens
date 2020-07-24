@@ -28,8 +28,12 @@ class InputSelectComponent<T = string, K = string> extends Component<IInputSelec
 	componentDidMount() {
 		if (typeof this.props.value !== 'undefined'
 			&& ((typeof this.props.value === 'number' && this.props.value > 0) || !isEmpty(this.props.value))) {
-			const defalutValue: T | undefined = find<T>(this.props.items, [this.props.valueKey || '', this.props.value])
-			this.setState({ isSelected: true, selectedValue: defalutValue || '' })
+			if (typeof this.props.valueKey !== 'undefined') {
+				const defalutValue: T | undefined = find<T>(this.props.items, [this.props.valueKey || '', this.props.value])
+				this.setState({ isSelected: true, selectedValue: defalutValue || '' })
+			} else {
+				this.setState({ isSelected: true, selectedValue: this.props.value })
+			}
 		}
 	}
 
@@ -37,8 +41,12 @@ class InputSelectComponent<T = string, K = string> extends Component<IInputSelec
 		if (typeof this.props.value !== 'undefined' && prevProps.value !== this.props.value
 			&& ((typeof this.props.value === 'number' && this.props.value > 0)
 				|| !isEmpty(this.props.value))) {
-			const defalutValue: T | undefined = find<T>(this.props.items, [this.props.valueKey || '', this.props.value])
-			this.setState({ isSelected: true, selectedValue: defalutValue || '' })
+			if (typeof this.props.valueKey !== 'undefined') {
+				const defalutValue: T | undefined = find<T>(this.props.items, [this.props.valueKey || '', this.props.value])
+				this.setState({ isSelected: true, selectedValue: defalutValue || '' })
+			} else {
+				this.setState({ isSelected: true, selectedValue: this.props.value })
+			}
 		}
 	}
 
@@ -61,7 +69,7 @@ class InputSelectComponent<T = string, K = string> extends Component<IInputSelec
 		const { isSelected, selectedValue } = this.state
 
 		if (isSelected) {
-			if (typeof RenderSelected !== 'undefined' && typeof selectedValue !== 'string') {
+			if (typeof RenderSelected !== 'undefined') {
 				return (
 					<RenderSelected
 						item={selectedValue}

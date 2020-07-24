@@ -40,6 +40,9 @@ $space-4: 32px;
         &-x {margin-left: $space-4; margin-right: $space-4;}
         &-y {margin-top: $space-4; margin-bottom: $space-4;}
     }
+    &-auto {
+        margin: 'auto' 
+    }
 }
 
 .p {

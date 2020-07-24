@@ -3,12 +3,15 @@ import { RouteComponentProps } from 'react-router-dom'
 import {
   Modal,
   ALink,
-  Switch,
+  Badge,
   ResponsiveIcon,
 } from 'components'
-import { noop, replace } from 'lodash'
 import moment from 'moment'
 import { number } from 'utils'
+import colors from 'constants/colors'
+import { noop, replace, sum, values } from 'lodash'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faChevronLeft, faChevronRight, faStopwatch } from '@fortawesome/free-solid-svg-icons'
 import { MakingLotto, MakingGame, summaryLottoModal, BetResult } from './components'
 import './lottoMake.style.scss'
 
@@ -21,17 +24,13 @@ const constants = {
   ok: 'ตกลง',
   lottoLabel: 'แทงหวย',
   numsumLabel: 'ยิงเลข',
-  yeegeLabel: 'ยี่กี',
+  yeegeLabel: (round: string) => `หวยยี่กีรอบที่ ${round}`,
   makeLabel: 'แทง',
-  back: '< ย้อนกลับ',
+  back: 'กลับ',
   cannotBet: 'ไม่สามารถแทงได้',
   betSuccess: 'คุณได้ทำรายการเสร็จสมบูรณ์',
   makingGameLabel: 'ผลรวม (ยิงเลข)',
   timeups: 'หมดเวลา',
-}
-
-const slugNames: { [P in IGamePath]: TLottoType } = {
-  yeege: 'YEGEE',
 }
 
 type DefaultProps = Readonly<typeof defaultProps>
@@ -75,7 +74,7 @@ const defaultProps: IMakingLottoProps & IMakingLottoActionProps = {
 
 class LottoMakeContainer extends Component<
   IMakingLottoProps & IMakingLottoActionProps & DefaultProps
-  & RouteComponentProps<{ type: IGamePath }, any, IMakingLottoParam>,
+  & RouteComponentProps<{ type: TLottoSlug }, any, IMakingLottoParam>,
   IMakingLottoState
   > {
 
@@ -86,7 +85,7 @@ class LottoMakeContainer extends Component<
   state: IMakingLottoState = {
     activeModeSwitch: 'lotto',
     numberList: [],
-    defaultGameValue: '100',
+    defaultGameValue: '1',
     remainingTime: {
       hours: 0,
       minutes: 0,
@@ -198,9 +197,14 @@ class LottoMakeContainer extends Component<
   }
 
   countingdown = () => {
+    if (this.intervalId !== null) {
+      clearInterval(this.intervalId)
+    }
+
     const endedTime = this.props.location.state.selectedLottoGame.endTime
     const momentEndAt = moment(replace(endedTime!, /\s/g, ''))
     const momentEndAtTimezone = momentEndAt.clone().add(-7, 'hour')
+
     this.intervalId = setInterval(() => {
       const duration = moment.duration(momentEndAtTimezone.diff(moment()))
       const hours = duration.hours()
@@ -222,17 +226,11 @@ class LottoMakeContainer extends Component<
     }, 1000);
   }
 
-  getGameSlugFromGamePath = () => {
-    const generateSlug = (slugName: TLottoType) => {
-      const currentTime = moment().format('DDMMYYYYHHmm')
-      return `LOTTER_${slugName}_${currentTime}${number.padNumber(this.props.location.state.selectedLottoGame.round, 3)}`
-    }
-    switch (this.props.match.params.type) {
-      case 'yeege':
-        return generateSlug(slugNames.yeege)
-      default:
-        return ''
-    }
+  generateGameSlug = () => {
+    const slugName = this.props.match.params.type
+    const gameround = this.props.location.state.selectedLottoGame.round || '1'
+    const currentTime = moment().format('DDMMYYYYHHmm')
+    return `${slugName}_${currentTime}${number.padNumber(gameround, 3)}`
   }
 
   handleOnClickBreadcrumb = (path: string) => {
@@ -249,7 +247,7 @@ class LottoMakeContainer extends Component<
       numberList: [...this.state.numberList, {
         ...lottoNumber,
         value: this.state.defaultGameValue,
-        slug: this.getGameSlugFromGamePath(),
+        slug: this.generateGameSlug(),
       }],
     })
   }
@@ -274,9 +272,10 @@ class LottoMakeContainer extends Component<
 
   handleOnPlayYeegeGame = (gameNumber: string) => {
     this.props.loader(true)
+    const game = this.props.location.state.selectedLottoGame
     this.props.playYeege({
       number: gameNumber,
-      round: this.props.location.state.selectedLottoGame.round,
+      round: game.round,
     })
   }
 
@@ -300,6 +299,7 @@ class LottoMakeContainer extends Component<
   }
 
   renderGameMode = () => {
+    // TODO: Implement this on got a layout
     if (this.props.location.state.selectedLottoGame.status === 'CLOSE') {
       return (
         <BetResult
@@ -312,7 +312,13 @@ class LottoMakeContainer extends Component<
     switch (this.state.activeModeSwitch) {
       case 'lotto':
         if (this.state.lottoStatus === 'OPEN') {
-          return (<MakingLotto onClickAddNumber={this.handleOnAddLottoNumber} />)
+          return (
+            <MakingLotto
+              betRates={this.props.betRates}
+              gameSlug={this.props.match.params.type}
+              onAddedNumber={this.handleOnAddLottoNumber}
+            />
+          )
         }
         return (<div />)
       case 'game':
@@ -332,63 +338,93 @@ class LottoMakeContainer extends Component<
     }
   }
 
-  render() {
-    const switchsMode: ISwitchItem[] = [
-      { label: constants.lottoLabel, value: 'lotto' },
-      { label: constants.numsumLabel, value: 'game' },
-    ]
+  handleOnBack = () => {
+    this.handleOnClickBreadcrumb(`/lotto/${this.props.match.params.type}`)
+  }
 
-    const ViewLottoListButton = this.renderViewLottoListButton
-    const GameModeComponent = this.renderGameMode
-
-    const remainingTime = (this.state.remainingTime.hours < 1
-      && this.state.remainingTime.minutes < 1
-      && this.state.remainingTime.hours < 1)
-      ? constants.timeups
-      : `${number.padNumber(String(this.state.remainingTime.hours), 2)} : ${number.padNumber(String(this.state.remainingTime.minutes), 2)} : ${number.padNumber(String(this.state.remainingTime.seconds), 2)}`
-
+  renderYeegeGame = () => {
+    const status = this.state.lottoStatus
     return (
-      <>
-        <div className="container lotto-make-container">
-          <div className="row mb-3">
-            <div className="col">
-              <ALink
-                id="backto-previus-page"
-                color="#ff9b96"
-                bold
-                onClick={() => this.handleOnClickBreadcrumb(`/lotto/${this.props.match.params.type}`)}
-              >
-                {constants.back}
+      <div className="yeege-game-result-container p2">
+        <div className="flex">
+          <h4 className="secondary-text">{constants.makingGameLabel}</h4>
+          <h2 className="yeege-game-result-text">{this.props.yeegeSum || '0'}</h2>
+        </div>
+        {status === 'OPEN'
+          ? (
+            <div className="yeege-game-action-wrapper m-auto">
+              <ALink id="goto-yeege-game" color={colors.PRIMARY_BLUE}>
+                {constants.numsumLabel}
+                <FontAwesomeIcon icon={faChevronRight} className="ml-1" />
               </ALink>
             </div>
-          </div>
-          <div className="row mb-3 mx-2">
-            <div className="col d-flex flex-column yeege-sum-lotto-container p-3">
-              <div className="yeege-sum-lotto-title d-flex flex-row align-items-center">
-                {constants.makingGameLabel}
-                <div className="d-flex justify-content-center">
-                  <div className="remaining-time-lotto">{remainingTime}</div>
-                </div>
+          )
+          : <></>}
+      </div >
+    )
+  }
+
+  render() {
+    // change to pop up on header
+    const ViewLottoListButton = this.renderViewLottoListButton
+
+    const GameModeComponent = this.renderGameMode
+    const RenderYeegeGameComponent = this.renderYeegeGame
+
+    const game = this.props.location.state.selectedLottoGame
+    const sumtime = sum(values(this.state.remainingTime))
+    const remainingTime = (this.state.lottoStatus === 'OPEN')
+      ? (sumtime > 0)
+        ? `${number.padNumber(String(this.state.remainingTime.hours), 2)} : ${number.padNumber(String(this.state.remainingTime.minutes), 2)} : ${number.padNumber(String(this.state.remainingTime.seconds), 2)}`
+        : '-'
+      : (this.state.lottoStatus === 'CLOSE')
+        ? constants.timeups
+        : '-'
+    const RenderRemainingTime = (): JSX.Element => {
+      return (
+        <>
+          <FontAwesomeIcon icon={faStopwatch} className="mr-1" />
+          {remainingTime}
+        </>
+      )
+    }
+
+    return (
+      <div className="lotto-make-container primary-bg">
+        <div className="container">
+          <div className="row">
+            <div className="col d-flex">
+              <div className="flex">
+                <ALink id="backto-previus-page" color={colors.PRIMARY_RED} bold onClick={this.handleOnBack}>
+                  <FontAwesomeIcon icon={faChevronLeft} className="m1-r" />
+                  {constants.back}
+                </ALink>
               </div>
-              <div className="yeege-sum-lotto-result mt-3">{this.props.yeegeSum || '0'}</div>
+              <Badge
+                renderText={RenderRemainingTime}
+                backgroundColor={colors.SECONDARY_RED}
+                color={colors.PRIMARY_TEXT}
+              />
             </div>
           </div>
-          <div className="row mt-4">
+          <div className="row m3-t">
             <div className="col">
-              {this.props.location.state.selectedLottoGame.status === 'OPEN'
-                ? <Switch tabs={switchsMode} handleOnChangeTab={this.handleOnSwitchChanged} />
-                : <></>
-              }
+              <h2>{constants.yeegeLabel(game.round)}</h2>
+            </div>
+          </div>
+          <div className="row m2-t">
+            <div className="col">
+              <RenderYeegeGameComponent />
             </div>
           </div>
           <div className="row">
-            <div className="col">
+            <div className="col col-lg-6">
               <GameModeComponent />
             </div>
           </div>
         </div>
         <ViewLottoListButton />
-      </>
+      </div>
     )
   }
 }
