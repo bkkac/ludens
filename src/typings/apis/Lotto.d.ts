@@ -142,7 +142,7 @@ declare interface IBet {
 declare interface IBetResult {
   id: string
   value: string
-  valueType: string
+  valueType: TLottoGameType
   slug: string
   createdAt: string
 }

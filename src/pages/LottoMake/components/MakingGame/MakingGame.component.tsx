@@ -1,14 +1,9 @@
 import React, { Component, ChangeEvent } from 'react'
-import moment from 'moment'
 import {
   NumberPad,
-  Collapse,
   Button,
 } from 'components'
-import { isEmpty } from 'lodash'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faChevronRight } from '@fortawesome/free-solid-svg-icons'
-
+import { isEmpty, noop } from 'lodash'
 import './makingGame.style.scss'
 
 const constants = {
@@ -17,7 +12,13 @@ const constants = {
   nameList: 'รายการยิงเลข',
 }
 
+const defaultProps: IMakingGameComponentProps = {
+  onClickAddNumber() { noop() },
+}
+
 class MakingGame extends Component<IMakingGameComponentProps, IMakingGameComponentState> {
+
+  static defaultProps = defaultProps
 
   state: IMakingGameComponentState = {
     numberSet: '',
@@ -47,62 +48,6 @@ class MakingGame extends Component<IMakingGameComponentProps, IMakingGameCompone
     })
   }
 
-  renderPlayedUsers = (): JSX.Element => {
-    return (
-      <div className="player-game-wrapper">
-        {
-          this.props.playedYeegeList.map((played, playedIndex) => {
-            const time = moment(played.createdAt).clone().format('HH:mm:ss')
-            return (
-              <div className="row" key={`played-game-user-${playedIndex}`}>
-                <div className="col">
-                  <div className="d-flex flex-row p2-x p1-y">
-                    <div className="seq-player-number"><h4>{playedIndex + 1}</h4></div>
-                    <h4 className="flex">{played.userId?.username}</h4>
-                    <div className="text-right">
-                      <h4>{played.number}</h4>
-                      <h4 className="secondary-text">{time}</h4>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            )
-          })
-        }
-      </div>
-    )
-  }
-
-  renderPlayedGame = (): JSX.Element => {
-    const onCollapseStateChanged = (state: boolean) => {
-      this.setState({ collapseState: state })
-    }
-
-    const Header = (): JSX.Element => (
-      <div className="row">
-        <div className="col">
-          <div className="d-flex flex-row p2-x p3-b align-items-center">
-            <h3 className="flex">{constants.nameList}</h3>
-            <FontAwesomeIcon
-              icon={faChevronRight}
-              className={`chevron-right-icon ${this.state.collapseState ? 'expanded' : ''} primary-blue-text`}
-            />
-          </div>
-        </div>
-      </div>
-    )
-    return (
-      <div className="played-game-container secondary-bg p2-t">
-        <Collapse
-          minCollapsedHeight={180}
-          onStateChanged={onCollapseStateChanged}
-          RenderHeaderComponent={Header}
-          RenderBodyComponent={this.renderPlayedUsers}
-        />
-      </div>
-    )
-  }
-
   renderMakingGameNumber = () => {
     if (isEmpty(this.state.numberSet)) {
       return <h3 className="placeholder-making-game-number secondary-text">{constants.sampleGamePlaceHoder}</h3>
@@ -112,15 +57,9 @@ class MakingGame extends Component<IMakingGameComponentProps, IMakingGameCompone
 
   render() {
     const MakingGameNumberComponent = this.renderMakingGameNumber
-    const PlayedGameListComponent = this.renderPlayedGame
 
     return (
       <div>
-        <div className="row">
-          <div className="col">
-            <PlayedGameListComponent />
-          </div>
-        </div>
         <div className="row m4-t">
           <div className="col d-flex">
             <div className="flex m-auto text-center">
