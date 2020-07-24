@@ -1,21 +1,23 @@
+@import "assets/stylesheets/colors";
+
 .transaction-item-container {
   min-height: 59px;
   border-radius: 8px;
   box-shadow: 0 3px 6px 0 #00000029;
-  background-color: #fcfcfc;
+  background-color: $secondary-bg;
   align-items: center;
   cursor: pointer;
   transition: all 250ms ease-in;
 
   &:hover {
-    background-color: #f3f3f3;
+    background-color: $primary-bg;
   }
 
   .transaction-name {
     font-family: "SukhumvitSet-Bold";
     font-size: 14px;
     line-height: 20px;
-    color: #777777;
+    color: $primary-text;
   }
 
   .transaction-time {
