@@ -1,0 +1,9 @@
+.collapse-wrapper {
+  height: auto;
+  max-height: 0;
+  overflow: hidden;
+  overflow-y: scroll;
+  box-sizing: border-box;
+  transition: all 512ms ease-in-out;
+  width: 100%;
+}

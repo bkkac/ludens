@@ -5,6 +5,7 @@ import { Navbar } from './Navbar'
 import { Banner } from './Banner'
 import { Button } from './Button'
 import { Switch } from './Switch'
+import { Collapse } from './Collapse'
 import { NumberPad } from './NumberPad'
 import { InputText } from './InputText'
 import { Breadcrumb } from './Breadcrumb'
@@ -34,6 +35,7 @@ export {
   Navbar,
   Button,
   Switch,
+  Collapse,
   NumberPad,
   InputText,
   Breadcrumb,

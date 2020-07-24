@@ -1,3 +1,5 @@
+@import "assets/stylesheets/colors";
+
 .placeholder-making-game-number {
   min-width: 210px;
   opacity: 1;
@@ -16,65 +18,34 @@
 }
 
 .played-game-container {
-  border-radius: 16px;
-  box-shadow: 3px 3px 10px 0 #00000029;
-  background-color: #fcfcfc;
-  overflow: hidden;
+  box-shadow: none !important;
+  border-radius: 8px;
 
-  .played-game-title-wrapper {
-    height: 76px;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
+  .chevron-right-icon {
+    transition: all 128ms ease;
+    transform: rotate(0);
 
-    .played-game-title {
-      font-family: "SukhumvitSet-Bold";
-      font-size: 24px;
-      line-height: 24px;
-      text-align: left;
-      color: #777777;
+    &.expanded {
+      transform: rotate(90deg);
     }
   }
 
-  .played-game-row {
-    background-color: #fcfcfc;
-
-    font-family: "SukhumvitSet-Medium";
-    font-size: 16px;
-    line-height: 16px;
-    text-align: left;
-    color: #ada2a0;
-
-    &:nth-child(even) {
-      background-color: #efefef;
+  .player-game-wrapper {
+    .row:nth-child(even) {
+      background-color: $primary-bg;
     }
-  }
-}
-
-.input-game-container {
-  background-color: #3587f1;
-
-  .input-game-core {
-    height: 50px;
-    width: 100%;
-    background-color: #3587f1;
-    border: none;
-    font-family: "SukhumvitSet-Bold";
-    font-size: 20px;
-    line-height: 1.5;
-    text-align: right;
-    color: transparent;
-    text-shadow: 0 0 0 #ffffffcc;
-    padding-left: 12px;
-    padding-right: 12px;
-
-    &::placeholder {
-      color: #ffffffcc;
+    .row:nth-child(odd) {
+      background-color: $secondary-bg;
+    }
+    .row:nth-child(1) {
+      background-color: rgba($color: #6777f0, $alpha: 0.6);
+    }
+    .row:nth-child(16) {
+      background-color: rgba($color: #66c6b9, $alpha: 1);
     }
 
-    &:focus {
-      outline: none;
+    .seq-player-number {
+      min-width: 30px;
     }
   }
 }

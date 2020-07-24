@@ -77,4 +77,5 @@ declare interface IMakingGameComponentProps {
 
 declare interface IMakingGameComponentState {
   numberSet: string
+  collapseState: boolean
 }

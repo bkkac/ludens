@@ -2,21 +2,26 @@ import React, { Component, ChangeEvent } from 'react'
 import moment from 'moment'
 import {
   NumberPad,
+  Collapse,
   Button,
 } from 'components'
-import './makingGame.style.scss'
 import { isEmpty } from 'lodash'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faChevronRight } from '@fortawesome/free-solid-svg-icons'
+
+import './makingGame.style.scss'
 
 const constants = {
   addNumber: 'ยิงเลข',
   sampleGamePlaceHoder: 'กรอกตัวเลข 5 หลัก',
-  nameList: 'รายชื่อผลรวม',
+  nameList: 'รายการยิงเลข',
 }
 
 class MakingGame extends Component<IMakingGameComponentProps, IMakingGameComponentState> {
 
   state: IMakingGameComponentState = {
     numberSet: '',
+    collapseState: false,
   }
 
   onChangeNumberValue = (event: ChangeEvent<HTMLInputElement>) => {
@@ -42,42 +47,78 @@ class MakingGame extends Component<IMakingGameComponentProps, IMakingGameCompone
     })
   }
 
-  renderPlayedGame = () => this.props.playedYeegeList.map((played, playedIndex) => {
-    const time = moment(played.createdAt).clone().format('HH:mm:ss')
+  renderPlayedUsers = (): JSX.Element => {
     return (
-      <div className="row played-game-row py-3" key={`played-game-user-${playedIndex}`}>
-        <div className="col-1">{playedIndex + 1}</div>
-        <div className="col">{played.userId?.username}</div>
-        <div className="col">{played.number}</div>
-        <div className="col">{time}</div>
+      <div className="player-game-wrapper">
+        {
+          this.props.playedYeegeList.map((played, playedIndex) => {
+            const time = moment(played.createdAt).clone().format('HH:mm:ss')
+            return (
+              <div className="row" key={`played-game-user-${playedIndex}`}>
+                <div className="col">
+                  <div className="d-flex flex-row p2-x p1-y">
+                    <div className="seq-player-number"><h4>{playedIndex + 1}</h4></div>
+                    <h4 className="flex">{played.userId?.username}</h4>
+                    <div className="text-right">
+                      <h4>{played.number}</h4>
+                      <h4 className="secondary-text">{time}</h4>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )
+          })
+        }
       </div>
     )
-  })
+  }
+
+  renderPlayedGame = (): JSX.Element => {
+    const onCollapseStateChanged = (state: boolean) => {
+      this.setState({ collapseState: state })
+    }
+
+    const Header = (): JSX.Element => (
+      <div className="row">
+        <div className="col">
+          <div className="d-flex flex-row p2-x p3-b align-items-center">
+            <h3 className="flex">{constants.nameList}</h3>
+            <FontAwesomeIcon
+              icon={faChevronRight}
+              className={`chevron-right-icon ${this.state.collapseState ? 'expanded' : ''} primary-blue-text`}
+            />
+          </div>
+        </div>
+      </div>
+    )
+    return (
+      <div className="played-game-container secondary-bg p2-t">
+        <Collapse
+          minCollapsedHeight={180}
+          onStateChanged={onCollapseStateChanged}
+          RenderHeaderComponent={Header}
+          RenderBodyComponent={this.renderPlayedUsers}
+        />
+      </div>
+    )
+  }
 
   renderMakingGameNumber = () => {
     if (isEmpty(this.state.numberSet)) {
       return <h3 className="placeholder-making-game-number secondary-text">{constants.sampleGamePlaceHoder}</h3>
     }
-
     return <h2 className="making-game-number-text">{this.state.numberSet}</h2>
   }
 
   render() {
     const MakingGameNumberComponent = this.renderMakingGameNumber
+    const PlayedGameListComponent = this.renderPlayedGame
 
     return (
       <div>
         <div className="row">
           <div className="col">
-            {/* Collapse */}
-            {/* <div className="row mt-3 mb-4 mx-1">
-          <div className="col played-game-container py-3">
-            <div className="played-game-title-wrapper">
-              <div className="played-game-title">{constants.nameList}</div>
-            </div>
-            {this.renderPlayedGame()}
-          </div>
-        </div> */}
+            <PlayedGameListComponent />
           </div>
         </div>
         <div className="row m4-t">
