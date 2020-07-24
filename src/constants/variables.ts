@@ -58,7 +58,7 @@ export const LOTTO_TYPE: { [type in TLottoType]: string } = {
   GOVN: 'หวยรัฐบาล',
   BAAC: 'หวยธกส.',
   GSB: 'หวยออมสิน',
-  LAO_SUITE: 'หวยลาว ( เลขชุด )',
+  LAO: 'หวยลาว ( เลขชุด )',
   TH_SHARE_MORNING: 'หุ้นไทยเช้า',
   TH_SHARE_MIDDAY: 'หุ้นไทยเที่ยง',
   TH_SHARE_AFTERNOON: 'หุ้นไทยบ่าย',
