@@ -119,7 +119,7 @@ export const LOTTO_SLUG_NAME: { [type in TLottoSlug]: string } = {
   LOTTER_NAT_SHARE_HUNGSENG_AFTERNOON: 'หวยหุ้นฮั่งเส็งรอบบ่าย',
 }
 
-export const LOTTO_GAME_TYPE: { [type in TLottoGameType]: string } = {
+export const LOTTO_GAME_TYPE_NAME: { [type in TLottoGameType]: string } = {
   TWO_UP: 'สองตัวบน',
   TWO_DOWN: 'สองตัวล่าง',
   THREE_UP: 'สามตัวบน',
@@ -131,4 +131,50 @@ export const LOTTO_GAME_TYPE: { [type in TLottoGameType]: string } = {
   RUN_DOWN: 'วิ่งล่าง',
   ONE_AWARD: 'รางวัลที่ 1',
   YEGEE_PLAY_AWARD: 'รางวัลยิงเลขลำดับที่',
+}
+
+export const LOTTO_GAME_TYPES: { [type in TLottoSlug]: TLottoGameType[] } = {
+  LOTTER_YEGEE: ['THREE_UP', 'THREE_TOAST', 'TWO_UP', 'TWO_DOWN', 'RUN_UP', 'RUN_DOWN'],
+  LOTTER_GOVN: [],
+  LOTTER_BAAC: [],
+  LOTTER_GSB: [],
+  LOTTER_LAO_SUITE: [],
+  LOTTER_TH_SHARE_MORNING: [],
+  LOTTER_TH_SHARE_MIDDAY: [],
+  LOTTER_TH_SHARE_AFTERNOON: [],
+  LOTTER_TH_SHARE_EVENING: [],
+  LOTTER_NAT_SHARE_DOWNJON: [],
+  LOTTER_NAT_SHARE_EGYPT: [],
+  LOTTER_NAT_SHARE_GERMANY: [],
+  LOTTER_NAT_SHARE_NIKAII_MORNING: [],
+  LOTTER_NAT_SHARE_NIKAII_AFTERNOON: [],
+  LOTTER_NAT_SHARE_CHINA_MORNING: [],
+  LOTTER_NAT_SHARE_CHINA_AFTERNOON: [],
+  LOTTER_NAT_SHARE_TAIWAN: [],
+  LOTTER_NAT_SHARE_KOREA: [],
+  LOTTER_NAT_SHARE_SINGAPORE: [],
+  LOTTER_NAT_SHARE_INDIA: [],
+  LOTTER_NAT_SHARE_HANOI_SPECIAL: [],
+  LOTTER_NAT_SHARE_MALAY: [],
+  LOTTER_NAT_SHARE_VIETNAM_HANOI: [],
+  LOTTER_NAT_SHARE_VIETNAM_HANOI_VIP: [],
+  LOTTER_NAT_SHARE_HANOI_4D: [],
+  LOTTER_NAT_SHARE_RUSSIA: [],
+  LOTTER_NAT_SHARE_ENGLISH: [],
+  LOTTER_NAT_SHARE_HUNGSENG_MORNING: [],
+  LOTTER_NAT_SHARE_HUNGSENG_AFTERNOON: [],
+}
+
+export const LOTTO_GAME_TYPE_LENGTH: { [type in TLottoGameType]: number } = {
+  TWO_UP: 2,
+  TWO_DOWN: 2,
+  THREE_UP: 3,
+  THREE_FRONT: 3,
+  THREE_BACK: 3,
+  THREE_TOAST: 3,
+  FOUR_SUIT: 4,
+  RUN_UP: 1,
+  RUN_DOWN: 1,
+  ONE_AWARD: 6,
+  YEGEE_PLAY_AWARD: 5,
 }
