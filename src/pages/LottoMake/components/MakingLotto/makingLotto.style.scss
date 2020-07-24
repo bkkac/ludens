@@ -1,79 +1,27 @@
-.button-making-lotto {
-  width: 100px;
-  height: 40px;
-  border-radius: 20px;
-  background-color: #5c9ef4;
-  overflow: hidden;
+.placeholder-numbersets-text {
+  font-size: 34px !important;
+  line-height: 44px;
 
-  font-family: "SukhumvitSet-Bold";
-  font-size: 16px;
-  line-height: 1.5;
-  text-align: left;
-  color: #ffffff;
-  cursor: pointer;
+  -webkit-transition: opacity 128ms ease-in-out;
+  transition: opacity 128ms ease-in-out;
+  opacity: 0;
 
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  .plus-icon-button {
-    margin-right: 4px;
-  }
-
-  &:hover {
-    background-color: #3e7fd3;
-  }
-
-  &.disabled {
-    cursor: unset;
-    background-color: #cccccc;
-
-    &:hover {
-      background-color: #cccccc;
-    }
+  &.animated {
+    opacity: 1;
   }
 }
 
-.leading-making-lotto-panel {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
+.numbersets-text {
+  font-size: 34px !important;
+  line-height: 44px;
+  letter-spacing: 8px;
+  -webkit-transition: transform 512ms ease-out 256ms, opacity 256ms ease-in-out 256ms;
+  transition: transform 512ms ease-out 256ms, opacity 256ms ease-in-out 256ms;
+  transform: translateY(0);
+  opacity: 1;
 
-.center-making-lotto-panel {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.trailing-making-lotto-panel {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.input-cell-container {
-
-  .input-cell-core {
-    width: 40px;
-    height: 64px;
-    border-radius: 4px;
-    border: solid 1px #7777774d;
-    padding: 0 !important;
-
-    -webkit-text-stroke: 1px #7070701a;
-    font-family: "SukhumvitSet-Bold";
-    font-size: 40px;
-    line-height: 40px;
-    text-align: center;
-    color: #777777;
-
-    &:focus {
-      outline: none;
-      border-color: #065bc9;
-    }
+  &.animated {
+    transform: translateY(-50px);
+    opacity: 0;
   }
 }

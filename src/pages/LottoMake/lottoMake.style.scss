@@ -1,5 +1,19 @@
+@import "assets/stylesheets/colors";
+
 .lotto-make-container {
   padding-top: 112px;
+  min-height: 100vh;
+}
+
+.yeege-game-result-container {
+  border-radius: 8px;
+  background-color: rgba($color: $secondary-bg, $alpha: 0.5);
+  display: flex;
+  flex-direction: row;
+
+  .yeege-game-result-text {
+    letter-spacing: 4px
+  }
 }
 
 .summary-badge-container {
@@ -24,62 +38,5 @@
     width: 50px;
     height: 50px;
     object-fit: contain;
-  }
-
-  .badge {
-    position: absolute;
-    top: 0;
-    right: -4px;
-    padding-left: 8px;
-    padding-right: 8px;
-    height: 20px;
-    border-radius: 10px;
-    background-color: #bb130a;
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    .badge-text {
-      font-family: "SukhumvitSet-bold";
-      font-size: 18px;
-      line-height: 1.5;
-      color: #ffffff;
-    }
-  }
-}
-
-.remaining-time-lotto {
-  background-color: #ff5148;
-  height: 24px;
-  border-radius: 12px;
-  padding: 4px 12px;
-
-  font-family: "SukhumvitSet-Bold";
-  font-size: 16px;
-  line-height: 16px;
-  text-align: center;
-  color: #ffffff;
-}
-
-.yeege-sum-lotto-container {
-  border-radius: 16px;
-  box-shadow: 3px 3px 10px 0 #00000029;
-  background-color: #fcfcfc;
-  
-  .yeege-sum-lotto-title {
-    justify-content: space-between;
-    font-family: "SukhumvitSet-Bold";
-    font-size: 20px;
-    line-height: 20px;
-    text-align: left;
-    color: #7777779a;
-  }
-
-  .yeege-sum-lotto-result {
-    font-family: "SukhumvitSet-Bold";
-    font-size: 48px;
-    line-height: 48px;
-    text-align: left;
-    color: #777777;
   }
 }

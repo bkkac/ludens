@@ -22,10 +22,20 @@ const PadSetComponent: SFC<INumberPadProps & DefaultProps> = ({ onNumberPresses 
   const NumberPadSetComponent = arrageSet.map((numbers, index) => {
 
     const PadComponents = numbers.map((num, numIndex) => {
-      const numberChar = num === -1 ? <FontAwesomeIcon key="backspace-ico" icon={faBackspace} className="plus-icon-button" />
+      const numberChar = (num === -1)
+        ? <FontAwesomeIcon key="backspace-ico" icon={faBackspace} className="plus-icon-button" />
         : (num === -2) ? '' : num
+      const disabled = (typeof numberChar === 'string')
       return (
-        <div className="number-pad" key={`number-${numIndex}`} onClick={() => onNumberPresses!(num)}>{numberChar}</div>
+        <div
+          className={`number-pad p1-y ${disabled ? 'disabled' : ''}`}
+          key={`number-${numIndex}`}
+          onClick={() => disabled ? noop() : onNumberPresses!(num)}
+        >
+          <div className="number-wrapper">
+            <h2 className="number-text">{numberChar}</h2>
+          </div>
+        </div>
       )
     })
 

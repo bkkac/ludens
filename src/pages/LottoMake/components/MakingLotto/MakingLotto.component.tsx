@@ -1,193 +1,165 @@
-import React, { Component, SFC, ChangeEvent } from 'react'
-import NumberFormat, { NumberFormatProps } from 'react-number-format'
-import { get } from 'lodash'
-import { NumberPad, Switch } from 'components'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faPlus, faCircleNotch } from '@fortawesome/free-solid-svg-icons'
-
+import React, { Component, createRef, RefObject } from 'react'
+import { get, noop, isEmpty } from 'lodash'
+import {
+  NumberPad,
+  InputSelect,
+  SelectorItem,
+  ALink,
+  ButtonRadio
+} from 'components'
+import {
+  LOTTO_GAME_TYPES,
+  LOTTO_GAME_TYPE_NAME,
+  LOTTO_GAME_TYPE_LENGTH
+} from 'constants/variables'
+import colors from 'constants/colors'
 import './makingLotto.style.scss'
 
 const constants = {
-  make: 'เพิ่มเลข',
-  numSet: 'สลับ',
-  lotto3: 'สามตัวบน',
-  lotto2: 'สองตัวล่าง',
-  lottoRun: 'เลขวิ่ง',
+  switchNumberMode: 'กลับเลข',
+  numberSetMode: 'โหมดชุดตัวเลข',
+  betRate: 'บาทละ',
+  placeholderGameType: 'เลือกประเภทหวย',
+  placeholderNumber: (numberSet: number) => `เลข ${numberSet} ตัว`,
 }
 
-const InputCellComponent: SFC<IInputTextProps & NumberFormatProps> = (inputProps) => {
-
-  const InputComponent: SFC<IInputTextProps> = ({
-    name,
-    type,
-    value,
-    onBlur,
-    onChange,
-  }) => (
-      <div className="input-cell-container m-1">
-        <input
-          name={name}
-          type={type}
-          value={value}
-          onBlur={onBlur}
-          onChange={onChange}
-          className="input-cell-core"
-        />
-      </div>
-    )
-
-  return (
-    <NumberFormat
-      {...inputProps}
-      format="#"
-      decimalScale={0}
-      customInput={InputComponent}
-    />
-  )
+const defaultProps: IMakingLottoComponentProps = {
+  betRates: [],
+  gameSlug: 'LOTTER_YEGEE',
+  onAddedNumber() { noop() },
 }
 
 class MakingLotto extends Component<IMakingLottoComponentProps, IMakingLottoComponentState> {
 
+  static defaultProps = defaultProps
+
+  makingLottoRef: RefObject<HTMLDivElement> = createRef()
+
   state: IMakingLottoComponentState = {
+    animated: false,
     numberSet: '',
     gameType: 'THREE_UP',
   }
 
-  isDisabledAddNumberButton = () => {
-    if (this.state.gameType === 'THREE_UP') {
-      return this.state.numberSet.length < 3
-    } else if (this.state.gameType === 'TWO_DOWN') {
-      return this.state.numberSet.length < 2
-    }
-    return true
-  }
-
-  renderInputCell = () => {
-    if (this.state.gameType === 'TWO_DOWN') {
-      const setOfNumber = [0, 1]
-
-      return setOfNumber.map((num) => {
-        const value = get(this.state.numberSet, num, '')
-        return (
-          <InputCellComponent
-            key={`number-${num}`}
-            value={value}
-            name={`number-${num}`}
-            onChange={this.onChangeNumberValue(num)}
-          />
-        )
-      })
-    } else if (this.state.gameType === 'THREE_UP') {
-      const setOfNumber = [0, 1, 2]
-
-      return setOfNumber.map((num) => {
-        const value = get(this.state.numberSet, num, '')
-        return (
-          <InputCellComponent
-            key={`number-${num}`}
-            value={value}
-            name={`number-${num}`}
-            onChange={this.onChangeNumberValue(num)}
-          />
-        )
-      })
-    } else if (this.state.gameType === 'RUN_DOWN') {
-      const setOfNumber = [0, 1, 2]
-
-      return setOfNumber.map((num) => {
-        const value = get(this.state.numberSet, num, '')
-        return (
-          <InputCellComponent
-            key={`number-${num}`}
-            value={value}
-            name={`number-${num}`}
-            onChange={this.onChangeNumberValue(num)}
-          />
-        )
-      })
-    }
-
-    return <></>
-  }
-
-  onChangeNumberValue = (num: number) => (event: ChangeEvent<HTMLInputElement>) => {
-    // const target = event.target.name
-    const value = event.target.value
-    const newValue = this.state.numberSet.concat(value)
-    this.setState({
-      numberSet: newValue,
-    })
+  isRejectAddingNumber = () => {
+    const length = LOTTO_GAME_TYPE_LENGTH[this.state.gameType]
+    return this.state.numberSet.length < length
   }
 
   handleOnClickNumberPad = (num: number) => {
+    this.makingLottoRef.current?.scrollIntoView({
+      behavior: 'smooth',
+      block: 'end',
+      inline: 'end',
+    })
+    const length = LOTTO_GAME_TYPE_LENGTH[this.state.gameType]
     if (num === -1) {
       return this.setState({ numberSet: this.state.numberSet.slice(0, -1) })
-    }
-    else if (this.state.gameType === 'THREE_UP' && this.state.numberSet.length >= 3) { return }
-    else if (this.state.gameType === 'TWO_DOWN' && this.state.numberSet.length >= 2) { return }
+    } else if (this.state.numberSet.length >= length) { return }
 
     const newValue = this.state.numberSet.concat(String(num))
-    return this.setState({ numberSet: newValue })
+    return this.setState({ numberSet: newValue }, () => {
+      this.handleOnAddNumber()
+    })
   }
 
   handleOnAddNumber = () => {
-    if (this.isDisabledAddNumberButton()) { return }
-
+    if (this.isRejectAddingNumber()) { return }
     const lottoNumber: ILottoNumber = {
       number: this.state.numberSet,
       type: this.state.gameType,
     }
-    this.props.onClickAddNumber(lottoNumber)
-    this.setState({ numberSet: '' })
+    this.props.onAddedNumber(lottoNumber)
+    this.setState({ animated: true }, () => {
+      const timeoutInstance = setTimeout(() => {
+        this.setState({ numberSet: '', animated: false }, () => {
+          clearTimeout(timeoutInstance)
+        })
+      }, 768)
+    })
   }
 
   handleOnSwitchLottoTypeChanged = (currentTab: TLottoGameType) => {
     this.setState({ gameType: currentTab, numberSet: '' })
   }
 
-  render() {
+  handleOnChangeSwitchMode = (switchState: boolean) => {
+    // TODO: When implement switch number mode
+  }
 
-    const switchsLottoTypes: ISwitchItem<TLottoGameType>[] = [
-      { label: constants.lotto3, value: 'THREE_UP' },
-      { label: constants.lotto2, value: 'TWO_DOWN' },
-      // { label: constants.lottoRun, value: 'run' },
-    ]
+  renderLottoGameTypeOption = ({ item, ...selectProps }: IInputDefaultSelectProps<TLottoGameType>): JSX.Element => {
+    const combindedBetRateType = `${this.props.gameSlug}_${item}` as TBetType
+    const betRate: IBetRate = get(this.props.betRates.filter((rate) => rate.type === combindedBetRateType), '0', {})
+    const betRateText = `${constants.betRate} ${betRate.rate || '0'}`
+    return (
+      <SelectorItem
+        title={LOTTO_GAME_TYPE_NAME[item]}
+        subTitle={betRateText}
+        {...selectProps}
+      />
+    )
+  }
+
+  renderLottoNumber = (): JSX.Element => {
+    if (isEmpty(this.state.numberSet)) {
+      return (
+        <h2 className={`body-1 placeholder-numbersets-text secondary-text ${!this.state.animated ? 'animated' : ''}`}>
+          {constants.placeholderNumber(LOTTO_GAME_TYPE_LENGTH[this.state.gameType])}
+        </h2>
+      )
+    }
+    return (
+      <h2 className={`body-1 numbersets-text ${this.state.animated ? 'animated' : ''}`}>
+        {this.state.numberSet}
+      </h2>
+    )
+  }
+
+  render() {
+    const gameList = LOTTO_GAME_TYPES[this.props.gameSlug]
+
+    const LottoNumbersets = this.renderLottoNumber
 
     return (
-      <>
-        <div className="row mt-3 mb-4">
+      <div ref={this.makingLottoRef}>
+        <div className="row m2-t">
           <div className="col">
-            <Switch type="outline" tabs={switchsLottoTypes} handleOnChangeTab={this.handleOnSwitchLottoTypeChanged} />
+            <InputSelect<TLottoGameType, TLottoGameType>
+              name="lotto-game-type"
+              items={gameList}
+              value={this.state.gameType}
+              onChange={(type) => this.setState({ gameType: type, numberSet: '' })}
+              placeholder={constants.placeholderGameType}
+              RenderSelected={this.renderLottoGameTypeOption}
+            />
           </div>
         </div>
-        <div className="row mb-4">
-          <div className="col d-flex flex-row">
-            <div className="leading-making-lotto-panel">
-              <div className="button-making-lotto disabled">
-                <FontAwesomeIcon icon={faCircleNotch} className="plus-icon-button" />
-                {constants.numSet}
-              </div>
-            </div>
-            <div className="center-making-lotto-panel d-flex flex-row justify-content-center">
-              {this.renderInputCell()}
-            </div>
-            <div className="trailing-making-lotto-panel">
-              <div
-                className={`button-making-lotto ${this.isDisabledAddNumberButton() ? 'disabled' : ''}`}
-                onClick={this.handleOnAddNumber}
-              >
-                <FontAwesomeIcon icon={faPlus} className="plus-icon-button" />
-                {constants.make}
-              </div>
-            </div>
+        {/* TODO: When implement numberset and switch number */}
+        <div className="row m2-t">
+          <div className="col text-center">
+            <ALink id="changeto-number-set-mode" color={colors.PRIMARY_BLUE}>{constants.numberSetMode}</ALink>
           </div>
         </div>
-        <div className="row">
+        <div className="row m2-t">
+          <div className="col text-center">
+            <ButtonRadio
+              id="switch-number-mode"
+              text={constants.switchNumberMode}
+              onChangeState={this.handleOnChangeSwitchMode}
+            />
+          </div>
+        </div>
+        <div className="row m4-t">
+          <div className="col text-center">
+            <LottoNumbersets />
+          </div>
+        </div>
+        <div className="row m3-t">
           <div className="col">
             <NumberPad onNumberPresses={this.handleOnClickNumberPad} />
           </div>
         </div>
-      </>
+      </div>
     )
   }
 

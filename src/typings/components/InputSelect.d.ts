@@ -18,7 +18,7 @@ declare interface IInputSelectProps<T = string, K = string> {
 }
 
 declare interface IInputSelectState<T = string> {
-	selectedValue: T | string
+	selectedValue: T | K
 	isExpand: boolean
 	isSelected: boolean
 }

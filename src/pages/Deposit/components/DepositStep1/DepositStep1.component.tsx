@@ -64,15 +64,16 @@ const DepositStep1:
 
     const defaultSelectorList: IBank[] = [extraProps?.userBank! || {}]
 
-    const renderBankOption = ({ item, ...selectProps }: IInputDefaultSelectProps<IBank>): JSX.Element =>
-      (
+    const renderBankOption = ({ item, ...selectProps }: IInputDefaultSelectProps<IBank>): JSX.Element => {
+      return (
         <SelectorItem
-          icon={ImageBankSet[item.type!].Icon}
+          icon={(typeof item.type !== 'undefined') ? ImageBankSet[item.type].Icon : ''}
           title={item.name || ''}
           subTitle={item.number}
           {...selectProps}
         />
       )
+    }
 
     return (
       <Form>

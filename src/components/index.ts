@@ -11,6 +11,7 @@ import { Breadcrumb } from './Breadcrumb'
 import { CreditCard } from './CreditCard'
 import { ButtonMenu } from './ButtonMenu'
 import { ButtonIcon } from './ButtonIcon'
+import { ButtonRadio } from './ButtonRadio'
 import { InputSelect } from './InputSelect'
 import { InputNumber } from './InputNumber'
 import { TextRunning } from './TextRunning'
@@ -39,6 +40,7 @@ export {
   CreditCard,
   ButtonMenu,
   ButtonIcon,
+  ButtonRadio,
   InputSelect,
   InputNumber,
   TextRunning,
