@@ -1,3 +1,5 @@
+declare type TMakeLottoGameMode = | 'LOTTO' | 'GAME'
+
 declare interface IMakingLottoRouteProps {
   selectedLottoGame: IYeegeGame
   betList?: ILottoNumber[]
@@ -44,7 +46,7 @@ declare interface IMakingLottoActionProps {
 }
 
 declare interface IMakingLottoState {
-  activeModeSwitch: string
+  activeModeSwitch: TMakeLottoGameMode
   numberList: ILottoNumber[]
   defaultGameValue: string
   remainingTime: {
@@ -75,4 +77,5 @@ declare interface IMakingGameComponentProps {
 
 declare interface IMakingGameComponentState {
   numberSet: string
+  collapseState: boolean
 }
