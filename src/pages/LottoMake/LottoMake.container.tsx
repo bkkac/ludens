@@ -4,25 +4,26 @@ import {
   Modal,
   ALink,
   Badge,
-  ResponsiveIcon,
 } from 'components'
 import moment from 'moment'
 import { number } from 'utils'
+import route from 'constants/routes'
 import colors from 'constants/colors'
+import response from 'constants/response'
 import { noop, replace, sum, values } from 'lodash'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faChevronLeft, faChevronRight, faStopwatch } from '@fortawesome/free-solid-svg-icons'
-import { MakingLotto, MakingGame, summaryLottoModal, BetResult } from './components'
+import {
+  MakingLotto,
+  MakingGame,
+  BetResult,
+} from './components'
+import { Summary } from '../LottoPayment/components'
 import './lottoMake.style.scss'
-
-import DocumentIcon from 'assets/images/lotto/document/document.png'
-import DocumentIcon2x from 'assets/images/lotto/document/document@2x.png'
-import DocumentIcon3x from 'assets/images/lotto/document/document@3x.png'
-import response from 'constants/response'
 
 const constants = {
   ok: 'ตกลง',
-  lottoLabel: 'แทงหวย',
+  numberList: (length: number) => `รายการแทง (${length})`,
   numsumLabel: 'ยิงเลข',
   yeegeLabel: (round: string) => `หวยยี่กีรอบที่ ${round}`,
   makeLabel: 'แทง',
@@ -74,7 +75,7 @@ const defaultProps: IMakingLottoProps & IMakingLottoActionProps = {
 
 class LottoMakeContainer extends Component<
   IMakingLottoProps & IMakingLottoActionProps & DefaultProps
-  & RouteComponentProps<{ type: TLottoSlug }, any, IMakingLottoParam>,
+  & RouteComponentProps<{ type: TLottoSlug }, any, IMakingLottoRouteProps | ILottoPaymentRouteProps>,
   IMakingLottoState
   > {
 
@@ -95,20 +96,24 @@ class LottoMakeContainer extends Component<
   }
 
   componentDidMount() {
-    const game = this.props.location.state.selectedLottoGame
+    const locationState: IMakingLottoRouteProps = this.props.location.state
+    const game = locationState.selectedLottoGame
     const gameDate = moment(game.createdAt).format('DDMMYYYY')
     const gameRound = number.padNumber(game.round, 3)
     this.props.getYeegeSum({
       date: gameDate,
-      round: this.props.location.state.selectedLottoGame.round,
+      round: locationState.selectedLottoGame.round,
     })
     this.props.getPlayedYeegeList({
       date: gameDate,
-      round: this.props.location.state.selectedLottoGame.round,
+      round: locationState.selectedLottoGame.round,
     })
     this.props.getBetRate()
-    this.setState({ lottoStatus: this.props.location.state.selectedLottoGame.status }, () => {
-      if (this.props.location.state.selectedLottoGame.status === 'OPEN') {
+    this.setState({
+      lottoStatus: locationState.selectedLottoGame.status,
+      numberList: locationState.betList || [],
+    }, () => {
+      if (locationState.selectedLottoGame.status === 'OPEN') {
         this.countingdown()
       } else {
         this.props.loader(true)
@@ -130,8 +135,7 @@ class LottoMakeContainer extends Component<
           action: () => {
             this.setState({ numberList: [] }, () => {
               Modal.success.hide()
-              summaryLottoModal.hide()
-              this.handleOnClickBreadcrumb(`/lotto/${this.props.match.params.type}`)
+              this.handleOnClickBreadcrumb(route.lottoChrildren.exactPath(this.props.match.params.type))
             })
           },
           actionText: constants.ok,
@@ -159,7 +163,8 @@ class LottoMakeContainer extends Component<
 
     if (prevProps.getYeegeSumIsFetching !== this.props.getYeegeSumIsFetching
       && !this.props.getYeegeSumIsFetching) {
-      const game = this.props.location.state.selectedLottoGame
+      const locationState: IMakingLottoRouteProps = this.props.location.state
+      const game = locationState.selectedLottoGame
       const gameDate = moment(game.createdAt).format('DDMMYYYY')
       const gameRound = number.padNumber(game.round, 3)
       this.props.listenYeegeSum({ date: gameDate, round: gameRound })
@@ -167,7 +172,9 @@ class LottoMakeContainer extends Component<
 
     if (prevProps.getPlayedYeegeListIsFetching !== this.props.getPlayedYeegeListIsFetching
       && !this.props.getPlayedYeegeListIsFetching) {
-      const game = this.props.location.state.selectedLottoGame
+      const locationState: IMakingLottoRouteProps = this.props.location.state
+
+      const game = locationState.selectedLottoGame
       const gameDate = moment(game.createdAt).format('DDMMYYYY')
       const gameRound = number.padNumber(game.round, 3)
       this.props.listenPlayedYeegeList({ date: gameDate, round: gameRound })
@@ -178,9 +185,9 @@ class LottoMakeContainer extends Component<
     this.clearLocalInterval()
     this.props.clearBetResult()
     this.props.clearYeegeSum()
-    summaryLottoModal.hide()
 
-    const game = this.props.location.state.selectedLottoGame
+    const locationState: IMakingLottoRouteProps = this.props.location.state
+    const game = locationState.selectedLottoGame
     const gameDate = moment(game.createdAt).format('DDMMYYYY')
     const gameRound = number.padNumber(game.round, 3)
     this.props.unlistenYeegeSum({ date: gameDate, round: gameRound })
@@ -188,20 +195,15 @@ class LottoMakeContainer extends Component<
   }
 
   clearLocalInterval = () => {
-    this.setState({ lottoStatus: 'CLOSE', numberList: [] }, () => {
-      summaryLottoModal.hide()
-    })
     if (this.intervalId !== null) {
       clearInterval(this.intervalId)
     }
   }
 
   countingdown = () => {
-    if (this.intervalId !== null) {
-      clearInterval(this.intervalId)
-    }
-
-    const endedTime = this.props.location.state.selectedLottoGame.endTime
+    this.clearLocalInterval()
+    const locationState: IMakingLottoRouteProps = this.props.location.state
+    const endedTime = locationState.selectedLottoGame.endTime
     const momentEndAt = moment(replace(endedTime!, /\s/g, ''))
     const momentEndAtTimezone = momentEndAt.clone().add(-7, 'hour')
 
@@ -228,7 +230,8 @@ class LottoMakeContainer extends Component<
 
   generateGameSlug = () => {
     const slugName = this.props.match.params.type
-    const gameround = this.props.location.state.selectedLottoGame.round || '1'
+    const locationState: IMakingLottoRouteProps = this.props.location.state
+    const gameround = locationState.selectedLottoGame.round || '1'
     const currentTime = moment().format('DDMMYYYYHHmm')
     return `${slugName}_${currentTime}${number.padNumber(gameround, 3)}`
   }
@@ -252,63 +255,48 @@ class LottoMakeContainer extends Component<
     })
   }
 
-  handleOnMakingBetLotto = (lottoLost: ILottoNumber[]) => {
+  handleOnMakingBetLotto = (lottoList: ILottoNumber[]) => {
     this.props.loader(true)
-    this.props.makingBetLotto(lottoLost)
-  }
-
-  handleOnWatchLottoNumberList = () => {
-    summaryLottoModal.show({
-      betRates: this.props.betRates,
-      lottoList: this.state.numberList,
-      onClickBet: this.handleOnMakingBetLotto,
-      onClickClose: (callbackLottoList: ILottoNumber[]) => {
-        this.setState({ numberList: callbackLottoList }, () => {
-          summaryLottoModal.hide()
-        })
-      },
-    })
+    this.props.makingBetLotto(lottoList)
   }
 
   handleOnPlayYeegeGame = (gameNumber: string) => {
     this.props.loader(true)
-    const game = this.props.location.state.selectedLottoGame
+    const locationState: IMakingLottoRouteProps = this.props.location.state
+    const game = locationState.selectedLottoGame
     this.props.playYeege({
       number: gameNumber,
       round: game.round,
     })
   }
 
-  renderViewLottoListButton = () => {
-    if (this.state.numberList.length > 0) {
-      return (
-        <div
-          className="summary-badge-container d-flex justify-content-center align-items-center"
-          onClick={this.handleOnWatchLottoNumberList}
-        >
-          <ResponsiveIcon
-            icon={{ x1: DocumentIcon, x2: DocumentIcon2x, x3: DocumentIcon3x }}
-            alt="document-badge"
-            className="document-image-icon"
-          />
-          <div className="badge"><span className="badge-text">{this.state.numberList.length}</span></div>
-        </div>
-      )
+  handleOnClickLottoPayment = () => {
+    const locationState: IMakingLottoRouteProps = this.props.location.state
+    const paymentRouteProps: ILottoPaymentRouteProps = {
+      betList: this.state.numberList,
+      lottoSlug: this.props.match.params.type,
+      selectedLottoGame: locationState.selectedLottoGame,
     }
-    return <></>
+    this.props.history.replace(route.lottoCheckout.path, paymentRouteProps)
+  }
+
+  handleOnBetListChanged = (lottoList: ILottoNumber[]) => {
+    this.setState({ numberList: lottoList })
   }
 
   renderGameMode = () => {
     // TODO: Implement this on got a layout
-    if (this.props.location.state.selectedLottoGame.status === 'CLOSE') {
+    const locationState: IMakingLottoRouteProps = this.props.location.state
+    if (locationState.selectedLottoGame.status === 'CLOSE') {
       return (
         <BetResult
-          reound={number.padNumber(this.props.location.state.selectedLottoGame.round, 3)}
+          reound={number.padNumber(locationState.selectedLottoGame.round, 3)}
           results={this.props.betResults}
           playedYeegeList={this.props.playedYeegeList}
         />
       )
     }
+    // End
     switch (this.state.activeModeSwitch) {
       case 'lotto':
         if (this.state.lottoStatus === 'OPEN') {
@@ -339,7 +327,7 @@ class LottoMakeContainer extends Component<
   }
 
   handleOnBack = () => {
-    this.handleOnClickBreadcrumb(`/lotto/${this.props.match.params.type}`)
+    this.handleOnClickBreadcrumb(route.lottoChrildren.exactPath(this.props.match.params.type))
   }
 
   renderYeegeGame = () => {
@@ -364,14 +352,28 @@ class LottoMakeContainer extends Component<
     )
   }
 
-  render() {
-    // change to pop up on header
-    const ViewLottoListButton = this.renderViewLottoListButton
+  renderSummaryNotification = (active: boolean) => {
+    return (
+      <div className={`summary-notification-container primary-blue-bg ${active ? 'opened' : ''}`}>
+        <div className="container flex m-auto text-right">
+          <ALink
+            id="open-number-list-summary"
+            onClick={this.handleOnClickLottoPayment}
+            color={colors.PRIMARY_TEXT}
+            underline
+          >
+            {constants.numberList(this.state.numberList.length)}
+          </ALink>
+        </div>
+      </div>
+    )
+  }
 
+  render() {
     const GameModeComponent = this.renderGameMode
     const RenderYeegeGameComponent = this.renderYeegeGame
-
-    const game = this.props.location.state.selectedLottoGame
+    const locationState: IMakingLottoRouteProps = this.props.location.state
+    const game = locationState.selectedLottoGame
     const sumtime = sum(values(this.state.remainingTime))
     const remainingTime = (this.state.lottoStatus === 'OPEN')
       ? (sumtime > 0)
@@ -389,8 +391,11 @@ class LottoMakeContainer extends Component<
       )
     }
 
+    const isActiveSummaryNotification = (this.state.numberList.length > 0)
+
     return (
-      <div className="lotto-make-container primary-bg">
+      <div className={`lotto-make-container primary-bg ${isActiveSummaryNotification ? 'opened' : ''}`}>
+        {this.renderSummaryNotification(isActiveSummaryNotification)}
         <div className="container">
           <div className="row">
             <div className="col d-flex">
@@ -418,12 +423,19 @@ class LottoMakeContainer extends Component<
             </div>
           </div>
           <div className="row">
-            <div className="col col-lg-6">
+            <div className="col col-lg-7 m2-t">
               <GameModeComponent />
+            </div>
+            <div className="d-none d-lg-block col-lg-5 m2-t">
+              <Summary
+                betRates={this.props.betRates}
+                lottoList={this.state.numberList}
+                onClickBet={this.handleOnMakingBetLotto}
+                onBetListChanged={this.handleOnBetListChanged}
+              />
             </div>
           </div>
         </div>
-        <ViewLottoListButton />
       </div>
     )
   }

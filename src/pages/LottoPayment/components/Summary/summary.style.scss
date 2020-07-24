@@ -1,0 +1,38 @@
+.summary-maked-list-container {
+  border-radius: 8px;
+}
+
+.lotto-row {
+  .lotto-win-rate-wrapper {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
+    padding-right: 60px;
+  }
+
+  .lotto-wrapper {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+
+    .lotto-remove-wrapper {
+      width: 30px;
+    }
+  }
+}
+
+.delete-lotto-button-container {
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  outline: hidden;
+  cursor: pointer;
+
+  .delete-lotto-button-icon {
+    width: 30px;
+    height: 30px;
+    object-fit: contain;
+  }
+}

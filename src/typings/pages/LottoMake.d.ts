@@ -1,5 +1,6 @@
-declare interface IMakingLottoParam {
+declare interface IMakingLottoRouteProps {
   selectedLottoGame: IYeegeGame
+  betList?: ILottoNumber[]
 }
 
 declare interface IMakingLottoProps {
@@ -52,17 +53,6 @@ declare interface IMakingLottoState {
     seconds: number
   }
   lottoStatus: TGameStatus
-}
-
-declare interface ISummaryLottoModalProps {
-  betRates: IBetRate[]
-  lottoList: ILottoNumber[]
-  onClickBet(data: ILottoNumber[]): void
-  onClickClose(data: ILottoNumber[]): void
-}
-
-declare interface ISummaryLottoModalState {
-  betList: ILottoNumber[]
 }
 
 declare interface IMakingLottoComponentProps {

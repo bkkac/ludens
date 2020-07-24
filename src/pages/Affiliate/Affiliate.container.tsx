@@ -86,7 +86,7 @@ class AffilateContainer extends
       const dividerPercent = `${constants.divider} ${affiDivider}%`
       const income = getAffilateSummaryResult.income
       const affiIncome = number.castToMoney(Number(income))
-      const link = `${window.location.host}/register-affiliate/${this.props.affilateUuid}`
+      const link = `${window.location.host}/register/${this.props.affilateUuid}`
       const memberList = getAffilateMemberResult.map((memberData) => {
          return {
             memberName: memberData.memberName,
