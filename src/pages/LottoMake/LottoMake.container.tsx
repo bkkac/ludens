@@ -25,8 +25,8 @@ const constants = {
   ok: 'ตกลง',
   numberList: (length: number) => `รายการแทง (${length})`,
   numsumLabel: 'ยิงเลข',
+  makeLabel: 'แทงหวย',
   yeegeLabel: (round: string) => `หวยยี่กีรอบที่ ${round}`,
-  makeLabel: 'แทง',
   back: 'กลับ',
   cannotBet: 'ไม่สามารถแทงได้',
   betSuccess: 'คุณได้ทำรายการเสร็จสมบูรณ์',
@@ -84,7 +84,7 @@ class LottoMakeContainer extends Component<
   intervalId: NodeJS.Timeout | null = null
 
   state: IMakingLottoState = {
-    activeModeSwitch: 'lotto',
+    activeModeSwitch: 'LOTTO',
     numberList: [],
     defaultGameValue: '1',
     remainingTime: {
@@ -240,7 +240,7 @@ class LottoMakeContainer extends Component<
     this.props.history.replace(path)
   }
 
-  handleOnSwitchChanged = (currentTab: string) => {
+  handleOnSwitchChanged = (currentTab: TMakeLottoGameMode) => {
     this.setState({ activeModeSwitch: currentTab })
   }
 
@@ -297,9 +297,10 @@ class LottoMakeContainer extends Component<
       )
     }
     // End
-    switch (this.state.activeModeSwitch) {
-      case 'lotto':
-        if (this.state.lottoStatus === 'OPEN') {
+
+    if (this.state.lottoStatus === 'OPEN') {
+      switch (this.state.activeModeSwitch) {
+        case 'LOTTO':
           return (
             <MakingLotto
               betRates={this.props.betRates}
@@ -307,27 +308,27 @@ class LottoMakeContainer extends Component<
               onAddedNumber={this.handleOnAddLottoNumber}
             />
           )
-        }
-        return (<div />)
-      case 'game':
-        if (this.state.lottoStatus === 'OPEN') {
+        case 'GAME':
           return (
             <MakingGame
               playedYeegeList={this.props.playedYeegeList}
               onClickAddNumber={this.handleOnPlayYeegeGame}
               yeegeSum={this.props.yeegeSum}
-
             />
           )
-        }
-        return (<div />)
-      default:
-        return (<></>)
+        default:
+          return (<></>)
+      }
     }
+    return (<></>)
   }
 
   handleOnBack = () => {
     this.handleOnClickBreadcrumb(route.lottoChrildren.exactPath(this.props.match.params.type))
+  }
+
+  handleOnSwitchMode = () => {
+    this.setState({ activeModeSwitch: this.state.activeModeSwitch === 'LOTTO' ? 'GAME' : 'LOTTO' })
   }
 
   renderYeegeGame = () => {
@@ -341,8 +342,8 @@ class LottoMakeContainer extends Component<
         {status === 'OPEN'
           ? (
             <div className="yeege-game-action-wrapper m-auto">
-              <ALink id="goto-yeege-game" color={colors.PRIMARY_BLUE}>
-                {constants.numsumLabel}
+              <ALink id="goto-yeege-game" color={colors.PRIMARY_BLUE} onClick={this.handleOnSwitchMode}>
+                {this.state.activeModeSwitch === 'LOTTO' ? constants.numsumLabel : constants.makeLabel}
                 <FontAwesomeIcon icon={faChevronRight} className="ml-1" />
               </ALink>
             </div>
