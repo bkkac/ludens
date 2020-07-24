@@ -122,7 +122,7 @@ class MakingLotto extends Component<IMakingLottoComponentProps, IMakingLottoComp
 
     return (
       <div ref={this.makingLottoRef}>
-        <div className="row m2-t">
+        <div className="row">
           <div className="col">
             <InputSelect<TLottoGameType, TLottoGameType>
               name="lotto-game-type"

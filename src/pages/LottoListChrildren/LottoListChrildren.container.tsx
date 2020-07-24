@@ -6,6 +6,7 @@ import {
   LottoActionCard,
 } from 'components'
 import colors from 'constants/colors'
+import routes from 'constants/routes'
 import { LOTTO_SLUG_NAME } from 'constants/variables'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons'
@@ -23,7 +24,7 @@ const constants = {
 
 type DefaultProps = Readonly<typeof defaultProps>
 
-const defaultProps: ISubLottoProps & ISubLottoActionProps = {
+const defaultProps: ILottoListChrildrenProps & ILottoListChrildrenActionProps = {
   getYeegeGameList() { noop() },
   loader() { noop() },
   getYeegeGameListCode: 0,
@@ -32,9 +33,12 @@ const defaultProps: ISubLottoProps & ISubLottoActionProps = {
   yeegeGameList: [],
 }
 
-class LottoSubContainer extends Component<
-  ISubLottoProps & ISubLottoActionProps & DefaultProps & RouteComponentProps<{ type: TLottoSlug }>,
-  ISubLottoState> {
+class LottoListChrildrenContainer extends Component<
+  ILottoListChrildrenProps
+  & ILottoListChrildrenActionProps
+  & DefaultProps
+  & RouteComponentProps<{ type: TLottoSlug }>>
+{
 
   static defaultProps = defaultProps
 
@@ -45,7 +49,7 @@ class LottoSubContainer extends Component<
     }
   }
 
-  componentDidUpdate(prevProps: ISubLottoProps) {
+  componentDidUpdate(prevProps: ILottoListChrildrenProps) {
     if (prevProps.getYeegeGameListIsFetching !== this.props.getYeegeGameListIsFetching
       && !this.props.getYeegeGameListIsFetching) {
       this.props.loader(false)
@@ -53,7 +57,7 @@ class LottoSubContainer extends Component<
   }
 
   handleOnClickPlay = (game: IYeegeGame) => {
-    this.props.history.replace(`/lotto/making/${this.props.match.params.type}`, { selectedLottoGame: game })
+    this.props.history.replace(routes.lottoMaking.exactPath(this.props.match.params.type), { selectedLottoGame: game })
   }
 
   handleOnClickBreadcrumb = (path: string) => {
@@ -120,4 +124,4 @@ class LottoSubContainer extends Component<
   }
 }
 
-export default LottoSubContainer
+export default LottoListChrildrenContainer

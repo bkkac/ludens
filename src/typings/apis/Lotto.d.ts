@@ -16,7 +16,7 @@ declare type TLottoType =
   | 'BAAC'
   | 'BAAC'
   | 'GSB'
-  | 'LAO_SUITE'
+  | 'LAO'
   | 'TH_SHARE_MORNING'
   | 'TH_SHARE_MIDDAY'
   | 'TH_SHARE_AFTERNOON'
