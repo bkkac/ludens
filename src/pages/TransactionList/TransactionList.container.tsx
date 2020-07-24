@@ -11,6 +11,7 @@ import {
 } from 'lodash'
 import moment from 'moment'
 import { number } from 'utils'
+import colors from 'constants/colors'
 import response from 'constants/response'
 import { ALink, Modal, TransactionItem } from 'components'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -77,7 +78,7 @@ class TransactionListContainer extends
   }
 
   onPressTransactionDetail = (transaction: ITransaction) => {
-    this.props.history.push('/transaction/detail', { transaction })
+    // this.props.history.push('/transaction/detail', { transaction })
   }
 
   renderTransactionList = () => {
@@ -132,43 +133,45 @@ class TransactionListContainer extends
       <div className="transaction-list-container">
         <div className="transaction-list-background" />
         <div className="container ">
-          <div className="row">
-            <div className="col">
-              <ALink id="backto-previus-page" color="#ff9b96" bold onClick={this.onPressBack}>
-                {constants.back}
-              </ALink></div>
-          </div>
-          <div className="row mt-4">
-            <div className="col">
-              <div className="transaction-list-title-text">{constants.titleText}</div>
+          <div className="large-screen-container">
+            <div className="row">
+              <div className="col">
+                <ALink id="backto-previus-page" color={colors.PRIMARY_RED} bold onClick={this.onPressBack}>
+                  {constants.back}
+                </ALink></div>
             </div>
-          </div>
-          <div className="row mt-4">
-            <div className="col">
-              <div className="remaining-label mx-auto">{constants.remainingLabel}</div>
-              <div className="credit-amount-text">{credit}</div>
-              <div className="updated-time-text">{updatedTimeText}</div>
+            <div className="row mt-4">
+              <div className="col">
+                <div className="transaction-list-title-text">{constants.titleText}</div>
+              </div>
             </div>
-          </div>
-          <div className="row mt-3">
-            <div className="col">
-              <div className="credit-panel-action-wrapper">
-                <div className="temprary-button-wrapper mx-2" onClick={this.onPressDeposit}>
-                  <div className="temp-text-button">
-                    <FontAwesomeIcon icon={faPlus} className="temp-icon-button" />
-                    {constants.deposit}
+            <div className="row mt-4">
+              <div className="col">
+                <div className="remaining-label mx-auto">{constants.remainingLabel}</div>
+                <div className="credit-amount-text">{credit}</div>
+                <div className="updated-time-text">{updatedTimeText}</div>
+              </div>
+            </div>
+            <div className="row mt-3">
+              <div className="col">
+                <div className="credit-panel-action-wrapper">
+                  <div className="temprary-button-wrapper mx-2" onClick={this.onPressDeposit}>
+                    <div className="temp-text-button">
+                      <FontAwesomeIcon icon={faPlus} className="temp-icon-button" />
+                      {constants.deposit}
+                    </div>
                   </div>
-                </div>
-                <div className="temprary-button-wrapper mx-2" onClick={this.onPresWithdraw}>
-                  <div className="temp-text-button">
-                    <FontAwesomeIcon icon={faMinus} className="temp-icon-button" />
-                    {constants.withdraw}
+                  <div className="temprary-button-wrapper mx-2" onClick={this.onPresWithdraw}>
+                    <div className="temp-text-button">
+                      <FontAwesomeIcon icon={faMinus} className="temp-icon-button" />
+                      {constants.withdraw}
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-          <div className="row mb-4">
+          <div className="transaction-list row mb-4">
             <div className="col">
               {TransactionList}
             </div>
