@@ -12,6 +12,7 @@ import { LOTTO_SLUG_NAME } from 'constants/variables'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons'
 import { Summary } from './components'
+import { number } from 'utils'
 import './lottoPayment.style.scss'
 
 const constants = {
@@ -100,7 +101,8 @@ class LottoPaymentContainer extends Component<
 
 	handleOnMakingBetLotto = (lottoList: ILottoNumber[]) => {
 		this.props.loader(true)
-		this.props.makingBetLotto(lottoList)
+    const lottos = lottoList.map(lotto => ({ ...lotto, value: number.castToInteger(lotto.value)}))
+		this.props.makingBetLotto(lottos)
 	}
 
 	handleOnBetListChanged = (lottoList: ILottoNumber[]) => {
