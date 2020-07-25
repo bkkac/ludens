@@ -1,0 +1,35 @@
+@import "assets/stylesheets/colors";
+
+.played-game-container {
+  box-shadow: none !important;
+  border-radius: 8px;
+  overflow: hidden;
+
+  .chevron-right-icon {
+    transition: all 128ms ease;
+    transform: rotate(0);
+
+    &.expanded {
+      transform: rotate(90deg);
+    }
+  }
+
+  .player-game-wrapper {
+    .row:nth-child(even) {
+      background-color: $primary-bg;
+    }
+    .row:nth-child(odd) {
+      background-color: $secondary-bg;
+    }
+    .row:nth-child(1) {
+      background-color: rgba($color: #6777f0, $alpha: 0.6);
+    }
+    .row:nth-child(16) {
+      background-color: rgba($color: #66c6b9, $alpha: 1);
+    }
+
+    .seq-player-number {
+      min-width: 30px;
+    }
+  }
+}
