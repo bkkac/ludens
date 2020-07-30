@@ -1,7 +1,7 @@
 import React, { Component, createRef, RefObject } from 'react'
 import { RouteComponentProps } from 'react-router-dom'
 import { Formik, FormikProps } from 'formik'
-import { noop } from 'lodash'
+import { noop, isEmpty } from 'lodash'
 import response from 'constants/response'
 import { Modal } from 'components'
 import {
@@ -189,6 +189,7 @@ class RegisterContainer extends
             {...formProps}
             onBackStep={this.onBackStep}
             onConfirmPresses={this.onNextStepPresses}
+            extraProps={{ isAffiliate: !isEmpty(this.props.match.params.affiliate) }}
           />
         )
       }
