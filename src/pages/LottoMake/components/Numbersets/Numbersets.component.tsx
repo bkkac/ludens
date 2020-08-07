@@ -3,7 +3,6 @@ import { range, chunk, map, min, isEqual, find, isEmpty, noop, startsWith, endsW
 import { ButtonRadio, ButtonRadioGroup } from 'components'
 import { number } from 'utils'
 import { LOTTO_GAME_TYPE_LENGTH } from 'constants/variables'
-import './numbersets.style.scss'
 import colors from 'constants/colors'
 
 const defaultProps: NumbersetsProps = {
