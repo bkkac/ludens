@@ -1,11 +1,11 @@
 import React, { Component, createRef, RefObject } from 'react'
 import { get, noop, isEmpty } from 'lodash'
 import {
+  ALink,
   NumberPad,
   InputSelect,
+  ButtonRadio,
   SelectorItem,
-  ALink,
-  ButtonRadio
 } from 'components'
 import {
   LOTTO_GAME_TYPES,
@@ -13,17 +13,20 @@ import {
   LOTTO_GAME_TYPE_LENGTH
 } from 'constants/variables'
 import colors from 'constants/colors'
+import { Numbersets } from '../../components'
 import './makingLotto.style.scss'
 
 const constants = {
   switchNumberMode: 'กลับเลข',
-  numberSetMode: 'โหมดชุดตัวเลข',
+  numberpadMode: 'โหมดแป้นตัวเลข',
+  numbersetMode: 'โหมดชุดตัวเลข',
   betRate: 'บาทละ',
   placeholderGameType: 'เลือกประเภทหวย',
   placeholderNumber: (numberSet: number) => `เลข ${numberSet} ตัว`,
 }
 
 const defaultProps: IMakingLottoComponentProps = {
+  lottos: [],
   betRates: [],
   gameSlug: 'LOTTER_YEGEE',
   onAddedNumber() { noop() },
@@ -39,6 +42,8 @@ class MakingLotto extends Component<IMakingLottoComponentProps, IMakingLottoComp
     animated: false,
     numberSet: '',
     gameType: 'THREE_UP',
+    inputMode: 'NUMBERPAD',
+    isSwitchedNumber: false,
   }
 
   isRejectAddingNumber = () => {
@@ -49,8 +54,8 @@ class MakingLotto extends Component<IMakingLottoComponentProps, IMakingLottoComp
   handleOnClickNumberPad = (num: number) => {
     this.makingLottoRef.current?.scrollIntoView({
       behavior: 'smooth',
-      block: 'end',
-      inline: 'end',
+      block: 'center',
+      inline: 'center',
     })
     const length = LOTTO_GAME_TYPE_LENGTH[this.state.gameType]
     if (num === -1) {
@@ -69,7 +74,7 @@ class MakingLotto extends Component<IMakingLottoComponentProps, IMakingLottoComp
       number: this.state.numberSet,
       type: this.state.gameType,
     }
-    this.props.onAddedNumber(lottoNumber)
+    this.props.onAddedNumber(lottoNumber, 'ADD', this.state.isSwitchedNumber)
     this.setState({ animated: true }, () => {
       const timeoutInstance = setTimeout(() => {
         this.setState({ numberSet: '', animated: false }, () => {
@@ -83,9 +88,14 @@ class MakingLotto extends Component<IMakingLottoComponentProps, IMakingLottoComp
     this.setState({ gameType: currentTab, numberSet: '' })
   }
 
-  handleOnChangeSwitchMode = (switchState: boolean) => {
-    // TODO: When implement switch number mode
+  handleOnChangeInputMode = () => {
+    if (this.state.inputMode === 'NUMBERPAD') {
+      return this.setState({ inputMode: 'NUMBERSET', numberSet: '' })
+    }
+    return this.setState({ inputMode: 'NUMBERPAD', numberSet: '' })
   }
+
+  handleOnChangeSwitchMode = () => this.setState({ isSwitchedNumber: !this.state.isSwitchedNumber })
 
   renderLottoGameTypeOption = ({ item, ...selectProps }: IInputDefaultSelectProps<TLottoGameType>): JSX.Element => {
     const combindedBetRateType = `${this.props.gameSlug}_${item}` as TBetType
@@ -115,10 +125,49 @@ class MakingLotto extends Component<IMakingLottoComponentProps, IMakingLottoComp
     )
   }
 
+  renderInputMode = (): JSX.Element => {
+    switch (this.state.inputMode) {
+      case 'NUMBERPAD':
+        const LottoNumbersets = this.renderLottoNumber
+        return (
+          <>
+            <div className="row m4-t">
+              <div className="col text-center">
+                <LottoNumbersets />
+              </div>
+            </div>
+            <div className="row m3-t">
+              <div className="col">
+                <NumberPad onNumberPresses={this.handleOnClickNumberPad} />
+              </div>
+            </div>
+          </>
+        )
+      case 'NUMBERSET':
+        return (
+          <>
+            <div className="row m4-t">
+              <div className="col">
+                <Numbersets
+                  lottos={this.props.lottos}
+                  gameMode={this.state.gameType}
+                  onAddedNumber={(lottoNumbers, state) =>
+                    this.props.onAddedNumber(lottoNumbers, state, this.state.isSwitchedNumber)}
+                />
+              </div>
+            </div>
+          </>
+        )
+      default:
+        return (
+          <></>
+        )
+    }
+  }
+
   render() {
     const gameList = LOTTO_GAME_TYPES[this.props.gameSlug]
-
-    const LottoNumbersets = this.renderLottoNumber
+    const GameInput = this.renderInputMode
 
     return (
       <div ref={this.makingLottoRef}>
@@ -128,37 +177,46 @@ class MakingLotto extends Component<IMakingLottoComponentProps, IMakingLottoComp
               name="lotto-game-type"
               items={gameList}
               value={this.state.gameType}
-              onChange={(type) => this.setState({ gameType: type, numberSet: '' })}
+              onChange={(type) => {
+                if (type === 'RUN_DOWN' || type === 'RUN_UP') {
+                  return this.setState({ gameType: type, numberSet: '', inputMode: 'NUMBERPAD' })
+                }
+                this.setState({ gameType: type, numberSet: '' })
+              }}
               placeholder={constants.placeholderGameType}
               RenderSelected={this.renderLottoGameTypeOption}
             />
           </div>
         </div>
-        {/* TODO: When implement numberset and switch number */}
-        <div className="row m2-t">
-          <div className="col text-center">
-            <ALink id="changeto-number-set-mode" color={colors.PRIMARY_BLUE}>{constants.numberSetMode}</ALink>
-          </div>
-        </div>
-        <div className="row m2-t">
-          <div className="col text-center">
-            <ButtonRadio
-              id="switch-number-mode"
-              text={constants.switchNumberMode}
-              onChangeState={this.handleOnChangeSwitchMode}
-            />
-          </div>
-        </div>
-        <div className="row m4-t">
-          <div className="col text-center">
-            <LottoNumbersets />
-          </div>
-        </div>
-        <div className="row m3-t">
-          <div className="col">
-            <NumberPad onNumberPresses={this.handleOnClickNumberPad} />
-          </div>
-        </div>
+        {
+          (this.state.gameType === 'RUN_DOWN' || this.state.gameType === 'RUN_UP')
+            ? <></>
+            : (
+              <>
+                <div className="row m2-t">
+                  <div className="col text-center">
+                    <ALink
+                      id="changeto-number-set-mode"
+                      color={colors.PRIMARY_BLUE}
+                      onClick={this.handleOnChangeInputMode}
+                    >
+                      {this.state.inputMode === 'NUMBERSET' ? constants.numberpadMode : constants.numbersetMode}
+                    </ALink>
+                  </div>
+                </div>
+                <div className="row m2-t">
+                  <div className="col text-center">
+                    <ButtonRadio
+                      id="switch-number-mode"
+                      text={constants.switchNumberMode}
+                      onChangeState={this.handleOnChangeSwitchMode}
+                    />
+                  </div>
+                </div>
+              </>
+            )
+        }
+        <GameInput />
       </div>
     )
   }
