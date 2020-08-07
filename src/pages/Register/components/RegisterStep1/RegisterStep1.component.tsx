@@ -1,5 +1,5 @@
 import React, { SFC } from 'react'
-import { Banner, InputText, Button, ALink } from 'components'
+import { Banner, InputNumber, Button, ALink } from 'components'
 import colors from 'constants/colors'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons'
@@ -33,7 +33,6 @@ const RegisterStep1: SFC<FormikProps<IRegister> & IRegisterFormProps & DefaultPr
     errors,
     onBackStep,
     handleBlur,
-    handleChange,
     setFieldValue,
     setFieldError,
     setFieldTouched,
@@ -82,11 +81,12 @@ const RegisterStep1: SFC<FormikProps<IRegister> & IRegisterFormProps & DefaultPr
       </div>
       <div className="row p3-t">
         <div className="col">
-          <InputText
-            useNumberpad
+          <InputNumber
+            decimalScale={0}
             name="phoneNumber"
+            format="### ### ####"
             onBlur={handleBlur}
-            onChange={handleChange}
+            onValueChange={({ value }) => setFieldValue('phoneNumber', value)}
             value={values.phoneNumber}
             errorMessage={errors.phoneNumber}
             placeholder={constants.placeholderPhoneNumber}
