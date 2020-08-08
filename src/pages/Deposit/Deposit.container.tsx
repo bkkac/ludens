@@ -93,6 +93,7 @@ class DepositContainer extends
             },
           })
         }
+        // TODO: chenge response code GONE to TIMEOUT
       } else if (this.props.depositRequestCode === response.GONE) {
         // TODO: when before transaction timeout
       } else if (this.props.transactionRequestCode === response.NOT_FOUND) {
