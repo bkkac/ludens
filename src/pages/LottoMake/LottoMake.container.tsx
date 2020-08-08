@@ -10,14 +10,29 @@ import { number } from 'utils'
 import route from 'constants/routes'
 import colors from 'constants/colors'
 import response from 'constants/response'
-import { noop, replace, sum, values } from 'lodash'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faChevronLeft, faChevronRight, faStopwatch } from '@fortawesome/free-solid-svg-icons'
+import {
+  faChevronRight,
+  faChevronLeft,
+  faStopwatch
+} from '@fortawesome/free-solid-svg-icons'
+import {
+  sum,
+  uniq,
+  noop,
+  find,
+  split,
+  values,
+  replace,
+  isArray,
+  isEmpty,
+  reverse,
+} from 'lodash'
 import {
   MakingLotto,
   MakingGame,
-  BetResult,
   PlayedUser,
+  BetResult,
 } from './components'
 import { Summary } from '../LottoPayment/components'
 import './lottoMake.style.scss'
@@ -245,20 +260,78 @@ class LottoMakeContainer extends Component<
     this.setState({ activeModeSwitch: currentTab })
   }
 
-  handleOnAddLottoNumber = (lottoNumber: ILottoNumber) => {
-    // TODO: Check dupplicate
-    this.setState({
-      numberList: [...this.state.numberList, {
-        ...lottoNumber,
-        value: this.state.defaultGameValue,
-        slug: this.generateGameSlug(),
-      }],
-    })
+  handleOnAddLottoNumber = (
+    lottoNumber: ILottoNumber | ILottoNumber[],
+    state: 'ADD' | 'REMOVE',
+    isSwitchedNumber: boolean = false) => {
+
+    const lottoNumbering = (): ILottoNumber | ILottoNumber[] => {
+      if (isSwitchedNumber) {
+        const lottoNumberArray = (pureLottoNumber: ILottoNumber): ILottoNumber[] => {
+          const numberAsArray = split(pureLottoNumber.number, '')
+          if (numberAsArray.length === 2) {
+            return [
+              pureLottoNumber,
+              { ...pureLottoNumber, number: String(sum(reverse(numberAsArray))) },
+            ]
+          } else if (numberAsArray.length === 3) {
+            return uniq<string>([
+              `${numberAsArray[0]}${numberAsArray[1]}${numberAsArray[2]}`,
+              `${numberAsArray[0]}${numberAsArray[2]}${numberAsArray[1]}`,
+              `${numberAsArray[1]}${numberAsArray[0]}${numberAsArray[2]}`,
+              `${numberAsArray[1]}${numberAsArray[2]}${numberAsArray[0]}`,
+              `${numberAsArray[2]}${numberAsArray[0]}${numberAsArray[1]}`,
+              `${numberAsArray[2]}${numberAsArray[1]}${numberAsArray[0]}`,
+            ]).map((numb) => ({ ...pureLottoNumber, number: numb }))
+          }
+          return [pureLottoNumber]
+        }
+
+        if (isArray(lottoNumber)) {
+          const temporaryList: ILottoNumber[] = []
+          lottoNumber.forEach(lot => {
+            const lottos = lottoNumberArray(lot)
+            lottos.forEach(lotto => temporaryList.push(lotto))
+          })
+          return temporaryList
+        } else {
+          return lottoNumberArray(lottoNumber)
+        }
+      }
+      return lottoNumber
+    }
+
+    const lotterNumbers = lottoNumbering()
+    const finding = (numb: ILottoNumber) => isArray(lotterNumbers)
+      ? isEmpty(find(lotterNumbers, { number: numb.number, type: numb.type }))
+      : !(numb.number === lotterNumbers.number && numb.type === lotterNumbers.type)
+
+    const newNumberList = this.state.numberList.filter(finding)
+    if (state === 'ADD') {
+      if (isArray(lotterNumbers)) {
+        const addNumberList = lotterNumbers.map(numb => ({
+          ...numb,
+          value: this.state.defaultGameValue,
+          slug: this.generateGameSlug(),
+        }))
+        this.setState({ numberList: [...newNumberList, ...addNumberList] })
+      } else {
+        this.setState({
+          numberList: [...newNumberList, {
+            ...lotterNumbers,
+            value: this.state.defaultGameValue,
+            slug: this.generateGameSlug(),
+          }],
+        })
+      }
+    } else {
+      this.setState({ numberList: newNumberList })
+    }
   }
 
   handleOnMakingBetLotto = (lottoList: ILottoNumber[]) => {
     this.props.loader(true)
-    const lottos = lottoList.map(lotto => ({ ...lotto, value: number.castToInteger(lotto.value)}))
+    const lottos = lottoList.map(lotto => ({ ...lotto, value: number.castToInteger(lotto.value) }))
     this.props.makingBetLotto(lottos)
   }
 
@@ -289,7 +362,17 @@ class LottoMakeContainer extends Component<
   renderGameMode = () => {
     const locationState: IMakingLottoRouteProps = this.props.location.state
     if (locationState.selectedLottoGame.status === 'CLOSE') {
-      return (<BetResult results={this.props.betResults} />)
+      return (
+        <>
+          <BetResult results={this.props.betResults} />
+          <MakingLotto
+            lottos={this.state.numberList}
+            betRates={this.props.betRates}
+            gameSlug={this.props.match.params.type}
+            onAddedNumber={this.handleOnAddLottoNumber}
+          />
+        </>
+      )
     }
 
     if (this.state.lottoStatus === 'OPEN') {
@@ -297,6 +380,7 @@ class LottoMakeContainer extends Component<
         case 'LOTTO':
           return (
             <MakingLotto
+              lottos={this.state.numberList}
               betRates={this.props.betRates}
               gameSlug={this.props.match.params.type}
               onAddedNumber={this.handleOnAddLottoNumber}

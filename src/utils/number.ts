@@ -1,4 +1,5 @@
 import { DECIMAL_DITGITS, COMMA } from 'constants/regex'
+import { padStart } from 'lodash'
 
 const castToInteger = (numberString: string = '') => {
   const result = numberString.replace(COMMA, '').replace(DECIMAL_DITGITS, '')
@@ -7,9 +8,7 @@ const castToInteger = (numberString: string = '') => {
 
 const padNumber = (value: string, ditgit: number) => {
   const padString = '0'
-  return (value.length >= ditgit)
-    ? value
-    : new Array(ditgit - value.length + 1).join(padString) + value;
+  return padStart(value, ditgit, padString)
 }
 
 const castToMoney = (value: number, spacing?: boolean) => {

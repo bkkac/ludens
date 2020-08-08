@@ -6,6 +6,7 @@ import {
 import {
   SelectorItem,
   InputSelect,
+  InputNumber,
   InputText,
   Button,
   ALink,
@@ -35,13 +36,20 @@ const constants = {
 
 type DefaultProps = Readonly<typeof defaultProps>
 
-const defaultProps: IRegisterFormProps = {
+const defaultProps: IRegisterFormProps<{ isAffiliate: boolean }> = {
   onConfirmPresses() { noop() },
+  extraProps: {
+    isAffiliate: false,
+  },
 }
 
 const CURRENT_STEP = 3
 
-const RegisterStep3: SFC<FormikProps<IRegister> & IRegisterFormProps & DefaultProps> = (props) => {
+const RegisterStep3: SFC<
+  FormikProps<IRegister>
+  & IRegisterFormProps<{ isAffiliate: boolean }>
+  & DefaultProps
+> = (props) => {
 
   const {
     onBackStep,
@@ -56,6 +64,7 @@ const RegisterStep3: SFC<FormikProps<IRegister> & IRegisterFormProps & DefaultPr
     setFieldValue,
     setErrors,
     setTouched,
+    extraProps,
   } = props
 
   const resetInformationForm = () => {
@@ -177,6 +186,7 @@ const RegisterStep3: SFC<FormikProps<IRegister> & IRegisterFormProps & DefaultPr
             value={values.affilateRef}
             onBlur={handleBlur}
             onChange={handleChange}
+            disabled={extraProps?.isAffiliate}
             errorMessage={errors.affilateRef}
             error={!!errors.affilateRef && touched.affilateRef}
             placeholder={constants.placeholderInput(constants.placeholderAffilate)}
@@ -208,14 +218,16 @@ const RegisterStep3: SFC<FormikProps<IRegister> & IRegisterFormProps & DefaultPr
       <div className="row p1-t">
         <div className="col">
           <h6 className="subtitle-2  secondary-blue-text">{constants.placeholderBankNumber}</h6>
-          <InputText
+          <InputNumber
+            decimalScale={0}
             name="bankNumber"
-            value={values.bankNumber}
+            format="### ### #### #### ####"
             onBlur={handleBlur}
-            onChange={handleChange}
+            onValueChange={({ value }) => setFieldValue('bankNumber', value)}
+            value={values.bankNumber}
             errorMessage={errors.bankNumber}
-            error={!!errors.bankNumber && touched.bankNumber}
             placeholder={constants.placeholderInput(constants.placeholderBankNumber)}
+            error={!!errors.bankNumber && touched.bankNumber}
           />
         </div>
       </div>

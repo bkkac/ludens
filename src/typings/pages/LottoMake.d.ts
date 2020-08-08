@@ -58,15 +58,18 @@ declare interface IMakingLottoState {
 }
 
 declare interface IMakingLottoComponentProps {
+  lottos: ILottoNumber[]
   betRates: IBetRate[]
   gameSlug: TLottoSlug
-  onAddedNumber(lottoNumber: ILottoNumber): void
+  onAddedNumber(lottoNumber: ILottoNumber | ILottoNumber[], state: 'ADD' | 'REMOVE', isSwitchedNumber: boolean): void
 }
 
 declare interface IMakingLottoComponentState {
   animated: boolean
   numberSet: string
   gameType: TLottoGameType
+  isSwitchedNumber: boolean
+  inputMode: 'NUMBERPAD' | 'NUMBERSET'
 }
 
 declare interface IMakingGameComponentProps {
@@ -84,4 +87,17 @@ declare interface IBetResultComponentProps {
 
 declare interface IPlayedUsers {
   playedYeegeList: IYeegePlay[]
+}
+
+declare interface NumbersetsProps {
+  gameMode: TLottoGameType
+  lottos: ReadonlyArray<ILottoNumber>
+  onAddedNumber(lottoNumber: ILottoNumber | ILottoNumber[], state: 'ADD' | 'REMOVE'): void
+}
+
+declare interface NumbersetsState {
+  gameNumberLength: number
+  currentNumberIndex: number
+  maxNumber: number
+  selectedIndexFrontNumbers: boolean[]
 }
