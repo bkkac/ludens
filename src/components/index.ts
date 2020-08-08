@@ -25,6 +25,7 @@ import { LottoResultCard } from './LottoResultCard'
 import { LottoActionCard } from './LottoActionCard'
 import { InputRadioImage } from './InputRadioImage'
 import { TransactionItem } from './TransactionItem'
+import { ButtonRadioGroup } from './ButtonRadioGroup'
 import { TransactionItemCollapsible } from './TransactionItemCollapsible'
 
 export {
@@ -55,5 +56,6 @@ export {
   LottoActionCard,
   InputRadioImage,
   TransactionItem,
+  ButtonRadioGroup,
   TransactionItemCollapsible,
 }
