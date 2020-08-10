@@ -30,6 +30,10 @@
         background-color: $primary-bg;
     }
 
+    &.selected {
+        background-color: $primary-bg;
+    }
+
     &.displaying {
         .selector-text-wrapper {
             border-bottom: unset;

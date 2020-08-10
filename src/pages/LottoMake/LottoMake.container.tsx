@@ -362,17 +362,7 @@ class LottoMakeContainer extends Component<
   renderGameMode = () => {
     const locationState: IMakingLottoRouteProps = this.props.location.state
     if (locationState.selectedLottoGame.status === 'CLOSE') {
-      return (
-        <>
-          <BetResult results={this.props.betResults} />
-          <MakingLotto
-            lottos={this.state.numberList}
-            betRates={this.props.betRates}
-            gameSlug={this.props.match.params.type}
-            onAddedNumber={this.handleOnAddLottoNumber}
-          />
-        </>
-      )
+      return (<BetResult results={this.props.betResults} />)
     }
 
     if (this.state.lottoStatus === 'OPEN') {
