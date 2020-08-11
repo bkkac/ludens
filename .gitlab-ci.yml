@@ -52,4 +52,4 @@ deploy_prod:
   script:
     - echo "Deploy project on server"
     - echo ubuntu@"$PROD_DEPLOY_SERVER"
-    - bash .gitlab-stage-deploy.sh
+    - bash .gitlab-prod-deploy.sh
