@@ -138,6 +138,7 @@ const WithdrawForm:
                       onBlur={handleBlur}
                       onChange={handleChange}
                       value={values.money}
+                      allowNegative={false}
                       errorMessage={errors.money}
                       placeholder={constants.placeholdeAmount}
                       error={!!errors.money && touched.money}
