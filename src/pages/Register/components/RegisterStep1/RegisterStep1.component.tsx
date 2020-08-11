@@ -86,6 +86,7 @@ const RegisterStep1: SFC<FormikProps<IRegister> & IRegisterFormProps & DefaultPr
             name="phoneNumber"
             format="### ### ####"
             onBlur={handleBlur}
+            allowNegative={false}
             onValueChange={({ value }) => setFieldValue('phoneNumber', value)}
             value={values.phoneNumber}
             errorMessage={errors.phoneNumber}

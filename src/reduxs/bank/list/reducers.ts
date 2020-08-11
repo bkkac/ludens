@@ -13,7 +13,7 @@ const depositReducer = (state: IBankListState = initialState, action: RootAction
     case getType(actions.getBankListSuccessAction):
       return {
         isFetching: false,
-        data: action.payload.data.data,
+        data: action.payload.data.data.dataList,
         code: action.payload.data.code,
       }
     case getType(actions.getBankListFailureAction):

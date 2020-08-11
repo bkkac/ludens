@@ -142,6 +142,7 @@ class SummaryLottoComponent extends Component<ILottoPaymentSummaryProps, ILottoP
                 <InputNumber
                   hiddenErrorBlock
                   thousandSeparator
+                  allowNegative={false}
                   decimalScale={0}
                   name={`values-${lotto.seq}`}
                   onBlur={(event: ChangeEvent<HTMLInputElement>) =>
@@ -211,6 +212,7 @@ class SummaryLottoComponent extends Component<ILottoPaymentSummaryProps, ILottoP
               thousandSeparator
               decimalScale={0}
               name="maked-all-value"
+              allowNegative={false}
               onChange={(event: ChangeEvent<HTMLInputElement>) => this.setState({ defaultValue: event.target.value })}
               onBlur={this.handleOnDefaultValueBlur}
               value={this.state.defaultValue}
