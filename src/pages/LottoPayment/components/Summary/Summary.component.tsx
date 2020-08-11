@@ -153,7 +153,7 @@ class SummaryLottoComponent extends Component<ILottoPaymentSummaryProps, ILottoP
               </div>
               <div className="text-center p2-r">
                 <h6 className="subtitle-1 secondary-text">{constants.perBath}</h6>
-                <h6 className="subtitle-2">x {betRate.rate}</h6>
+                <h6 className="subtitle-2">x {number.castToMoney(Number(betRate.rate))}</h6>
               </div>
               <div className="lotto-remove-wrapper">
                 <div className="delete-lotto-button-container" onClick={() => this.handleOnRemove(lotto.seq!)}>
