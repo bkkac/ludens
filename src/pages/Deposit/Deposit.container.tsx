@@ -105,6 +105,20 @@ class DepositContainer extends
         })
       }
     }
+
+    if (prevProps.getBankListIsFetching !== this.props.getBankListIsFetching
+      && !this.props.getBankListIsFetching) {
+      if (this.props.getBankListCode === response.OK) {
+        if (this.props.bankList.length > 0) {
+          const initialBankSelect: IBank = get(this.props.bankList, '0', {})
+          if (this.state.initialFormValue.webBankId <= 0) {
+            this.setState({
+              initialFormValue: { ...this.state.initialFormValue, webBankId: initialBankSelect.id || 0 },
+            })
+          }
+        }
+      }
+    }
   }
 
   onSubmitDeposit = (values: IDepositForm) => {

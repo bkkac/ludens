@@ -142,6 +142,7 @@ class SummaryLottoComponent extends Component<ILottoPaymentSummaryProps, ILottoP
                 <InputNumber
                   hiddenErrorBlock
                   thousandSeparator
+                  allowNegative={false}
                   decimalScale={0}
                   name={`values-${lotto.seq}`}
                   onBlur={(event: ChangeEvent<HTMLInputElement>) =>
@@ -153,7 +154,7 @@ class SummaryLottoComponent extends Component<ILottoPaymentSummaryProps, ILottoP
               </div>
               <div className="text-center p2-r">
                 <h6 className="subtitle-1 secondary-text">{constants.perBath}</h6>
-                <h6 className="subtitle-2">x {betRate.rate}</h6>
+                <h6 className="subtitle-2">x {number.castToMoney(Number(betRate.rate))}</h6>
               </div>
               <div className="lotto-remove-wrapper">
                 <div className="delete-lotto-button-container" onClick={() => this.handleOnRemove(lotto.seq!)}>
@@ -211,6 +212,7 @@ class SummaryLottoComponent extends Component<ILottoPaymentSummaryProps, ILottoP
               thousandSeparator
               decimalScale={0}
               name="maked-all-value"
+              allowNegative={false}
               onChange={(event: ChangeEvent<HTMLInputElement>) => this.setState({ defaultValue: event.target.value })}
               onBlur={this.handleOnDefaultValueBlur}
               value={this.state.defaultValue}

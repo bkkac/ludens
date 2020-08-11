@@ -144,6 +144,7 @@ const DepositStep1:
                   <div className="col">
                     <h6 className="secondary-blue-text m1-b">{constants.amountLabel}</h6>
                     <InputNumber
+                      allowNegative={false}
                       thousandSeparator
                       decimalScale={0}
                       name="money"

@@ -8,6 +8,7 @@ stages:
   - test
   - build
   - deploy
+  - deploy_prod
 
 test:
   stage: test
@@ -36,3 +37,19 @@ deploy:
     - echo "Deploy project on server"
     - echo ubuntu@"$STAGE_DEPLOY_SERVER"
     - bash .gitlab-stage-deploy.sh
+
+deploy_prod:
+  stage: deploy_prod
+  only:
+    - master
+  
+  before_script:
+    - mkdir -p ~/.ssh
+    - echo -e "$PROD_SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
+    - chmod 600 ~/.ssh/id_rsa
+    - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
+
+  script:
+    - echo "Deploy project on server"
+    - echo ubuntu@"$PROD_DEPLOY_SERVER"
+    - bash .gitlab-prod-deploy.sh
