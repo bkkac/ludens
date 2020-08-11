@@ -15,5 +15,5 @@ export const initialState: ReducerState<IBetRate[]> = {
 
 
 export const endpoint = {
-  getBetRate: `${project.environment[project.environmentName].api}/lotter/bet/rate`,
+  getBetRate: `${project.environment[project.environmentName].api}/lotter/bet/client`,
 }

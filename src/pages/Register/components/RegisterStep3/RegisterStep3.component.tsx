@@ -223,6 +223,7 @@ const RegisterStep3: SFC<
             name="bankNumber"
             format="### ### #### #### ####"
             onBlur={handleBlur}
+            allowNegative={false}
             onValueChange={({ value }) => setFieldValue('bankNumber', value)}
             value={values.bankNumber}
             errorMessage={errors.bankNumber}
