@@ -28,14 +28,19 @@ const CreditCard: SFC<ICreditCard> = ({
 
     const total = number.castToMoney(credit, true)
 
+    const isActive = (typeof onClick === 'function')
+
     const handleOnClickContainer = () => {
-        if(typeof onClick === 'function') {
-            return onClick()
+        if (isActive) {
+            return onClick!()
         }
     }
 
     return (
-        <div className="wallet-card-container d-flex flex-column" onClick={handleOnClickContainer}>
+        <div
+            className={`wallet-card-container d-flex flex-column ${isActive ? 'active' : ''}`}
+            onClick={handleOnClickContainer}
+        >
             <div className="d-flex flex-row align-items-center">
                 <h3 className="wallet-card-name">{constants.thailand}<span>{constants.bet}</span></h3>
                 <h4 className="wallet-card-credit-name">{constants.credit}</h4>

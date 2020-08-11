@@ -12,19 +12,25 @@ import { LottoListChrildren } from './LottoListChrildren'
 import { LottoMake } from './LottoMake'
 import { Affiliate } from './Affiliate'
 import { LottoPayment } from './LottoPayment'
+import { LottoFavorite } from './LottoFavorite'
+import { ContactUs } from './ContactUs'
+import { Newsroom } from './Newsroom'
 
 export default {
   Home,
   Main,
   Deposit,
+  Newsroom,
   Withdraw,
   Register,
+  ContactUs,
   Affiliate,
   LottoList,
   LottoMake,
   CreditInfo,
   ComingSoon,
   LottoPayment,
+  LottoFavorite,
   TransactionList,
   TransactionDetail,
   LottoListChrildren,

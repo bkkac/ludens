@@ -1,0 +1,13 @@
+@import "assets/stylesheets/colors";
+
+.newsroom-container {
+  padding-top: 112px;
+  padding-bottom: 32px;
+  min-height: 100vh;
+
+  .separator-line {
+    width: 100%;
+    height: 0.5px;
+    background-color: rgba($color: $secondary-text, $alpha: .2);
+  }
+}

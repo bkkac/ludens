@@ -48,7 +48,7 @@ class LottoPaymentContainer extends Component<
 	}
 
 	componentDidMount() {
-		if(typeof this.props.location.state === 'undefined' || isEmpty(this.props.location.state)){
+		if (typeof this.props.location.state === 'undefined' || isEmpty(this.props.location.state)) {
 			return this.props.history.replace(routes.main.path)
 		}
 		const { betList } = this.props.location.state as ILottoPaymentRouteProps
@@ -101,7 +101,7 @@ class LottoPaymentContainer extends Component<
 
 	handleOnMakingBetLotto = (lottoList: ILottoNumber[]) => {
 		this.props.loader(true)
-    const lottos = lottoList.map(lotto => ({ ...lotto, value: number.castToInteger(lotto.value)}))
+		const lottos = lottoList.map(lotto => ({ ...lotto, value: number.castToInteger(lotto.value) }))
 		this.props.makingBetLotto(lottos)
 	}
 
@@ -109,10 +109,20 @@ class LottoPaymentContainer extends Component<
 		this.setState({ lottoNumbers: lottoList })
 	}
 
+	handleOnGotoSelectFavorite = () => {
+		const { lottoSlug, selectedLottoGame } = this.props.location.state as ILottoPaymentRouteProps
+		const favoriteRouteProps: ILottoFavoriteRouteProps = {
+			betList: this.state.lottoNumbers,
+			selectedLottoGame,
+			lottoSlug,
+		}
+		this.props.history.replace(routes.lottoFavorite.path, favoriteRouteProps)
+	}
+
 	render() {
 		const { lottoNumbers } = this.state
 		const { location, betRates } = this.props
-		if(typeof location.state === 'undefined' || isEmpty(location.state)){
+		if (typeof location.state === 'undefined' || isEmpty(location.state)) {
 			return <Redirect to={routes.main.path} />
 		}
 		const { lottoSlug, selectedLottoGame } = location.state as ILottoPaymentRouteProps
@@ -139,6 +149,7 @@ class LottoPaymentContainer extends Component<
 							<Summary
 								betRates={betRates}
 								lottoList={lottoNumbers}
+								onNavigateToFavorite={this.handleOnGotoSelectFavorite}
 								onClickBet={this.handleOnMakingBetLotto}
 								onBetListChanged={this.handleOnBetListChanged}
 							/>

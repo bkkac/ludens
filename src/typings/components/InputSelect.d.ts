@@ -1,14 +1,15 @@
 declare interface IInputDefaultSelectProps<T = string> {
 	item: T
+	isSelected?: boolean
 	isDisplaying?: boolean
 	backgroundColor?: string
 	backgroundHoverColor?: string
 }
 
 declare interface IInputSelectProps<T = string, K = string> {
-    name: string
+	name: string
 	value: K
-    valueKey?: string
+	valueKey?: string
 	placeholder?: string
 	backgroundColor?: string
 	backgroundHoverColor?: string

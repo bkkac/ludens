@@ -19,5 +19,6 @@ declare interface RootReducers {
     socket: ISocketState
     affilate: IAffilateState
     config: IConfig
+    newsroom: ReducerState<ReadonlyArray<INews>>
   }
 }

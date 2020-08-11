@@ -12,6 +12,7 @@ import socket from './socket/reducers'
 import credit from './credit/reducers'
 import affilate from './affilate/reducers'
 import config from './config/reducers'
+import newsroom from './newsroom/reducers'
 import storage from 'redux-persist/lib/storage'
 import { persistReducer } from 'redux-persist'
 
@@ -39,6 +40,7 @@ const rootReducers = {
   credit,
   affilate,
   config,
+  newsroom,
 }
 
 export default persistReducer(
