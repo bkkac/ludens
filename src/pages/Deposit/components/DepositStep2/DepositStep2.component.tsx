@@ -253,6 +253,7 @@ const DepositStep2:
                         allowLeadingZeros
                         name="depositHours"
                         onBlur={handleBlur}
+                        allowNegative={false}
                         onChange={handleChange}
                         value={values.depositHours}
                         errorMessage={errors.depositHours}
@@ -267,6 +268,7 @@ const DepositStep2:
                         allowLeadingZeros
                         name="depositMinutes"
                         onBlur={handleBlur}
+                        allowNegative={false}
                         onChange={handleChange}
                         value={values.depositMinutes}
                         errorMessage={errors.depositMinutes}
