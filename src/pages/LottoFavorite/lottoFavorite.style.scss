@@ -1,0 +1,17 @@
+@import 'assets/stylesheets/colors';
+
+.lotto-favorite-container {
+  min-height: 100vh;
+  padding-top: 112px;
+  padding-bottom: 32px;
+
+  .favorite-container {
+    .selector-favorite-wrapper {
+      min-width: 80px;
+    }
+
+    &:nth-child(odd) {
+      background-color: $primary-bg;
+    }
+  }
+}

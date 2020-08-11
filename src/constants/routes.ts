@@ -9,9 +9,9 @@ export default {
   },
   main: { name: 'main', path: '/main', exactPath: '/main' },
   deposit: { name: 'deposit', path: '/deposit', exactPath: '/deposit' },
-  withdraw: { name: 'withdraw', path: '/withdraw', exactPath: '/withdraw'  },
-  transaction: { name: 'transaction', path: '/transaction', exactPath: '/transaction'  },
-  transactionDetail: { name: 'transaction-detail', path: '/transaction/detail', exactPath: '/transaction/detail'  },
+  withdraw: { name: 'withdraw', path: '/withdraw', exactPath: '/withdraw' },
+  transaction: { name: 'transaction', path: '/transaction', exactPath: '/transaction' },
+  transactionDetail: { name: 'transaction-detail', path: '/transaction/detail', exactPath: '/transaction/detail' },
   lotto: { name: 'lotto', path: '/lotto', exactPath: '/lotto' },
   lottoChrildren: {
     name: 'lotto-chrildren', path: '/lotto/:type', exactPath: (type: string) => `/lotto/${type}`,
@@ -22,4 +22,7 @@ export default {
   lottoCheckout: { name: 'lotto-checkout', path: '/checkout/lotto', exactPath: '/checkout/lotto' },
   creditInfo: { name: 'credit-info', path: '/credit-info', exactPath: '/credit-info' },
   affiliate: { name: 'affiliate', path: '/affiliate', exactPath: '/affiliate' },
+  lottoFavorite: { name: 'lottoFavorite', path: '/lotto-favorite', exactPath: '/lotto-favorite' },
+  contactus: { name: 'contact-us', path: '/contactus', exactPath: '/contactus' },
+  newsroom: { name: 'newsroom', path: '/newsroom', exactPath: '/newsroom' },
 }

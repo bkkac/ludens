@@ -10,3 +10,12 @@ declare interface ILottoSchedule {
     endTime: string
     updatedAt: string
 }
+
+declare interface IWebConfig {
+    id: number
+    textRunner: string
+    contactUrl: string
+    contactLine: string
+    contactPhoneNumber: string
+    updatedAt: string
+}

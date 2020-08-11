@@ -15,8 +15,13 @@ declare interface IBetState {
   result: ReducerState<IBetResult[]>
 }
 
+declare interface ILottoFavorite {
+  list: ReducerState<ReadonlyArray<IFavoriteSet>>
+}
+
 declare interface ILottoState {
   list: ReducerState<ILotto[]>
+  favorite: ILottoFavorite
   yeege: IYeegeState
   bet: IBetState
   me: IBetHistoryState

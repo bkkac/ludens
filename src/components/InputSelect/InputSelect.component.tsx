@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { isEmpty, map, noop, find } from 'lodash'
+import { isEmpty, map, noop, find, get, isEqual } from 'lodash'
 import colors from 'constants/colors'
 import { SelectorItem } from 'components'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -91,17 +91,28 @@ class InputSelectComponent<T = string, K = string> extends Component<IInputSelec
 		const Items = map(items, (item, index) => {
 			const key = `${name}-${index}`
 			if (typeof RenderSelected !== 'undefined') {
+
+				const selectedValue = (typeof this.props.valueKey !== 'undefined')
+					? get(item, this.props.valueKey || '', '')
+					: item
 				return (
 					<li onClick={() => this.handleOnClickItem(item)} key={key} id={key}>
-						<RenderSelected item={item} backgroundColor={backgroundColor} backgroundHoverColor={backgroundHoverColor} />
+						<RenderSelected
+							item={item}
+							isSelected={isEqual(selectedValue, this.props.value)}
+							backgroundColor={backgroundColor}
+							backgroundHoverColor={backgroundHoverColor}
+						/>
 					</li>
 				)
 			}
+
 			return (
 				<li onClick={() => this.handleOnClickItem(item)} key={key} id={key}>
 					<SelectorItem
 						title={String(item) || ''}
 						backgroundColor={backgroundColor}
+						isSelected={isEqual(item, this.props.value)}
 						backgroundHoverColor={backgroundHoverColor}
 					/>
 				</li>

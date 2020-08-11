@@ -14,6 +14,8 @@ import {
 } from 'constants/variables'
 import colors from 'constants/colors'
 import { Numbersets } from '../../components'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faRandom } from '@fortawesome/free-solid-svg-icons'
 import './makingLotto.style.scss'
 
 const constants = {
@@ -201,6 +203,7 @@ class MakingLotto extends Component<IMakingLottoComponentProps, IMakingLottoComp
                       onClick={this.handleOnChangeInputMode}
                     >
                       {this.state.inputMode === 'NUMBERSET' ? constants.numberpadMode : constants.numbersetMode}
+                      <FontAwesomeIcon icon={faRandom} className="m1-l" />
                     </ALink>
                   </div>
                 </div>

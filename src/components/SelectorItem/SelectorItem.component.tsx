@@ -6,6 +6,7 @@ import './selectorItem.style.scss'
 const defaultProps: ISelectorItemProps = {
 	title: '',
 	subTitle: '',
+	isSelected: false,
 	isDisplaying: false,
 	backgroundColor: colors.SECONDARY_BG,
 	backgroundHoverColor: colors.PRIMARY_BG,
@@ -15,12 +16,15 @@ const SelectorItemComponent: SFC<ISelectorItemProps> = ({
 	icon,
 	title,
 	subTitle,
+	isSelected,
 	isDisplaying,
 	backgroundColor,
 	backgroundHoverColor,
 }) => {
 
-	const [hoverColor, setHoverColor] = useState(backgroundColor)
+	const baseBackgroundColor = isSelected ? backgroundHoverColor : backgroundColor
+
+	const [hoverColor, setHoverColor] = useState(baseBackgroundColor)
 
 	const handleOnMouseOver = () => {
 		if (!isDisplaying) {
@@ -29,12 +33,12 @@ const SelectorItemComponent: SFC<ISelectorItemProps> = ({
 	}
 
 	const handleOnMouseLeave = () => {
-		setHoverColor(backgroundColor)
+		setHoverColor(baseBackgroundColor)
 	}
 
 	return (
 		<div
-			className={`selector-item-container ${isDisplaying ? 'displaying' : ''}`}
+			className={`selector-item-container ${isSelected ? 'selected' : ''} ${isDisplaying ? 'displaying' : ''}`}
 			style={{ backgroundColor: hoverColor }}
 			onMouseLeave={handleOnMouseLeave}
 			onMouseOver={handleOnMouseOver}
