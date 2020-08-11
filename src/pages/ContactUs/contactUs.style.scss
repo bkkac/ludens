@@ -1,0 +1,15 @@
+@import "assets/stylesheets/spacing";
+@import "assets/stylesheets/colors";
+
+.contactus-container {
+  padding-top: 112px;
+  padding-bottom: 32px;
+  min-height: 100vh;
+
+  .line-wrapper {
+    cursor: pointer;
+    border-radius: 2px;
+    padding: 2px $space-2;
+    background-color: $green-line;
+  }
+}

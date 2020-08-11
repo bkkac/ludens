@@ -10,6 +10,7 @@ import socketAction from './socket/actions'
 import creditAction from './credit/actions'
 import affilateAction from './affilate/actions'
 import config from './config/actions'
+import newsroom from './newsroom/actions'
 
 export default {
   ...userAction,
@@ -24,4 +25,5 @@ export default {
   ...creditAction,
   ...affilateAction,
   ...config,
+  ...newsroom,
 }

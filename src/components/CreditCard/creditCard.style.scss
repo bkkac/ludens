@@ -9,6 +9,10 @@
     background-color: $secondary-bg;
     padding: 32px 40px;
 
+    &.active {
+        cursor: pointer;
+    }
+
     .wallet-card-name {
         span {
             font-family: "SukhumvitSet-Thin";
