@@ -7,7 +7,6 @@ import {
 } from 'components'
 import moment from 'moment'
 import { number } from 'utils'
-import route from 'constants/routes'
 import colors from 'constants/colors'
 import response from 'constants/response'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -36,6 +35,7 @@ import {
 } from './components'
 import { Summary } from '../LottoPayment/components'
 import './lottoMake.style.scss'
+import routes from 'constants/routes'
 
 const constants = {
   ok: 'ตกลง',
@@ -151,7 +151,7 @@ class LottoMakeContainer extends Component<
           action: () => {
             this.setState({ numberList: [] }, () => {
               Modal.success.hide()
-              this.handleOnClickBreadcrumb(route.lottoChrildren.exactPath(this.props.match.params.type))
+              this.handleOnClickBreadcrumb(routes.lottoChrildren.exactPath(this.props.match.params.type))
             })
           },
           actionText: constants.ok,
@@ -352,12 +352,22 @@ class LottoMakeContainer extends Component<
       lottoSlug: this.props.match.params.type,
       selectedLottoGame: locationState.selectedLottoGame,
     }
-    this.props.history.replace(route.lottoCheckout.path, paymentRouteProps)
+    this.props.history.replace(routes.lottoCheckout.path, paymentRouteProps)
   }
 
   handleOnBetListChanged = (lottoList: ILottoNumber[]) => {
     this.setState({ numberList: lottoList })
   }
+
+  handleOnGotoSelectFavorite = () => {
+		const locationState: IMakingLottoRouteProps = this.props.location.state
+		const favoriteRouteProps: ILottoFavoriteRouteProps = {
+			betList: this.state.numberList,
+			lottoSlug: this.props.match.params.type,
+			selectedLottoGame: locationState.selectedLottoGame,
+		}
+		this.props.history.replace(routes.lottoFavorite.path, favoriteRouteProps)
+	}
 
   renderGameMode = () => {
     const locationState: IMakingLottoRouteProps = this.props.location.state
@@ -398,6 +408,7 @@ class LottoMakeContainer extends Component<
       return (
         <div className="d-none d-lg-block">
           <Summary
+            onNavigateToFavorite={this.handleOnGotoSelectFavorite}
             betRates={this.props.betRates}
             lottoList={this.state.numberList}
             onClickBet={this.handleOnMakingBetLotto}
@@ -410,7 +421,7 @@ class LottoMakeContainer extends Component<
   }
 
   handleOnBack = () => {
-    this.handleOnClickBreadcrumb(route.lottoChrildren.exactPath(this.props.match.params.type))
+    this.handleOnClickBreadcrumb(routes.lottoChrildren.exactPath(this.props.match.params.type))
   }
 
   handleOnSwitchMode = () => {

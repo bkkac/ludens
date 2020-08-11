@@ -10,4 +10,6 @@ declare interface IButton {
   size?: ButtonSize
   disabled?: boolean
   buttonType?: ButtonType
+  backgroundColor?: string
+  backgroundHoverColor?: string
 }

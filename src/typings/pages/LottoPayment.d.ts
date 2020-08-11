@@ -25,6 +25,7 @@ declare interface ILottoPaymentState {
 declare interface ILottoPaymentSummaryProps {
     betRates: IBetRate[]
     lottoList: ILottoNumber[]
+    onNavigateToFavorite?(): void
     onClickBet(data: ILottoNumber[]): void
     onBetListChanged?(data: ILottoNumber[]): void
 }

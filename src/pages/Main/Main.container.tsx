@@ -13,6 +13,7 @@ import ProblemIcon from 'assets/images/main/problem/problem.svg'
 import MegaphoneIcon from 'assets/images/main/megaphone/megaphone.svg'
 
 import './main.style.scss'
+import routes from 'constants/routes'
 
 const constants = {
   creditLabel: 'ยอดเครดิต',
@@ -22,7 +23,7 @@ const constants = {
   gotoCredit: 'ข้อมูลเครดิต',
   gotoWD: 'ฝาก - ถอน',
   gotoAffli: 'ระบบแนะนำ',
-  gotoHowto: 'วิธีใช้งาน',
+  gotoNews: 'ข่าวสาร',
   gotoContact: 'ติดต่อทีมงาน',
 }
 
@@ -50,8 +51,6 @@ class MainContainer extends Component<IMainProps & IMainActionProps & DefaultPro
     this.context.wallet.changeShown(true)
   }
 
-  onPressAddingCredit = () => this.props.history.push('/deposit')
-
   onNavigateTo = (path: string) => this.props.history.push(path)
 
   render() {
@@ -62,7 +61,10 @@ class MainContainer extends Component<IMainProps & IMainActionProps & DefaultPro
             <div className="col-12 col-sm-12 col-md-12 col-lg-4">
               <div className="row">
                 <div className="col d-flex justify-content-center">
-                  <CreditCard credit={this.props.wallet.money || 0} onClick={() => this.onNavigateTo('/credit-info')} />
+                  <CreditCard
+                    credit={this.props.wallet.money || 0}
+                    onClick={() => this.onNavigateTo(routes.creditInfo.path)}
+                  />
                 </div>
               </div>
               <div className="row m2-t m4-b">
@@ -82,7 +84,7 @@ class MainContainer extends Component<IMainProps & IMainActionProps & DefaultPro
                         <div className="col-6 col-md-12 m3-b d-flex">
                           <ButtonMenu
                             id="goto-credit-info-button"
-                            onClick={() => this.onNavigateTo('/credit-info')}
+                            onClick={() => this.onNavigateTo(routes.creditInfo.path)}
                             text={constants.gotoCredit}
                             icon={CreditIcon}
                           />
@@ -90,7 +92,7 @@ class MainContainer extends Component<IMainProps & IMainActionProps & DefaultPro
                         <div className="col-6 col-md-12 m3-b d-flex">
                           <ButtonMenu
                             id="goto-transaction-button"
-                            onClick={() => this.onNavigateTo('/transaction')}
+                            onClick={() => this.onNavigateTo(routes.transaction.path)}
                             text={constants.gotoWD}
                             icon={WalletIcon}
                           />
@@ -100,7 +102,7 @@ class MainContainer extends Component<IMainProps & IMainActionProps & DefaultPro
                     <div className="col-6 col-sm-6 col-md-7 col-lg-7 col-xl-7 m3-b d-flex">
                       <ButtonMenu
                         id="goto-lotto-button"
-                        onClick={() => this.onNavigateTo('/lotto')}
+                        onClick={() => this.onNavigateTo(routes.lotto.path)}
                         text={constants.gotoLotto}
                         icon={LottoIcon}
                       />
@@ -108,6 +110,7 @@ class MainContainer extends Component<IMainProps & IMainActionProps & DefaultPro
                     <div className="col-6 d-md-none m3-b d-flex">
                       <ButtonMenu
                         id="goto-contact-button"
+                        onClick={() => this.onNavigateTo(routes.contactus.path)}
                         text={constants.gotoContact}
                         icon={ContactIcon}
                       />
@@ -119,6 +122,7 @@ class MainContainer extends Component<IMainProps & IMainActionProps & DefaultPro
                     <div className="d-none d-sm-none d-md-flex col-md-3 col-lg-3 col-xl-6 m3-b">
                       <ButtonMenu
                         id="goto-contact-button"
+                        onClick={() => this.onNavigateTo(routes.contactus.path)}
                         text={constants.gotoContact}
                         icon={ContactIcon}
                       />
@@ -126,14 +130,15 @@ class MainContainer extends Component<IMainProps & IMainActionProps & DefaultPro
                     <div className="col-6 col-md-3 col-lg-3 m3-b col-xl-6 d-flex">
                       <ButtonMenu
                         id="goto-howto-button"
-                        text={constants.gotoHowto}
+                        onClick={() => this.onNavigateTo(routes.newsroom.path)}
+                        text={constants.gotoNews}
                         icon={ProblemIcon}
                       />
                     </div>
                     <div className="col-6 col-md-6 col-lg-6 col-xl-12 m3-b d-flex">
                       <ButtonMenu
                         id="goto-affilate-button"
-                        onClick={() => this.onNavigateTo('/affiliate')}
+                        onClick={() => this.onNavigateTo(routes.affiliate.path)}
                         text={constants.gotoAffli}
                         icon={MegaphoneIcon}
                       />

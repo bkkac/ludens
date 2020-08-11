@@ -34,9 +34,10 @@ const defaultProps: ILottoPaymentSummaryProps = {
   lottoList: [],
   onClickBet() { noop() },
   onBetListChanged() { noop() },
+  onNavigateToFavorite() { noop() },
 }
 
-class SummaryLottoModal extends Component<ILottoPaymentSummaryProps, ILottoPaymentSummaryState> {
+class SummaryLottoComponent extends Component<ILottoPaymentSummaryProps, ILottoPaymentSummaryState> {
 
   static defaultProps = defaultProps
 
@@ -91,6 +92,10 @@ class SummaryLottoModal extends Component<ILottoPaymentSummaryProps, ILottoPayme
     this.setState({ betList: newBetList }, () => {
       this.props.onBetListChanged!(newBetList)
     })
+  }
+
+  handleOnGotoFavoriteSelect = () => {
+    this.props.onNavigateToFavorite!()
   }
 
   calculateBenefitValue = (betValueString: string = '0', rate: string = '0') => {
@@ -248,6 +253,7 @@ class SummaryLottoModal extends Component<ILottoPaymentSummaryProps, ILottoPayme
                     <ALink
                       id="goto-maked-history-list"
                       color={colors.PRIMARY_BLUE}
+                      onClick={this.handleOnGotoFavoriteSelect}
                     >
                       {constants.historyMakedList}
                       <FontAwesomeIcon icon={faChevronRight} className="ml-1" />
@@ -283,4 +289,4 @@ class SummaryLottoModal extends Component<ILottoPaymentSummaryProps, ILottoPayme
   }
 }
 
-export default SummaryLottoModal
+export default SummaryLottoComponent

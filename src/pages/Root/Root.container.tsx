@@ -19,17 +19,15 @@ import { THEME_MODE } from 'constants/variables'
 import { LudensContext } from 'configs/context'
 import event from 'constants/event'
 
-const constants = {
-  textRunning: 'ยินดีต้อนรับสู่ ThailandBet เว็บแทงหวยออนไลน์ ที่ดีที่สุด เดิมพันง่าย จ่ายเงินจริง เล่นได้ทุกที่ทุกเวลา หากต้องสร้างรายได้กับการเดิมพัน โปรดีที่สุด จ่ายชัว 100%',
-}
-
 type DefaultProps = Readonly<typeof defaultProps>
 
 const defaultProps: IRootProps & IRootActionProps = {
   wallet: { money: 0 },
   accessToken: '',
+  textRunning: '',
   loader() { noop() },
   logout() { noop() },
+  getMeConfig() { noop() },
   connectSocket() { noop() },
 }
 
@@ -45,6 +43,7 @@ class RootContainer extends Component<IRootProps & IRootActionProps & DefaultPro
   componentDidMount() {
     if (!isEmpty(this.props.accessToken)) {
       this.props.connectSocket()
+      this.props.getMeConfig()
     }
   }
 
@@ -134,7 +133,7 @@ class RootContainer extends Component<IRootProps & IRootActionProps & DefaultPro
     return (
       <LudensContext.Provider value={contextProviderValues}>
         <Router>
-          <TextRunning text={constants.textRunning} />
+          <TextRunning text={this.props.textRunning} />
           <PageNavbar />
           <PageElement />
         </Router>

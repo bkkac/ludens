@@ -95,6 +95,27 @@ const routes: IRoutes[] = [
     private: true,
   },
   {
+    exact: true,
+    name: route.lottoFavorite.name,
+    path: route.lottoFavorite.path,
+    component: pages.LottoFavorite,
+    private: true,
+  },
+  {
+    exact: true,
+    name: route.contactus.name,
+    path: route.contactus.path,
+    component: pages.ContactUs,
+    private: true,
+  },
+  {
+    exact: true,
+    name: route.newsroom.name,
+    path: route.newsroom.path,
+    component: pages.Newsroom,
+    private: true,
+  },
+  {
     name: route.notFound.name,
     path: route.notFound.path,
     component: pages.ComingSoon,
