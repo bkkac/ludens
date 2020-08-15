@@ -13,7 +13,7 @@ declare interface ILottoPaymentActionProps {
 }
 
 declare interface ILottoPaymentRouteProps {
-    selectedLottoGame: IYeegeGame
+    selectedLottoGame: ILottoGame
     lottoSlug: TLottoSlug
     betList: ILottoNumber[]
 }

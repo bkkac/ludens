@@ -1,5 +1,5 @@
 import React, { SFC } from 'react'
-import ThaiFlagIcon from 'assets/images/flags/thailand.png'
+import LogoThailandBet from 'assets/images/logo/logothailandbet.png'
 import { THEME_MODE } from 'constants/variables'
 import { noop } from 'lodash'
 import { number } from 'utils'
@@ -10,7 +10,7 @@ import './navbar.style.scss'
 type DefaultProps = Readonly<typeof defaultProps>
 
 const defaultProps: INavbarProps = {
-  mode: THEME_MODE.DARKER,
+  mode: THEME_MODE.DARK,
   isDisplayWallet: true,
   isAuthorized: false,
   wallet: {},
@@ -32,9 +32,10 @@ const Navbar: SFC<INavbarProps & DefaultProps> = ({
       if (!isDisplayWallet) { return <></> }
       return (
         <div className={`credit-badge-wrapper ${mode}`}>
-          <span className="credit-badge-text">
-            <FontAwesomeIcon icon={faCreditCard} className="font-awsome-creditbadge" />
-            {number.castToMoney(wallet?.money || 0)}</span>
+          <h6>
+            <FontAwesomeIcon icon={faCreditCard} className="m0-r" />
+            {number.castToMoney(wallet?.money || 0)}
+          </h6>
         </div>
       )
     }
@@ -52,8 +53,8 @@ const Navbar: SFC<INavbarProps & DefaultProps> = ({
     <div className={`col-12 navbar-container position-fixed ${mode}`}>
       <div className="container">
         <div className="leading-navbar-container" onClick={onPressesLogo}>
-          <img src={ThaiFlagIcon} alt="thailand" className="logo-container" />
-          <div className="name-container d-none d-sm-none d-md-block">THAILAND<span>BET</span></div>
+          <img src={LogoThailandBet} alt="thailand" className="logo-container" />
+          <h4 className="name-container p1-l m0-t d-none d-sm-none d-md-block">THAILAND<span>BET</span></h4>
         </div>
         <div className="trailing-navbar-container">
           <CreditBadgeComponent />

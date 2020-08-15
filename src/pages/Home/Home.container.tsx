@@ -7,7 +7,7 @@ import { Modal } from 'components'
 import { LoginForm, LottoList } from './components'
 import initialValues from './models/initialValues'
 import scheme from './models/scheme'
-import ThailandIcon from 'assets/images/flags/thailand.png'
+import LogoThailandBet from 'assets/images/logo/logothailandbet.png'
 import './home.style.scss'
 
 const constants = {
@@ -109,8 +109,8 @@ class HomeContainer extends Component<IHomeProps & IHomeActionProps & DefaultPro
         <div className="login-container primary-bg">
           <div className="container">
             <div className="d-flex flex-column justify-content-center align-items-center m3-b">
-              <img alt="thailand bet logo" src={ThailandIcon} className="login-logo" />
-              <h3>Thailand<span>BET</span></h3>
+              <img alt="thailand bet logo" src={LogoThailandBet} className="login-logo m3-b" />
+              {/* <h3>Thailand<span>BET</span></h3> */}
             </div>
             <RenderLoginFormComponent />
           </div>

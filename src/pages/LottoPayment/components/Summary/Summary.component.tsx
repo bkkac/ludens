@@ -27,6 +27,7 @@ const constants = {
   defaultValue: 'เดิมพันราคาเท่ากัน',
   totalToPay: 'เดิมพันทั้งหมด',
   totalBenefit: 'เมื่อชนะทั้งหมด',
+  clean: 'ล้าง',
 }
 
 const defaultProps: ILottoPaymentSummaryProps = {
@@ -96,6 +97,10 @@ class SummaryLottoComponent extends Component<ILottoPaymentSummaryProps, ILottoP
 
   handleOnGotoFavoriteSelect = () => {
     this.props.onNavigateToFavorite!()
+  }
+
+  handleOnCleanLit = () => {
+    this.setState({ betList: [] })
   }
 
   calculateBenefitValue = (betValueString: string = '0', rate: string = '0') => {
@@ -249,7 +254,7 @@ class SummaryLottoComponent extends Component<ILottoPaymentSummaryProps, ILottoP
           <div className="col">
             <div className="summary-maked-list-container secondary-bg p2-b">
               <div className="row">
-                <div className="col ">
+                <div className="col">
                   <div className="d-flex flex-row align-items-center p2-t p2-x">
                     <h3 className="flex">{constants.lottoListTitle}</h3>
                     <ALink
@@ -260,6 +265,20 @@ class SummaryLottoComponent extends Component<ILottoPaymentSummaryProps, ILottoP
                       {constants.historyMakedList}
                       <FontAwesomeIcon icon={faChevronRight} className="ml-1" />
                     </ALink>
+                  </div>
+                </div>
+              </div>
+              <div className="row">
+                <div className="col">
+                  <div className="d-flex flex-row">
+                    <Button
+                      size="small"
+                      id="delete-all-lotto"
+                      text={constants.clean}
+                      onClick={this.handleOnCleanLit}
+                      backgroundColor={colors.PRIMARY_RED}
+                      backgroundHoverColor={colors.SECONDARY_RED}
+                    />
                   </div>
                 </div>
               </div>

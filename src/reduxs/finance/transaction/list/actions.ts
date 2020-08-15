@@ -11,7 +11,7 @@ const getTransactionListAction = createAction(GET_TRANSACTION_LIST_REQUEST)
 
 const getTransactionListSuccessAction = createAction(
   GET_TRANSACTION_LIST_SUCCESS,
-  resolve => (data: AxiosResponse<APIResponse<ITransaction[]>>) => resolve(data))
+  resolve => (data: AxiosResponse<APIResponse<APIPagination<ITransaction>>>) => resolve(data))
 
 const getTransactionListFailureAction = createAction(
   GET_TRANSACTION_LIST_FAILURE,
