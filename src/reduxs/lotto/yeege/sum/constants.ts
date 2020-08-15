@@ -21,5 +21,5 @@ export const initialState: ReducerState<string> = {
 }
 
 export const endpoint = {
-  getAllYeegeGame: (query: IGetYeegeSum) => `${project.environment[project.environmentName].api}/lotter/yegee/play/sum?date=${query.date}&round=${query.round}`,
+  getAllYeegeGame: (query: ILottoRoundQuery) => `${project.environment[project.environmentName].api}/lotter/yegee/play/sum?date=${query.date}&round=${query.round}`,
 }

@@ -1,7 +1,7 @@
 declare type TMakeLottoGameMode = | 'LOTTO' | 'GAME'
 
 declare interface IMakingLottoRouteProps {
-  selectedLottoGame: IYeegeGame
+  selectedLottoGame: ILottoGame
   betList?: ILottoNumber[]
 }
 
@@ -27,22 +27,28 @@ declare interface IMakingLottoProps {
   getBetResultCode: number | string
   betResults: IBetResult[]
   betRates: IBetRate[]
+  getLottoGameIsFetching: boolean
+  getLottoGameCode: number | string
+  getLottoGameError: string
+  lottoGame: ILottoGame
 }
 
 declare interface IMakingLottoActionProps {
   getBetRate(): void
-  getPlayedYeegeList(data: IGetYeegeSum): void
-  listenPlayedYeegeList(data: IGetYeegeSum): void
-  unlistenPlayedYeegeList(data: IGetYeegeSum): void
+  getLottoGame(query: ILottoRoundQuery)
+  getPlayedYeegeList(query: ILottoRoundQuery): void
+  listenPlayedYeegeList(query: ILottoRoundQuery): void
+  unlistenPlayedYeegeList(query: ILottoRoundQuery): void
   makingBetLotto(data: ILottoNumber[]): void
-  getYeegeSum(data: IGetYeegeSum): void
-  listenYeegeSum(data: IGetYeegeSum): void
-  unlistenYeegeSum(data: IGetYeegeSum): void
+  getYeegeSum(query: ILottoRoundQuery): void
+  listenYeegeSum(query: ILottoRoundQuery): void
+  unlistenYeegeSum(query: ILottoRoundQuery): void
   getBetResult(data: IBetResultRequest): void
   playYeege(data: IYeegePlayRequest): void
   loader(state: boolean): void
   clearBetResult(): void
   clearYeegeSum(): void
+  clearYeegePlayedList(): void
 }
 
 declare interface IMakingLottoState {

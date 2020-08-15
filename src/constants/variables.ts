@@ -4,7 +4,6 @@ import ImageBankSet from 'assets/images/global/bank'
 export const THEME_MODE = {
   DARK: 'dark-mode',
   LIGHT: 'light-mode',
-  DARKER: 'darker-mode',
 }
 
 export const EBANK: { [key in TBankType]: string } = {

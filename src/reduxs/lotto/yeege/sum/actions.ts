@@ -15,7 +15,7 @@ import { AxiosResponse, AxiosError } from 'axios'
 
 const getYeegeSumAction = createAction(
   GET_YEEGE_SUM_REQUEST,
-  resolve => (data: IGetYeegeSum) => resolve(data))
+  resolve => (data: ILottoRoundQuery) => resolve(data))
 
 const getYeegeSumSuccessAction = createAction(
   GET_YEEGE_SUM_SUCCESS,
@@ -29,11 +29,11 @@ const getYeegeSumCancelAction = createAction(GET_YEEGE_SUM_CANCEL)
 
 const listenYeegeSumSocket = createAction(
   LISTEN_YEEGE_SUM_SOCKET,
-  resolve => (data: IGetYeegeSum) => resolve(data))
+  resolve => (data: ILottoRoundQuery) => resolve(data))
 
 const unlistenYeegeSumSocket = createAction(
   UNLISTEN_YEEGE_SUM_SOCKET,
-  resolve => (data: IGetYeegeSum) => resolve(data))
+  resolve => (data: ILottoRoundQuery) => resolve(data))
 
 const updateYeegeSumAction = createAction(
   UPDATE_YEEGE_SUM_REQUEST,

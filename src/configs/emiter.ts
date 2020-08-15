@@ -3,13 +3,13 @@ import EventEmitter from 'eventemitter3'
 const eventEmitter = new EventEmitter()
 
 const Emitter = {
-  on: (event: any, fn: (data: IModalShowProps | IModalHideProps) => void) =>
+  on: <T = any>(event: TEvent, fn: (data: T) => void) =>
     eventEmitter.on(event, fn),
-  once: (event: any, fn: (data: IModalShowProps | IModalHideProps) => void) =>
+  once: <T = any>(event: TEvent, fn: (data: T) => void) =>
     eventEmitter.once(event, fn),
-  off: (event: any, fn?: (data: IModalShowProps | IModalHideProps) => void) =>
+  off: <T = any>(event: TEvent, fn?: (data: T) => void) =>
     eventEmitter.off(event, fn),
-  emit: (event: any, payload: IModalShowProps | IModalHideProps) =>
+  emit: <T = any>(event: TEvent, payload: T) =>
     eventEmitter.emit(event, payload),
 }
 

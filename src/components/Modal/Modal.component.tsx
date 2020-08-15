@@ -1,16 +1,13 @@
 import React, { Component } from 'react'
 import Emitter from 'configs/emiter'
-import event from 'constants/event'
 import ModalCore from 'react-bootstrap/Modal'
 import './modal.style.scss'
 
-type DefaultProps = Readonly<typeof defaultProps>
-
 const defaultProps: IModalProps = {
-  event: event.MODAL,
+  event: 'MODAL',
 }
 
-class Modal extends Component<IModalProps & DefaultProps, IModalState> {
+class Modal extends Component<IModalProps, IModalState> {
 
   static defaultProps = defaultProps
 

@@ -1,0 +1,5 @@
+declare type TEvent =
+  | 'MODAL'
+  | 'MODAL_OVER'
+  | 'ALERT_NOTIFICATION_SHOW'
+  | 'ALERT_NOTIFICATION_HIDE'
