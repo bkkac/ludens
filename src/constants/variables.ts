@@ -83,6 +83,7 @@ export const LOTTO_TYPE: { [type in TLottoType]: string } = {
   NAT_SHARE_HUNGSENG_MORNING: 'หุ้นฮั่งเส็งรอบเช้า',
   NAT_SHARE_HUNGSENG_AFTERNOON: 'หุ้นฮั่งเส็งรอบบ่าย',
   NAT_SHARE_LAO: 'หุ้นลาว',
+  LAO_SUITE:'หวยลาว',
   YEGEE: 'ยี่กี',
 }
 
@@ -91,6 +92,7 @@ export const LOTTO_SLUG_NAME: { [type in TLottoSlug]: string } = {
   LOTTER_GOVN: 'หวยรัฐบาล',
   LOTTER_BAAC: 'หวยธกส',
   LOTTER_GSB: 'หวยออมสิน',
+  LOTTER_NAT_SHARE_LAO: 'หวยลาว',
   LOTTER_LAO_SUITE: 'หวยลาว (เลขชุด)',
   LOTTER_TH_SHARE_MORNING: 'หวยหุ้นไทยเช้า',
   LOTTER_TH_SHARE_MIDDAY: 'หวยหุ้นไทยเที่ยง',
@@ -138,6 +140,7 @@ export const LOTTO_GAME_TYPES: { [type in TLottoSlug]: TLottoGameType[] } = {
   LOTTER_BAAC: [],
   LOTTER_GSB: [],
   LOTTER_LAO_SUITE: [],
+  LOTTER_NAT_SHARE_LAO: [],
   LOTTER_TH_SHARE_MORNING: [],
   LOTTER_TH_SHARE_MIDDAY: [],
   LOTTER_TH_SHARE_AFTERNOON: [],
