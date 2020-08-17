@@ -1,5 +1,5 @@
 declare interface IModalProps {
-  event: string
+  event: TEvent
 }
 
 declare interface IModalState {

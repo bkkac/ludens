@@ -1,12 +1,14 @@
 import { combineReducers } from 'redux'
-import game from './game/reducers'
 import sum from './sum/reducers'
 import play from './play/reducers'
+import game from './game/reducers'
+import gameList from './gameList/reducers'
 import playedList from './playedList/reducers'
 
 export default combineReducers({
-  game,
   sum,
   play,
+  game,
+  gameList,
   playedList,
 })

@@ -4,7 +4,7 @@ import { THEME_MODE } from 'constants/variables'
 
 export const LudensContext = createContext({
   theme: {
-    mode: THEME_MODE.DARKER,
+    mode: THEME_MODE.DARK,
     changeMode(_: string) { noop() },
   },
   wallet: {

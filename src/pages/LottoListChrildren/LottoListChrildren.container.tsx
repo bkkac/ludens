@@ -56,8 +56,8 @@ class LottoListChrildrenContainer extends Component<
     }
   }
 
-  handleOnClickPlay = (game: IYeegeGame) => {
-    this.props.history.replace(routes.lottoMaking.exactPath(this.props.match.params.type), { selectedLottoGame: game })
+  handleOnClickPlay = (game: ILottoGame) => {
+    this.props.history.push(routes.lottoMaking.exactPath(this.props.match.params.type), { selectedLottoGame: game })
   }
 
   handleOnClickBreadcrumb = (path: string) => {
@@ -66,7 +66,7 @@ class LottoListChrildrenContainer extends Component<
 
   renderSubLottoList = () => {
     if (!isEmpty(this.props.yeegeGameList)) {
-      const ListComponent = this.props.yeegeGameList.map((yeege: IYeegeGame, index) => {
+      const ListComponent = this.props.yeegeGameList.map((yeege: ILottoGame, index) => {
         const yeegeRound = `${constants.round} ${yeege.round}`
         const expireTime = moment(yeege.endTime).add(-7, 'hour').format('DD MMM YY HH:mm')
 

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { ALink } from 'components'
+import { ALink, AlertNotification } from 'components'
 import { noop } from 'lodash'
 import colors from 'constants/colors'
 import { RouteComponentProps } from 'react-router-dom'
@@ -23,6 +23,7 @@ const constants = {
 	totalMaked: 'จำนวนแทงทั้งหมด',
 	prefixMemberCreatedAt: 'เป็นสมาชิก',
 	multipy2Percent: 100,
+	copied: 'คัดลอกแล้ว!',
 }
 
 type DefaultProps = Readonly<typeof defaultProps>
@@ -71,8 +72,7 @@ class AffilateContainer extends
 
 	onPressCopy = (link: string) => {
 		copy(link)
-		// TODO: Create popup show copied. state
-		console.log('copied.')
+		AlertNotification.show({ text: constants.copied, countdown: true })
 	}
 
 	render() {

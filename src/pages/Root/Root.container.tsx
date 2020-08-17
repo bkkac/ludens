@@ -4,6 +4,7 @@ import {
   Modal,
   Navbar,
   TextRunning,
+  AlertNotification,
 } from 'components'
 import {
   BrowserRouter as Router,
@@ -17,7 +18,6 @@ import routes from 'configs/routes'
 import { Loader } from '../Loader'
 import { THEME_MODE } from 'constants/variables'
 import { LudensContext } from 'configs/context'
-import event from 'constants/event'
 
 type DefaultProps = Readonly<typeof defaultProps>
 
@@ -36,14 +36,14 @@ class RootContainer extends Component<IRootProps & IRootActionProps & DefaultPro
   static defaultProps = defaultProps
 
   state: IRootStates = {
-    themeMode: THEME_MODE.DARKER,
+    themeMode: THEME_MODE.DARK,
     isShownWallet: true,
   }
 
   componentDidMount() {
+    this.props.getMeConfig()
     if (!isEmpty(this.props.accessToken)) {
       this.props.connectSocket()
-      this.props.getMeConfig()
     }
   }
 
@@ -137,8 +137,9 @@ class RootContainer extends Component<IRootProps & IRootActionProps & DefaultPro
           <PageNavbar />
           <PageElement />
         </Router>
-        <Modal.Core event={event.MODAL} />
-        <Modal.Core event={event.MODAL_OVER} />
+        <AlertNotification.Core />
+        <Modal.Core event="MODAL" />
+        <Modal.Core event="MODAL_OVER" />
         <Loader />
       </LudensContext.Provider>
     )
