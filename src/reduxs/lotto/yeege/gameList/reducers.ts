@@ -4,16 +4,16 @@ import { initialState } from './constants'
 import actions from './actions'
 
 const getYeegeGameListReducer = (
-  state: ReducerState<ILottoGame> = initialState,
+  state: ReducerState<ILottoGame[]> = initialState,
   action: RootAction
 ): ReducerState<any> => {
   switch (action.type) {
-    case getType(actions.getLottoGameAction):
+    case getType(actions.getYeegeGameListAction):
       return {
         ...state,
         isFetching: true,
       }
-    case getType(actions.getLottoGameSuccessAction):
+    case getType(actions.getYeegeGameListSuccessAction):
       return {
         ...state,
         isFetching: false,
@@ -21,25 +21,25 @@ const getYeegeGameListReducer = (
         code: action.payload.status,
       }
 
-    case getType(actions.getLottoGameFailureAction):
+    case getType(actions.getYeegeGameListFailureAction):
       return {
         ...state,
         isFetching: false,
         error: action.payload.message,
         code: action.payload.code,
       }
-    case getType(actions.updateLottoGameAction):
+    case getType(actions.updateYeegeGameListAction):
       return {
         ...state,
       }
-    case getType(actions.updateLottoGameSuccessAction):
+    case getType(actions.updateYeegeGameListSuccessAction):
       return {
         ...state,
         isFetching: false,
         data: action.payload,
       }
 
-    case getType(actions.updateLottoGameFailureAction):
+    case getType(actions.updateYeegeGameListFailureAction):
       return {
         ...state,
       }

@@ -5,6 +5,7 @@ import {
   InputText,
   InputNumber,
   SelectorItem,
+  AlertNotification,
 } from 'components'
 import moment from 'moment'
 import { number } from 'utils'
@@ -34,6 +35,7 @@ const constants = {
   remainingTime: 'คุณมีเวลาโอนเงินภายใน 10 นาที',
   selectBank: 'เลือกธนาคาร',
   copy: 'คัดลอก',
+  copied: 'คัดลอก.',
 }
 
 
@@ -137,8 +139,7 @@ const DepositStep2:
 
       const handleOnCopy = (bankNumber: string) => {
         copy(bankNumber)
-        // TODO: Create popup show copied. state
-        console.log('copied.')
+        AlertNotification.show({ text: constants.copied, countdown: true })
       }
 
       const requestedTransaction = extraProps?.requestedTransaction

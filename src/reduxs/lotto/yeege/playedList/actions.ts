@@ -14,7 +14,7 @@ import { AxiosResponse, AxiosError } from 'axios'
 
 const getPlayedYeegeListAction = createAction(
   GET_PLAYED_YEEGE_LIST_REQUEST,
-  resolve => (data: IGetYeegeSum) => resolve(data))
+  resolve => (data: ILottoRoundQuery) => resolve(data))
 
 const getPlayedYeegeListSuccessAction = createAction(
   GET_PLAYED_YEEGE_LIST_SUCCESS,
@@ -28,11 +28,11 @@ const getPlayedYeegeListCancelAction = createAction(GET_PLAYED_YEEGE_LIST_CANCEL
 
 const listenPlayedYeegeListSocket = createAction(
   LISTEN_PLAYED_YEEGE_LIST_SOCKET,
-  resolve => (data: IGetYeegeSum) => resolve(data))
+  resolve => (data: ILottoRoundQuery) => resolve(data))
 
 const unlistenPlayedYeegeListSocket = createAction(
   UNLISTEN_PLAYED_YEEGE_LIST_SOCKET,
-  resolve => (data: IGetYeegeSum) => resolve(data))
+  resolve => (data: ILottoRoundQuery) => resolve(data))
 
 const updatePlayedYeegeListAction = createAction(
   UPDATE_PLAYED_YEEGE_LIST_REQUEST,

@@ -1,6 +1,5 @@
 import React from 'react'
 import emiter from 'configs/emiter'
-import event from 'constants/event'
 import { ModalProps } from 'react-bootstrap/Modal'
 import Modal from './Modal.component'
 import { Success } from './components/Success'
@@ -11,7 +10,7 @@ const success = {
     const modalProps: ModalProps = {
       size: 'sm',
     }
-    return emiter.emit(event.MODAL_OVER, {
+    return emiter.emit<IModalShowProps>('MODAL_OVER', {
       state: 'show',
       extraProps: modalProps,
       component: (
@@ -24,7 +23,7 @@ const success = {
       ),
     })
   },
-  hide: () => emiter.emit(event.MODAL_OVER, { state: 'hide' }),
+  hide: () => emiter.emit<IModalHideProps>('MODAL_OVER', { state: 'hide' }),
 }
 
 const error = {
@@ -32,7 +31,7 @@ const error = {
     const modalProps: ModalProps = {
       size: 'sm',
     }
-    return emiter.emit(event.MODAL_OVER, {
+    return emiter.emit('MODAL_OVER', {
       state: 'show',
       extraProps: modalProps,
       component: (
@@ -45,7 +44,7 @@ const error = {
       ),
     })
   },
-  hide: () => emiter.emit(event.MODAL_OVER, { state: 'hide' }),
+  hide: () => emiter.emit('MODAL_OVER', { state: 'hide' }),
 }
 
 export default {

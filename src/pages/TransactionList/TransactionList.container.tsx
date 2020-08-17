@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import { RouteComponentProps } from 'react-router-dom'
 import {
+  get,
+  map,
   noop,
   keys,
   sortBy,
@@ -82,16 +84,16 @@ class TransactionListContainer extends
   }
 
   renderTransactionList = () => {
+    if (isEmpty(this.props.transactionList)) { return <></> }
+
     const transactionGroupList: Dictionary<ITransaction[]> = groupBy<ITransaction>(
-      this.props.transactionList.map(transaction =>
-        ({ ...transaction, createdAt: moment(transaction.updatedAt).format('YYYYMMDD') })),
+      map(this.props.transactionList, (transaction) =>
+        ({ ...transaction, createdAt: moment(get(transaction, 'updatedAt', '')).format('YYYYMMDD') })),
       'createdAt')
 
-    if (isEmpty(transactionGroupList)) { return <></> }
-
-    return reverse(keys(transactionGroupList).sort()).map((key, index) => {
+    return map(reverse(keys(transactionGroupList).sort()), (key, index) => {
       const TransactionDay = reverse(sortBy(
-        transactionGroupList[key].map(ts => ({ ...ts, updatedAt: moment(ts.updatedAt).format('YYYYMMDDHHmmss') })),
+        map(transactionGroupList[key], ts => ({ ...ts, updatedAt: moment(ts.updatedAt).format('YYYYMMDDHHmmss') })),
         ['createdAt', 'updatedAt']))
         .map((transaction, transactionIndex) => {
           return (

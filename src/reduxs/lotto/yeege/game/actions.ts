@@ -1,45 +1,47 @@
 import { createAction } from 'typesafe-actions'
 import {
-  GET_YEEGE_GAME_LIST_REQUEST,
-  GET_YEEGE_GAME_LIST_SUCCESS,
-  GET_YEEGE_GAME_LIST_FAILURE,
-  GET_YEEGE_GAME_LIST_CANCEL,
-  UPDATE_YEEGE_GAME_LIST_REQUEST,
-  UPDATE_YEEGE_GAME_LIST_SUCCESS,
-  UPDATE_YEEGE_GAME_LIST_FAILURE,
+  GET_LOTTO_GAME_REQUEST,
+  GET_LOTTO_GAME_SUCCESS,
+  GET_LOTTO_GAME_FAILURE,
+  GET_LOTTO_GAME_CANCEL,
+  UPDATE_LOTTO_GAME_REQUEST,
+  UPDATE_LOTTO_GAME_SUCCESS,
+  UPDATE_LOTTO_GAME_FAILURE,
 } from './constants'
 import { AxiosResponse, AxiosError } from 'axios'
 
-const getYeegeGameListAction = createAction(GET_YEEGE_GAME_LIST_REQUEST)
+const getLottoGameAction = createAction(
+  GET_LOTTO_GAME_REQUEST,
+  resolve => (qurey: ILottoRoundQuery) => resolve(qurey))
 
-const getYeegeGameListSuccessAction = createAction(
-  GET_YEEGE_GAME_LIST_SUCCESS,
-  resolve => (data: AxiosResponse<APIResponse<IYeegeGame[]>>) => resolve(data))
+const getLottoGameSuccessAction = createAction(
+  GET_LOTTO_GAME_SUCCESS,
+  resolve => (data: AxiosResponse<APIResponse<ILottoGame>>) => resolve(data))
 
-const getYeegeGameListFailureAction = createAction(
-  GET_YEEGE_GAME_LIST_FAILURE,
+const getLottoGameFailureAction = createAction(
+  GET_LOTTO_GAME_FAILURE,
   resolve => (error: AxiosError) => resolve(error))
 
-const getYeegeGameListCancelAction = createAction(GET_YEEGE_GAME_LIST_CANCEL)
+const getLottoGameCancelAction = createAction(GET_LOTTO_GAME_CANCEL)
 
-const updateYeegeGameListAction = createAction(
-  UPDATE_YEEGE_GAME_LIST_REQUEST,
-  resolve => (data: IYeegeGame[]) => resolve(data))
+const updateLottoGameAction = createAction(
+  UPDATE_LOTTO_GAME_REQUEST,
+  resolve => (data: ILottoGame) => resolve(data))
 
-const updateYeegeGameListSuccessAction = createAction(
-  UPDATE_YEEGE_GAME_LIST_SUCCESS,
-  resolve => (data: IYeegeGame[]) => resolve(data))
+const updateLottoGameSuccessAction = createAction(
+  UPDATE_LOTTO_GAME_SUCCESS,
+  resolve => (data: ILottoGame) => resolve(data))
 
-const updateYeegeGameListFailureAction = createAction(
-  UPDATE_YEEGE_GAME_LIST_FAILURE,
+const updateLottoGameFailureAction = createAction(
+  UPDATE_LOTTO_GAME_FAILURE,
   resolve => (error: any) => resolve(error))
 
 export default {
-  getYeegeGameListAction,
-  getYeegeGameListSuccessAction,
-  getYeegeGameListFailureAction,
-  getYeegeGameListCancelAction,
-  updateYeegeGameListAction,
-  updateYeegeGameListSuccessAction,
-  updateYeegeGameListFailureAction,
+  getLottoGameAction,
+  getLottoGameSuccessAction,
+  getLottoGameFailureAction,
+  getLottoGameCancelAction,
+  updateLottoGameAction,
+  updateLottoGameSuccessAction,
+  updateLottoGameFailureAction,
 }
