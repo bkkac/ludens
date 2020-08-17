@@ -6,6 +6,10 @@ import moment from 'moment'
 import { number } from 'utils'
 import './lottoActionCard.style.scss'
 
+const constants = {
+  hr: 'ชม.',
+}
+
 type DefaultProps = Readonly<typeof defaultProps>
 
 const defaultProps: ILottoActionCard = {
@@ -43,7 +47,7 @@ const LottoActionCard: SFC<ILottoActionCard & DefaultProps> = (props) => {
 
   let intervalId: NodeJS.Timeout | null = null
 
-  const [remain, setRemain] = useState({ hours: 0, minutes: 0, seconds: 0 })
+  const [remain, setRemain] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 })
 
   const clearLocalInterval = () => {
     if (intervalId !== null) {
@@ -59,16 +63,17 @@ const LottoActionCard: SFC<ILottoActionCard & DefaultProps> = (props) => {
       const expireWithCastTimezone = expireMoment.clone().add(-7, 'hour')
       intervalId = setInterval(() => {
         const duration = moment.duration(expireWithCastTimezone.diff(moment()))
+        const days = duration.days()
         const hours = duration.hours()
         const minutes = duration.minutes()
         const seconds = duration.seconds()
 
         if ((hours <= 0 && minutes <= 0 && seconds <= 0)
           || isNaN(hours) || isNaN(minutes) || isNaN(seconds)) {
-          setRemain({ hours: 0, minutes: 0, seconds: 0 })
+          setRemain({ days: 0, hours: 0, minutes: 0, seconds: 0 })
           clearLocalInterval()
         } else {
-          setRemain({ hours, minutes, seconds })
+          setRemain({ days, hours, minutes, seconds })
         }
       }, 1000);
     }
@@ -103,6 +108,7 @@ const LottoActionCard: SFC<ILottoActionCard & DefaultProps> = (props) => {
 
   const statusText = (): string => {
     if (isCountingdown) {
+      if (remain.days >= 0) { return `${number.padNumber(String(remain.hours), 2)} ${constants.hr}` }
       return `${number.padNumber(String(remain.hours), 2)}:${number.padNumber(String(remain.minutes), 2)}:${number.padNumber(String(remain.seconds), 2)}`
     } else if (status === 'OPEN') {
       return openedStatusText || ''
@@ -123,13 +129,15 @@ const LottoActionCard: SFC<ILottoActionCard & DefaultProps> = (props) => {
     >
       <div className="sub-background" />
       <div className="lotto-action-text-wrapper">
-        <h3 className="flex">
+        <ResponsiveIcon icon={icon!} alt="flag" className="lotto-action-card-flag m2-r" />
+        <h3 className="d-flex flex">
           {title}
-          <span><ResponsiveIcon icon={icon!} alt="flag" className="lotto-action-card-flag" /></span>
         </h3>
+      </div>
+      <div className="d-flex flex-row justify-content-between">
+        <h6 className="sub-title-label">{subTitle}<span className="subtitle-1 primary-text">{description}</span></h6>
         <BadgeComponent text={statusText()} />
       </div>
-      <h6 className="sub-title-label">{subTitle}<span className="subtitle-1 primary-text">{description}</span></h6>
     </div>
   )
 }
