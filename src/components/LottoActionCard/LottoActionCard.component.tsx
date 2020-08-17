@@ -129,15 +129,15 @@ const LottoActionCard: SFC<ILottoActionCard & DefaultProps> = (props) => {
     >
       <div className="sub-background" />
       <div className="lotto-action-text-wrapper">
+        <ResponsiveIcon icon={icon!} alt="flag" className="lotto-action-card-flag m2-r" />
         <h3 className="d-flex flex">
           {title}
-          <span className="d-flex p0-l">
-            <ResponsiveIcon icon={icon!} alt="flag" className="lotto-action-card-flag" />
-          </span>
         </h3>
+      </div>
+      <div className="d-flex flex-row justify-content-between">
+        <h6 className="sub-title-label">{subTitle}<span className="subtitle-1 primary-text">{description}</span></h6>
         <BadgeComponent text={statusText()} />
       </div>
-      <h6 className="sub-title-label">{subTitle}<span className="subtitle-1 primary-text">{description}</span></h6>
     </div>
   )
 }
