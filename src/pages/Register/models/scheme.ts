@@ -1,5 +1,5 @@
 import { string, object, ObjectSchema } from 'yup'
-import { NUMBER } from 'constants/regex'
+import { NUMBER, ENG, LOWERCASE } from 'constants/regex'
 
 const constants = {
   phoneNumber: 'กรุณากรอกหมายเลขโทรศัพท์ 10 หลัก',
@@ -7,6 +7,8 @@ const constants = {
   otp: 'กรุณากรอก OTP',
   otpLenght: 'กรุณากรอกไม่เกิน 6 ตัว',
   username: 'กรุณากรอกชื่อผู้ใช้',
+  lowercase: 'กรุณากรอกเฉพาะตัวหนังสือตัวเล็ก',
+  englishRequire: 'กรุณากรอกเฉพาะตัวหนังสือภาษาอังกฤษและตัวเลข',
   usernameMinLength: 'กรุณากรอกชื่อผู้ใช้ 6 ตัวขึ้นไป',
   password: 'กรุณากรอกรหัสผ่าน',
   passwordMinLength: 'กรุณากรอกรหัสผ่าน 6 ตัวขึ้นไป',
@@ -27,6 +29,8 @@ const scheme: ObjectSchema<IRegister> = object().shape({
     .required(constants.otp),
   username: string()
     .min(6, constants.usernameMinLength)
+    .matches(ENG, constants.englishRequire)
+    .matches(LOWERCASE, constants.lowercase)
     .required(constants.username),
   password: string()
     .min(6, constants.passwordMinLength)
