@@ -14,6 +14,7 @@ declare type TBankType =
   | 'ICBCT' // ไอซีบีซี (ไทย)
   | 'GSB' // ออมสิน
   | 'ISBT' // อิสลามแห่งประเทศไทย
+  | 'BAAC' // ธกส
 
 declare interface IBank {
   id?: number
