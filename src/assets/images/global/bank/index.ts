@@ -13,6 +13,7 @@ import TCD from './TCD.png'
 import ICBCT from './ICBCT.png'
 import GSB from './GSB.png'
 import ISBT from './ISBT.png'
+import BAAC from './BAAC.png'
 
 const collectBank: IImageSet = {
   BBL: {
@@ -74,6 +75,10 @@ const collectBank: IImageSet = {
   ISBT: {
     Icon: ISBT,
     key: 'ISBT',
+  },
+  BAAC: {
+    Icon: BAAC,
+    key: 'BAAC',
   },
 }
 
