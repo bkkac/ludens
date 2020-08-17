@@ -3,8 +3,8 @@ import { Badge } from 'components'
 import moment from 'moment'
 import { replace } from 'lodash'
 import colors from 'constants/colors'
-import { LOTTO_GAME_TYPE_NAME, LOTTO_TYPE } from 'constants/variables'
-import ThaiFlagIcon from 'assets/images/flags/thailand.png'
+import { LOTTO_GAME_TYPE_NAME, LOTTO_TYPE, LOTTO_FLAG_ALPHA } from 'constants/variables'
+import LottoFlags from 'assets/images/global/flags'
 import './lottoResultCard.style.scss'
 
 type DefaultProps = Readonly<typeof defaultProps>
@@ -150,13 +150,15 @@ const LottoResultCard: SFC<ILottoResultCard & DefaultProps> = (props) => {
     }
   }
 
+  const FlagIcon = LottoFlags[LOTTO_FLAG_ALPHA[code]].Icon
+
   return (
     <div className="col-12">
       <div className="lotto-card-container secondary-bg p3">
         <div className="row mb-2">
           <div className="col text-left d-flex flex-row align-items-center">
             <h3>{LOTTO_TYPE[lotto.code]}{round !== 0 ? ` รอบที่ ${round}` : ``}</h3>
-            <img alt="thailand" src={ThaiFlagIcon} className="flag-icon" />
+            <img alt="lotto-flag" src={FlagIcon} className="flag-icon" />
           </div>
           <div className="col-auto text-right m-auto">
             <Badge text={dateDisplay} backgroundColor={colors.PRIMARY_GREEN} />
