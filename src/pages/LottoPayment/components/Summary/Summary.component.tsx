@@ -100,7 +100,9 @@ class SummaryLottoComponent extends Component<ILottoPaymentSummaryProps, ILottoP
   }
 
   handleOnCleanLit = () => {
-    this.setState({ betList: [] })
+    this.setState({ betList: [] }, () => {
+      this.props.onBetListChanged!([])
+    })
   }
 
   calculateBenefitValue = (betValueString: string = '0', rate: string = '0') => {
@@ -270,19 +272,21 @@ class SummaryLottoComponent extends Component<ILottoPaymentSummaryProps, ILottoP
               </div>
               <div className="row">
                 <div className="col">
-                  <div className="d-flex flex-row">
-                    <Button
-                      size="small"
-                      id="delete-all-lotto"
-                      text={constants.clean}
-                      onClick={this.handleOnCleanLit}
-                      backgroundColor={colors.PRIMARY_RED}
-                      backgroundHoverColor={colors.SECONDARY_RED}
-                    />
+                  <div className="d-flex flex-row justify-content-end p2-x p2-t p1-b">
+                    <div>
+                      <Button
+                        size="small"
+                        id="delete-all-lotto"
+                        text={constants.clean}
+                        onClick={this.handleOnCleanLit}
+                        backgroundColor={colors.PRIMARY_RED}
+                        backgroundHoverColor={colors.SECONDARY_RED}
+                      />
+                    </div>
                   </div>
                 </div>
               </div>
-              <div className="row">
+              <div className="row lotto-list-wrapper">
                 <div className="col">
                   <LottoListComponent />
                 </div>

@@ -129,9 +129,9 @@ class LottoMakeContainer extends Component<
     this.props.loader(true)
 
     const locationState: IMakingLottoRouteProps = this.props.location.state
-    const gameRound = locationState.selectedLottoGame.round
     const game = locationState.selectedLottoGame
     const gameDate = moment(game.createdAt).format('DDMMYYYY')
+    const gameRound = number.padNumber(locationState.selectedLottoGame.round, 3)
     const gameQuery = { date: gameDate, round: gameRound }
 
     this.props.getLottoGame(gameQuery)

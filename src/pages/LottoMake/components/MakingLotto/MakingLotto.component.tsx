@@ -12,6 +12,7 @@ import {
   LOTTO_GAME_TYPE_NAME,
   LOTTO_GAME_TYPE_LENGTH
 } from 'constants/variables'
+import { number } from 'utils'
 import colors from 'constants/colors'
 import { Numbersets } from '../../components'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -102,7 +103,8 @@ class MakingLotto extends Component<IMakingLottoComponentProps, IMakingLottoComp
   renderLottoGameTypeOption = ({ item, ...selectProps }: IInputDefaultSelectProps<TLottoGameType>): JSX.Element => {
     const combindedBetRateType = `${this.props.gameSlug}_${item}` as TBetType
     const betRate: IBetRate = get(this.props.betRates.filter((rate) => rate.type === combindedBetRateType), '0', {})
-    const betRateText = `${constants.betRate} ${betRate.rate || '0'}`
+    const rateAsMoney = number.castToMoney(Number(betRate.rate || '0'))
+    const betRateText = `${constants.betRate} ${rateAsMoney}`
     return (
       <SelectorItem
         title={LOTTO_GAME_TYPE_NAME[item]}

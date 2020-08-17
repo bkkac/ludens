@@ -1,5 +1,10 @@
 .summary-maked-list-container {
   border-radius: 8px;
+
+  .lotto-list-wrapper {
+    max-height: 700px;
+    overflow: scroll;
+  }
 }
 
 .lotto-row {
