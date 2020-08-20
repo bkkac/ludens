@@ -12,6 +12,6 @@ declare interface IRootActionProps {
 }
 
 declare interface IRootStates {
-  themeMode: 'dark-mode' | 'light-mode' | string
+  themeMode: TThemeMode
   isShownWallet: boolean
 }
