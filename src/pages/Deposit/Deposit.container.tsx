@@ -194,7 +194,7 @@ class DepositContainer extends
   render() {
     const DepositFormComponent = this.renderDepositForm
     return (
-      <div className="deposit-container primary-bg p4-b">
+      <div className="deposit-container primary-bg">
         <div className="container">
           <DepositFormComponent />
         </div>

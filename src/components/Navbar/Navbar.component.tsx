@@ -1,8 +1,9 @@
 import React, { SFC } from 'react'
 import LogoThailandBet from 'assets/images/logo/logothailandbet.png'
-import { THEME_MODE } from 'constants/variables'
 import { noop } from 'lodash'
 import { number } from 'utils'
+import routers from 'constants/routes'
+import { useHistory } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCreditCard, faBars } from '@fortawesome/free-solid-svg-icons'
 import './navbar.style.scss'
@@ -10,11 +11,10 @@ import './navbar.style.scss'
 type DefaultProps = Readonly<typeof defaultProps>
 
 const defaultProps: INavbarProps = {
-  mode: THEME_MODE.DARK,
+  mode: 'dark-mode',
   isDisplayWallet: true,
   isAuthorized: false,
   wallet: {},
-  onPressesLogo() { noop() },
   onPressesMenu() { noop() },
 }
 
@@ -23,9 +23,14 @@ const Navbar: SFC<INavbarProps & DefaultProps> = ({
   wallet,
   isAuthorized,
   isDisplayWallet,
-  onPressesLogo,
   onPressesMenu,
 }) => {
+
+  const history = useHistory()
+
+  const handleOnClick = () => {
+    history.replace(routers.main.path)
+  }
 
   const CreditBadgeComponent = () => {
     if (isAuthorized) {
@@ -52,7 +57,7 @@ const Navbar: SFC<INavbarProps & DefaultProps> = ({
   return (
     <div className={`col-12 navbar-container position-fixed ${mode}`}>
       <div className="container">
-        <div className="leading-navbar-container" onClick={onPressesLogo}>
+        <div className="leading-navbar-container" onClick={handleOnClick}>
           <img src={LogoThailandBet} alt="thailand" className="logo-container" />
           <h4 className="name-container p1-l m0-t d-none d-sm-none d-md-block">THAILAND<span>BET</span></h4>
         </div>

@@ -1,7 +1,6 @@
 declare interface INavbarProps {
-  mode?: 'light-mode' | 'dark-mode' | string
+  mode?: TThemeMode
   isDisplayWallet?: boolean
-  onPressesLogo?(): void
   onPressesMenu?(): void
   isAuthorized?: boolean
   wallet?: IWallet
