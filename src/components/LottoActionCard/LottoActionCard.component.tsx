@@ -7,7 +7,7 @@ import { number } from 'utils'
 import './lottoActionCard.style.scss'
 
 const constants = {
-  hr: 'ชม.',
+  day: 'วัน',
 }
 
 type DefaultProps = Readonly<typeof defaultProps>
@@ -108,7 +108,7 @@ const LottoActionCard: SFC<ILottoActionCard & DefaultProps> = (props) => {
 
   const statusText = (): string => {
     if (isCountingdown) {
-      if (remain.days >= 0) { return `${number.padNumber(String(remain.hours), 2)} ${constants.hr}` }
+      if (remain.days > 0) { return `${number.padNumber(String(remain.hours), 2)} ${constants.day}` }
       return `${number.padNumber(String(remain.hours), 2)}:${number.padNumber(String(remain.minutes), 2)}:${number.padNumber(String(remain.seconds), 2)}`
     } else if (status === 'OPEN') {
       return openedStatusText || ''
