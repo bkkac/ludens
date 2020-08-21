@@ -3,6 +3,7 @@ import { isEqual, isEmpty, noop } from 'lodash'
 import {
   Modal,
   Navbar,
+  Tabbar,
   TextRunning,
   AlertNotification,
 } from 'components'
@@ -12,12 +13,15 @@ import {
   Redirect,
   Switch,
   Route,
-  Link,
 } from 'react-router-dom'
+import routers from 'constants/routes'
 import routes from 'configs/routes'
 import { Loader } from '../Loader'
-import { THEME_MODE } from 'constants/variables'
 import { LudensContext } from 'configs/context'
+import { ReactComponent as HomeIcon } from 'assets/images/global/menu/home.svg'
+import { ReactComponent as LotteryIcon } from 'assets/images/global/menu/lottery.svg'
+import { ReactComponent as ChipIcon } from 'assets/images/global/menu/chip.svg'
+import { ReactComponent as SlotIcon } from 'assets/images/global/menu/slot.svg'
 
 type DefaultProps = Readonly<typeof defaultProps>
 
@@ -31,12 +35,41 @@ const defaultProps: IRootProps & IRootActionProps = {
   connectSocket() { noop() },
 }
 
+const Menus: ITabItem[] = [
+  {
+    title: 'หน้าหลัก',
+    name: 'main',
+    path: routers.main.path,
+    Icon: (<HomeIcon className="tab-menu-icon m0-b" />),
+  },
+  {
+    title: 'แทงหวย',
+    name: 'lotto',
+    path: routers.lotto.path,
+    Icon: (<LotteryIcon className="tab-menu-icon m0-b" />),
+  },
+  {
+    title: 'คาสิโน',
+    name: 'cosino',
+    disabled: true,
+    path: '',
+    Icon: (<ChipIcon className="tab-menu-icon m0-b" />),
+  },
+  {
+    title: 'เกมส์',
+    name: 'game',
+    disabled: true,
+    path: '',
+    Icon: (<SlotIcon className="tab-menu-icon m0-b" />),
+  },
+]
+
 class RootContainer extends Component<IRootProps & IRootActionProps & DefaultProps, IRootStates> {
 
   static defaultProps = defaultProps
 
   state: IRootStates = {
-    themeMode: THEME_MODE.DARK,
+    themeMode: 'dark-mode',
     isShownWallet: true,
   }
 
@@ -47,17 +80,13 @@ class RootContainer extends Component<IRootProps & IRootActionProps & DefaultPro
     }
   }
 
-  changeThemeMode = (mode: string) => this.setState({
+  changeThemeMode = (mode: TThemeMode) => this.setState({
     themeMode: mode,
   })
 
   changeShowWallet = (shown: boolean) => this.setState({
     isShownWallet: shown,
   })
-
-  onPressLogo = () => {
-    return <Link to="/main" />
-  }
 
   renderGuardRoute = ({ component: RouteComponent, name, path, exact }: IRoutes) => {
     const renderRoute = (routeProps: RouteComponentProps) => {
@@ -113,7 +142,6 @@ class RootContainer extends Component<IRootProps & IRootActionProps & DefaultPro
           mode={theme.mode}
           isDisplayWallet={wallet.shown}
           wallet={this.props.wallet}
-          onPressesLogo={this.onPressLogo}
           onPressesMenu={this.props.logout}
           isAuthorized={!isEmpty(this.props.accessToken)}
         />
@@ -121,9 +149,23 @@ class RootContainer extends Component<IRootProps & IRootActionProps & DefaultPro
     </LudensContext.Consumer>
   )
 
+  renderTabbar = () => {
+    if (!isEmpty(this.props.accessToken)) {
+      return (
+        <LudensContext.Consumer>
+          {({ theme }) => (
+            <Tabbar mode={theme.mode} tabs={Menus} />
+          )}
+        </LudensContext.Consumer>
+      )
+    }
+    return <></>
+  }
+
   render() {
     const PageElement = this.renderPageElement
     const PageNavbar = this.renderNavbar
+    const PageTabbar = this.renderTabbar
 
     const contextProviderValues = {
       theme: { mode: this.state.themeMode, changeMode: this.changeThemeMode },
@@ -136,6 +178,7 @@ class RootContainer extends Component<IRootProps & IRootActionProps & DefaultPro
           <TextRunning text={this.props.textRunning} />
           <PageNavbar />
           <PageElement />
+          <PageTabbar />
         </Router>
         <AlertNotification.Core />
         <Modal.Core event="MODAL" />

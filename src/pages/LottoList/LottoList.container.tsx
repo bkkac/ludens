@@ -101,7 +101,7 @@ class LottoListContainer extends Component<
     ]
 
     return (
-      <div className="lotto-list-container primary-bg p4-b">
+      <div className="lotto-list-container primary-bg">
         <div className="container">
           <div className="row">
             <div className="col">
