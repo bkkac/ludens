@@ -115,8 +115,6 @@ class HomeContainer extends Component<IHomeProps & IHomeActionProps & DefaultPro
             <RenderLoginFormComponent />
           </div>
         </div>
-        <img alt="banner" src="https://3.bp.blogspot.com/-gLYDJEWOLgI/XoaKoqR6PyI/AAAAAAAACcI/6ki30_y8rFIIUbERmxdP9iPA3vNk-ANTgCLcBGAsYHQ/s1600/3.gif" className="ad-image" />
-        <img alt="banner" src="https://4.bp.blogspot.com/-u7vnBFj6HwA/XwSPXMu8VHI/AAAAAAAACno/gYCuwaK9dNMI8KA3_q54BTqGIhR9vx68QCLcBGAsYHQ/s1600/1.gif" className="ad-image" />
         <div className="pb-4 primary-bg">
           <div className="container">
             <RenderLottoListComponent />
