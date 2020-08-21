@@ -1,0 +1,55 @@
+@import "assets/stylesheets/colors";
+
+.tabbar-container {
+  height: 64px;
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+  z-index: 1;
+
+  .menu-item {
+    cursor: pointer;
+
+    &.disabled {
+      .tab-menu-icon,
+      .subtitle-2 {
+        color: $secondary-text;
+        fill: $secondary-text;
+      }
+    }
+
+    &.active {
+      .tab-menu-icon,
+      .subtitle-2 {
+        color: $secondary-blue;
+        fill: $secondary-blue;
+      }
+    }
+  }
+
+  .tab-menu-icon {
+    font-size: 24px;
+    width: 24px;
+    height: 24px;
+    fill: $primary-text;
+    color: $primary-text;
+  }
+
+  &.light-mode {
+    box-shadow: 0 1px 6px 0 rgba(0, 0, 0, 0.16);
+    background-color: $primary-text;
+
+    .menu-item:hover {
+      background-color: $secondary-text;
+    }
+  }
+
+  &.dark-mode {
+    box-shadow: 0 2px 9px 0 #00000029;
+    background-color: $secondary-bg;
+
+    .menu-item:hover {
+      background-color: $primary-bg;
+    }
+  }
+}

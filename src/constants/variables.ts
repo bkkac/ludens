@@ -1,11 +1,6 @@
 import { values as _values } from 'lodash'
 import ImageBankSet from 'assets/images/global/bank'
 
-export const THEME_MODE = {
-  DARK: 'dark-mode',
-  LIGHT: 'light-mode',
-}
-
 export const EBANK: { [key in TBankType]: string } = {
   BBL: 'BBL', // กรุงเทพ
   KBANK: 'KBANK', // กสิกร
