@@ -68,7 +68,7 @@ export const LOTTO_TYPE: { [type in TLottoType]: string } = {
   NAT_SHARE_CHINA_AFTERNOON: 'หุ้นจีนรอบบ่าย',
   NAT_SHARE_TAIWAN: 'หุ้นไต้หวัน',
   NAT_SHARE_KOREA: 'หุ้นเกาหลี',
-  NAT_SHARE_SINGAPORE: 'หุ้นสิงค์โปร',
+  NAT_SHARE_SINGAPORE: 'หุ้นสิงคโปร์',
   NAT_SHARE_INDIA: 'หุ้นอินเดีย',
   NAT_SHARE_HANOI_SPECIAL: 'หุ้นฮานอยพิเศษ',
   NAT_SHARE_MALAY: 'หุ้นมาเลย์',
