@@ -8,7 +8,8 @@ import {
 import moment from 'moment'
 import { noop, isEmpty, map } from 'lodash'
 import colors from 'constants/colors'
-import { LOTTO_SLUG_NAME } from 'constants/variables'
+import { LOTTO_SLUG_NAME, LOTTO_FLAG_ALPHA, LOTTO_SLUG_TO_TYPE } from 'constants/variables'
+import LottoFlags from 'assets/images/global/flags'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons'
 import './lottoList.style.scss'
@@ -68,6 +69,7 @@ class LottoListContainer extends Component<
       ? () => this.props.history.push(`/lotto/${lotto.code}`)
       : undefined
 
+    const FlagIcon = LottoFlags[LOTTO_FLAG_ALPHA[LOTTO_SLUG_TO_TYPE[lotto.code]]].Icon
     return (
       <div className="col-12 col-md-6 col-lg-4 m2-t" key={`lotto-${lotto.code}-${index}`}>
         <LottoActionCard
@@ -75,6 +77,7 @@ class LottoListContainer extends Component<
           onClick={navigate}
           title={LOTTO_SLUG_NAME[lotto.code]}
           subTitle={subtitle}
+          icon={FlagIcon}
           backgroundColor={backgroundColor}
           status={lotto.status}
           isCountingdown={isCountingDown}
@@ -98,7 +101,7 @@ class LottoListContainer extends Component<
     ]
 
     return (
-      <div className="lotto-list-container primary-bg p4-b">
+      <div className="lotto-list-container primary-bg">
         <div className="container">
           <div className="row">
             <div className="col">

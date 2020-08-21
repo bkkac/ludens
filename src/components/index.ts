@@ -1,6 +1,7 @@
 import { Modal } from './Modal'
 import { ALink } from './ALink'
 import { Badge } from './Badge'
+import { Tabbar } from './Tabbar'
 import { Navbar } from './Navbar'
 import { Banner } from './Banner'
 import { Button } from './Button'
@@ -26,12 +27,14 @@ import { LottoActionCard } from './LottoActionCard'
 import { InputRadioImage } from './InputRadioImage'
 import { TransactionItem } from './TransactionItem'
 import { ButtonRadioGroup } from './ButtonRadioGroup'
+import { AlertNotification } from './AlertNotification'
 import { TransactionItemCollapsible } from './TransactionItemCollapsible'
 
 export {
   Modal,
   ALink,
   Badge,
+  Tabbar,
   Banner,
   Navbar,
   Button,
@@ -57,5 +60,6 @@ export {
   InputRadioImage,
   TransactionItem,
   ButtonRadioGroup,
+  AlertNotification,
   TransactionItemCollapsible,
 }

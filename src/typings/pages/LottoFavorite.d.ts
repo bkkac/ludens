@@ -11,7 +11,7 @@ declare interface ILottoFavoriteActionProps {
 }
 
 declare interface ILottoFavoriteRouteProps {
-  selectedLottoGame: IYeegeGame
+  selectedLottoGame: ILottoGame
   lottoSlug: TLottoSlug
   betList: ILottoNumber[]
 }

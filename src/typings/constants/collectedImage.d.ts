@@ -5,3 +5,10 @@ declare type IImageSet = {
     Icon: string
   }
 }
+
+declare type IImageFlag = {
+  [name in TFlag]: {
+    name?: string
+    Icon: string
+  }
+}

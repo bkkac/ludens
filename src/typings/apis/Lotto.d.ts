@@ -42,6 +42,7 @@ declare type TLottoType =
   | 'NAT_SHARE_HUNGSENG_MORNING'
   | 'NAT_SHARE_HUNGSENG_AFTERNOON'
   | 'NAT_SHARE_LAO'
+  | 'LAO_SUITE'
   | 'YEGEE'
 
 declare type TLottoSlug =
@@ -54,6 +55,7 @@ declare type TLottoSlug =
   | 'LOTTER_TH_SHARE_MIDDAY'
   | 'LOTTER_TH_SHARE_AFTERNOON'
   | 'LOTTER_TH_SHARE_EVENING'
+  | 'LOTTER_NAT_SHARE_LAO'
   | 'LOTTER_NAT_SHARE_DOWNJON'
   | 'LOTTER_NAT_SHARE_EGYPT'
   | 'LOTTER_NAT_SHARE_GERMANY'
@@ -86,7 +88,7 @@ declare interface ILotto {
   lotto: ReadonlyArray<ILottoResult>
 }
 
-declare interface IYeegeGame {
+declare interface ILottoGame {
   id: number
   round: string
   endTime: string
@@ -102,7 +104,7 @@ declare interface ILottoNumber {
   slug?: string
 }
 
-declare interface IGetYeegeSum {
+declare interface ILottoRoundQuery {
   date: string
   round: string
 }
@@ -114,7 +116,7 @@ declare interface IYeegePlayRequest {
 
 declare interface IBetResultRequest {
   date: string
-  type: string
+  type: TLottoSlug
   round: string
 }
 

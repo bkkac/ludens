@@ -1,10 +1,9 @@
 import { createContext } from 'react'
 import { noop } from 'lodash'
-import { THEME_MODE } from 'constants/variables'
 
-export const LudensContext = createContext({
+export const LudensContext = createContext<ILudensContext>({
   theme: {
-    mode: THEME_MODE.DARKER,
+    mode: 'dark-mode',
     changeMode(_: string) { noop() },
   },
   wallet: {

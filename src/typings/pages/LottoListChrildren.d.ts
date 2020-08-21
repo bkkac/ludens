@@ -2,7 +2,7 @@ declare interface ILottoListChrildrenProps {
   getYeegeGameListIsFetching: boolean
   getYeegeGameListError: string
   getYeegeGameListCode: number | string
-  yeegeGameList: IYeegeGame[]
+  yeegeGameList: ILottoGame[]
 }
 
 declare interface ILottoListChrildrenActionProps {

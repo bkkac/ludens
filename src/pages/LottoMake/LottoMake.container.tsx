@@ -53,6 +53,7 @@ const constants = {
 type DefaultProps = Readonly<typeof defaultProps>
 
 const defaultProps: IMakingLottoProps & IMakingLottoActionProps = {
+  getLottoGame() { noop() },
   loader() { noop() },
   makingBetLotto() { noop() },
   getYeegeSum() { noop() },
@@ -65,6 +66,7 @@ const defaultProps: IMakingLottoProps & IMakingLottoActionProps = {
   getBetResult() { noop() },
   clearBetResult() { noop() },
   clearYeegeSum() { noop() },
+  clearYeegePlayedList() { noop() },
   getBetRate() { noop() },
   makingBetLottoCode: 0,
   makingBetLottoError: '',
@@ -80,13 +82,25 @@ const defaultProps: IMakingLottoProps & IMakingLottoActionProps = {
   yeegeSum: '0',
   getPlayedYeegeListIsFetching: false,
   getPlayedYeegeListError: '',
-  getPlayedYeegeListCode: '0',
+  getPlayedYeegeListCode: 0,
   playedYeegeList: [],
   getBetResultIsFetching: false,
   getBetResultError: '',
-  getBetResultCode: '0',
+  getBetResultCode: 0,
   betResults: [],
   betRates: [],
+
+  getLottoGameIsFetching: false,
+  getLottoGameCode: 0,
+  getLottoGameError: '',
+  lottoGame: {
+    id: 0,
+    round: '',
+    endTime: '',
+    startTime: '',
+    createdAt: '',
+    status: 'UNKNOWN',
+  },
 }
 
 class LottoMakeContainer extends Component<
@@ -108,41 +122,55 @@ class LottoMakeContainer extends Component<
       minutes: 0,
       seconds: 0,
     },
-    lottoStatus: 'OPEN',
+    lottoStatus: 'UNKNOWN',
   }
 
   componentDidMount() {
+    this.props.loader(true)
+
     const locationState: IMakingLottoRouteProps = this.props.location.state
     const game = locationState.selectedLottoGame
     const gameDate = moment(game.createdAt).format('DDMMYYYY')
-    const gameRound = number.padNumber(game.round, 3)
-    this.props.getYeegeSum({
-      date: gameDate,
-      round: locationState.selectedLottoGame.round,
-    })
-    this.props.getPlayedYeegeList({
-      date: gameDate,
-      round: locationState.selectedLottoGame.round,
-    })
+    const gameRound = number.padNumber(locationState.selectedLottoGame.round, 3)
+    const gameQuery = { date: gameDate, round: gameRound }
+
+    this.props.getLottoGame(gameQuery)
     this.props.getBetRate()
-    this.setState({
-      lottoStatus: locationState.selectedLottoGame.status,
-      numberList: locationState.betList || [],
-    }, () => {
-      if (locationState.selectedLottoGame.status === 'OPEN') {
-        this.countingdown()
-      } else {
-        this.props.loader(true)
-        this.props.getBetResult({
-          date: gameDate,
-          round: gameRound,
-          type: 'LOTTER_YEGEE',
-        })
-      }
-    })
+
+    const slugName = this.props.match.params.type
+    if (slugName === 'LOTTER_YEGEE') {
+      this.props.getYeegeSum(gameQuery)
+      this.props.getPlayedYeegeList(gameQuery)
+    }
+    this.setState({ numberList: locationState.betList || [] })
   }
 
   componentDidUpdate(prevProps: IMakingLottoProps) {
+    // On get lotto game
+    if (prevProps.getLottoGameIsFetching !== this.props.getLottoGameIsFetching
+      && !this.props.getLottoGameIsFetching) {
+      if (this.props.getLottoGameCode === response.OK) {
+        this.setState({ lottoStatus: this.props.lottoGame.status }, () => {
+          if (this.props.lottoGame.status === 'OPEN') {
+            this.props.loader(false)
+            this.countingdown()
+          } else {
+            this.props.loader(true)
+            const lottoGame = this.props.lottoGame
+            const gameDate = moment(lottoGame.createdAt).format('DDMMYYYY')
+            const gameRound = number.padNumber(lottoGame.round, 3)
+            this.props.getBetResult({
+              date: gameDate,
+              round: gameRound,
+              type: 'LOTTER_YEGEE',
+            })
+          }
+        })
+      } else {
+        this.props.history.goBack()
+      }
+    }
+
     if (prevProps.makingBetLottoIsFetching !== this.props.makingBetLottoIsFetching
       && !this.props.makingBetLottoIsFetching) {
       this.props.loader(false)
@@ -167,47 +195,50 @@ class LottoMakeContainer extends Component<
       }
     }
 
-    if (prevProps.playYeegeIsFetching !== this.props.playYeegeIsFetching
-      && !this.props.playYeegeIsFetching) {
-      this.props.loader(false)
-    }
-
+    // Result until time is up
     if (prevProps.getBetResultIsFetching !== this.props.getBetResultIsFetching
       && !this.props.getBetResultIsFetching) {
       this.props.loader(false)
     }
 
+    // BEGIN: YEEGE GAME
+    if (prevProps.playYeegeIsFetching !== this.props.playYeegeIsFetching
+      && !this.props.playYeegeIsFetching) {
+      this.props.loader(false)
+    }
+
     if (prevProps.getYeegeSumIsFetching !== this.props.getYeegeSumIsFetching
       && !this.props.getYeegeSumIsFetching) {
-      const locationState: IMakingLottoRouteProps = this.props.location.state
-      const game = locationState.selectedLottoGame
-      const gameDate = moment(game.createdAt).format('DDMMYYYY')
-      const gameRound = number.padNumber(game.round, 3)
+      const lottoGame = this.props.lottoGame
+      const gameDate = moment(lottoGame.createdAt).format('DDMMYYYY')
+      const gameRound = number.padNumber(lottoGame.round, 3)
       this.props.listenYeegeSum({ date: gameDate, round: gameRound })
     }
 
     if (prevProps.getPlayedYeegeListIsFetching !== this.props.getPlayedYeegeListIsFetching
       && !this.props.getPlayedYeegeListIsFetching) {
-      const locationState: IMakingLottoRouteProps = this.props.location.state
-
-      const game = locationState.selectedLottoGame
-      const gameDate = moment(game.createdAt).format('DDMMYYYY')
-      const gameRound = number.padNumber(game.round, 3)
+      const lottoGame = this.props.lottoGame
+      const gameDate = moment(lottoGame.createdAt).format('DDMMYYYY')
+      const gameRound = number.padNumber(lottoGame.round, 3)
       this.props.listenPlayedYeegeList({ date: gameDate, round: gameRound })
+      // END: YEEGE GAME
     }
   }
 
   componentWillUnmount() {
     this.clearLocalInterval()
     this.props.clearBetResult()
-    this.props.clearYeegeSum()
-
-    const locationState: IMakingLottoRouteProps = this.props.location.state
-    const game = locationState.selectedLottoGame
-    const gameDate = moment(game.createdAt).format('DDMMYYYY')
-    const gameRound = number.padNumber(game.round, 3)
-    this.props.unlistenYeegeSum({ date: gameDate, round: gameRound })
-    this.props.unlistenPlayedYeegeList({ date: gameDate, round: gameRound })
+    const slugName = this.props.match.params.type
+    if (slugName === 'LOTTER_YEGEE') {
+      const lottoGame = this.props.lottoGame
+      const gameDate = moment(lottoGame.createdAt).format('DDMMYYYY')
+      const gameRound = number.padNumber(lottoGame.round, 3)
+      const gameQuery = { date: gameDate, round: gameRound }
+      this.props.unlistenYeegeSum(gameQuery)
+      this.props.unlistenPlayedYeegeList(gameQuery)
+      this.props.clearYeegeSum()
+      this.props.clearYeegePlayedList()
+    }
   }
 
   clearLocalInterval = () => {
@@ -218,9 +249,8 @@ class LottoMakeContainer extends Component<
 
   countingdown = () => {
     this.clearLocalInterval()
-    const locationState: IMakingLottoRouteProps = this.props.location.state
-    const endedTime = locationState.selectedLottoGame.endTime
-    const momentEndAt = moment(replace(endedTime!, /\s/g, ''))
+    const lottoGame = this.props.lottoGame
+    const momentEndAt = moment(replace(lottoGame.endTime!, /\s/g, ''))
     const momentEndAtTimezone = momentEndAt.clone().add(-7, 'hour')
 
     this.intervalId = setInterval(() => {
@@ -231,8 +261,10 @@ class LottoMakeContainer extends Component<
 
       if (hours <= 0 && minutes <= 0 && seconds < 0) {
         this.clearLocalInterval()
-        // this.props.loader(true)
-        // TODO: integrate get lotto result
+        this.props.loader(true)
+        const gameDate = moment(lottoGame.createdAt).format('DDMMYYYY')
+        const gameRound = number.padNumber(lottoGame.round, 3)
+        this.props.getLottoGame({ date: gameDate, round: gameRound })
       } else if (isNaN(hours) || isNaN(minutes) || isNaN(seconds)) {
         this.setState({ remainingTime: { hours: 0, minutes: 0, seconds: 0 } }, () => {
           this.clearLocalInterval()
@@ -246,8 +278,7 @@ class LottoMakeContainer extends Component<
 
   generateGameSlug = () => {
     const slugName = this.props.match.params.type
-    const locationState: IMakingLottoRouteProps = this.props.location.state
-    const gameround = locationState.selectedLottoGame.round || '1'
+    const gameround = this.props.lottoGame.round
     const currentTime = moment().format('DDMMYYYYHHmm')
     return `${slugName}_${currentTime}${number.padNumber(gameround, 3)}`
   }
@@ -337,20 +368,17 @@ class LottoMakeContainer extends Component<
 
   handleOnPlayYeegeGame = (gameNumber: string) => {
     this.props.loader(true)
-    const locationState: IMakingLottoRouteProps = this.props.location.state
-    const game = locationState.selectedLottoGame
     this.props.playYeege({
       number: gameNumber,
-      round: game.round,
+      round: this.props.lottoGame.round,
     })
   }
 
   handleOnClickLottoPayment = () => {
-    const locationState: IMakingLottoRouteProps = this.props.location.state
     const paymentRouteProps: ILottoPaymentRouteProps = {
       betList: this.state.numberList,
       lottoSlug: this.props.match.params.type,
-      selectedLottoGame: locationState.selectedLottoGame,
+      selectedLottoGame: this.props.lottoGame,
     }
     this.props.history.replace(routes.lottoCheckout.path, paymentRouteProps)
   }
@@ -360,18 +388,16 @@ class LottoMakeContainer extends Component<
   }
 
   handleOnGotoSelectFavorite = () => {
-		const locationState: IMakingLottoRouteProps = this.props.location.state
-		const favoriteRouteProps: ILottoFavoriteRouteProps = {
-			betList: this.state.numberList,
-			lottoSlug: this.props.match.params.type,
-			selectedLottoGame: locationState.selectedLottoGame,
-		}
-		this.props.history.replace(routes.lottoFavorite.path, favoriteRouteProps)
-	}
+    const favoriteRouteProps: ILottoFavoriteRouteProps = {
+      betList: this.state.numberList,
+      lottoSlug: this.props.match.params.type,
+      selectedLottoGame: this.props.lottoGame,
+    }
+    this.props.history.replace(routes.lottoFavorite.path, favoriteRouteProps)
+  }
 
   renderGameMode = () => {
-    const locationState: IMakingLottoRouteProps = this.props.location.state
-    if (locationState.selectedLottoGame.status === 'CLOSE') {
+    if (this.props.lottoGame.status === 'CLOSE') {
       return (<BetResult results={this.props.betResults} />)
     }
 
@@ -401,10 +427,9 @@ class LottoMakeContainer extends Component<
   }
 
   renderSummaryMode = () => {
-    const locationState: IMakingLottoRouteProps = this.props.location.state
-    if (locationState.selectedLottoGame.status === 'CLOSE') {
+    if (this.props.lottoGame.status === 'CLOSE') {
       return (<PlayedUser playedYeegeList={this.props.playedYeegeList} />)
-    } else if (locationState.selectedLottoGame.status === 'OPEN') {
+    } else if (this.props.lottoGame.status === 'OPEN') {
       return (
         <div className="d-none d-lg-block">
           <Summary
@@ -471,8 +496,7 @@ class LottoMakeContainer extends Component<
     const GameModeComponent = this.renderGameMode
     const SummaryModeComponent = this.renderSummaryMode
     const RenderYeegeGameComponent = this.renderYeegeGame
-    const locationState: IMakingLottoRouteProps = this.props.location.state
-    const game = locationState.selectedLottoGame
+
     const sumtime = sum(values(this.state.remainingTime))
     const remainingTime = (this.state.lottoStatus === 'OPEN')
       ? (sumtime > 0)
@@ -490,8 +514,8 @@ class LottoMakeContainer extends Component<
       )
     }
 
+    const gameRound = this.props.lottoGame.round
     const isActiveSummaryNotification = (this.state.numberList.length > 0)
-
     return (
       <div className={`lotto-make-container primary-bg ${isActiveSummaryNotification ? 'opened' : ''}`}>
         {this.renderSummaryNotification(isActiveSummaryNotification)}
@@ -513,7 +537,7 @@ class LottoMakeContainer extends Component<
           </div>
           <div className="row m3-t">
             <div className="col">
-              <h2>{constants.yeegeLabel(game.round)}</h2>
+              <h2>{constants.yeegeLabel(gameRound)}</h2>
             </div>
           </div>
           <div className="row m2-t">

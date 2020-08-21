@@ -1,9 +1,19 @@
+$space-0: 4px;
 $space-1: 8px;
 $space-2: 16px;
 $space-3: 24px;
 $space-4: 32px;
 
 .m {
+    &0 {
+        margin: $space-0;
+        &-t {margin-top: $space-0;}
+        &-b {margin-bottom: $space-0;}
+        &-l {margin-left: $space-0;}
+        &-r {margin-right: $space-0;}
+        &-x {margin-left: $space-0; margin-right: $space-0;}
+        &-y {margin-top: $space-0; margin-bottom: $space-0;}
+    }
     &1 {
         margin: $space-1;
         &-t {margin-top: $space-1;}
@@ -46,6 +56,15 @@ $space-4: 32px;
 }
 
 .p {
+    &0 {
+        padding: $space-0;
+        &-t {padding-top: $space-0;}
+        &-b {padding-bottom: $space-0;}
+        &-l {padding-left: $space-0;}
+        &-r {padding-right: $space-0;}
+        &-x {padding-left: $space-0; padding-right: $space-0;}
+        &-y {padding-top: $space-0; padding-bottom: $space-0;}
+    }
     &1 {
         padding: $space-1;
         &-t {padding-top: $space-1;}

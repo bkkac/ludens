@@ -1,8 +1,9 @@
 import React, { SFC } from 'react'
-import ThaiFlagIcon from 'assets/images/flags/thailand.png'
-import { THEME_MODE } from 'constants/variables'
+import LogoThailandBet from 'assets/images/logo/logothailandbet.png'
 import { noop } from 'lodash'
 import { number } from 'utils'
+import routers from 'constants/routes'
+import { useHistory } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCreditCard, faBars } from '@fortawesome/free-solid-svg-icons'
 import './navbar.style.scss'
@@ -10,11 +11,10 @@ import './navbar.style.scss'
 type DefaultProps = Readonly<typeof defaultProps>
 
 const defaultProps: INavbarProps = {
-  mode: THEME_MODE.DARKER,
+  mode: 'dark-mode',
   isDisplayWallet: true,
   isAuthorized: false,
   wallet: {},
-  onPressesLogo() { noop() },
   onPressesMenu() { noop() },
 }
 
@@ -23,18 +23,24 @@ const Navbar: SFC<INavbarProps & DefaultProps> = ({
   wallet,
   isAuthorized,
   isDisplayWallet,
-  onPressesLogo,
   onPressesMenu,
 }) => {
+
+  const history = useHistory()
+
+  const handleOnClick = () => {
+    history.replace(routers.main.path)
+  }
 
   const CreditBadgeComponent = () => {
     if (isAuthorized) {
       if (!isDisplayWallet) { return <></> }
       return (
         <div className={`credit-badge-wrapper ${mode}`}>
-          <span className="credit-badge-text">
-            <FontAwesomeIcon icon={faCreditCard} className="font-awsome-creditbadge" />
-            {number.castToMoney(wallet?.money || 0)}</span>
+          <h6>
+            <FontAwesomeIcon icon={faCreditCard} className="m0-r" />
+            {number.castToMoney(wallet?.money || 0)}
+          </h6>
         </div>
       )
     }
@@ -51,9 +57,9 @@ const Navbar: SFC<INavbarProps & DefaultProps> = ({
   return (
     <div className={`col-12 navbar-container position-fixed ${mode}`}>
       <div className="container">
-        <div className="leading-navbar-container" onClick={onPressesLogo}>
-          <img src={ThaiFlagIcon} alt="thailand" className="logo-container" />
-          <div className="name-container d-none d-sm-none d-md-block">THAILAND<span>BET</span></div>
+        <div className="leading-navbar-container" onClick={handleOnClick}>
+          <img src={LogoThailandBet} alt="thailand" className="logo-container" />
+          <h4 className="name-container p1-l m0-t d-none d-sm-none d-md-block">THAILAND<span>BET</span></h4>
         </div>
         <div className="trailing-navbar-container">
           <CreditBadgeComponent />

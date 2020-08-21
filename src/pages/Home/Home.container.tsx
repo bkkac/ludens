@@ -7,7 +7,7 @@ import { Modal } from 'components'
 import { LoginForm, LottoList } from './components'
 import initialValues from './models/initialValues'
 import scheme from './models/scheme'
-import ThailandIcon from 'assets/images/flags/thailand.png'
+import LogoThailandBet from 'assets/images/logo/logothailandbet.png'
 import './home.style.scss'
 
 const constants = {
@@ -109,14 +109,12 @@ class HomeContainer extends Component<IHomeProps & IHomeActionProps & DefaultPro
         <div className="login-container primary-bg">
           <div className="container">
             <div className="d-flex flex-column justify-content-center align-items-center m3-b">
-              <img alt="thailand bet logo" src={ThailandIcon} className="login-logo" />
-              <h3>Thailand<span>BET</span></h3>
+              <img alt="thailand bet logo" src={LogoThailandBet} className="login-logo m3-b" />
+              {/* <h3>Thailand<span>BET</span></h3> */}
             </div>
             <RenderLoginFormComponent />
           </div>
         </div>
-        <img alt="banner" src="https://3.bp.blogspot.com/-gLYDJEWOLgI/XoaKoqR6PyI/AAAAAAAACcI/6ki30_y8rFIIUbERmxdP9iPA3vNk-ANTgCLcBGAsYHQ/s1600/3.gif" className="ad-image" />
-        <img alt="banner" src="https://4.bp.blogspot.com/-u7vnBFj6HwA/XwSPXMu8VHI/AAAAAAAACno/gYCuwaK9dNMI8KA3_q54BTqGIhR9vx68QCLcBGAsYHQ/s1600/1.gif" className="ad-image" />
         <div className="pb-4 primary-bg">
           <div className="container">
             <RenderLottoListComponent />

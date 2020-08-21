@@ -30,9 +30,9 @@ const onUpdateWallet = (handlerStore: MiddlewareAPI<Dispatch, RootReducers>) =>
 
 const onUpdateYeegeGame = (handlerStore: MiddlewareAPI<Dispatch, RootReducers>) =>
   (response: any) => {
-    const responseYeegeGameList: APIResponse<IYeegeGame[]> = (typeof response === 'string')
+    const responseYeegeGameList: APIResponse<ILottoGame[]> = (typeof response === 'string')
       ? JSON.parse(response) : response
-    const transformed = transformer.camelcaseTransform(responseYeegeGameList) as APIResponse<IYeegeGame[]>
+    const transformed = transformer.camelcaseTransform(responseYeegeGameList) as APIResponse<ILottoGame[]>
     handlerStore.dispatch(lottoAction.updateYeegeGameListAction(transformed.data))
   }
 
