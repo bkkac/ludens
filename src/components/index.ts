@@ -1,6 +1,7 @@
 import { Modal } from './Modal'
 import { ALink } from './ALink'
 import { Badge } from './Badge'
+import { Drawer } from './Drawer'
 import { Tabbar } from './Tabbar'
 import { Navbar } from './Navbar'
 import { Banner } from './Banner'
@@ -34,6 +35,7 @@ export {
   Modal,
   ALink,
   Badge,
+  Drawer,
   Tabbar,
   Banner,
   Navbar,

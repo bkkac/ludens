@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { isEqual, isEmpty, noop } from 'lodash'
 import {
   Modal,
+  Drawer,
   Navbar,
   Tabbar,
   TextRunning,
@@ -71,6 +72,7 @@ class RootContainer extends Component<IRootProps & IRootActionProps & DefaultPro
   state: IRootStates = {
     themeMode: 'dark-mode',
     isShownWallet: true,
+    isOpenDrawer: false,
   }
 
   componentDidMount() {
@@ -87,6 +89,19 @@ class RootContainer extends Component<IRootProps & IRootActionProps & DefaultPro
   changeShowWallet = (shown: boolean) => this.setState({
     isShownWallet: shown,
   })
+
+  handleOnClickBurgerMenu = () => {
+    this.setState({ isOpenDrawer: !this.state.isOpenDrawer })
+  }
+
+  handleOnCloseDrawer = () => {
+    this.setState({ isOpenDrawer: false })
+  }
+
+  handleOnLogout = () => {
+    this.handleOnCloseDrawer()
+    this.props.logout!()
+  }
 
   renderGuardRoute = ({ component: RouteComponent, name, path, exact }: IRoutes) => {
     const renderRoute = (routeProps: RouteComponentProps) => {
@@ -142,7 +157,7 @@ class RootContainer extends Component<IRootProps & IRootActionProps & DefaultPro
           mode={theme.mode}
           isDisplayWallet={wallet.shown}
           wallet={this.props.wallet}
-          onPressesMenu={this.props.logout}
+          onPressesMenu={this.handleOnClickBurgerMenu}
           isAuthorized={!isEmpty(this.props.accessToken)}
         />
       )}
@@ -162,10 +177,30 @@ class RootContainer extends Component<IRootProps & IRootActionProps & DefaultPro
     return <></>
   }
 
+  renderDrawer = () => {
+    if (!isEmpty(this.props.accessToken)) {
+      return (
+        <LudensContext.Consumer>
+          {({ theme }) => (
+            <Drawer
+              mode={theme.mode}
+              isOpen={this.state.isOpenDrawer}
+              onPressLogout={this.handleOnLogout}
+              onCloseDrawer={this.handleOnCloseDrawer}
+              onPressBackground={this.handleOnClickBurgerMenu}
+            />
+          )}
+        </LudensContext.Consumer>
+      )
+    }
+    return <></>
+  }
+
   render() {
     const PageElement = this.renderPageElement
     const PageNavbar = this.renderNavbar
     const PageTabbar = this.renderTabbar
+    const PageDrawer = this.renderDrawer
 
     const contextProviderValues = {
       theme: { mode: this.state.themeMode, changeMode: this.changeThemeMode },
@@ -179,6 +214,7 @@ class RootContainer extends Component<IRootProps & IRootActionProps & DefaultPro
           <PageNavbar />
           <PageElement />
           <PageTabbar />
+          <PageDrawer />
         </Router>
         <AlertNotification.Core />
         <Modal.Core event="MODAL" />
