@@ -14,4 +14,5 @@ declare interface IRootActionProps {
 declare interface IRootStates {
   themeMode: TThemeMode
   isShownWallet: boolean
+  isOpenDrawer: boolean
 }
