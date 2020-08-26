@@ -25,9 +25,12 @@ const TabbarComponent: SFC<ITabbarProps> = ({
       title,
       name,
       path,
-      Icon,
       disabled,
+      ActiveIcon,
+      InactiveIcon,
     }, itemIndex) => {
+
+      const isActive = isEqual(location.pathname, path)
       return (
         <div
           className="flex d-flex p0"
@@ -35,11 +38,11 @@ const TabbarComponent: SFC<ITabbarProps> = ({
           id={`tab-${itemIndex}-${name}`}
         >
           <div
-            className={`menu-item border-rounded flex d-flex flex-column align-items-center justify-content-center ${disabled ? 'disabled' : ''} ${isEqual(location.pathname, path) ? 'active' : ''}`}
+            className={`menu-item border-rounded flex d-flex flex-column align-items-center justify-content-center ${disabled ? 'disabled' : ''} ${isActive ? 'active' : ''}`}
             onClick={() => disabled ? noop() : onClickMenu(path)}
           >
-            {Icon}
-            <h6 className="subtitle-2">{title}</h6>
+            {isActive ? ActiveIcon : InactiveIcon}
+            <h6 className="subtitle-2 m0-t">{title}</h6>
           </div>
         </div>
       )

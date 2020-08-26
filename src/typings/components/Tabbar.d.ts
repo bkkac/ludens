@@ -2,7 +2,8 @@ declare interface ITabItem {
   title: string
   name: string
   path: string
-  Icon: JSX.Element
+  ActiveIcon: JSX.Element
+  InactiveIcon: JSX.Element
   disabled?: boolean
 }
 

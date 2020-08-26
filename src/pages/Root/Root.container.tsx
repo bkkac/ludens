@@ -20,9 +20,13 @@ import routes from 'configs/routes'
 import { Loader } from '../Loader'
 import { LudensContext } from 'configs/context'
 import { ReactComponent as HomeIcon } from 'assets/images/global/menu/home.svg'
-import { ReactComponent as LotteryIcon } from 'assets/images/global/menu/lottery.svg'
+import { ReactComponent as HomeColorIcon } from 'assets/images/global/menu/home-color.svg'
+import { ReactComponent as BillIcon } from 'assets/images/global/menu/bill.svg'
+import { ReactComponent as BillColorIcon } from 'assets/images/global/menu/bill-color.svg'
 import { ReactComponent as ChipIcon } from 'assets/images/global/menu/chip.svg'
+import { ReactComponent as ChipColorIcon } from 'assets/images/global/menu/chip-color.svg'
 import { ReactComponent as SlotIcon } from 'assets/images/global/menu/slot.svg'
+import { ReactComponent as SlotColorIcon } from 'assets/images/global/menu/slot-color.svg'
 
 type DefaultProps = Readonly<typeof defaultProps>
 
@@ -41,27 +45,31 @@ const Menus: ITabItem[] = [
     title: 'หน้าหลัก',
     name: 'main',
     path: routers.main.path,
-    Icon: (<HomeIcon className="tab-menu-icon m0-b" />),
+    ActiveIcon: (<HomeColorIcon className="tab-menu-icon m0-b" />),
+    InactiveIcon: (<HomeIcon className="tab-menu-icon m0-b" />),
   },
   {
     title: 'แทงหวย',
     name: 'lotto',
     path: routers.lotto.path,
-    Icon: (<LotteryIcon className="tab-menu-icon m0-b" />),
+    ActiveIcon: (<BillColorIcon className="tab-menu-icon m0-b" />),
+    InactiveIcon: (<BillIcon className="tab-menu-icon m0-b" />),
   },
   {
     title: 'คาสิโน',
     name: 'cosino',
     disabled: true,
     path: '',
-    Icon: (<ChipIcon className="tab-menu-icon m0-b" />),
+    ActiveIcon: (<ChipColorIcon className="tab-menu-icon m0-b" />),
+    InactiveIcon: (<ChipIcon className="tab-menu-icon m0-b" />),
   },
   {
     title: 'เกมส์',
     name: 'game',
     disabled: true,
     path: '',
-    Icon: (<SlotIcon className="tab-menu-icon m0-b" />),
+    ActiveIcon: (<SlotColorIcon className="tab-menu-icon m0-b" />),
+    InactiveIcon: (<SlotIcon className="tab-menu-icon m0-b" />),
   },
 ]
 
