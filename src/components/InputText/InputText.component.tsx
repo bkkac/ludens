@@ -51,6 +51,7 @@ const InputText = class extends Component<IInputTextProps & DefaultProps> {
           name={name}
           type={type}
           value={value}
+          autoCapitalize="none"
           pattern={useNumberpad ? '\\d*' : undefined}
           onBlur={onBlur}
           onChange={onChange}

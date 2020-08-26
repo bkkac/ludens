@@ -11,7 +11,9 @@ import IndiaIcon from './india.svg'
 import VietnamIcon from './vietnam.svg'
 import MalaysiaIcon from './malaysia.svg'
 import RussianIcon from './russia.svg'
-import EnglandIcon from './england.svg'
+import EnglandIcon from './uk.svg'
+import TaiwanIcon from './taiwan.svg'
+import HongKongIcon from './hong-kong.svg'
 import BankIcon from '../bank'
 
 const flagImage: IImageFlag = {
@@ -45,7 +47,7 @@ const flagImage: IImageFlag = {
   },
   TWN: {
     name: 'Taiwan',
-    Icon: ChinaIcon, // Need a flag
+    Icon: TaiwanIcon,
   },
   KOR: {
     name: 'Korea',
@@ -77,7 +79,7 @@ const flagImage: IImageFlag = {
   },
   HKG: {
     name: 'Hong Kong',
-    Icon: ChinaIcon, // Need a flag
+    Icon: HongKongIcon,
   },
   // Bank
   BAAC: {

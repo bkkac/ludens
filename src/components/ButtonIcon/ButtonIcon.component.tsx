@@ -1,15 +1,12 @@
 import React, { SFC } from 'react'
-import { ResponsiveIcon } from 'components'
 import { noop } from 'lodash'
 import './buttonIcon.style.scss'
 
-import CloseIcon from 'assets/images/global/close/close.png'
-import CloseIcon2x from 'assets/images/global/close/close@2x.png'
-import CloseIcon3x from 'assets/images/global/close/close@3x.png'
+import { ReactComponent as CloseIcon } from 'assets/images/global/close/close.svg'
 
-const iconSet: { [typed in IButtonIconType]: string | IIconSet } = {
-  close: { x1: CloseIcon, x2: CloseIcon2x, x3: CloseIcon3x },
-  custom: '',
+const iconSet: { [typed in IButtonIconType]: React.FunctionComponent<React.SVGProps<SVGSVGElement>> } = {
+  close: CloseIcon,
+  custom: () => <></>,
 }
 
 type DefaultProps = Readonly<typeof defaultProps>
@@ -24,21 +21,23 @@ const ButtonIcon: SFC<IButtonIcon & DefaultProps> = ({
   id,
   type,
   onClick,
-  customIcon,
+  CustomIcon,
 }) => {
 
-  const icon = (): string | IIconSet => {
+  const Icon = (): JSX.Element => {
     switch (type) {
       case 'custom':
-        return customIcon!
+        if (typeof CustomIcon === 'undefined') { return <></> }
+        return CustomIcon
       default:
-        return iconSet[type]
+        const IconComponent = iconSet[type]
+        return <IconComponent className="icon-button" />
     }
   }
 
   return (
     <div className="icon-button-container" onClick={onClick} id={id}>
-      <ResponsiveIcon icon={icon()} className="icon-button" alt="icon-button-alt" />
+      <Icon />
     </div>
   )
 }

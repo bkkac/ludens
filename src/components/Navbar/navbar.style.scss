@@ -38,6 +38,7 @@
       align-items: center;
 
       .burger-container {
+        cursor: pointer;
         color: $primary-text;
         margin-left: 12px;
         width: 24px;
@@ -63,7 +64,6 @@
   }
 
   &.dark-mode {
-    // box-shadow: 0 1px 6px 0 #00000029;
     box-shadow: unset;
     background-color: $primary-bg;
 
