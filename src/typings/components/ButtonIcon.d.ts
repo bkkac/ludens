@@ -4,5 +4,5 @@ declare interface IButtonIcon {
   id: string
   type: IButtonIconType
   onClick?(): void
-  customIcon?: string | IIconSet
+  CustomIcon?: JSX.Element
 }
