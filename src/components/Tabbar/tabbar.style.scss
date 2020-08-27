@@ -1,7 +1,8 @@
 @import "assets/stylesheets/colors";
 
 .tabbar-container {
-  height: 64px;
+  height: 88px;
+  padding-bottom: 20px;
   width: 100%;
   position: fixed;
   bottom: 0;
@@ -11,6 +12,8 @@
     cursor: pointer;
 
     &.disabled {
+      cursor: default;
+
       .tab-menu-icon,
       .subtitle-2 {
         color: $secondary-text;
@@ -39,6 +42,7 @@
     box-shadow: 0 1px 6px 0 rgba(0, 0, 0, 0.16);
     background-color: $primary-text;
 
+    .menu-item.active,
     .menu-item:hover {
       background-color: $secondary-text;
     }
@@ -50,6 +54,10 @@
 
     .menu-item:hover {
       background-color: $primary-bg;
+    }
+
+    .menu-item.disabled:hover {
+      background-color: unset;
     }
   }
 }

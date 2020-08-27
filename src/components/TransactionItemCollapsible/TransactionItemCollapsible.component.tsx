@@ -1,7 +1,7 @@
 import React, { SFC, useState, Fragment } from 'react'
 import { number } from 'utils'
 import moment from 'moment'
-import { split, groupBy, Dictionary, isEmpty, map, keys } from 'lodash'
+import { split, groupBy, Dictionary, isEmpty, map, keys, get } from 'lodash'
 import { Badge } from 'components'
 import { LOTTO_TYPE, LOTTO_GAME_TYPE_NAME, TRANSACTION_TYPE } from 'constants/variables'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -89,8 +89,12 @@ const TransactionItemCollapsible: SFC<ITransactionItemCollapsible & DefaultProps
 
   const CreditInfoListComponent = () => {
 
+
     if (name === 'FINANCE') {
       return map(credit.list, (cred, creditIndex) => {
+        const stColor = get(statusName, `${cred.status}.color`, '')
+        const stName = get(statusName, `${cred.status}.name`, '')
+        // TODO: Recheck get(...)
         return (
           <div
             className="d-flex flex-row align-items-center transaction-description-row"
@@ -105,7 +109,7 @@ const TransactionItemCollapsible: SFC<ITransactionItemCollapsible & DefaultProps
               {' '}
               <span className="transaction-description-lotto-number">{cred.numbers}</span>
               {' '}
-              (<span style={{ color: statusName[cred.status].color }}>{statusName[cred.status].name}</span>)
+              (<span style={{ color: stColor }}>{stName}</span>)
             </div>
             <div className="transaction-description-amount">{number.castToMoney(Number(cred.money))}</div>
           </div>
@@ -120,14 +124,17 @@ const TransactionItemCollapsible: SFC<ITransactionItemCollapsible & DefaultProps
         const creditDetails = creditGroupList[key]
 
         const DetailComponents = map(creditDetails, (detail, detailIndex) => {
+          const stName = get(statusName, `${detail.status}.name`, '')
+          const stColor = get(statusName, `${detail.status}.color`, '')
+
           const subCreditStatus = () => {
             if (name === 'FINANCE') {
-              return statusName[detail.status].name
+              return stName
             } else {
               if (detail.status === 'WAIT') {
                 return 'รอผลออก'
               }
-              return statusName[detail.status].name
+              return stName
             }
           }
 
@@ -139,7 +146,7 @@ const TransactionItemCollapsible: SFC<ITransactionItemCollapsible & DefaultProps
               <div className="transaction-description-name-text">
                 <span className="transaction-description-lotto-number">{detail.numbers}</span>
                 {' '}
-            (<span style={{ color: statusName[detail.status].color }}>{subCreditStatus()}</span>)
+            (<span style={{ color: stColor }}>{subCreditStatus()}</span>)
           </div>
               <div className="transaction-description-amount">{number.castToMoney(Number(detail.money))}</div>
             </div>
@@ -160,6 +167,9 @@ const TransactionItemCollapsible: SFC<ITransactionItemCollapsible & DefaultProps
     }
   }
 
+  const trxName = get(getStatus(), 'name', '')
+  const trxColor = get(getStatus(), 'color', '')
+
   return (
     <div className="row py-3 credit-info-item-container" onClick={handleOnExpandClick}>
       <div className="col d-flex credit-info-item-wrapper">
@@ -167,12 +177,12 @@ const TransactionItemCollapsible: SFC<ITransactionItemCollapsible & DefaultProps
           <div className="transaction-name-text d-flex align-items-center">
             {displayName}
             <span className="transaction-badge-wrapper">
-              <Badge text={getStatus().name} color="white" backgroundColor={getStatus().color} />
+              <Badge text={trxName} color="white" backgroundColor={trxColor} />
             </span>
           </div>
           <div className="transaction-time-text py-2">{displayTime} {round}</div>
         </div>
-        <div className="transaction-amount-text" style={{ color: getStatus().color }}>
+        <div className="transaction-amount-text" style={{ color: trxColor }}>
           {number.castToMoney(Number(credit.money))}
         </div>
         <div className="d-flex transaction-chevron-right-icon">
