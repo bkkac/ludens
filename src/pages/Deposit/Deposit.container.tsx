@@ -38,6 +38,11 @@ const defaultProps: IDepositProps & IDepositActionProps = {
   transactionRequestCode: 0,
   transactionRequestError: '',
   transactionRequestIsFetching: false,
+  cancelingTransactionRequest() { noop() },
+  transactionCancel: {},
+  transactionCancelCode: 0,
+  transactionCancelError: '',
+  transactionCancelIsFetching: false,
 }
 
 class DepositContainer extends
@@ -78,6 +83,7 @@ class DepositContainer extends
       this.props.loader(false)
     }
 
+    // Request
     if (prevProps.transactionRequestIsFetching !== this.props.transactionRequestIsFetching
       && !this.props.transactionRequestIsFetching) {
       this.props.loader(false)
@@ -97,6 +103,29 @@ class DepositContainer extends
         // TODO: when before transaction timeout
       } else if (this.props.transactionRequestCode === response.NOT_FOUND) {
         // TODO: when never transaction request before
+      } else {
+        Modal.error.show({
+          action: () => { Modal.error.hide(); return this.props.history.goBack(); },
+          description: `${this.props.transactionRequestError} ${constants.pleaseTryAgain}`,
+          actionText: constants.ok,
+        })
+      }
+    }
+
+    // Cancel
+    if (prevProps.transactionCancelIsFetching !== this.props.transactionCancelIsFetching
+      && !this.props.transactionCancelIsFetching) {
+      this.props.loader(false)
+      if (this.props.transactionCancelCode === response.OK) {
+        const { webBank } = this.props.transactionRequest
+        this.setState({
+          currentStep: 1,
+          initialFormValue: {
+            ...this.state.initialFormValue,
+            webBankId: webBank?.id || 0,
+            money: '',
+          },
+        })
       } else {
         Modal.error.show({
           action: () => { Modal.error.hide(); return this.props.history.goBack(); },
@@ -150,7 +179,9 @@ class DepositContainer extends
   }
 
   onCancelHandler = () => {
-    this.props.history.goBack()
+    const id = this.props.transactionRequest.id || 0
+    this.props.loader(true)
+    this.props.cancelingTransactionRequest(id)
   }
 
   renderDepositForm = () => {

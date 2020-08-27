@@ -11,6 +11,10 @@ declare interface IDepositProps {
   transactionRequestCode: number | string
   transactionRequestError: string
   transactionRequestIsFetching: boolean
+  transactionCancel: ITransactionRequest
+  transactionCancelCode: number | string
+  transactionCancelError: string
+  transactionCancelIsFetching: boolean
   user: IUser
 }
 
@@ -20,6 +24,7 @@ declare interface IDepositActionProps {
   loader(data: boolean): void
   getTransactionRequest(): void
   signTransactionRequest(data: ISignTransactionRequest): void
+  cancelingTransactionRequest(transactionRequestId: number): void
 }
 
 declare interface IDepositStates {
