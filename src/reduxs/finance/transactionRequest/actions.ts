@@ -33,7 +33,7 @@ const signTransactionRequestSuccessAction = createAction(
 
 const signTransactionRequestFailureAction = createAction(
   SIGN_TRANSACTION_REQUEST_FAILURE,
-  resolve => (error: AxiosError<APIResponse<any>>) => resolve(error))
+  resolve => (error: AxiosError<APIResponse>) => resolve(error))
 
 const signTransactionRequestCancelAction = createAction(SIGN_TRANSACTION_REQUEST_CANCEL)
 

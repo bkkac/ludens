@@ -20,7 +20,7 @@ const getLottoGameSuccessAction = createAction(
 
 const getLottoGameFailureAction = createAction(
   GET_LOTTO_GAME_FAILURE,
-  resolve => (error: AxiosError) => resolve(error))
+  resolve => (error: AxiosError<APIResponse>) => resolve(error))
 
 const getLottoGameCancelAction = createAction(GET_LOTTO_GAME_CANCEL)
 

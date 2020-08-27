@@ -18,7 +18,7 @@ const getYeegeGameListSuccessAction = createAction(
 
 const getYeegeGameListFailureAction = createAction(
   GET_YEEGE_GAME_LIST_FAILURE,
-  resolve => (error: AxiosError) => resolve(error))
+  resolve => (error: AxiosError<APIResponse>) => resolve(error))
 
 const getYeegeGameListCancelAction = createAction(GET_YEEGE_GAME_LIST_CANCEL)
 

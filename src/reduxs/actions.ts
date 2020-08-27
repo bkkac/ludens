@@ -11,6 +11,8 @@ import creditAction from './credit/actions'
 import affilateAction from './affilate/actions'
 import config from './config/actions'
 import newsroom from './newsroom/actions'
+import forgotPassword from './forgotPassword/actions'
+import resetPassword from './resetPassword/actions'
 
 export default {
   ...userAction,
@@ -26,4 +28,6 @@ export default {
   ...affilateAction,
   ...config,
   ...newsroom,
+  ...forgotPassword,
+  ...resetPassword,
 }

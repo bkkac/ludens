@@ -15,7 +15,7 @@ const getBetHistorySuccessAction = createAction(
 
 const getBetHistoryFailureAction = createAction(
   GET_BET_HISTORY_FAILURE,
-  resolve => (error: AxiosError<APIResponse<any>>) => resolve(error))
+  resolve => (error: AxiosError<APIResponse>) => resolve(error))
 
 const getBetHistoryCancelAction = createAction(GET_BET_HISTORY_CANCEL)
 
