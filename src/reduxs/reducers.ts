@@ -13,6 +13,8 @@ import credit from './credit/reducers'
 import affilate from './affilate/reducers'
 import config from './config/reducers'
 import newsroom from './newsroom/reducers'
+import forgotPassword from './forgotPassword/reducers'
+import resetPassword from './resetPassword/reducers'
 import storage from 'redux-persist/lib/storage'
 import { persistReducer } from 'redux-persist'
 
@@ -41,6 +43,8 @@ const rootReducers = {
   affilate,
   config,
   newsroom,
+  forgotPassword,
+  resetPassword,
 }
 
 export default persistReducer(

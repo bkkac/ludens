@@ -18,7 +18,7 @@ const epicMiddleware = createEpicMiddleware<
 
 const enhancer = [axiosMiddleware, socketMiddleware, epicMiddleware]
 
-const composedEnhancer = process.env.REACT_APP_LUDENS_STATE === project.environment.prod.name
+const composedEnhancer = process.env.REACT_APP_LUDENS_ENV === project.environment.prod.name
   ? applyMiddleware(...enhancer)
   : composeWithDevTools(applyMiddleware(...enhancer))
 

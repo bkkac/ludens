@@ -21,7 +21,7 @@ const withdrawReducer = (state: IWithdrawState = initialState, action: RootActio
       return {
         isFetching: false,
         error: action.payload.response?.data.devMessage,
-        code: action.payload.code,
+        code: action.payload.response?.data.code,
       }
     default:
       return state
