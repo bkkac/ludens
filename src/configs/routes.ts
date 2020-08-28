@@ -116,6 +116,12 @@ const routes: IRoutes[] = [
     private: true,
   },
   {
+    exact: true,
+    name: route.forgotPassword.name,
+    path: route.forgotPassword.path,
+    component: pages.ForgotPassword,
+  },
+  {
     name: route.notFound.name,
     path: route.notFound.path,
     component: pages.ComingSoon,

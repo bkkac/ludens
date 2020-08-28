@@ -15,7 +15,7 @@ const getTransactionListSuccessAction = createAction(
 
 const getTransactionListFailureAction = createAction(
   GET_TRANSACTION_LIST_FAILURE,
-  resolve => (error: AxiosError<APIResponse<any>>) => resolve(error))
+  resolve => (error: AxiosError<APIResponse>) => resolve(error))
 
 const getTransactionListCancelAction = createAction(GET_TRANSACTION_LIST_CANCEL)
 

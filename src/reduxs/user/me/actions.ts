@@ -15,7 +15,7 @@ const getMeSuccessAction = createAction(
 
 const getMeFailureAction = createAction(
   GET_ME_FAILURE,
-  resolve => (error: AxiosError) => resolve(error))
+  resolve => (error: AxiosError<APIResponse>) => resolve(error))
 
 const getMeCancelAction = createAction(GET_ME_CANCEL)
 

@@ -21,7 +21,7 @@ const loginReducer = (state: ILoginState = initialState, action: RootAction): IL
       return {
         isFetching: false,
         error: action.payload.message,
-        code: action.payload.code,
+        code: action.payload.response?.data.code,
       }
     default:
       return state

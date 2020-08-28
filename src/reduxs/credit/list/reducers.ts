@@ -23,8 +23,8 @@ const getCreditInfoListReducer = (
     case getType(actions.getCreditInfoListFailureAction):
       return {
         isFetching: false,
-        error: action.payload.message,
-        code: action.payload.code,
+        error: action.payload.response?.data.devMessage,
+        code: action.payload.response?.data.code,
       }
     default:
       return state

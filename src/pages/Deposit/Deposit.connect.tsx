@@ -15,10 +15,14 @@ const mapStateToProps = (state: RootReducers): IDepositProps => ({
   depositRequestCode: state.ludens.finance.deposit.code!,
   depositRequestError: state.ludens.finance.deposit.error!,
   depositRequestIsFetching: state.ludens.finance.deposit.isFetching!,
-  transactionRequest: state.ludens.finance.transactionRequest.data!,
-  transactionRequestCode: state.ludens.finance.transactionRequest.code!,
-  transactionRequestError: state.ludens.finance.transactionRequest.error!,
-  transactionRequestIsFetching: state.ludens.finance.transactionRequest.isFetching!,
+  transactionRequest: state.ludens.finance.transactionRequest.request.data!,
+  transactionRequestCode: state.ludens.finance.transactionRequest.request.code!,
+  transactionRequestError: state.ludens.finance.transactionRequest.request.error!,
+  transactionRequestIsFetching: state.ludens.finance.transactionRequest.request.isFetching!,
+  transactionCancel: state.ludens.finance.transactionRequest.cancel.data!,
+  transactionCancelCode: state.ludens.finance.transactionRequest.cancel.code!,
+  transactionCancelError: state.ludens.finance.transactionRequest.cancel.error!,
+  transactionCancelIsFetching: state.ludens.finance.transactionRequest.cancel.isFetching!,
   user: state.ludens.user.me.data!,
 })
 
@@ -28,6 +32,7 @@ const mapDispatchToProos = (dispatch: Dispatch<RootAction>): IDepositActionProps
   loader: loaderAction.loadingAction,
   getTransactionRequest: financeAction.getTransactionRequestAction,
   signTransactionRequest: financeAction.signTransactionRequestAction,
+  cancelingTransactionRequest: financeAction.cancelingTransactionRequestAction,
 }, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProos)(DepositContainer)

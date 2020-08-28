@@ -9,6 +9,7 @@ import initialValues from './models/initialValues'
 import scheme from './models/scheme'
 import LogoThailandBet from 'assets/images/logo/logothailandbet.png'
 import './home.style.scss'
+import routes from 'constants/routes'
 
 const constants = {
   ok: 'ตกลง',
@@ -67,11 +68,11 @@ class HomeContainer extends Component<IHomeProps & IHomeActionProps & DefaultPro
   }
 
   onNavigateToRegister = () => {
-    this.props.history.push('/register')
+    this.props.history.push(routes.register.path)
   }
 
   onNavigateToForgotPassword = () => {
-    // this.props.history.replace('/register')
+    this.props.history.push(routes.forgotPassword.path)
   }
 
   renderLoginForm = () => {
