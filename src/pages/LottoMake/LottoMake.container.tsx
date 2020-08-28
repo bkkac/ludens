@@ -39,15 +39,16 @@ import routes from 'constants/routes'
 
 const constants = {
   ok: 'ตกลง',
-  numberList: (length: number) => `รายการแทง (${length})`,
   numsumLabel: 'ยิงเลข',
   makeLabel: 'แทงหวย',
+  numberList: (length: number) => `รายการแทง (${length})`,
   yeegeLabel: (round: string) => `หวยยี่กีรอบที่ ${round}`,
   back: 'กลับ',
   cannotBet: 'ไม่สามารถแทงได้',
   betSuccess: 'คุณได้ทำรายการเสร็จสมบูรณ์',
   makingGameLabel: 'ผลรวม (ยิงเลข)',
   timeups: 'หมดเวลา',
+  onProcessing: 'กำลังประมวนผล...',
 }
 
 type DefaultProps = Readonly<typeof defaultProps>
@@ -123,6 +124,7 @@ class LottoMakeContainer extends Component<
       seconds: 0,
     },
     lottoStatus: 'UNKNOWN',
+    onLottoProcessing: false,
   }
 
   componentDidMount() {
@@ -134,10 +136,10 @@ class LottoMakeContainer extends Component<
     const gameRound = number.padNumber(locationState.selectedLottoGame.round, 3)
     const gameQuery = { date: gameDate, round: gameRound }
 
-    this.props.getLottoGame(gameQuery)
+    const slugName = this.props.match.params.type
+    this.props.getLottoGame(slugName, gameDate, gameRound)
     this.props.getBetRate()
 
-    const slugName = this.props.match.params.type
     if (slugName === 'LOTTER_YEGEE') {
       this.props.getYeegeSum(gameQuery)
       this.props.getPlayedYeegeList(gameQuery)
@@ -236,9 +238,6 @@ class LottoMakeContainer extends Component<
       const gameQuery = { date: gameDate, round: gameRound }
       this.props.unlistenYeegeSum(gameQuery)
       this.props.unlistenPlayedYeegeList(gameQuery)
-      // TODO: Temporary comment and Recheck
-      // this.props.clearYeegeSum()
-      // this.props.clearYeegePlayedList()
     }
   }
 
@@ -263,9 +262,16 @@ class LottoMakeContainer extends Component<
       if (hours <= 0 && minutes <= 0 && seconds < 0) {
         this.clearLocalInterval()
         this.props.loader(true)
-        const gameDate = moment(lottoGame.createdAt).format('DDMMYYYY')
-        const gameRound = number.padNumber(lottoGame.round, 3)
-        this.props.getLottoGame({ date: gameDate, round: gameRound })
+        this.setState({ onLottoProcessing: true }, () => {
+          setTimeout(() => {
+            const slugName = this.props.match.params.type
+            const gameDate = moment(lottoGame.createdAt).format('DDMMYYYY')
+            const gameRound = number.padNumber(lottoGame.round, 3)
+            this.props.loader(true)
+            this.props.getLottoGame(slugName, gameDate, gameRound)
+            this.setState({ onLottoProcessing: false })
+          }, 5000)
+        })
       } else if (isNaN(hours) || isNaN(minutes) || isNaN(seconds)) {
         this.setState({ remainingTime: { hours: 0, minutes: 0, seconds: 0 } }, () => {
           this.clearLocalInterval()
@@ -399,6 +405,17 @@ class LottoMakeContainer extends Component<
 
   renderGameMode = () => {
     if (this.props.lottoGame.status === 'CLOSE') {
+      if (this.state.onLottoProcessing) {
+        return (
+          <div className="border-rounded secondary-bg p4">
+            <div className="row">
+              <div className="col text-center m3-y">
+                <h2>{constants.onProcessing}</h2>
+              </div>
+            </div>
+          </div>
+        )
+      }
       return (<BetResult results={this.props.betResults} />)
     }
 
