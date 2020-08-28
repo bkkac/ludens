@@ -236,8 +236,9 @@ class LottoMakeContainer extends Component<
       const gameQuery = { date: gameDate, round: gameRound }
       this.props.unlistenYeegeSum(gameQuery)
       this.props.unlistenPlayedYeegeList(gameQuery)
-      this.props.clearYeegeSum()
-      this.props.clearYeegePlayedList()
+      // TODO: Temporary comment and Recheck
+      // this.props.clearYeegeSum()
+      // this.props.clearYeegePlayedList()
     }
   }
 

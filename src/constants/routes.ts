@@ -25,4 +25,5 @@ export default {
   lottoFavorite: { name: 'lottoFavorite', path: '/lotto-favorite', exactPath: '/lotto-favorite' },
   contactus: { name: 'contact-us', path: '/contactus', exactPath: '/contactus' },
   newsroom: { name: 'newsroom', path: '/newsroom', exactPath: '/newsroom' },
+  forgotPassword: { name: 'forgot-password', path: '/forgot-password', exactPath: '/forgot-password' },
 }

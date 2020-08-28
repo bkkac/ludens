@@ -12,6 +12,8 @@ import credit from './credit/epics'
 import affilate from './affilate/epics'
 import config from './config/epics'
 import newsroom from './newsroom/epics'
+import forgotPassword from './forgotPassword/epics'
+import resetPassword from './resetPassword/epics'
 
 export default combineEpics(
   ...user,
@@ -27,5 +29,7 @@ export default combineEpics(
   ...affilate,
   ...config,
   ...newsroom,
+  ...forgotPassword,
+  ...resetPassword,
 )
 
