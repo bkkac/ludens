@@ -2,13 +2,13 @@ import { string, object, ObjectSchema } from 'yup'
 
 const constants = {
   moneyRequired: 'กรุณากรอกจำนวนเงิน',
-  moneyMinimunRequired: 'จำนวนเงินถอนขั้นต่ำ 100 บาท',
+  moneyMinimunRequired: 'จำนวนเงินถอนขั้นต่ำ 1 บาท',
 }
 
 const scheme: ObjectSchema<IWithdraw> = object().shape({
   money: string()
     .required(constants.moneyRequired)
-    .minimumMoneyRequire(10, constants.moneyMinimunRequired)
+    .minimumMoneyRequire(1, constants.moneyMinimunRequired)
     .transformIntegerMoney(),
   description: string(),
 })
