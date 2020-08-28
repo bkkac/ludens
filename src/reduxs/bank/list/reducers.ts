@@ -20,7 +20,7 @@ const depositReducer = (state: IBankListState = initialState, action: RootAction
       return {
         isFetching: false,
         error: action.payload.message,
-        code: action.payload.code,
+        code: action.payload.response?.data.code,
       }
     default:
       return state

@@ -2,7 +2,7 @@ declare interface ReducerState<T = any> {
   isFetching?: boolean
   data?: T
   error?: string
-  code?: number | string
+  code?: number
 }
 
 declare interface RootReducers {
@@ -20,5 +20,7 @@ declare interface RootReducers {
     affilate: IAffilateState
     config: IConfig
     newsroom: ReducerState<ReadonlyArray<INews>>
+    forgotPassword: ReducerState<IForgotPassword>
+    resetPassword: ReducerState<IResetPasswordSuccess>
   }
 }

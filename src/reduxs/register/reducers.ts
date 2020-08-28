@@ -21,7 +21,7 @@ const registerReducer = (state: ReducerState = initialState, action: RootAction)
       return {
         isFetching: false,
         error: action.payload.response?.data.devMessage,
-        code: action.payload.code,
+        code: action.payload.response?.data.code,
       }
     default:
       return state

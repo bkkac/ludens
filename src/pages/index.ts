@@ -15,6 +15,7 @@ import { LottoPayment } from './LottoPayment'
 import { LottoFavorite } from './LottoFavorite'
 import { ContactUs } from './ContactUs'
 import { Newsroom } from './Newsroom'
+import { ForgotPassword } from './ForgotPassword'
 
 export default {
   Home,
@@ -31,6 +32,7 @@ export default {
   ComingSoon,
   LottoPayment,
   LottoFavorite,
+  ForgotPassword,
   TransactionList,
   TransactionDetail,
   LottoListChrildren,
