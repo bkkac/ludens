@@ -66,12 +66,13 @@ class LottoListContainer extends Component<
       ? false
       : (lotto.status === 'OPEN')
 
-    // lotto.id
+
+      // Faking lotto game object
     const lottoGame: ILottoGame = {
       id: 0,
       round: '',
       status: lotto.status,
-      createdAt: '',
+      createdAt: lotto.startTime,
       endTime: lotto.endTime,
       startTime: lotto.startTime,
     }
