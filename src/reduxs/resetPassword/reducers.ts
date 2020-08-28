@@ -3,21 +3,23 @@ import { RootAction } from 'typings/reduxs/Actions'
 import { initialState } from './constants'
 import actions from './actions'
 
-const loginReducer = (state: IGetMeState = initialState, action: RootAction): IGetMeState => {
+const resetPasswordReducer = (
+  state: ReducerState<IResetPasswordSuccess> = initialState, action: RootAction
+): ReducerState<IResetPasswordSuccess> => {
   switch (action.type) {
-    case getType(actions.getMeAction):
+    case getType(actions.resetPasswordAction):
       return {
         ...state,
         isFetching: true,
       }
-    case getType(actions.getMeSuccessAction):
+    case getType(actions.resetPasswordSuccessAction):
       return {
         isFetching: false,
         data: action.payload.data.data,
-        code: action.payload.data.code,
+        code: action.payload.status,
       }
 
-    case getType(actions.getMeFailureAction):
+    case getType(actions.resetPasswordFailureAction):
       return {
         isFetching: false,
         error: action.payload.response?.data.devMessage,
@@ -28,4 +30,4 @@ const loginReducer = (state: IGetMeState = initialState, action: RootAction): IG
   }
 }
 
-export default loginReducer
+export default resetPasswordReducer
