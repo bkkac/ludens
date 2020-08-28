@@ -39,9 +39,9 @@ import routes from 'constants/routes'
 
 const constants = {
   ok: 'ตกลง',
-  numberList: (length: number) => `รายการแทง (${length})`,
   numsumLabel: 'ยิงเลข',
   makeLabel: 'แทงหวย',
+  numberList: (length: number) => `รายการแทง (${length})`,
   yeegeLabel: (round: string) => `หวยยี่กีรอบที่ ${round}`,
   back: 'กลับ',
   cannotBet: 'ไม่สามารถแทงได้',
@@ -134,10 +134,10 @@ class LottoMakeContainer extends Component<
     const gameRound = number.padNumber(locationState.selectedLottoGame.round, 3)
     const gameQuery = { date: gameDate, round: gameRound }
 
-    this.props.getLottoGame(gameQuery)
+    const slugName = this.props.match.params.type
+    this.props.getLottoGame(slugName, gameDate, gameRound)
     this.props.getBetRate()
 
-    const slugName = this.props.match.params.type
     if (slugName === 'LOTTER_YEGEE') {
       this.props.getYeegeSum(gameQuery)
       this.props.getPlayedYeegeList(gameQuery)
@@ -262,9 +262,10 @@ class LottoMakeContainer extends Component<
       if (hours <= 0 && minutes <= 0 && seconds < 0) {
         this.clearLocalInterval()
         this.props.loader(true)
+        const slugName = this.props.match.params.type
         const gameDate = moment(lottoGame.createdAt).format('DDMMYYYY')
         const gameRound = number.padNumber(lottoGame.round, 3)
-        this.props.getLottoGame({ date: gameDate, round: gameRound })
+        this.props.getLottoGame(slugName, gameDate, gameRound)
       } else if (isNaN(hours) || isNaN(minutes) || isNaN(seconds)) {
         this.setState({ remainingTime: { hours: 0, minutes: 0, seconds: 0 } }, () => {
           this.clearLocalInterval()

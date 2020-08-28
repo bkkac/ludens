@@ -35,7 +35,7 @@ declare interface IMakingLottoProps {
 
 declare interface IMakingLottoActionProps {
   getBetRate(): void
-  getLottoGame(query: ILottoRoundQuery)
+  getLottoGame(slugname: TLottoSlug, date: string, round: string)
   getPlayedYeegeList(query: ILottoRoundQuery): void
   listenPlayedYeegeList(query: ILottoRoundQuery): void
   unlistenPlayedYeegeList(query: ILottoRoundQuery): void

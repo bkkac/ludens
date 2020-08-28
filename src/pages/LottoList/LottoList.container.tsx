@@ -13,6 +13,7 @@ import LottoFlags from 'assets/images/global/flags'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons'
 import './lottoList.style.scss'
+import routes from 'constants/routes'
 
 const constants = {
   back: 'กลับ',
@@ -65,9 +66,19 @@ class LottoListContainer extends Component<
       ? false
       : (lotto.status === 'OPEN')
 
+    // lotto.id
+    const lottoGame: ILottoGame = {
+      id: 0,
+      round: '',
+      status: lotto.status,
+      createdAt: '',
+      endTime: lotto.endTime,
+      startTime: lotto.startTime,
+    }
+
     const navigate = (lotto.code === 'LOTTER_YEGEE')
-      ? () => this.props.history.push(`/lotto/${lotto.code}`)
-      : undefined
+      ? () => this.props.history.push(routes.lottoChrildren.exactPath(lotto.code))
+      : () => this.props.history.push(routes.lottoMaking.exactPath(lotto.code), { selectedLottoGame: lottoGame })
 
     const FlagIcon = LottoFlags[LOTTO_FLAG_ALPHA[LOTTO_SLUG_TO_TYPE[lotto.code]]].Icon
     return (

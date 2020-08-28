@@ -24,6 +24,7 @@ declare interface ILottoState {
   list: ReducerState<ILotto[]>
   favorite: ILottoFavorite
   yeege: ILottoGameState
+  game: ReducerState<ILottoGame>
   bet: IBetState
   me: IBetHistoryState
 }
