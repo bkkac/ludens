@@ -10,11 +10,24 @@ export const SIGN_TRANSACTION_REQUEST_SUCCESS = 'SIGN_TRANSACTION_REQUEST_SUCCES
 export const SIGN_TRANSACTION_REQUEST_FAILURE = 'SIGN_TRANSACTION_REQUEST_FAILURE'
 export const SIGN_TRANSACTION_REQUEST_CANCEL = 'SIGN_TRANSACTION_REQUEST_CANCEL'
 
-export const initialState: ReducerState<ITransactionRequest> = {
-  isFetching: false,
-  code: 0,
-  data: {},
-  error: '',
+export const CANCELING_TRANSACTION_REQUEST = 'CANCELING_TRANSACTION_REQUEST'
+export const CANCELING_TRANSACTION_REQUEST_SUCCESS = 'CANCELING_TRANSACTION_REQUEST_SUCCESS'
+export const CANCELING_TRANSACTION_REQUEST_FAILURE = 'CANCELING_TRANSACTION_REQUEST_FAILURE'
+export const CANCELING_TRANSACTION_REQUEST_CANCEL = 'CANCELING_TRANSACTION_REQUEST_CANCEL'
+
+export const initialState: ITransactionRequestState = {
+  request: {
+    isFetching: false,
+    code: 0,
+    data: {},
+    error: '',
+  },
+  cancel: {
+    isFetching: false,
+    code: 0,
+    data: {},
+    error: '',
+  },
 }
 
 export const endpoint = {

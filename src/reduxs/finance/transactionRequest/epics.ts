@@ -9,7 +9,7 @@ import {
 } from 'rxjs/operators'
 import { isActionOf } from 'typesafe-actions'
 import { RootAction } from 'typings/reduxs/Actions'
-import { fetchGetTransactionRequest, fetchSignTransactionRequest } from './services'
+import { fetchGetTransactionRequest, fetchSignTransactionRequest, fetchCancelingTransactionRequest } from './services'
 import actions from './actions'
 
 const getTransactionRequestEpic: Epic<RootAction, RootAction, RootReducers> = (action$, store) =>
@@ -38,7 +38,21 @@ const signTransactionRequestEpic: Epic<RootAction, RootAction, RootReducers> = (
     )
   )
 
+const cancelingTransactionRequestEpic: Epic<RootAction, RootAction, RootReducers> = (action$, store) =>
+  action$.pipe(
+    filter(isActionOf(actions.cancelingTransactionRequestAction)),
+    exhaustMap(action =>
+      from(fetchCancelingTransactionRequest(action.payload))
+        .pipe(
+          map(actions.cancelingTransactionRequestSuccessAction),
+          catchError(error => of(actions.cancelingTransactionRequestFailureAction(error))),
+          takeUntil(action$.pipe(filter(isActionOf(actions.cancelingTransactionRequestCancelAction))))
+        ),
+    )
+  )
+
 export default [
   getTransactionRequestEpic,
   signTransactionRequestEpic,
+  cancelingTransactionRequestEpic,
 ]

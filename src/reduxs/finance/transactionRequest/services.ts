@@ -5,3 +5,6 @@ export const fetchGetTransactionRequest = () => axios.get(endpoint.transactionRe
 
 export const fetchSignTransactionRequest = (data: ISignTransactionRequest) =>
   axios.post(endpoint.transactionRequest, data)
+
+export const fetchCancelingTransactionRequest = (transactionRequestId: number) =>
+  axios.delete(endpoint.transactionRequest, { data: { id: transactionRequestId } })

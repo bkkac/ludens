@@ -16,9 +16,14 @@ declare interface ITransactionState {
   list: ReducerState<ITransaction[]>
 }
 
+declare interface ITransactionRequestState {
+  request: ReducerState<ITransactionRequest>
+  cancel: ReducerState<ITransactionRequest>
+}
+
 declare interface IFinanceState {
   deposit: IDepositState
   withdraw: IWithdrawState
   transaction: ITransactionState
-  transactionRequest: ReducerState<ITransactionRequest>
+  transactionRequest: ITransactionRequestState
 }

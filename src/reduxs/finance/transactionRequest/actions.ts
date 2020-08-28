@@ -8,6 +8,10 @@ import {
   SIGN_TRANSACTION_REQUEST_SUCCESS,
   SIGN_TRANSACTION_REQUEST_FAILURE,
   SIGN_TRANSACTION_REQUEST_CANCEL,
+  CANCELING_TRANSACTION_REQUEST,
+  CANCELING_TRANSACTION_REQUEST_SUCCESS,
+  CANCELING_TRANSACTION_REQUEST_FAILURE,
+  CANCELING_TRANSACTION_REQUEST_CANCEL,
 } from './constants'
 import { AxiosResponse, AxiosError } from 'axios'
 
@@ -19,7 +23,7 @@ const getTransactionRequestSuccessAction = createAction(
 
 const getTransactionRequestFailureAction = createAction(
   GET_TRANSACTION_REQUEST_FAILURE,
-  resolve => (error: AxiosError<APIResponse<any>>) => resolve(error))
+  resolve => (error: AxiosError<APIResponse>) => resolve(error))
 
 const getTransactionRequestCancelAction = createAction(GET_TRANSACTION_REQUEST_CANCEL)
 
@@ -37,6 +41,20 @@ const signTransactionRequestFailureAction = createAction(
 
 const signTransactionRequestCancelAction = createAction(SIGN_TRANSACTION_REQUEST_CANCEL)
 
+const cancelingTransactionRequestAction = createAction(
+  CANCELING_TRANSACTION_REQUEST,
+  resolve => (transactionRequestId: number) => resolve(transactionRequestId))
+
+const cancelingTransactionRequestSuccessAction = createAction(
+  CANCELING_TRANSACTION_REQUEST_SUCCESS,
+  resolve => (data: AxiosResponse<APIResponse<ITransactionRequest>>) => resolve(data))
+
+const cancelingTransactionRequestFailureAction = createAction(
+  CANCELING_TRANSACTION_REQUEST_FAILURE,
+  resolve => (error: AxiosError<APIResponse>) => resolve(error))
+
+const cancelingTransactionRequestCancelAction = createAction(CANCELING_TRANSACTION_REQUEST_CANCEL)
+
 export default {
   getTransactionRequestAction,
   getTransactionRequestSuccessAction,
@@ -46,4 +64,8 @@ export default {
   signTransactionRequestSuccessAction,
   signTransactionRequestFailureAction,
   signTransactionRequestCancelAction,
+  cancelingTransactionRequestAction,
+  cancelingTransactionRequestSuccessAction,
+  cancelingTransactionRequestFailureAction,
+  cancelingTransactionRequestCancelAction,
 }
