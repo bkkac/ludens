@@ -61,6 +61,7 @@ declare interface IMakingLottoState {
     seconds: number
   }
   lottoStatus: TGameStatus
+  onLottoProcessing: boolean
 }
 
 declare interface IMakingLottoComponentProps {

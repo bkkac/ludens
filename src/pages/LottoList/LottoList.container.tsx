@@ -67,7 +67,7 @@ class LottoListContainer extends Component<
       : (lotto.status === 'OPEN')
 
 
-      // Faking lotto game object
+    // Faking lotto game object
     const lottoGame: ILottoGame = {
       id: 0,
       round: '',
@@ -79,7 +79,9 @@ class LottoListContainer extends Component<
 
     const navigate = (lotto.code === 'LOTTER_YEGEE')
       ? () => this.props.history.push(routes.lottoChrildren.exactPath(lotto.code))
-      : () => this.props.history.push(routes.lottoMaking.exactPath(lotto.code), { selectedLottoGame: lottoGame })
+      : (lotto.status === 'OPEN')
+        ? () => this.props.history.push(routes.lottoMaking.exactPath(lotto.code), { selectedLottoGame: lottoGame })
+        : undefined
 
     const FlagIcon = LottoFlags[LOTTO_FLAG_ALPHA[LOTTO_SLUG_TO_TYPE[lotto.code]]].Icon
     return (

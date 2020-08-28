@@ -18,9 +18,9 @@ const getLottoListEpic: Epic<RootAction, RootAction, RootReducers> = (action$, s
     filter(isActionOf(actions.getLottoAction)),
     exhaustMap(data => {
       const { slugname, round, date } = data.payload
-      const getGame = () => (slugname === 'LOTTER_YEGEE')
-        ? fetchLottoGame(slugname)
-        : fetchYeegeGame({ round, date })
+      const getGame = (slugname === 'LOTTER_YEGEE')
+        ? fetchYeegeGame({ round, date })
+        : fetchLottoGame(slugname)
       return from(getGame)
         .pipe(
           map(actions.getLottoSuccessAction),
