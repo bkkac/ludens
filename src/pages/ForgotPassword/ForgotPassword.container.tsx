@@ -15,6 +15,8 @@ import response from 'constants/response'
 const constants = {
   ok: 'ตกลง',
   back: 'กลับ',
+  gotoMain: 'กลับสู่หน้าหลัก',
+  requestedSuccess: 'เปลี่ยนรหัสผ่านสำเร็จ',
   forgotPassword: 'ลืมรหัสผ่าน',
 }
 
@@ -45,7 +47,7 @@ class ForgotPasswordContainer extends
 
   componentDidUpdate(prevProps: IForgotPasswordProps) {
     if (prevProps.forgotPasswordIsFetching !== this.props.forgotPasswordIsFetching
-      || !this.props.forgotPasswordIsFetching) {
+      && !this.props.forgotPasswordIsFetching) {
       this.props.loader(false)
       if (this.props.forgotPasswordCode !== response.OK) {
         Modal.error.show({
@@ -56,13 +58,22 @@ class ForgotPasswordContainer extends
       }
     }
     if (prevProps.resetPasswordIsFetching !== this.props.resetPasswordIsFetching
-      || !this.props.resetPasswordIsFetching) {
+      && !this.props.resetPasswordIsFetching) {
       this.props.loader(false)
       if (this.props.resetPasswordCode !== response.OK) {
         Modal.error.show({
           action: Modal.error.hide,
           description: this.props.resetPasswordError,
           actionText: constants.ok,
+        })
+      } else {
+        Modal.success.show({
+          action: () => {
+            this.props.history.replace('/transaction')
+            Modal.success.hide()
+          },
+          actionText: constants.gotoMain,
+          description: constants.requestedSuccess,
         })
       }
     }
@@ -84,8 +95,8 @@ class ForgotPasswordContainer extends
       const submitForm: IResetPasswordRequest = {
         otp: values.otp,
         forgotPasswordId: this.props.requestedForgotPassword.id,
-        newPassowrd: values.newPassword,
-        confirmPassword: values.confirmNewPassword,
+        newPassword: values.newPassword,
+        confirmNewPassword: values.confirmNewPassword,
       }
       this.props.loader(true)
       this.props.resetPassword(submitForm)

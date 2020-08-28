@@ -1,8 +1,8 @@
 declare interface IResetPasswordRequest {
   otp: string
   forgotPasswordId: number
-  newPassowrd: string
-  confirmPassword: string
+  newPassword: string
+  confirmNewPassword: string
 }
 
 declare interface IResetPasswordSuccess {
