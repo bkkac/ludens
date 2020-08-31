@@ -404,8 +404,7 @@ class LottoMakeContainer extends Component<
   }
 
   renderGameMode = () => {
-    if (this.props.lottoGame.status === 'CLOSE') {
-      if (this.state.onLottoProcessing) {
+    if (this.state.onLottoProcessing) {
         return (
           <div className="border-rounded secondary-bg p4">
             <div className="row">
@@ -415,11 +414,9 @@ class LottoMakeContainer extends Component<
             </div>
           </div>
         )
-      }
+    } else if (this.props.lottoGame.status === 'CLOSE') {
       return (<BetResult results={this.props.betResults} />)
-    }
-
-    if (this.state.lottoStatus === 'OPEN') {
+    } else if (this.state.lottoStatus === 'OPEN') {
       switch (this.state.activeModeSwitch) {
         case 'LOTTO':
           return (
