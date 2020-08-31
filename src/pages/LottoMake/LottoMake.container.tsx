@@ -34,6 +34,7 @@ import {
   BetResult,
 } from './components'
 import { Summary } from '../LottoPayment/components'
+import { LOTTO_SLUG_NAME } from 'constants/variables'
 import './lottoMake.style.scss'
 import routes from 'constants/routes'
 
@@ -48,7 +49,7 @@ const constants = {
   betSuccess: 'คุณได้ทำรายการเสร็จสมบูรณ์',
   makingGameLabel: 'ผลรวม (ยิงเลข)',
   timeups: 'หมดเวลา',
-  onProcessing: 'กำลังประมวนผล...',
+  onProcessing: 'กำลังประมวลผล...',
 }
 
 type DefaultProps = Readonly<typeof defaultProps>
@@ -261,7 +262,6 @@ class LottoMakeContainer extends Component<
 
       if (hours <= 0 && minutes <= 0 && seconds < 0) {
         this.clearLocalInterval()
-        this.props.loader(true)
         this.setState({ onLottoProcessing: true }, () => {
           setTimeout(() => {
             const slugName = this.props.match.params.type
@@ -405,15 +405,15 @@ class LottoMakeContainer extends Component<
 
   renderGameMode = () => {
     if (this.state.onLottoProcessing) {
-        return (
-          <div className="border-rounded secondary-bg p4">
-            <div className="row">
-              <div className="col text-center m3-y">
-                <h2>{constants.onProcessing}</h2>
-              </div>
+      return (
+        <div className="border-rounded secondary-bg p4">
+          <div className="row">
+            <div className="col text-center m3-y">
+              <h2>{constants.onProcessing}</h2>
             </div>
           </div>
-        )
+        </div>
+      )
     } else if (this.props.lottoGame.status === 'CLOSE') {
       return (<BetResult results={this.props.betResults} />)
     } else if (this.state.lottoStatus === 'OPEN') {
@@ -442,7 +442,9 @@ class LottoMakeContainer extends Component<
   }
 
   renderSummaryMode = () => {
-    if (this.props.lottoGame.status === 'CLOSE') {
+    if (this.state.onLottoProcessing) {
+      return (<></>)
+    } else if (this.props.lottoGame.status === 'CLOSE') {
       return (<PlayedUser playedYeegeList={this.props.playedYeegeList} />)
     } else if (this.props.lottoGame.status === 'OPEN') {
       return (
@@ -461,7 +463,12 @@ class LottoMakeContainer extends Component<
   }
 
   handleOnBack = () => {
-    this.handleOnClickBreadcrumb(routes.lottoChrildren.exactPath(this.props.match.params.type))
+    const slugName = this.props.match.params.type
+    if (slugName !== 'LOTTER_YEGEE') {
+      this.props.history.goBack()
+    } else {
+      this.handleOnClickBreadcrumb(routes.lottoChrildren.exactPath(this.props.match.params.type))
+    }
   }
 
   handleOnSwitchMode = () => {
@@ -469,6 +476,11 @@ class LottoMakeContainer extends Component<
   }
 
   renderYeegeGame = () => {
+    const slugName = this.props.match.params.type
+    if (slugName !== 'LOTTER_YEGEE') {
+      return (<></>)
+    }
+
     const status = this.state.lottoStatus
     return (
       <div className="yeege-game-result-container p2">
@@ -529,6 +541,7 @@ class LottoMakeContainer extends Component<
       )
     }
 
+    const slugName = this.props.match.params.type
     const gameRound = this.props.lottoGame.round
     const isActiveSummaryNotification = (this.state.numberList.length > 0)
     return (
@@ -552,7 +565,9 @@ class LottoMakeContainer extends Component<
           </div>
           <div className="row m3-t">
             <div className="col">
-              <h2>{constants.yeegeLabel(gameRound)}</h2>
+              <h2>{(slugName !== 'LOTTER_YEGEE')
+                ? LOTTO_SLUG_NAME[slugName]
+                : constants.yeegeLabel(gameRound)}</h2>
             </div>
           </div>
           <div className="row m2-t">
