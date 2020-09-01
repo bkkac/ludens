@@ -9,5 +9,7 @@ declare interface IInputTextProps {
   hiddenErrorBlock?: boolean
   onBlur?(event: React.ChangeEvent<HTMLInputElement>): void
   onChange?(event: React.ChangeEvent<HTMLInputElement>): void
+  setFieldValue?(field: string, value: any, shouldValidate?: boolean): void
   useNumberpad?: boolean
+  toLowercase?: boolean
 }
