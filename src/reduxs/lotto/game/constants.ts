@@ -20,5 +20,5 @@ export const initialState: ReducerState<ILottoGame> = {
 }
 
 export const endpoint = {
-  getLottoGame: (lottoSlug: TLottoSlug) => `${project.environment[project.environmentName].api}/web/lottery?type=${lottoSlug}`,
+  getLottoGame: (lottoSlug: TLottoSlug) => `${project.environment[project.environmentName].api}/config/web/lottery?type=${lottoSlug}`,
 }
