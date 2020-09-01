@@ -1,4 +1,4 @@
-import React, { Component, ComponentClass } from 'react'
+import React, { Component, ComponentClass, ChangeEvent } from 'react'
 import { noop } from 'lodash'
 import './inputText.style.scss'
 
@@ -10,12 +10,14 @@ const defaultProps: IInputTextProps = {
   name: '',
   value: '',
   errorMessage: '',
+  toLowercase: false,
   error: false,
   disabled: false,
   useNumberpad: false,
   hiddenErrorBlock: false,
   onBlur() { noop() },
   onChange() { noop() },
+  setFieldValue() { noop() },
 }
 
 const InputText = class extends Component<IInputTextProps & DefaultProps> {
@@ -28,6 +30,7 @@ const InputText = class extends Component<IInputTextProps & DefaultProps> {
       value,
       onBlur,
       onChange,
+      setFieldValue,
       type,
       error,
       hiddenErrorBlock,
@@ -35,9 +38,20 @@ const InputText = class extends Component<IInputTextProps & DefaultProps> {
       errorMessage,
       placeholder,
       disabled,
+      toLowercase,
     } = this.props
 
     const hasErrorClass = error ? 'error' : ''
+
+    const handleOnChange = (event: ChangeEvent<HTMLInputElement>) => {
+      if (toLowercase) {
+        const fieldValue = (event.target.value || '').toLowerCase()
+        const fieldName = event.target.name
+        setFieldValue!(fieldName, fieldValue)
+      } else {
+        onChange!(event)
+      }
+    }
 
     const Message = () => hiddenErrorBlock
       ? <></>
@@ -54,7 +68,7 @@ const InputText = class extends Component<IInputTextProps & DefaultProps> {
           autoCapitalize="none"
           pattern={useNumberpad ? '\\d*' : undefined}
           onBlur={onBlur}
-          onChange={onChange}
+          onChange={handleOnChange}
           className="input-core"
           placeholder={placeholder}
         />
