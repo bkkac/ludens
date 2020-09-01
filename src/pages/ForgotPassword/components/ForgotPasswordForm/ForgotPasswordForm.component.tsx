@@ -51,7 +51,8 @@ const ForgotPasswordFormComponnet:
                     value={values.username}
                     onBlur={handleBlur}
                     disabled={isOTPRequest}
-                    onChange={handleChange}
+                    toLowercase
+                    setFieldValue={setFieldValue}
                     errorMessage={errors.username}
                     error={!!errors.username && touched.username}
                     placeholder={constants.placeholderInput(constants.placeholderUsername)}
@@ -119,7 +120,8 @@ const ForgotPasswordFormComponnet:
                             value={values.newPassword}
                             type="password"
                             onBlur={handleBlur}
-                            onChange={handleChange}
+                            toLowercase
+                            setFieldValue={setFieldValue}
                             errorMessage={errors.newPassword}
                             error={!!errors.newPassword && touched.newPassword}
                             placeholder={constants.placeholderInput(constants.placeholderPassword)}
@@ -134,7 +136,8 @@ const ForgotPasswordFormComponnet:
                             value={values.confirmNewPassword}
                             type="password"
                             onBlur={handleBlur}
-                            onChange={handleChange}
+                            toLowercase
+                            setFieldValue={setFieldValue}
                             errorMessage={errors.confirmNewPassword}
                             error={!!errors.confirmNewPassword && touched.confirmNewPassword}
                             placeholder={constants.placeholderInput(constants.placeholderConfirmPassword)}

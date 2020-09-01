@@ -1,4 +1,4 @@
-import { camelCase, snakeCase, keys } from 'lodash'
+import { camelCase, snakeCase, keys, split, head, last } from 'lodash'
 
 const isArray = (array: any) => Array.isArray(array)
 
@@ -36,7 +36,15 @@ const snakecaseTransform = (data: any): { [name: string]: any } | [] => {
   return data
 }
 
+const hiddenString = (text: string): string => {
+  const splitedString = split(text, '')
+  const firstString = head(splitedString)
+  const lastString = last(splitedString)
+  return `${firstString}****${lastString}`
+}
+
 export default {
   camelcaseTransform,
   snakecaseTransform,
+  hiddenString,
 }

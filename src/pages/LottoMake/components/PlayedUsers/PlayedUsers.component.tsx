@@ -3,6 +3,7 @@ import moment from 'moment'
 import { Collapse } from 'components'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faChevronRight } from '@fortawesome/free-solid-svg-icons'
+import { transformer } from 'utils'
 
 import './playedUsers.style.scss'
 
@@ -44,7 +45,7 @@ const PlayedUser: SFC<IPlayedUsers> = ({ playedYeegeList }) => {
                 <div className="col">
                   <div className="d-flex flex-row p2-x p1-y">
                     <div className="seq-player-number"><h4>{playedIndex + 1}</h4></div>
-                    <h4 className="flex">{played.userId?.username}</h4>
+                    <h4 className="flex">{transformer.hiddenString(played.userId?.username || '')}</h4>
                     <div className="text-right">
                       <h4>{played.number}</h4>
                       <h4 className="secondary-text">{time}</h4>
