@@ -10,18 +10,18 @@ const transactionRequestReducer =
       case getType(actions.getTransactionRequestAction):
       case getType(actions.signTransactionRequestAction):
         return {
-          ...initialState,
+          ...state,
           request: {
-            ...initialState.request,
+            ...state.request,
             isFetching: true,
           },
         }
       case getType(actions.getTransactionRequestSuccessAction):
       case getType(actions.signTransactionRequestSuccessAction):
         return {
-          ...initialState,
+          ...state,
           request: {
-            ...initialState.request,
+            ...state.request,
             isFetching: false,
             data: action.payload.data.data,
             code: action.payload.status,
@@ -31,9 +31,9 @@ const transactionRequestReducer =
       case getType(actions.getTransactionRequestFailureAction):
       case getType(actions.signTransactionRequestFailureAction):
         return {
-          ...initialState,
+          ...state,
           request: {
-            ...initialState.request,
+            ...state.request,
             isFetching: false,
             error: action.payload.response?.data.devMessage,
             code: action.payload.response?.status,
@@ -42,17 +42,17 @@ const transactionRequestReducer =
       // Canceling
       case getType(actions.cancelingTransactionRequestAction):
         return {
-          ...initialState,
+          ...state,
           cancel: {
-            ...initialState.cancel,
+            ...state.cancel,
             isFetching: true,
           },
         }
       case getType(actions.cancelingTransactionRequestSuccessAction):
         return {
-          ...initialState,
+          ...state,
           cancel: {
-            ...initialState.cancel,
+            ...state.cancel,
             isFetching: false,
             data: action.payload.data.data,
             code: action.payload.status,
@@ -60,9 +60,9 @@ const transactionRequestReducer =
         }
       case getType(actions.cancelingTransactionRequestFailureAction):
         return {
-          ...initialState,
+          ...state,
           cancel: {
-            ...initialState.cancel,
+            ...state.cancel,
             isFetching: false,
             error: action.payload.response?.data.devMessage,
             code: action.payload.response?.status,
