@@ -17,11 +17,15 @@ import { ContactUs } from './ContactUs'
 import { Newsroom } from './Newsroom'
 import { ForgotPassword } from './ForgotPassword'
 import { QandA } from './QandA'
+import { Casino } from './Casino'
+import { Games } from './Games'
 
 export default {
   Home,
   Main,
+  Games,
   QandA,
+  Casino,
   Deposit,
   Newsroom,
   Withdraw,

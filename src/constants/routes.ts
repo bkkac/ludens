@@ -28,4 +28,6 @@ export default {
   forgotPassword: { name: 'forgot-password', path: '/forgot-password', exactPath: '/forgot-password' },
   qa: { name: 'qa', path: '/qa', exactPath: '/qa' },
   qaType: { name: 'qa-type', path: '/qa/:type', exactPath: (type: TQAType) => `/qa/${type}` },
+  casino: { name: 'casino', path: '/casino', exactPath: '/casino' },
+  games: { name: 'games', path: '/games', exactPath: '/games' },
 }

@@ -104,11 +104,17 @@ const DrawerComponent: SFC<IDrawer> = ({
                 <h5 className="icon-container"><FontAwesomeIcon icon={faReceipt} className="m1-r" /></h5>
                 <h5>{constants.lotto}</h5>
               </div>
-              <div className="drawer-item-container disabled">
+              <div
+                className={`drawer-item-container ${currentMenu === routes.casino.path ? 'active' : ''}`}
+                onClick={() => handleOnChangePage(routes.casino.path)}
+              >
                 <h5 className="icon-container"><FontAwesomeIcon icon={faDice} className="m1-r" /></h5>
                 <h5>{constants.casino}</h5>
               </div>
-              <div className="drawer-item-container disabled">
+              <div
+                className={`drawer-item-container ${currentMenu === routes.games.path ? 'active' : ''}`}
+                onClick={() => handleOnChangePage(routes.games.path)}
+              >
                 <h5 className="icon-container"><FontAwesomeIcon icon={faChessQueen} className="m1-r" /></h5>
                 <h5>{constants.slot}</h5>
               </div>
