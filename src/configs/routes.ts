@@ -122,6 +122,20 @@ const routes: IRoutes[] = [
     component: pages.ForgotPassword,
   },
   {
+    exact: true,
+    name: route.qa.name,
+    path: route.qa.path,
+    component: pages.QandA,
+    private: true,
+  },
+  {
+    exact: true,
+    name: route.qaType.name,
+    path: route.qaType.path,
+    component: pages.QandA,
+    private: true,
+  },
+  {
     name: route.notFound.name,
     path: route.notFound.path,
     component: pages.ComingSoon,

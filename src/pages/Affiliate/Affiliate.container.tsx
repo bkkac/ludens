@@ -9,6 +9,7 @@ import { number } from 'utils'
 import moment from 'moment'
 import copy from 'copy-to-clipboard'
 import './affiliate.style.scss'
+import routes from 'constants/routes'
 
 const constants = {
 	back: 'ย้อนกลับ',
@@ -68,7 +69,7 @@ class AffilateContainer extends
 
 	onPressBack = () => this.props.history.goBack()
 
-	onPressQAAffilate = () => this.props.history.push('/qa')
+	onPressQAAffilate = () => this.props.history.push(routes.qaType.exactPath('affiliate'))
 
 	onPressCopy = (link: string) => {
 		copy(link)
@@ -118,7 +119,7 @@ class AffilateContainer extends
 					</div>
 					<div className="row  m4-t">
 						<div className="col text-center">
-							<ALink id="goto-qa-howto-aff" color={colors.PRIMARY_BLUE} >
+							<ALink id="goto-qa-howto-aff" color={colors.PRIMARY_BLUE} onClick={this.onPressQAAffilate}>
 								{constants.howTo}
 							</ALink>
 						</div>

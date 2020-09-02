@@ -69,7 +69,12 @@ class MainContainer extends Component<IMainProps & IMainActionProps & DefaultPro
               </div>
               <div className="row m2-t m4-b">
                 <div className="col text-center">
-                  <ALink id="goto-privacy-condition" color={colors.PRIMARY_TEXT} underline>
+                  <ALink
+                    onClick={() => this.onNavigateTo(routes.qaType.exactPath('privacy'))}
+                    id="goto-privacy-condition"
+                    color={colors.PRIMARY_TEXT}
+                    underline
+                  >
                     {constants.conditionText}
                   </ALink>
                 </div>
