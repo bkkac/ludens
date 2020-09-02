@@ -155,7 +155,7 @@ const TransactionItemCollapsible: SFC<ITransactionItemCollapsible & DefaultProps
                 {' '}
             (<span style={{ color: stColor }}>{subCreditStatus()}</span>)
             {' '}
-                <span className="secondary-text">{type === 'LOTTER' ? `${constants.actureResult} ${detail.numbersBetResult}` : ''}</span>
+                <span className="secondary-text">{(type === 'LOTTER' && detail.status === 'LOSER') ? `${constants.actureResult} ${detail.numbersBetResult}` : ''}</span>
               </div>
               <div className="transaction-description-amount">{number.castToMoney(Number(detail.money))}</div>
             </div>
