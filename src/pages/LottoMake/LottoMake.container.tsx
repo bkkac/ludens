@@ -169,6 +169,8 @@ class LottoMakeContainer extends Component<
               round: gameRound,
               type: 'LOTTER_YEGEE',
             })
+            const gameQuery = { date: gameDate, round: gameRound }
+            this.props.getYeegeSum(gameQuery)
           }
         })
       } else {
@@ -203,6 +205,7 @@ class LottoMakeContainer extends Component<
     // Result until time is up
     if (prevProps.getBetResultIsFetching !== this.props.getBetResultIsFetching
       && !this.props.getBetResultIsFetching) {
+      this.setState({ onLottoProcessing: false })
       this.props.loader(false)
     }
 
@@ -283,7 +286,6 @@ class LottoMakeContainer extends Component<
             const gameRound = number.padNumber(lottoGame.round, 3)
             this.props.loader(true)
             this.props.getLottoGame(slugName, gameDate, gameRound)
-            this.setState({ onLottoProcessing: false })
           }, 5000)
         })
       } else if (isNaN(hours) || isNaN(minutes) || isNaN(seconds)) {
@@ -495,7 +497,7 @@ class LottoMakeContainer extends Component<
 
   renderYeegeGame = () => {
     const slugName = this.props.match.params.type
-    if (slugName !== 'LOTTER_YEGEE') {
+    if (slugName !== 'LOTTER_YEGEE' || this.state.onLottoProcessing) {
       return (<></>)
     }
 

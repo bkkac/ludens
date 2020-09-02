@@ -8,6 +8,13 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faChevronRight } from '@fortawesome/free-solid-svg-icons'
 import './transactionItemCollapsible.style.scss'
 
+const constants = {
+  round: 'รอบที่',
+  makeLotto: 'แทง',
+  waitResult: 'รอผลออก',
+  actureResult: 'เลขที่ออก',
+}
+
 const statusName: { [status in TBetStatus | TFinanceStatus]: { name: string; color: string } } = {
   WAIT: { name: 'รอตรวจสอบ', color: '#ffb751' },
   SUCCESS: { name: 'สำเร็จ', color: '#66c6b9' },
@@ -19,7 +26,7 @@ const statusName: { [status in TBetStatus | TFinanceStatus]: { name: string; col
 const creditInfoType: { [name: string]: string } = {
   WITHDRAW: 'ถอนเครดิต',
   DEPOSIT: 'ฝากเครดิต',
-  LOTTER: 'หวย',
+  LOTTER: '',
 }
 
 declare interface ITransactionItemCollapsible {
@@ -72,7 +79,7 @@ const TransactionItemCollapsible: SFC<ITransactionItemCollapsible & DefaultProps
 
   const displayTime = moment(credit.createdAt).format('DD MMM YYYY HH:mm')
   const round = (subType === 'YEGEE')
-    ? ` (รอบที่ ${Number(getSlug().round)})`
+    ? ` (${constants.round} ${Number(getSlug().round)})`
     : ''
 
   const getStatus = () => {
@@ -80,7 +87,7 @@ const TransactionItemCollapsible: SFC<ITransactionItemCollapsible & DefaultProps
       return statusName[credit.status as TFinanceStatus]
     } else if (name === 'BET') {
       if (credit.status === 'WAIT') {
-        return { name: 'แทง', color: statusName[credit.status as TBetStatus].color }
+        return { name: constants.makeLotto, color: statusName[credit.status as TBetStatus].color }
       }
       return statusName[credit.status as TBetStatus]
     }
@@ -132,7 +139,7 @@ const TransactionItemCollapsible: SFC<ITransactionItemCollapsible & DefaultProps
               return stName
             } else {
               if (detail.status === 'WAIT') {
-                return 'รอผลออก'
+                return constants.waitResult
               }
               return stName
             }
@@ -147,7 +154,9 @@ const TransactionItemCollapsible: SFC<ITransactionItemCollapsible & DefaultProps
                 <span className="transaction-description-lotto-number">{detail.numbers}</span>
                 {' '}
             (<span style={{ color: stColor }}>{subCreditStatus()}</span>)
-          </div>
+            {' '}
+                <span className="secondary-text">{type === 'LOTTER' ? `${constants.actureResult} ${detail.numbersBetResult}` : ''}</span>
+              </div>
               <div className="transaction-description-amount">{number.castToMoney(Number(detail.money))}</div>
             </div>
           )
