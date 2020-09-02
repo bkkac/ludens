@@ -39,7 +39,7 @@ const constants = {
   favorite: 'โพยหวย',
   finance: 'ฝาก/ถอน',
   credit: 'รายงานเครดิต',
-  affiliate: 'ระบบแนะนำ',
+  affiliate: 'ระบบแนะนำเพื่อน',
   content: 'ข่าวสาร',
   contactus: 'ติดต่อเรา',
   privacy: 'ข้อตกลงการใช้งาน',
