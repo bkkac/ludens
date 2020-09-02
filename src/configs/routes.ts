@@ -136,6 +136,20 @@ const routes: IRoutes[] = [
     private: true,
   },
   {
+    exact: true,
+    name: route.casino.name,
+    path: route.casino.path,
+    component: pages.Casino,
+    private: true,
+  },
+  {
+    exact: true,
+    name: route.games.name,
+    path: route.games.path,
+    component: pages.Games,
+    private: true,
+  },
+  {
     name: route.notFound.name,
     path: route.notFound.path,
     component: pages.ComingSoon,
