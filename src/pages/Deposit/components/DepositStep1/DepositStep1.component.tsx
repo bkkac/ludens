@@ -22,6 +22,7 @@ const constants = {
   placeholderOriginBank: 'กรุณาเลือกบัญชีธนาคาร',
   selectBankText: 'เลือกธนาคารที่ต้องการโอนเข้า',
   amountLabel: 'จำนวนเงินฝาก',
+  noMinimum: 'ไม่มีฝากขั้นต่ำ',
   placeholdeAmount: 'ระบุจำนวนเงินฝาก',
   buttonNextStep: 'ถัดไป',
 }
@@ -142,7 +143,9 @@ const DepositStep1:
                 </div>
                 <div className="row m3-t">
                   <div className="col">
-                    <h6 className="secondary-blue-text m1-b">{constants.amountLabel}</h6>
+                    <h6 className="secondary-blue-text m1-b">
+                      {constants.amountLabel}<span className="m1-l secondary-text">({constants.noMinimum})</span>
+                    </h6>
                     <InputNumber
                       allowNegative={false}
                       thousandSeparator
