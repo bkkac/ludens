@@ -4,11 +4,14 @@ declare type TCreditLottoType = | 'BET_LOTTER_YEGEE' | 'BET_LOTTER_GOVERNMENT'
 declare type TTransactionType = | 'DEPOSIT' | 'WITHDRAW'
 
 declare interface ICreditDetail {
-  money: string | number
+  money: string
   numbers: string
+  numbersBetResult: string
   type: TTransactionType | TLottoGameType
   status: TFinanceStatus | TBetStatus
   updatedAt: string
+  createDate: string
+  slug: string
 }
 
 declare interface ICredit {

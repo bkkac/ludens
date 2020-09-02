@@ -99,7 +99,7 @@
     }
   }
 
-  @for $i from 1 through 11 {
+  @for $i from 1 through 12 {
     .drawer-item-container {
       &:nth-child(#{$i}) {
         transition-delay: $i * (64ms);

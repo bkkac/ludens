@@ -15,6 +15,7 @@ import {
   faChessQueen,
   faUserFriends,
   faMoneyBillAlt,
+  faQuestionCircle,
   faFileInvoiceDollar,
 } from '@fortawesome/free-solid-svg-icons'
 import Logo from 'assets/images/logo/logothailandbet.png'
@@ -42,6 +43,7 @@ const constants = {
   content: 'ข่าวสาร',
   contactus: 'ติดต่อเรา',
   privacy: 'ข้อตกลงการใช้งาน',
+  qa: 'ถาม - ตอบ',
 }
 
 const defaultProps: IDrawer = {
@@ -148,6 +150,13 @@ const DrawerComponent: SFC<IDrawer> = ({
               >
                 <h5 className="icon-container"><FontAwesomeIcon icon={faPhoneAlt} className="m1-r" /></h5>
                 <h5>{constants.contactus}</h5>
+              </div>
+              <div
+                className={`drawer-item-container ${currentMenu === routes.qa.path ? 'active' : ''}`}
+                onClick={() => handleOnChangePage(routes.qa.path)}
+              >
+                <h5 className="icon-container"><FontAwesomeIcon icon={faQuestionCircle} className="m1-r" /></h5>
+                <h5>{constants.qa}</h5>
               </div>
               <div className="drawer-item-container disabled">
                 <h5 className="icon-container"><FontAwesomeIcon icon={faBook} className="m1-r" /></h5>
