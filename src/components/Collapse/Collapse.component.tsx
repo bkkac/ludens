@@ -1,4 +1,4 @@
-import React, { SFC, useState } from 'react'
+import React, { SFC, useState, useEffect } from 'react'
 import { noop } from 'lodash'
 import './collapse.style.scss'
 
@@ -29,7 +29,11 @@ const Collapse: SFC<CollapseProps> = ({
   RenderHeaderComponent,
 }) => {
 
-  const [isExpand, setExpand] = useState<boolean>(expanded!)
+  const [isExpand, setExpand] = useState<boolean>(false)
+
+  useEffect(() => {
+    setExpand(expanded!)
+  }, [expanded])
 
   const handleOnClickHeader = () => {
     const state = !isExpand
@@ -38,8 +42,10 @@ const Collapse: SFC<CollapseProps> = ({
   }
 
   return (
-    <div onClick={handleOnClickHeader}>
-      <RenderHeaderComponent />
+    <div>
+      <div onClick={handleOnClickHeader}>
+        <RenderHeaderComponent />
+      </div>
       <div className="collapse-wrapper" style={{ maxHeight: isExpand ? maxExpandHeight : minCollapsedHeight }}>
         <RenderBodyComponent />
       </div>
