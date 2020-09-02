@@ -11,9 +11,10 @@ import colors from 'constants/colors'
 import response from 'constants/response'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
+  faQuestionCircle,
   faChevronRight,
   faChevronLeft,
-  faStopwatch
+  faStopwatch,
 } from '@fortawesome/free-solid-svg-icons'
 import {
   sum,
@@ -34,9 +35,9 @@ import {
   BetResult,
 } from './components'
 import { Summary } from '../LottoPayment/components'
-import { LOTTO_SLUG_NAME } from 'constants/variables'
-import './lottoMake.style.scss'
+import { LOTTO_SLUG_NAME, LOTTO_SLUG_TO_QA_TYPE } from 'constants/variables'
 import routes from 'constants/routes'
+import './lottoMake.style.scss'
 
 const constants = {
   ok: 'ตกลง',
@@ -45,6 +46,7 @@ const constants = {
   numberList: (length: number) => `รายการแทง (${length})`,
   yeegeLabel: (round: string) => `หวยยี่กีรอบที่ ${round}`,
   back: 'กลับ',
+  qa: 'กติกาการเล่น',
   cannotBet: 'ไม่สามารถแทงได้',
   betSuccess: 'คุณได้ทำรายการเสร็จสมบูรณ์',
   makingGameLabel: 'ผลรวม (ยิงเลข)',
@@ -233,6 +235,7 @@ class LottoMakeContainer extends Component<
   }
 
   componentWillUnmount() {
+    this.props.loader(false)
     this.clearLocalInterval()
     this.props.clearBetResult()
     const slugName = this.props.match.params.type
@@ -482,6 +485,10 @@ class LottoMakeContainer extends Component<
     }
   }
 
+  handleOnQA = () => {
+    this.props.history.push(routes.qaType.exactPath(LOTTO_SLUG_TO_QA_TYPE[this.props.match.params.type]))
+  }
+
   handleOnSwitchMode = () => {
     this.setState({ activeModeSwitch: this.state.activeModeSwitch === 'LOTTO' ? 'GAME' : 'LOTTO' })
   }
@@ -576,9 +583,15 @@ class LottoMakeContainer extends Component<
           </div>
           <div className="row m3-t">
             <div className="col">
-              <h2>{(slugName !== 'LOTTER_YEGEE')
-                ? LOTTO_SLUG_NAME[slugName]
-                : constants.yeegeLabel(gameRound)}</h2>
+              <div className="d-flex flex-row align-items-center">
+                <h2 className="flex">{(slugName !== 'LOTTER_YEGEE')
+                  ? LOTTO_SLUG_NAME[slugName]
+                  : constants.yeegeLabel(gameRound)}</h2>
+                <ALink id="goto-qa" color={colors.PRIMARY_BLUE} bold onClick={this.handleOnQA}>
+                  <FontAwesomeIcon icon={faQuestionCircle} className="m1-r" />
+                  {constants.qa}
+                </ALink>
+              </div>
             </div>
           </div>
           <div className="row m2-t">

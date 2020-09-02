@@ -54,6 +54,10 @@ class LottoListContainer extends Component<
     }
   }
 
+  componentWillUnmount() {
+    this.props.loader(false)
+  }
+
   renderLottoList = () => map(this.props.lottoSchedule, (lotto, index) => {
     const subtitle = (lotto.code === 'LOTTER_YEGEE') ? constants.openedYeegeLabel : constants.closedLabel
     const backgroundColor = (lotto.code === 'LOTTER_YEGEE') ? colors.SECONDARY_BLUE : colors.SECONDARY_BG

@@ -1,0 +1,26 @@
+@import "assets/stylesheets/colors";
+
+.qa-container {
+  padding-top: 112px;
+  padding-bottom: 104px;
+  min-height: 100vh;
+
+  .qa-header-wrapper {
+    cursor: pointer;
+
+    .chevron-right-icon {
+      transition: all 254ms ease-in-out;
+      transform: rotate(0);
+  
+      &.expanded {
+        transform: rotate(90deg);
+      }
+    }
+  }
+
+
+  .qa-content-container {
+    padding: 16px 24px;
+    color: $primary-text;
+  }
+}

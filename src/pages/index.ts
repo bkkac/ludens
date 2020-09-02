@@ -16,10 +16,12 @@ import { LottoFavorite } from './LottoFavorite'
 import { ContactUs } from './ContactUs'
 import { Newsroom } from './Newsroom'
 import { ForgotPassword } from './ForgotPassword'
+import { QandA } from './QandA'
 
 export default {
   Home,
   Main,
+  QandA,
   Deposit,
   Newsroom,
   Withdraw,

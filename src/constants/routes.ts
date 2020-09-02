@@ -26,4 +26,6 @@ export default {
   contactus: { name: 'contact-us', path: '/contactus', exactPath: '/contactus' },
   newsroom: { name: 'newsroom', path: '/newsroom', exactPath: '/newsroom' },
   forgotPassword: { name: 'forgot-password', path: '/forgot-password', exactPath: '/forgot-password' },
+  qa: { name: 'qa', path: '/qa', exactPath: '/qa' },
+  qaType: { name: 'qa-type', path: '/qa/:type', exactPath: (type: TQAType) => `/qa/${type}` },
 }
