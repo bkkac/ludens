@@ -3,53 +3,32 @@
 .button-menu-container {
   padding: 12px;
   cursor: pointer;
-  position: relative;
-  z-index: 0;
   transition: all 256ms ease-in-out;
 
   min-height: 92px;
-  border-radius: 24px;
-  background-color: $primary-text;
+  border-radius: 4px;
+  background-color: $secondary-bg;
 
   &.disabled {
-    cursor: unset;
-    background-color: $secondary-text;
+    cursor: default;
+    background-color: $primary-bg;
 
     &:hover {
-      &:before {
-        opacity: 0;
-      }
+      background-color: $primary-bg;
       .title-text-button,
       .icon-button-menu,
       .chevron-icon-container {
         transform: unset;
+        color: $primary-text;
       }
     }
   }
 
-  &::before {
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    left: 0;
-    top: 0;
-    opacity: 0;
-    content: "";
-    z-index: -1;
-    border-radius: 24px;
-    transition: all 256ms ease-in-out;
-    background: -moz-linear-gradient(to bottom, $primary-text, rgba($color: $secondary-bg, $alpha: .28));
-    background: -webkit-linear-gradient(to bottom, $primary-text, rgba($color: $secondary-bg, $alpha: .28));
-    background: linear-gradient(to bottom, $primary-text, rgba($color: $secondary-bg, $alpha: .28));
-  }
-
   &:hover {
-    &:before {
-      opacity: 1;
-    }
-
+    background-color: $primary-text;
     .title-text-button {
       transform: translateY(-2px);
+      color: $primary-bg;
     }
 
     .icon-button-menu {
@@ -75,6 +54,6 @@
   .title-text-button {
     transition: all 256ms linear;
     margin-top: 16px;
-    color: $primary-bg;
+    color: $primary-text;
   }
 }

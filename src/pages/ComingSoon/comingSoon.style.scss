@@ -1,24 +1,44 @@
 .comingsoon-container {
-  margin-top: 76px;
-  height: 440px;
-  border-radius: 16px;
-  background-color: #edededb2;
+  padding-top: 112px;
+  padding-bottom: 104px;
+  min-height: 100vh;
 
-  .comingsoon-icon {
-    width: 180px;
-  }
+  .comingsoon-wrapper {
+    z-index: 0;
+    position: relative;
+    height: 440px;
+    border-radius: 16px;
+    overflow: hidden;
 
-  .comingsoon-title {
-    font-family: "SukhumvitSet-Bold";
-    font-size: 32px;
-    line-height: 0.84;
-    color: #767676;
-  }
+    .background-water-line {
+      z-index: 0;
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
 
-  .comingsoon-description {
-    font-family: "SukhumvitSet-Medium";
-    font-size: 18px;
-    line-height: 1.13;
-    color: #767676;
+      .logo-icon {
+        margin-top: 20px;
+        max-height: 400px;
+        height: auto;
+        width: 100%;
+        opacity: 0.03;
+        object-fit: contain;
+      }
+    }
+
+    .content-wrapper {
+      z-index: 1;
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+    }
+
+    .comingsoon-icon {
+      width: 180px;
+    }
   }
 }

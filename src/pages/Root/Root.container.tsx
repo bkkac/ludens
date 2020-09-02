@@ -58,16 +58,14 @@ const Menus: ITabItem[] = [
   {
     title: 'คาสิโน',
     name: 'cosino',
-    disabled: true,
-    path: '',
+    path: routers.casino.path,
     ActiveIcon: (<ChipColorIcon className="tab-menu-icon m0-b" />),
     InactiveIcon: (<ChipIcon className="tab-menu-icon m0-b" />),
   },
   {
     title: 'เกมส์',
     name: 'game',
-    disabled: true,
-    path: '',
+    path: routers.games.path,
     ActiveIcon: (<SlotColorIcon className="tab-menu-icon m0-b" />),
     InactiveIcon: (<SlotIcon className="tab-menu-icon m0-b" />),
   },
