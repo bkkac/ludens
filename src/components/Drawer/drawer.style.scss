@@ -1,0 +1,109 @@
+@import "assets/stylesheets/colors";
+
+.drawer-container {
+  position: fixed;
+  z-index: -1;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 100vw;
+  height: 100%;
+  background-color: rgba($color: black, $alpha: 0.5);
+  -webkit-transition: all 512ms cubic-bezier(0.86, 0, 0.07, 1);
+  -moz-transition: all 512ms cubic-bezier(0.86, 0, 0.07, 1);
+  -o-transition: all 512ms cubic-bezier(0.86, 0, 0.07, 1);
+  transition: all 512ms cubic-bezier(0.86, 0, 0.07, 1); /* easeInOutQuint */
+  -webkit-transition-timing-function: cubic-bezier(0.86, 0, 0.07, 1);
+  -moz-transition-timing-function: cubic-bezier(0.86, 0, 0.07, 1);
+  -o-transition-timing-function: cubic-bezier(0.86, 0, 0.07, 1);
+  transition-timing-function: cubic-bezier(0.86, 0, 0.07, 1); /* easeInOutQuint */
+  opacity: 0;
+
+  .drawer-wrapper {
+    overflow-y: scroll;
+    position: fixed;
+    width: 0;
+    height: 100%;
+    right: 0;
+    top: 0;
+    background-color: $primary-bg;
+    box-shadow: 2px 3px 10px 0 rgba($color: black, $alpha: 0.4);
+    -webkit-transition: all 1s cubic-bezier(0.86, 0, 0.07, 1);
+    -moz-transition: all 1s cubic-bezier(0.86, 0, 0.07, 1);
+    -o-transition: all 1s cubic-bezier(0.86, 0, 0.07, 1);
+    transition: all 1s cubic-bezier(0.86, 0, 0.07, 1); /* easeInOutQuint */
+
+    -webkit-transition-timing-function: cubic-bezier(0.86, 0, 0.07, 1);
+    -moz-transition-timing-function: cubic-bezier(0.86, 0, 0.07, 1);
+    -o-transition-timing-function: cubic-bezier(0.86, 0, 0.07, 1);
+    transition-timing-function: cubic-bezier(0.86, 0, 0.07, 1); /* easeInOutQuint */
+  }
+
+  &.dark-mode {
+    .drawer-wrapper {
+      background-color: $primary-bg;
+    }
+  }
+
+  &.opened {
+    opacity: 1;
+    z-index: 2;
+
+    .drawer-wrapper {
+      width: 260px;
+    }
+
+    .drawer-item-container {
+      opacity: 1;
+    }
+  }
+
+  .thailandbet-logo {
+    width: 150px;
+  }
+
+  .drawer-item-container {
+    cursor: pointer;
+    padding: 12px 16px;
+    border-radius: 4px;
+    margin-top: 4px;
+    display: flex;
+    flex-direction: row;
+    opacity: 0;
+
+    -webkit-transition: opacity 512ms ease-out;
+    -moz-transition: opacity 512ms ease-out;
+    -o-transition: opacity 512ms ease-out;
+    transition: opacity 512ms ease-out;
+
+    &.active {
+      background-color: $secondary-bg;
+    }
+    
+    &.disabled {
+      cursor: default;
+      h5 {
+        color: $secondary-text;
+      }
+      &:hover {
+        background-color: unset;
+      }
+    }
+
+    .icon-container {
+      width: 32px;
+    }
+
+    &:hover {
+      background-color: $secondary-bg;
+    }
+  }
+
+  @for $i from 1 through 12 {
+    .drawer-item-container {
+      &:nth-child(#{$i}) {
+        transition-delay: $i * (64ms);
+      }
+    }
+  }
+}

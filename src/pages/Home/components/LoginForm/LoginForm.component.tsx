@@ -29,6 +29,7 @@ function LoginForm(props: FormikProps<ILogin> & ILoginFormProps) {
     touched,
     handleBlur,
     handleChange,
+    setFieldValue,
   } = props
 
   const onPressNavigateToRegister = () => {
@@ -45,11 +46,12 @@ function LoginForm(props: FormikProps<ILogin> & ILoginFormProps) {
         <div className="row">
           <div className="col">
             <InputTextIcon
+              toLowercase
               icon={faUser}
               name="username"
               onBlur={handleBlur}
-              onChange={handleChange}
               value={values.username}
+              setFieldValue={setFieldValue}
               errorMessage={errors.username}
               placeholder={constants.placeholderUsername}
               error={!!errors.username && touched.username}
@@ -59,11 +61,12 @@ function LoginForm(props: FormikProps<ILogin> & ILoginFormProps) {
         <div className="row">
           <div className="col">
             <InputTextIcon
+              toLowercase
               icon={faKey}
               name="password"
               type="password"
               onBlur={handleBlur}
-              onChange={handleChange}
+              setFieldValue={setFieldValue}
               value={values.password}
               errorMessage={errors.password}
               placeholder={constants.placeholderPassword}

@@ -27,14 +27,14 @@ const mapStateToProps = (state: RootReducers): IMakingLottoProps => ({
   getBetResultCode: state.ludens.lotto.bet.result.code!,
   betResults: state.ludens.lotto.bet.result.data!,
   betRates: state.ludens.lotto.bet.rate.data!,
-  getLottoGameIsFetching: state.ludens.lotto.yeege.game.isFetching!,
-  getLottoGameCode: state.ludens.lotto.yeege.game.code!,
-  getLottoGameError: state.ludens.lotto.yeege.game.error!,
-  lottoGame: state.ludens.lotto.yeege.game.data!,
+  getLottoGameIsFetching: state.ludens.lotto.game.isFetching!,
+  getLottoGameCode: state.ludens.lotto.game.code!,
+  getLottoGameError: state.ludens.lotto.game.error!,
+  lottoGame: state.ludens.lotto.game.data!,
 })
 
 const mapDispatchToProos = (dispatch: Dispatch<RootAction>): IMakingLottoActionProps => bindActionCreators({
-  getLottoGame: lotterAction.getLottoGameAction,
+  getLottoGame: lotterAction.getLottoAction,
   getBetRate: lotterAction.getBetRateAction,
   getPlayedYeegeList: lotterAction.getPlayedYeegeListAction,
   listenPlayedYeegeList: lotterAction.listenPlayedYeegeListSocket,

@@ -138,10 +138,11 @@ const RegisterStep3: SFC<
         <div className="col">
           <h6 className="subtitle-2 secondary-blue-text">{constants.placeholderUsername}</h6>
           <InputText
+            toLowercase
             name="username"
             value={values.username}
             onBlur={handleBlur}
-            onChange={handleChange}
+            setFieldValue={setFieldValue}
             errorMessage={errors.username}
             error={!!errors.username && touched.username}
             placeholder={constants.placeholderInput(constants.placeholderUsername)}
@@ -152,11 +153,12 @@ const RegisterStep3: SFC<
         <div className="col">
           <h6 className="subtitle-2 secondary-blue-text">{constants.placeholderPassword}</h6>
           <InputText
+            toLowercase
             type="password"
             name="password"
             value={values.password}
             onBlur={handleBlur}
-            onChange={handleChange}
+            setFieldValue={setFieldValue}
             errorMessage={errors.password}
             error={!!errors.password && touched.password}
             placeholder={constants.placeholderInput(constants.placeholderPassword)}
@@ -167,10 +169,11 @@ const RegisterStep3: SFC<
         <div className="col">
           <h6 className="subtitle-2 secondary-blue-text">{constants.placeholderConfirmPassword}</h6>
           <InputText
+            toLowercase
             name="confirmPassword"
             value={values.confirmPassword}
             onBlur={handleBlur}
-            onChange={handleChange}
+            setFieldValue={setFieldValue}
             type="password"
             errorMessage={errors.confirmPassword}
             error={!!errors.confirmPassword && touched.confirmPassword}
@@ -182,10 +185,11 @@ const RegisterStep3: SFC<
         <div className="col">
           <h6 className="subtitle-2 secondary-blue-text">{constants.placeholderAffilate}</h6>
           <InputText
+            toLowercase
             name="affilateRef"
             value={values.affilateRef}
             onBlur={handleBlur}
-            onChange={handleChange}
+            setFieldValue={setFieldValue}
             disabled={extraProps?.isAffiliate}
             errorMessage={errors.affilateRef}
             error={!!errors.affilateRef && touched.affilateRef}

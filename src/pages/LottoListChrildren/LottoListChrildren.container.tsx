@@ -56,6 +56,10 @@ class LottoListChrildrenContainer extends Component<
     }
   }
 
+  componentWillUnmount() {
+    this.props.loader(false)
+  }
+
   handleOnClickPlay = (game: ILottoGame) => {
     this.props.history.push(routes.lottoMaking.exactPath(this.props.match.params.type), { selectedLottoGame: game })
   }

@@ -15,7 +15,7 @@ const getLottoListSuccessAction = createAction(
 
 const getLottoListFailureAction = createAction(
   GET_LOTTO_LIST_FAILURE,
-  resolve => (error: AxiosError) => resolve(error))
+  resolve => (error: AxiosError<APIResponse>) => resolve(error))
 
 const getLottoListCancelAction = createAction(GET_LOTTO_LIST_CANCEL)
 

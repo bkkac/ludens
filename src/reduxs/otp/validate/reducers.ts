@@ -21,7 +21,7 @@ const getOTPReducer = (state: IOTPValidateState = initialState, action: RootActi
       return {
         isFetching: false,
         error: action.payload.response?.data.data,
-        code: action.payload.code,
+        code: action.payload.response?.data.code,
       }
     default:
       return state

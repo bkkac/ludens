@@ -3,7 +3,10 @@ import { RootAction } from 'typings/reduxs/Actions'
 import { initialState } from './constants'
 import actions from './actions'
 
-const registerReducer = (state: ReducerState = initialState, action: RootAction): ReducerState => {
+const newsReducer = (
+  state: ReducerState<ReadonlyArray<INews>> = initialState,
+  action: RootAction
+): ReducerState<ReadonlyArray<INews>> => {
   switch (action.type) {
     case getType(actions.getNewsroomAction):
       return {
@@ -21,11 +24,11 @@ const registerReducer = (state: ReducerState = initialState, action: RootAction)
       return {
         isFetching: false,
         error: action.payload.response?.data.devMessage,
-        code: action.payload.code,
+        code: action.payload.response?.data.code,
       }
     default:
       return state
   }
 }
 
-export default registerReducer
+export default newsReducer

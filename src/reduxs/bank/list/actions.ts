@@ -15,7 +15,7 @@ const getBankListSuccessAction = createAction(
 
 const getBankListFailureAction = createAction(
   GET_BANK_LIST_FAILURE,
-  resolve => (error: AxiosError) => resolve(error))
+  resolve => (error: AxiosError<APIResponse>) => resolve(error))
 
 const getBankListCancelAction = createAction(GET_BANK_LIST_CANCEL)
 

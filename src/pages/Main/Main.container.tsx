@@ -11,6 +11,8 @@ import LottoIcon from 'assets/images/main/lotto/lotto.svg'
 import ContactIcon from 'assets/images/main/contacts/contacts.svg'
 import ProblemIcon from 'assets/images/main/problem/problem.svg'
 import MegaphoneIcon from 'assets/images/main/megaphone/megaphone.svg'
+import CasinoIcon from 'assets/images/main/casino/casino.svg'
+import SlotIcon from 'assets/images/main/slot/slot.svg'
 
 import './main.style.scss'
 import routes from 'constants/routes'
@@ -25,6 +27,8 @@ const constants = {
   gotoAffli: 'ระบบแนะนำ',
   gotoNews: 'ข่าวสาร',
   gotoContact: 'ติดต่อทีมงาน',
+  gotoCasino: 'คาสิโน',
+  gotoGame: 'เกมส์/สล๊อต',
 }
 
 type DefaultProps = Readonly<typeof defaultProps>
@@ -69,37 +73,22 @@ class MainContainer extends Component<IMainProps & IMainActionProps & DefaultPro
               </div>
               <div className="row m2-t m4-b">
                 <div className="col text-center">
-                  <ALink id="goto-privacy-condition" color={colors.PRIMARY_TEXT} underline>
+                  <ALink
+                    onClick={() => this.onNavigateTo(routes.qaType.exactPath('privacy'))}
+                    id="goto-privacy-condition"
+                    color={colors.PRIMARY_TEXT}
+                    underline
+                  >
                     {constants.conditionText}
                   </ALink>
                 </div>
               </div>
             </div>
-            <div className="col-xs-12 col-sm-12 col-md-12 col-lg-8">
+            <div className="col-12 col-lg-8">
               <div className="row">
-                <div className="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-6">
+                <div className="col-12 col-xl-6">
                   <div className="row">
-                    <div className="col-12 col-sm-12 col-md-5 col-lg-5 col-xl-5">
-                      <div className="row">
-                        <div className="col-6 col-md-12 m3-b d-flex">
-                          <ButtonMenu
-                            id="goto-credit-info-button"
-                            onClick={() => this.onNavigateTo(routes.creditInfo.path)}
-                            text={constants.gotoCredit}
-                            icon={CreditIcon}
-                          />
-                        </div>
-                        <div className="col-6 col-md-12 m3-b d-flex">
-                          <ButtonMenu
-                            id="goto-transaction-button"
-                            onClick={() => this.onNavigateTo(routes.transaction.path)}
-                            text={constants.gotoWD}
-                            icon={WalletIcon}
-                          />
-                        </div>
-                      </div>
-                    </div>
-                    <div className="col-6 col-sm-6 col-md-7 col-lg-7 col-xl-7 m3-b d-flex">
+                    <div className="col-12 m3-b">
                       <ButtonMenu
                         id="goto-lotto-button"
                         onClick={() => this.onNavigateTo(routes.lotto.path)}
@@ -107,40 +96,64 @@ class MainContainer extends Component<IMainProps & IMainActionProps & DefaultPro
                         icon={LottoIcon}
                       />
                     </div>
-                    <div className="col-6 d-md-none m3-b d-flex">
+                    <div className="col-6 m3-b">
                       <ButtonMenu
-                        id="goto-contact-button"
-                        onClick={() => this.onNavigateTo(routes.contactus.path)}
-                        text={constants.gotoContact}
-                        icon={ContactIcon}
+                        id="goto-casino-button"
+                        onClick={() => this.onNavigateTo(routes.casino.path)}
+                        text={constants.gotoCasino}
+                        icon={CasinoIcon}
+                      />
+                    </div>
+                    <div className="col-6 m3-b">
+                      <ButtonMenu
+                        id="goto-slot-button"
+                        onClick={() => this.onNavigateTo(routes.games.path)}
+                        text={constants.gotoGame}
+                        icon={SlotIcon}
                       />
                     </div>
                   </div>
                 </div>
-                <div className="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-6">
+                <div className="col-12 col-xl-6">
                   <div className="row">
-                    <div className="d-none d-sm-none d-md-flex col-md-3 col-lg-3 col-xl-6 m3-b">
+                    <div className="col-6 m3-b">
                       <ButtonMenu
-                        id="goto-contact-button"
-                        onClick={() => this.onNavigateTo(routes.contactus.path)}
-                        text={constants.gotoContact}
-                        icon={ContactIcon}
+                        id="goto-credit-info-button"
+                        onClick={() => this.onNavigateTo(routes.creditInfo.path)}
+                        text={constants.gotoCredit}
+                        icon={CreditIcon}
                       />
                     </div>
-                    <div className="col-6 col-md-3 col-lg-3 m3-b col-xl-6 d-flex">
+                    <div className="col-6 m3-b">
                       <ButtonMenu
-                        id="goto-howto-button"
-                        onClick={() => this.onNavigateTo(routes.newsroom.path)}
-                        text={constants.gotoNews}
-                        icon={ProblemIcon}
+                        id="goto-transaction-button"
+                        onClick={() => this.onNavigateTo(routes.transaction.path)}
+                        text={constants.gotoWD}
+                        icon={WalletIcon}
                       />
                     </div>
-                    <div className="col-6 col-md-6 col-lg-6 col-xl-12 m3-b d-flex">
+                    <div className="col-12 m3-b">
                       <ButtonMenu
                         id="goto-affilate-button"
                         onClick={() => this.onNavigateTo(routes.affiliate.path)}
                         text={constants.gotoAffli}
                         icon={MegaphoneIcon}
+                      />
+                    </div>
+                    <div className="col-6 m3-b">
+                      <ButtonMenu
+                        id="goto-contact-button"
+                        onClick={() => this.onNavigateTo(routes.contactus.path)}
+                        text={constants.gotoContact}
+                        icon={ContactIcon}
+                      />
+                    </div>
+                    <div className="col-6 m3-b">
+                      <ButtonMenu
+                        id="goto-news-button"
+                        onClick={() => this.onNavigateTo(routes.newsroom.path)}
+                        text={constants.gotoNews}
+                        icon={ProblemIcon}
                       />
                     </div>
                   </div>
