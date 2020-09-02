@@ -24,7 +24,7 @@ const constants = {
   gotoLotto: 'แทงหวย',
   gotoCredit: 'ข้อมูลเครดิต',
   gotoWD: 'ฝาก - ถอน',
-  gotoAffli: 'ระบบแนะนำ',
+  gotoAffli: 'ระบบแนะนำเพื่อน',
   gotoNews: 'ข่าวสาร',
   gotoContact: 'ติดต่อทีมงาน',
   gotoCasino: 'คาสิโน',
