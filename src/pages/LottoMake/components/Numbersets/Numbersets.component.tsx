@@ -46,7 +46,7 @@ class NumbersetsComponent extends Component<NumbersetsProps, NumbersetsState> {
         : (gameNumberLength === 2)
           ? 100
           : 0
-      this.setState({ gameNumberLength, currentNumberIndex: 0, maxNumber })
+      this.setState({ gameNumberLength, currentNumberIndex: 0, maxNumber, selectedIndexFrontNumbers: [] })
     }
   }
 
@@ -137,11 +137,12 @@ class NumbersetsComponent extends Component<NumbersetsProps, NumbersetsState> {
 
     const numberIndexs = (trigger: 'FRONT' | 'BACK' | 'DOOR') => datasets.map(numb => {
       const traggerFunction = (trigger === 'FRONT')
-        ? (lotto: ILottoNumber) => startsWith(lotto.number, String(numb))
+        ? (lotto: ILottoNumber) => (startsWith(lotto.number, String(numb)) && lotto.type === this.props.gameMode)
         : (trigger === 'BACK')
-          ? (lotto: ILottoNumber) => endsWith(lotto.number, String(numb))
+          ? (lotto: ILottoNumber) => (endsWith(lotto.number, String(numb)) && lotto.type === this.props.gameMode)
           : (trigger === 'DOOR')
-            ? (lotto: ILottoNumber) => (startsWith(lotto.number, String(numb)) || endsWith(lotto.number, String(numb)))
+            ? (lotto: ILottoNumber) => ((startsWith(lotto.number, String(numb)) || endsWith(lotto.number, String(numb)))
+              && lotto.type === this.props.gameMode)
             : noop
 
       const filteredNumberIndexs = this.props.lottos.filter(traggerFunction)
