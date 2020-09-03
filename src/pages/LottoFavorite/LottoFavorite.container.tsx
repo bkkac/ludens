@@ -54,11 +54,18 @@ class LottoFavoriteContainer extends Component<
   }
 
   onPressBack = () => {
-    this.props.history.goBack()
+    const locationState: ILottoFavoriteRouteProps = this.props.location.state
+    const paymentRouteProps: ILottoPaymentRouteProps = {
+      betList: locationState.betList,
+      lottoSlug: locationState.lottoSlug,
+      selectedLottoGame: locationState.selectedLottoGame,
+    }
+    this.props.history.replace(routers.lottoCheckout.path, paymentRouteProps)
   }
 
   onClickFavoriteManagement = () => {
-    this.props.history.push(routers.lottoFavorite.path)
+    // TODO: Enable whan havee a favorite management page
+    // this.props.history.push(routers.lottoFavorite.path)
   }
 
   onClickSelectFavorite = (favoriteItems: IFavoriteSet) => {
