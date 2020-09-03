@@ -130,7 +130,7 @@ class LottoPaymentContainer extends Component<
 			<div className="lotto-payment-container primary-bg">
 				<div className="container">
 					<div className="row">
-						<div className="col">
+						<div className="col back-fixed-panel primary-bg">
 							<ALink id="backto-previus-page" color={colors.PRIMARY_RED} bold onClick={this.handleOnBack}>
 								<FontAwesomeIcon icon={faChevronLeft} className="m1-r" />
 								{constants.back}

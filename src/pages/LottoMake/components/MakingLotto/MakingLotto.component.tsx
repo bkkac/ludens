@@ -24,7 +24,8 @@ const constants = {
   numberpadMode: 'โหมดแป้นตัวเลข',
   numbersetMode: 'โหมดชุดตัวเลข',
   betRate: 'บาทละ',
-  placeholderGameType: 'เลือกประเภทหวย',
+  gameType: 'ประเภทการแทง',
+  placeholderGameType: 'เลือกประเภทการแทง',
   placeholderNumber: (numberSet: number) => `เลข ${numberSet} ตัว`,
 }
 
@@ -177,6 +178,7 @@ class MakingLotto extends Component<IMakingLottoComponentProps, IMakingLottoComp
       <div ref={this.makingLottoRef}>
         <div className="row">
           <div className="col">
+            <h4 className="m1-l m1-b">{constants.gameType}</h4>
             <InputSelect<TLottoGameType, TLottoGameType>
               name="lotto-game-type"
               items={gameList}
