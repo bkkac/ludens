@@ -21,7 +21,7 @@ import { persistReducer } from 'redux-persist'
 const persistConfig = {
   key: project.name,
   storage,
-  blacklist: ['user'],
+  whitelist: ['user'],
 }
 
 const userPersistConfig = {
