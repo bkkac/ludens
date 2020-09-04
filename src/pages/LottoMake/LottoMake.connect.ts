@@ -47,8 +47,6 @@ const mapDispatchToProos = (dispatch: Dispatch<RootAction>): IMakingLottoActionP
   playYeege: lotterAction.playYeegeAction,
   loader: loaderAction.loadingAction,
   clearBetResult: lotterAction.clearBetResultAction,
-  clearYeegeSum: lotterAction.clearYeegeSum,
-  clearYeegePlayedList: lotterAction.clearPlayedYeegeList,
 }, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProos)(LottoMakeContainer)
