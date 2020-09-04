@@ -47,8 +47,6 @@ declare interface IMakingLottoActionProps {
   playYeege(data: IYeegePlayRequest): void
   loader(state: boolean): void
   clearBetResult(): void
-  clearYeegeSum(): void
-  clearYeegePlayedList(): void
 }
 
 declare interface IMakingLottoState {
