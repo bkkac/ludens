@@ -44,11 +44,6 @@ const onUpdateYeegeSum = (handlerStore: MiddlewareAPI<Dispatch, RootReducers>) =
     handlerStore.dispatch(lottoAction.updateYeegeSumAction(transformed.data))
   }
 
-const onOffYeegeSum = (handlerStore: MiddlewareAPI<Dispatch, RootReducers>) =>
-  () => {
-    handlerStore.dispatch(lottoAction.clearYeegeSum())
-  }
-
 const onUpdatePlayedYeegeList = (handlerStore: MiddlewareAPI<Dispatch, RootReducers>) =>
   (response: any) => {
     const responsePlayedYeegeList: APIResponse<IYeegePlay[]> = (typeof response === 'string')
@@ -56,12 +51,6 @@ const onUpdatePlayedYeegeList = (handlerStore: MiddlewareAPI<Dispatch, RootReduc
     const transformed = transformer.camelcaseTransform(responsePlayedYeegeList) as APIResponse<IYeegePlay[]>
     handlerStore.dispatch(lottoAction.updatePlayedYeegeListAction(transformed.data))
   }
-
-const onOffPlayedYeegeList = (handlerStore: MiddlewareAPI<Dispatch, RootReducers>) =>
-  () => {
-    handlerStore.dispatch(lottoAction.clearPlayedYeegeList())
-  }
-
 
 let socket: SocketIOClient.Socket | null = null
 
@@ -96,13 +85,15 @@ const socketMiddleware = (store: MiddlewareAPI<Dispatch, RootReducers>) => (next
         socket?.on(`yegee_play_sum_${action.payload.date}${action.payload.round}`, onUpdateYeegeSum(store))
         break;
       case getType(lottoAction.unlistenYeegeSumSocket):
-        socket?.off(`yegee_play_sum_${action.payload.date}${action.payload.round}`, onOffYeegeSum(store))
+        store.dispatch(lottoAction.clearYeegeSum())
+        socket?.off(`yegee_play_sum_${action.payload.date}${action.payload.round}`)
         break;
       case getType(lottoAction.listenPlayedYeegeListSocket):
         socket?.on(`yegee_play_list_${action.payload.date}${action.payload.round}`, onUpdatePlayedYeegeList(store))
         break;
       case getType(lottoAction.unlistenPlayedYeegeListSocket):
-        socket?.off(`yegee_play_list_${action.payload.date}${action.payload.round}`, onOffPlayedYeegeList(store))
+        store.dispatch(lottoAction.clearPlayedYeegeList())
+        socket?.off(`yegee_play_list_${action.payload.date}${action.payload.round}`)
         break;
       default:
         return next(action);
