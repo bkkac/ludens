@@ -9,7 +9,7 @@ import {
 } from 'components'
 import moment from 'moment'
 import { number } from 'utils'
-import { noop, replace } from 'lodash'
+import { noop, replace, get } from 'lodash'
 import { FormikProps, Form } from 'formik'
 import copy from 'copy-to-clipboard'
 import ImageBankSet from 'assets/images/global/bank'
@@ -81,7 +81,8 @@ const DepositStep2:
         clearLocalInterval()
         const LIMIT_TIME = 10
         const LIMIT_UNIT = 'minutes'
-        const createAt = moment(replace(extraProps?.requestedTransaction.createdAt!, /\s/g, ''))
+        const createdAtTimeString = get(extraProps, 'requestedTransaction.createdAt', '')
+        const createAt = moment(replace(createdAtTimeString, /\s/g, ''))
         const timeRange = createAt.clone().add(LIMIT_TIME, LIMIT_UNIT)
 
         intervalId = setInterval(() => {
@@ -142,9 +143,17 @@ const DepositStep2:
         AlertNotification.show({ text: constants.copied, countdown: true })
       }
 
-      const requestedTransaction = extraProps?.requestedTransaction
-      const userBank = requestedTransaction?.userBank
-      const webBank = requestedTransaction?.webBank
+      const userBank: IBank = get(extraProps, 'requestedTransaction.userBank', {})
+      const userBankType: TBankType | undefined = get(userBank, 'type', undefined)
+      const userBankIcon = get(ImageBankSet, `${userBankType}.Icon`, '')
+      const userBankName = get(userBank, 'name', '')
+      const userBankNumber = get(userBank, 'number', '')
+
+      const webBank: IBank = get(extraProps, 'requestedTransaction.webBank', {})
+      const webBankType: TBankType | undefined = get(webBank, 'type', undefined)
+      const webBankIcon = get(ImageBankSet, `${webBankType}.Icon`, '')
+      const webBankName = get(webBank, 'name', '')
+      const webBankNumber = get(webBank, 'number', '')
 
       const remainingDepositTime = `${number.padNumber(String(remain.minutes), 2)} : ${number.padNumber(String(remain.seconds), 2)}`
 
@@ -175,9 +184,9 @@ const DepositStep2:
                       <h6 className="subtitle-2 secondary-red-text m1-b">{constants.depositDescription}</h6>
                       <div className="copy-able-wrapper primary-bg">
                         <SelectorItem
-                          icon={(typeof userBank?.type !== 'undefined') ? ImageBankSet[userBank.type].Icon : ''}
-                          title={userBank?.name || ''}
-                          subTitle={userBank?.number}
+                          icon={userBankIcon}
+                          title={userBankName}
+                          subTitle={userBankNumber}
                           isDisplaying
                           backgroundColor={colors.PRIMARY_BG}
                         />
@@ -201,9 +210,9 @@ const DepositStep2:
                       <h6 className="secondary-blue-text m1-b">{constants.transferToLabel}</h6>
                       <div className="copy-able-wrapper primary-bg">
                         <SelectorItem
-                          icon={(typeof webBank?.type !== 'undefined') ? ImageBankSet[webBank.type].Icon : ''}
-                          title={webBank?.name || ''}
-                          subTitle={webBank?.number}
+                          icon={webBankIcon}
+                          title={webBankName}
+                          subTitle={webBankNumber}
                           isDisplaying
                           backgroundColor={colors.PRIMARY_BG}
                         />
@@ -211,7 +220,7 @@ const DepositStep2:
                           <ALink
                             id="copy-webbank-number"
                             color={colors.PRIMARY_BLUE}
-                            onClick={() => handleOnCopy(webBank?.number || '')}
+                            onClick={() => handleOnCopy(webBankNumber)}
                           >
                             {constants.copy}
                           </ALink>

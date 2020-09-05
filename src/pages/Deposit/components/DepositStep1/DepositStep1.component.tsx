@@ -6,7 +6,7 @@ import {
   InputNumber,
   SelectorItem,
 } from 'components'
-import { noop, isEmpty } from 'lodash'
+import { noop, isEmpty, get } from 'lodash'
 import { FormikProps, Form } from 'formik'
 import ImageBankSet from 'assets/images/global/bank'
 import colors from 'constants/colors'
@@ -63,18 +63,22 @@ const DepositStep1:
       onConfirmPresses!(values)
     }
 
-    const defaultSelectorList: IBank[] = [extraProps?.userBank! || {}]
+    const userBank = get(extraProps, 'userBank', {})
+    const userBankId = get(userBank, 'id', 0)
+    const defaultSelectorList: IBank[] = [userBank]
 
     const renderBankOption = ({ item, ...selectProps }: IInputDefaultSelectProps<IBank>): JSX.Element => {
+      const ImageIcon = get(ImageBankSet, `${item.type}.Icon`, '')
       return (
         <SelectorItem
-          icon={(typeof item.type !== 'undefined') ? ImageBankSet[item.type].Icon : ''}
+          icon={ImageIcon}
           title={item.name || ''}
           subTitle={item.number}
           {...selectProps}
         />
       )
     }
+
 
     return (
       <Form>
@@ -107,7 +111,7 @@ const DepositStep1:
                       backgroundHoverColor={colors.SECONDARY_BG}
                       items={defaultSelectorList}
                       valueKey="id"
-                      value={extraProps?.userBank.id}
+                      value={userBankId}
                       placeholder={constants.placeholderOriginBank}
                       RenderSelected={renderBankOption}
                     />
