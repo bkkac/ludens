@@ -117,12 +117,12 @@ class DepositContainer extends
       && !this.props.transactionCancelIsFetching) {
       this.props.loader(false)
       if (this.props.transactionCancelCode === response.OK) {
-        const { webBank } = this.props.transactionRequest
+        const webBankId = get(this.props.transactionRequest, 'webBank.id', 0)
         this.setState({
           currentStep: 1,
           initialFormValue: {
             ...this.state.initialFormValue,
-            webBankId: webBank?.id || 0,
+            webBankId,
             money: '',
           },
         })
@@ -139,10 +139,10 @@ class DepositContainer extends
       && !this.props.getBankListIsFetching) {
       if (this.props.getBankListCode === response.OK) {
         if (this.props.bankList.length > 0) {
-          const initialBankSelect: IBank = get(this.props.bankList, '0', {})
           if (this.state.initialFormValue.webBankId <= 0) {
+            const webBankId = get(this.props.bankList, '0.id', 0)
             this.setState({
-              initialFormValue: { ...this.state.initialFormValue, webBankId: initialBankSelect.id || 0 },
+              initialFormValue: { ...this.state.initialFormValue, webBankId },
             })
           }
         }
@@ -179,9 +179,9 @@ class DepositContainer extends
   }
 
   onCancelHandler = () => {
-    const id = this.props.transactionRequest.id || 0
+    const transactionRequestId = get(this.props.transactionRequest, 'id', 0)
     this.props.loader(true)
-    this.props.cancelingTransactionRequest(id)
+    this.props.cancelingTransactionRequest(transactionRequestId)
   }
 
   renderDepositForm = () => {
