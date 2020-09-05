@@ -99,8 +99,10 @@ class DepositContainer extends
             },
           })
         }
-      } else if (this.props.depositRequestCode === response.REQUEST_TIMEOUT) {
+      } else if (this.props.transactionRequestCode === response.REQUEST_TIMEOUT) {
         // TODO: when before transaction timeout
+      } else if (this.props.transactionRequestCode === response.UNDEFINED) {
+        // TODO: when before transaction undefined
       } else if (this.props.transactionRequestCode === response.NOT_FOUND) {
         // TODO: when never transaction request before
       } else {
@@ -127,6 +129,7 @@ class DepositContainer extends
           },
         })
       } else {
+        console.log('errrrorororor')
         Modal.error.show({
           action: () => { Modal.error.hide(); return this.props.history.goBack(); },
           description: `${this.props.transactionRequestError} ${constants.pleaseTryAgain}`,
