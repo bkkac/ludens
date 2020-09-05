@@ -5,4 +5,5 @@ export default {
   REQUEST_TIMEOUT: 408,
   GONE: 410,
   INTERNAL_SERVER_ERROR: 500,
+  UNDEFINED: 0,
 }
