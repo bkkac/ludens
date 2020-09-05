@@ -1,10 +1,18 @@
 import { connect } from 'react-redux'
+import { get } from 'lodash'
 import { Dispatch, bindActionCreators } from 'redux'
 import { RootAction } from 'typings/reduxs/Actions'
 import bankAction from 'reduxs/bank/actions'
 import financeAction from 'reduxs/finance/actions'
+import { initialState } from 'reduxs/finance/transactionRequest/constants'
 import loaderAction from 'reduxs/loader/actions'
 import DepositContainer from './Deposit.container'
+
+const transactionRequest = (state: RootReducers): ITransactionRequestState => get(state, 'ludens.finance.transactionRequest', initialState)
+const transactionRequestRequest = (state: RootReducers): ReducerState<ITransactionRequest> =>
+  get(transactionRequest(state), 'request', initialState.request)
+const transactionRequestCancel = (state: RootReducers): ReducerState<ITransactionRequest> =>
+  get(transactionRequest(state), 'cancel', initialState.cancel)
 
 const mapStateToProps = (state: RootReducers): IDepositProps => ({
   bankList: state.ludens.bank.list.data!,
@@ -15,14 +23,14 @@ const mapStateToProps = (state: RootReducers): IDepositProps => ({
   depositRequestCode: state.ludens.finance.deposit.code!,
   depositRequestError: state.ludens.finance.deposit.error!,
   depositRequestIsFetching: state.ludens.finance.deposit.isFetching!,
-  transactionRequest: state.ludens.finance.transactionRequest.request.data!,
-  transactionRequestCode: state.ludens.finance.transactionRequest.request.code!,
-  transactionRequestError: state.ludens.finance.transactionRequest.request.error!,
-  transactionRequestIsFetching: state.ludens.finance.transactionRequest.request.isFetching!,
-  transactionCancel: state.ludens.finance.transactionRequest.cancel.data!,
-  transactionCancelCode: state.ludens.finance.transactionRequest.cancel.code!,
-  transactionCancelError: state.ludens.finance.transactionRequest.cancel.error!,
-  transactionCancelIsFetching: state.ludens.finance.transactionRequest.cancel.isFetching!,
+  transactionRequest: transactionRequestRequest(state).data!,
+  transactionRequestCode: transactionRequestRequest(state).code!,
+  transactionRequestError: transactionRequestRequest(state).error!,
+  transactionRequestIsFetching: transactionRequestRequest(state).isFetching!,
+  transactionCancel: transactionRequestCancel(state).data!,
+  transactionCancelCode: transactionRequestCancel(state).code!,
+  transactionCancelError: transactionRequestCancel(state).error!,
+  transactionCancelIsFetching: transactionRequestCancel(state).isFetching!,
   user: state.ludens.user.me.data!,
 })
 

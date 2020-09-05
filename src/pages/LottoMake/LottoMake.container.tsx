@@ -69,8 +69,6 @@ const defaultProps: IMakingLottoProps & IMakingLottoActionProps = {
   unlistenPlayedYeegeList() { noop() },
   getBetResult() { noop() },
   clearBetResult() { noop() },
-  clearYeegeSum() { noop() },
-  clearYeegePlayedList() { noop() },
   getBetRate() { noop() },
   makingBetLottoCode: 0,
   makingBetLottoError: '',
