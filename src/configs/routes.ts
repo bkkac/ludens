@@ -103,6 +103,27 @@ const routes: IRoutes[] = [
   },
   {
     exact: true,
+    name: route.lottoFavoriteManagement.name,
+    path: route.lottoFavoriteManagement.path,
+    component: pages.LottoFavoriteManagement,
+    private: true,
+  },
+  {
+    exact: true,
+    name: route.lottoFavoriteAdd.name,
+    path: route.lottoFavoriteAdd.path,
+    component: pages.LottoFavoriteForm,
+    private: true,
+  },
+  {
+    exact: true,
+    name: route.lottoFavoriteEdit.name,
+    path: route.lottoFavoriteEdit.path,
+    component: pages.LottoFavoriteForm,
+    private: true,
+  },
+  {
+    exact: true,
     name: route.contactus.name,
     path: route.contactus.path,
     component: pages.ContactUs,

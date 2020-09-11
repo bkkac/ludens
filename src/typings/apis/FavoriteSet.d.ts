@@ -14,3 +14,10 @@ declare interface IFavoriteSet {
   createdAt: string
   updatedAt: string
 }
+
+declare interface IFavoriteNumberRequest {
+  id?: number
+  myNumberListId?: number
+  number: string
+  type: string
+}

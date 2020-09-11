@@ -18,6 +18,18 @@ declare interface IBetState {
 
 declare interface ILottoFavorite {
   list: ReducerState<ReadonlyArray<IFavoriteSet>>
+  add: {
+    set: ReducerState<ReadonlyArray<IFavoriteSet>>
+    number: ReducerState<ReadonlyArray<IFavoriteSet>>
+  }
+  edit: {
+    set: ReducerState<ReadonlyArray<IFavoriteSet>>
+    number: ReducerState<ReadonlyArray<IFavoriteSet>>
+  }
+  delete: {
+    set: ReducerState<ReadonlyArray<IFavoriteSet>>
+    number: ReducerState<ReadonlyArray<IFavoriteSet>>
+  }
 }
 
 declare interface ILottoState {

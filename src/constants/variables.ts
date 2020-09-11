@@ -80,7 +80,7 @@ export const LOTTO_TYPE: { [type in TLottoType]: string } = {
   NAT_SHARE_HUNGSENG_MORNING: 'หุ้นฮั่งเส็งรอบเช้า',
   NAT_SHARE_HUNGSENG_AFTERNOON: 'หุ้นฮั่งเส็งรอบบ่าย',
   NAT_SHARE_LAO: 'หุ้นลาว',
-  LAO_SUITE:'หวยลาว',
+  LAO_SUITE: 'หวยลาว',
   YEGEE: 'ยี่กี',
 }
 
@@ -164,6 +164,19 @@ export const LOTTO_GAME_TYPE_NAME: { [type in TLottoGameType]: string } = {
   YEGEE_PLAY_AWARD: 'รางวัลยิงเลขลำดับที่',
 }
 
+export const LOTTO_BET_TYPES: { [type in TLottoGameType]: TLottoGameType } = {
+  TWO_UP: 'TWO_UP',
+  TWO_DOWN: 'TWO_DOWN',
+  THREE_UP: 'THREE_UP',
+  THREE_FRONT: 'THREE_FRONT',
+  THREE_BACK: 'THREE_BACK',
+  THREE_TOAST: 'THREE_TOAST',
+  FOUR_SUIT: 'FOUR_SUIT',
+  RUN_UP: 'RUN_UP',
+  RUN_DOWN: 'RUN_DOWN',
+  ONE_AWARD: 'ONE_AWARD',
+  YEGEE_PLAY_AWARD: 'YEGEE_PLAY_AWARD',
+}
 export const LOTTO_GAME_TYPES: { [type in TLottoSlug]: TLottoGameType[] } = {
   LOTTER_YEGEE: ['THREE_UP', 'THREE_TOAST', 'TWO_UP', 'TWO_DOWN', 'RUN_UP', 'RUN_DOWN'],
   LOTTER_GOVN: ['THREE_UP', 'THREE_TOAST', 'TWO_UP', 'TWO_DOWN', 'RUN_UP', 'RUN_DOWN'],
@@ -241,7 +254,7 @@ export const LOTTO_FLAG_ALPHA: { [type in TLottoType]: TFlag } = {
   NAT_SHARE_HUNGSENG_MORNING: 'HKG',
   NAT_SHARE_HUNGSENG_AFTERNOON: 'HKG',
   NAT_SHARE_LAO: 'LAO',
-  LAO_SUITE:'LAO',
+  LAO_SUITE: 'LAO',
   YEGEE: 'THA',
 }
 

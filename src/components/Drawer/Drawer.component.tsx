@@ -36,7 +36,7 @@ const constants = {
   lotto: 'แทงหวย',
   casino: 'คาสิโน',
   slot: 'เกมส์/สล๊อต',
-  favorite: 'โพยหวย',
+  favorite: 'จัดการเลชชุด',
   finance: 'ฝาก/ถอน',
   credit: 'รายงานเครดิต',
   affiliate: 'ระบบแนะนำเพื่อน',
@@ -118,7 +118,10 @@ const DrawerComponent: SFC<IDrawer> = ({
                 <h5 className="icon-container"><FontAwesomeIcon icon={faChessQueen} className="m1-r" /></h5>
                 <h5>{constants.slot}</h5>
               </div>
-              <div className="drawer-item-container disabled">
+              <div
+                className={`drawer-item-container ${currentMenu === routes.lottoFavoriteManagement.path ? 'active' : ''}`}
+                onClick={() => handleOnChangePage(routes.lottoFavoriteManagement.path)}
+              >
                 <h5 className="icon-container"><FontAwesomeIcon icon={faFileInvoiceDollar} className="m1-r" /></h5>
                 <h5>{constants.favorite}</h5>
               </div>

@@ -19,6 +19,8 @@ import { ForgotPassword } from './ForgotPassword'
 import { QandA } from './QandA'
 import { Casino } from './Casino'
 import { Games } from './Games'
+import { LottoFavoriteManagement } from './LottoFavoriteManagement'
+import { LottoFavoriteForm } from './LottoFavoriteForm'
 
 export default {
   Home,
@@ -41,5 +43,7 @@ export default {
   ForgotPassword,
   TransactionList,
   TransactionDetail,
+  LottoFavoriteForm,
   LottoListChrildren,
+  LottoFavoriteManagement,
 }
