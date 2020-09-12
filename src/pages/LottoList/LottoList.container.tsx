@@ -65,7 +65,7 @@ class LottoListContainer extends Component<
       ? `88 ${constants.round}`
       : isEmpty(lotto.endTime)
         ? '-'
-        : moment(lotto.endTime).add(-7, 'hour').format('DD MMM YY')
+        : moment(lotto.endTime).format('DD MMM YY')
     const isCountingDown = (lotto.code === 'LOTTER_YEGEE')
       ? false
       : (lotto.status === 'OPEN')

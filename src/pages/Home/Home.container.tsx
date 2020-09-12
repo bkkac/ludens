@@ -1,5 +1,5 @@
 import React, { Component, createRef, RefObject } from 'react'
-import { noop } from 'lodash'
+import { noop, trim } from 'lodash'
 import { Formik, FormikProps } from 'formik'
 import { RouteComponentProps } from 'react-router-dom'
 import response from 'constants/response'
@@ -64,7 +64,12 @@ class HomeContainer extends Component<IHomeProps & IHomeActionProps & DefaultPro
 
   onSubmitLogin = (values: ILogin) => {
     this.props.loader(true)
-    this.props.login(values)
+    const loginObject: ILogin = {
+      username: trim(values.username),
+      password: trim(values.password),
+      remember: values.remember,
+    }
+    this.props.login(loginObject)
   }
 
   onNavigateToRegister = () => {
