@@ -29,22 +29,47 @@ declare interface ILottoFavoriteManagementActionProps {
 }
 
 declare interface ILottoFavoriteFormProps {
-  addLottoFavoriteIsFetching: boolean
-  addLottoFavoriteCode: number | string
-  addLottoFavoriteError: string
-  editLottoFavoriteIsFetching: boolean
-  editLottoFavoriteCode: number | string
-  editLottoFavoriteError: string
+  getLottoFavoriteIsFetching: boolean
+  getLottoFavoriteCode: number | string
+  getLottoFavoriteError: string
+  favoriteLotto: IFavoriteSet
+  addLottoFavoriteTitleIsFetching: boolean
+  addLottoFavoriteTitleCode: number | string
+  addLottoFavoriteTitleError: string
+  addLottoFavoriteTitleResponse: IFavoriteSet
+  editLottoFavoriteTitleIsFetching: boolean
+  editLottoFavoriteTitleCode: number | string
+  editLottoFavoriteTitleError: string
+  removeLottoFavoriteTitleIsFetching: boolean
+  removeLottoFavoriteTitleCode: number | string
+  removeLottoFavoriteTitleError: string
+  addLottoFavoriteNumberIsFetching: boolean
+  addLottoFavoriteNumberCode: number | string
+  addLottoFavoriteNumberError: string
+  editLottoFavoriteNumberIsFetching: boolean
+  editLottoFavoriteNumberCode: number | string
+  editLottoFavoriteNumberError: string
+  removeLottoFavoriteNumberIsFetching: boolean
+  removeLottoFavoriteNumberCode: number | string
+  removeLottoFavoriteNumberError: string
 }
 
 declare interface ILottoFavoriteFormActionProps {
   loader(data: boolean): void
-  addLottoFavorite(): void
-  editLottoFavorite(): void
+  getLottoFavorite(id: number): void
+  addLottoFavoriteTitle(title: string): void
+  addLottoFavoriteNumber(data: IFavoriteNumberRequest): void
+  editLottoFavoriteTitle(id: number, title: string): void
+  editLottoFavoriteNumber(data: IFavoriteNumberRequest): void
+  removeLottoFavoriteTitle(id: number): void
+  removeLottoFavoriteNumber(id: number): void
 }
 
 declare interface ILottoFavoriteFormState {
   isDertySet: boolean
-  initialSet: { title: string },
-  initialNumber: IFavoriteNumberRequest,
+  isOnEdit: boolean
+  titleName: string
+  initialSet: { title: string }
+  initialNumber: IFavoriteNumberRequest
+  currentNumber: IFavoriteNumberRequest
 }

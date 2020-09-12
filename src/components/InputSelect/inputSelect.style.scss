@@ -7,6 +7,11 @@
     outline: none;
     cursor: pointer;
 
+    &.disabled {
+        cursor: default;
+        opacity: 0.3;
+    }
+
     .selected-wrapper {
         background-color: $secondary-bg;
         border-radius: 8px;

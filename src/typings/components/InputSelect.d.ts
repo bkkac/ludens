@@ -9,6 +9,7 @@ declare interface IInputDefaultSelectProps<T = string> {
 declare interface IInputSelectProps<T = string, K = string> {
 	name: string
 	value: K
+	disabled?: boolean
 	valueKey?: string
 	placeholder?: string
 	backgroundColor?: string

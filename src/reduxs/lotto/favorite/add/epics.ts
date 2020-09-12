@@ -31,7 +31,7 @@ const addLottoFavoriteNumberEpic: Epic<RootAction, RootAction, RootReducers> = (
     exhaustMap(action =>
       from(fetchAddLottoFavoriteNumber(action.payload))
         .pipe(
-          map(actions.addLottoFavoriteSuccessAction),
+          map(actions.addLottoFavoriteNumberSuccessAction),
           catchError(error => of(actions.addLottoFavoriteNumberFailureAction(error))),
           takeUntil(action$.pipe(filter(isActionOf(actions.addLottoFavoriteNumberCancelAction))))
         ),

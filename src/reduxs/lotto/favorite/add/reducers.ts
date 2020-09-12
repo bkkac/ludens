@@ -4,7 +4,7 @@ import { initialState } from './constants'
 import actions from './actions'
 import { combineReducers } from 'redux'
 
-const addLottoFavoriteReducer = () => (
+const addLottoFavoriteReducer = (
   state: ReducerState<IFavoriteSet> = initialState,
   action: RootAction
 ): ReducerState<IFavoriteSet> => {

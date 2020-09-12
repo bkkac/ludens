@@ -7,6 +7,7 @@ import { faChevronRight } from '@fortawesome/free-solid-svg-icons'
 import './inputSelect.style.scss'
 
 const defaultProps: IInputSelectProps = {
+	disabled: false,
 	placeholder: 'เลือก',
 	value: '',
 	name: '',
@@ -48,10 +49,16 @@ class InputSelectComponent<T = string, K = string> extends Component<IInputSelec
 				this.setState({ isSelected: true, selectedValue: this.props.value })
 			}
 		}
+
+		if (this.props.value !== prevProps.value && isEmpty(this.props.value)) {
+			this.setState({ isSelected: false, selectedValue: '' })
+		}
 	}
 
 	handleOpenSelector = () => {
-		this.setState({ isExpand: !this.state.isExpand })
+		if (!this.props.disabled) {
+			this.setState({ isExpand: !this.state.isExpand })
+		}
 	}
 
 	handleOnBlurSelector = () => {
@@ -129,7 +136,7 @@ class InputSelectComponent<T = string, K = string> extends Component<IInputSelec
 		const ItemsComponent = this.renderItems
 		return (
 			<div
-				className="input-select-container"
+				className={`input-select-container ${this.props.disabled ? 'disabled' : ''}`}
 				onBlur={this.handleOnBlurSelector}
 				tabIndex={0}
 			>

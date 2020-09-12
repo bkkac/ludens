@@ -1,4 +1,4 @@
-import React, { SFC, useState } from 'react'
+import React, { FC, useState } from 'react'
 import colors from 'constants/colors'
 import { ResponsiveIcon } from 'components'
 import './selectorItem.style.scss'
@@ -12,7 +12,7 @@ const defaultProps: ISelectorItemProps = {
 	backgroundHoverColor: colors.PRIMARY_BG,
 }
 
-const SelectorItemComponent: SFC<ISelectorItemProps> = ({
+const SelectorItemComponent: FC<ISelectorItemProps> = ({
 	icon,
 	title,
 	subTitle,
