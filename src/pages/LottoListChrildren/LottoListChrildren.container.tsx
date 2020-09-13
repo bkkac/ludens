@@ -72,7 +72,7 @@ class LottoListChrildrenContainer extends Component<
     if (!isEmpty(this.props.yeegeGameList)) {
       const ListComponent = this.props.yeegeGameList.map((yeege: ILottoGame, index) => {
         const yeegeRound = `${constants.round} ${yeege.round}`
-        const expireTime = moment(yeege.endTime).add(-7, 'hour').format('DD MMM YY HH:mm')
+        const expireTime = moment(yeege.endTime).format('DD MMM YY HH:mm')
 
         return (
           <div className="col-12 col-md-6 col-lg-4 m2-t" key={`sub-${yeege.round}-${index}`}>
