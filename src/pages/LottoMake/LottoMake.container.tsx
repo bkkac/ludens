@@ -260,7 +260,7 @@ class LottoMakeContainer extends Component<
     this.clearLocalInterval()
     const lottoGame = this.props.lottoGame
     const momentEndAt = moment(replace(lottoGame.endTime!, /\s/g, ''))
-    const momentEndAtTimezone = momentEndAt.clone().add(-7, 'hour')
+    const momentEndAtTimezone = momentEndAt.clone()
 
     this.intervalId = setInterval(() => {
       const duration = moment.duration(momentEndAtTimezone.diff(moment()))
