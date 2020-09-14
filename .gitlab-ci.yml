@@ -7,7 +7,8 @@ cache:
 stages:
   - test
   - build
-  - deploy
+  - deploy_dev
+  - deploy_stage
   - deploy_prod
 
 test:
@@ -20,13 +21,28 @@ build:
   script: 
     - npm install --unsafe-perm node-sass
     - npm install
-    - npm run build
+    - npm run build:dev
 
-deploy:
-  stage: deploy
+deploy_dev:
+  stage: deploy_dev
+  only:
+    - develop
+  
+  before_script:
+    - mkdir -p ~/.ssh
+    - echo -e "$DEV_SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
+    - chmod 600 ~/.ssh/id_rsa
+    - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
+
+  script:
+    - echo "Deploy project on server"
+    - echo ubuntu@"$DEV_DEPLOY_SERVER"
+    - bash .gitlab-dev-deploy.sh
+
+deploy_stage:
+  stage: deploy_stage
   only:
     - staging
-  
   before_script:
     - mkdir -p ~/.ssh
     - echo -e "$STAGE_SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
