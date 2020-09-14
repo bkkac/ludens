@@ -1,3 +1,5 @@
+@import 'assets/stylesheets/colors';
+
 .home-container {
   min-height: 100vh;
 }
@@ -26,4 +28,17 @@
     text-align: left;
     color: #ada2a0;
   }
+}
+
+.scroll-to-top-wrapper {
+  width: 40px;
+  height: 40px;
+  border-radius: 4px;
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba($color: $secondary-text, $alpha: .4);
 }
