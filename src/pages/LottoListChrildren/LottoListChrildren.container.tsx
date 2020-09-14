@@ -43,6 +43,7 @@ class LottoListChrildrenContainer extends Component<
   static defaultProps = defaultProps
 
   componentDidMount() {
+    this.props.loader(false)
     if (this.props.match.params.type === 'LOTTER_YEGEE') {
       this.props.loader(true)
       this.props.getYeegeGameList()
