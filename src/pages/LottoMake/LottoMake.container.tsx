@@ -1,9 +1,10 @@
-import React, { Component } from 'react'
+import React, { Component, createRef, RefObject } from 'react'
 import { RouteComponentProps } from 'react-router-dom'
 import {
   Modal,
   ALink,
   Badge,
+  ButtonIcon,
 } from 'components'
 import moment from 'moment'
 import { number } from 'utils'
@@ -15,6 +16,7 @@ import {
   faChevronRight,
   faChevronLeft,
   faStopwatch,
+  faArrowUp,
 } from '@fortawesome/free-solid-svg-icons'
 import {
   sum,
@@ -112,6 +114,7 @@ class LottoMakeContainer extends Component<
   > {
 
   static defaultProps = defaultProps
+  lottoMakeContainerRef: RefObject<HTMLDivElement> = createRef()
 
   intervalId: NodeJS.Timeout | null = null
 
@@ -429,7 +432,17 @@ class LottoMakeContainer extends Component<
         </div>
       )
     } else if (this.props.lottoGame.status === 'CLOSE') {
-      return (<BetResult results={this.props.betResults} />)
+      return (
+        <>
+          <BetResult results={this.props.betResults} />
+          {/* <MakingLotto
+            lottos={this.state.numberList}
+            betRates={this.props.betRates}
+            gameSlug={this.props.match.params.type}
+            onAddedNumber={this.handleOnAddLottoNumber}
+          /> */}
+        </>
+      )
     } else if (this.state.lottoStatus === 'OPEN') {
       switch (this.state.activeModeSwitch) {
         case 'LOTTO':
@@ -462,15 +475,13 @@ class LottoMakeContainer extends Component<
       return (<PlayedUser playedYeegeList={this.props.playedYeegeList} />)
     } else if (this.props.lottoGame.status === 'OPEN') {
       return (
-        <div className="d-none d-lg-block">
-          <Summary
-            onNavigateToFavorite={this.handleOnGotoSelectFavorite}
-            betRates={this.props.betRates}
-            lottoList={this.state.numberList}
-            onClickBet={this.handleOnMakingBetLotto}
-            onBetListChanged={this.handleOnBetListChanged}
-          />
-        </div>
+        <Summary
+          onNavigateToFavorite={this.handleOnGotoSelectFavorite}
+          betRates={this.props.betRates}
+          lottoList={this.state.numberList}
+          onClickBet={this.handleOnMakingBetLotto}
+          onBetListChanged={this.handleOnBetListChanged}
+        />
       )
     }
     return <></>
@@ -537,6 +548,16 @@ class LottoMakeContainer extends Component<
     )
   }
 
+  handleScrollToTop = () => {
+    if (this.lottoMakeContainerRef.current) {
+      this.lottoMakeContainerRef.current.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start',
+        inline: 'start',
+      })
+    }
+  }
+
   render() {
     const GameModeComponent = this.renderGameMode
     const SummaryModeComponent = this.renderSummaryMode
@@ -561,10 +582,8 @@ class LottoMakeContainer extends Component<
 
     const slugName = this.props.match.params.type
     const gameRound = this.props.lottoGame.round
-    const isActiveSummaryNotification = (this.state.numberList.length > 0)
     return (
-      <div className={`lotto-make-container primary-bg ${isActiveSummaryNotification ? 'opened' : ''}`}>
-        {this.renderSummaryNotification(isActiveSummaryNotification)}
+      <div className={`lotto-make-container primary-bg`} ref={this.lottoMakeContainerRef}>
         <div className="container">
           <div className="row">
             <div className="col d-flex">
@@ -603,10 +622,18 @@ class LottoMakeContainer extends Component<
             <div className="col col-lg-7 m2-t">
               <GameModeComponent />
             </div>
-            <div className="col-lg-5 m2-t">
+            <div className="col-lg-5 m4-t pt-3">
               <SummaryModeComponent />
             </div>
           </div>
+        </div>
+        <div className="scroll-to-top-wrapper">
+          <ButtonIcon
+            onClick={this.handleScrollToTop}
+            CustomIcon={<FontAwesomeIcon icon={faArrowUp} className="primary-text" />}
+            type="custom"
+            id="scroll-to-top"
+          />
         </div>
       </div>
     )

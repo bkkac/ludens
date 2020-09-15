@@ -1,4 +1,4 @@
-import React, { Component, createRef, RefObject } from 'react'
+import React, { Component } from 'react'
 import { get, noop, isEmpty } from 'lodash'
 import {
   ALink,
@@ -40,8 +40,6 @@ class MakingLotto extends Component<IMakingLottoComponentProps, IMakingLottoComp
 
   static defaultProps = defaultProps
 
-  makingLottoRef: RefObject<HTMLDivElement> = createRef()
-
   state: IMakingLottoComponentState = {
     animated: false,
     numberSet: '',
@@ -56,11 +54,6 @@ class MakingLotto extends Component<IMakingLottoComponentProps, IMakingLottoComp
   }
 
   handleOnClickNumberPad = (num: number) => {
-    this.makingLottoRef.current?.scrollIntoView({
-      behavior: 'smooth',
-      block: 'center',
-      inline: 'center',
-    })
     const length = LOTTO_GAME_TYPE_LENGTH[this.state.gameType]
     if (num === -1) {
       return this.setState({ numberSet: this.state.numberSet.slice(0, -1) })
@@ -137,7 +130,7 @@ class MakingLotto extends Component<IMakingLottoComponentProps, IMakingLottoComp
         return (
           <>
             <div className="row m4-t">
-              <div className="col text-center">
+              <div className="col text-center selected-number-ditgit">
                 <LottoNumbersets />
               </div>
             </div>
@@ -175,7 +168,7 @@ class MakingLotto extends Component<IMakingLottoComponentProps, IMakingLottoComp
     const GameInput = this.renderInputMode
 
     return (
-      <div ref={this.makingLottoRef}>
+      <div>
         <div className="row">
           <div className="col">
             <h4 className="m1-l m1-b">{constants.gameType}</h4>
@@ -192,6 +185,16 @@ class MakingLotto extends Component<IMakingLottoComponentProps, IMakingLottoComp
               placeholder={constants.placeholderGameType}
               RenderSelected={this.renderLottoGameTypeOption}
             />
+            {/* <ButtonRadio
+              id={`lotto-game-type`}
+              text={numbers}
+              padding={8}
+              forceState={isSelected}
+              defaultState={isSelected}
+              onChangeState={state => this.handleOnSelectNumber(numbers, state)}
+              backgroundColor={colors.SECONDARY_TEXT}
+              color={colors.PRIMARY_TEXT}
+            /> */}
           </div>
         </div>
         {
