@@ -1,5 +1,7 @@
+declare type TInputTextAlign = "left" | "-moz-initial" | "inherit" | "initial" | "revert" | "unset" | "right" | "center" | "end" | "justify" | "match-parent" | "start" | undefined
 declare interface IInputTextProps {
   name?: string
+  textAlign?: TInputTextAlign
   error?: boolean
   type?: string
   disabled?: boolean
