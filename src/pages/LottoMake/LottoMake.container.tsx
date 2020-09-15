@@ -617,7 +617,7 @@ class LottoMakeContainer extends Component<
             </div>
           </div>
         </div>
-        <div className="scroll-to-top-wrapper">
+        <div className="croll-to-top-lotto-make-wrapper">
           <ButtonIcon
             onClick={this.handleScrollToTop}
             CustomIcon={<FontAwesomeIcon icon={faArrowUp} className="primary-text" />}
