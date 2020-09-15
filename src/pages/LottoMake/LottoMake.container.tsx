@@ -432,17 +432,7 @@ class LottoMakeContainer extends Component<
         </div>
       )
     } else if (this.props.lottoGame.status === 'CLOSE') {
-      return (
-        <>
-          <BetResult results={this.props.betResults} />
-          {/* <MakingLotto
-            lottos={this.state.numberList}
-            betRates={this.props.betRates}
-            gameSlug={this.props.match.params.type}
-            onAddedNumber={this.handleOnAddLottoNumber}
-          /> */}
-        </>
-      )
+      return (<BetResult results={this.props.betResults} />)
     } else if (this.state.lottoStatus === 'OPEN') {
       switch (this.state.activeModeSwitch) {
         case 'LOTTO':
