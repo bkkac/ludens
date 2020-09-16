@@ -8,7 +8,7 @@ import './lottoActionCard.style.scss'
 
 const constants = {
   day: 'วัน',
-  timeups: 'ปิด',
+  timeups: 'รอเปิด',
 }
 
 type DefaultProps = Readonly<typeof defaultProps>
@@ -90,9 +90,6 @@ const LottoActionCard: FC<ILottoActionCard & DefaultProps> = (props) => {
 
   const BadgeComponent = ({ text }: { text: string }) => {
     if (status === 'OPEN') {
-      if (remain.days <= 0 || remain.hours <= 0 || remain.minutes <= 0 || remain.seconds <= 0) {
-        return <Badge text={text} backgroundColor={colors.SECONDARY_TEXT} color={colors.PRIMARY_TEXT} />
-      }
       return <Badge text={text} backgroundColor={colors.PRIMARY_GREEN} color={colors.PRIMARY_TEXT} />
     } else if (status === 'CLOSE') {
       return <Badge text={text} backgroundColor={colors.SECONDARY_RED} color={colors.PRIMARY_TEXT} />
@@ -114,7 +111,7 @@ const LottoActionCard: FC<ILottoActionCard & DefaultProps> = (props) => {
     if (isCountingdown) {
       if (remain.days > 0) {
         return `${number.padNumber(String(remain.days), 2)} ${constants.day}`
-      } else if (remain.days <= 0 || remain.hours <= 0 || remain.minutes <= 0 || remain.seconds <= 0) {
+      } else if (remain.days <= 0 && remain.hours <= 0 && remain.minutes <= 0 && remain.seconds <= 0) {
         return constants.timeups
       } else {
         return `${number.padNumber(String(remain.hours), 2)}:${number.padNumber(String(remain.minutes), 2)}:${number.padNumber(String(remain.seconds), 2)}`
