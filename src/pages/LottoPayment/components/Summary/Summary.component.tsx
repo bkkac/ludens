@@ -144,9 +144,11 @@ class SummaryLottoComponent extends Component<ILottoPaymentSummaryProps, ILottoP
         return (
           <div className="row lotto-row primary-bg p2-y p2-x" key={`lotto-${lotto.type}-${lottoIndex}`}>
             <div className="col-12 lotto-wrapper">
-              <Badge text={lotto.number} backgroundColor={colors.SECONDARY_RED} />
+              <Badge text={lotto.number} backgroundColor={colors.SECONDARY_BLUE} />
               <div className="p2-x flex">
                 <InputNumber
+                  prefix="฿"
+                  textAlign="right"
                   hiddenErrorBlock
                   thousandSeparator
                   allowNegative={false}
@@ -215,8 +217,10 @@ class SummaryLottoComponent extends Component<ILottoPaymentSummaryProps, ILottoP
           </div>
           <div className="col m-auto">
             <InputNumber
+              prefix="฿"
               hiddenErrorBlock
               thousandSeparator
+              textAlign="right"
               decimalScale={0}
               name="maked-all-value"
               allowNegative={false}

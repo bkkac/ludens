@@ -1,6 +1,6 @@
 .placeholder-numbersets-text {
   font-size: 34px !important;
-  line-height: 44px;
+  line-height: 44px !important;
 
   -webkit-transition: opacity 128ms ease-in-out;
   transition: opacity 128ms ease-in-out;
@@ -11,9 +11,13 @@
   }
 }
 
+.selected-number-ditgit {
+  height: 44px;
+}
+
 .numbersets-text {
   font-size: 34px !important;
-  line-height: 44px;
+  line-height: 44px !important;
   letter-spacing: 8px;
   -webkit-transition: transform 512ms ease-out 256ms, opacity 256ms ease-in-out 256ms;
   transition: transform 512ms ease-out 256ms, opacity 256ms ease-in-out 256ms;
