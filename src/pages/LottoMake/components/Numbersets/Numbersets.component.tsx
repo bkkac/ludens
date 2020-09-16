@@ -110,7 +110,7 @@ class NumbersetsComponent extends Component<NumbersetsProps, NumbersetsState> {
                 stylename="outline"
                 id={`numberset-${numbers}`}
                 text={numbers}
-                padding={8}
+                paddingX={8}
                 forceState={isCurrentActive}
                 defaultState={isCurrentActive}
                 onChangeState={state => this.handleOnNumberFunctionChanged(state, numbers)}
@@ -214,7 +214,7 @@ class NumbersetsComponent extends Component<NumbersetsProps, NumbersetsState> {
             <ButtonRadio
               id={`numberset-${numbers}`}
               text={numbers}
-              padding={8}
+              paddingX={8}
               forceState={isSelected}
               defaultState={isSelected}
               onChangeState={state => this.handleOnSelectNumber(numbers, state)}

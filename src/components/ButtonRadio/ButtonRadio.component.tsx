@@ -1,4 +1,4 @@
-import React, { SFC, useState, useEffect } from 'react'
+import React, { FC, useState, useEffect } from 'react'
 import { noop } from 'lodash'
 import colors from 'constants/colors'
 import './buttonRadio.style.scss'
@@ -6,7 +6,6 @@ import './buttonRadio.style.scss'
 const defaultProps: IButtonRadio = {
 	id: '',
 	text: '',
-	padding: 32,
 	stylename: 'normal',
 	defaultState: false,
 	color: colors.PRIMARY_TEXT,
@@ -14,13 +13,14 @@ const defaultProps: IButtonRadio = {
 	onChangeState() { noop() },
 }
 
-const ButtonRadioComponent: SFC<IButtonRadio> = ({
+const ButtonRadioComponent: FC<IButtonRadio> = ({
 	id,
 	text,
 	stylename,
 	color,
 	forceState,
-	padding,
+	paddingX,
+	paddingY,
 	defaultState,
 	backgroundColor,
 	onChangeState,
@@ -42,6 +42,9 @@ const ButtonRadioComponent: SFC<IButtonRadio> = ({
 
 	const isForceState = (typeof forceState !== 'undefined')
 	const usedState = isForceState ? forceState : state
+
+	const isFixedPaddingX = (typeof paddingX === 'number')
+	const isFixedPaddingY = (typeof paddingY === 'number')
 	return (
 		<div
 			id={id}
@@ -58,8 +61,11 @@ const ButtonRadioComponent: SFC<IButtonRadio> = ({
 				borderColor: (stylename === 'outline')
 					? usedState ? backgroundColor : 'transparent'
 					: backgroundColor,
-				paddingLeft: padding,
-				paddingRight: padding,
+				paddingLeft: isFixedPaddingX ? paddingX : 'unset',
+				paddingRight: isFixedPaddingX ? paddingX : 'unset',
+				paddingTop: isFixedPaddingY ? paddingY : 'unset',
+				paddingBottom: isFixedPaddingY ? paddingY : 'unset',
+				flex: isFixedPaddingX ? 'unset' : 1,
 			}}
 			onClick={handleOnStateChange}
 		>

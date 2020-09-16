@@ -90,6 +90,8 @@ declare interface ILotto {
 
 declare interface ILottoGame {
   id: number
+  mode?: TGameMode
+  code?: TLottoSlug
   round: string
   endTime: string
   startTime: string
@@ -102,6 +104,7 @@ declare interface ILottoNumber {
   type: TLottoGameType
   value?: string
   slug?: string
+  rate?: string
 }
 
 declare interface ILottoRoundQuery {
