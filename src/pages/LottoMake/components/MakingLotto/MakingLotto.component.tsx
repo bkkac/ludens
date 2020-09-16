@@ -1,9 +1,8 @@
-import React, { Component, createRef, RefObject } from 'react'
-import { get, noop, isEmpty } from 'lodash'
+import React, { Component } from 'react'
+import { get, noop, isEmpty, map, isEqual } from 'lodash'
 import {
   ALink,
   NumberPad,
-  InputSelect,
   ButtonRadio,
   SelectorItem,
 } from 'components'
@@ -40,8 +39,6 @@ class MakingLotto extends Component<IMakingLottoComponentProps, IMakingLottoComp
 
   static defaultProps = defaultProps
 
-  makingLottoRef: RefObject<HTMLDivElement> = createRef()
-
   state: IMakingLottoComponentState = {
     animated: false,
     numberSet: '',
@@ -56,11 +53,6 @@ class MakingLotto extends Component<IMakingLottoComponentProps, IMakingLottoComp
   }
 
   handleOnClickNumberPad = (num: number) => {
-    this.makingLottoRef.current?.scrollIntoView({
-      behavior: 'smooth',
-      block: 'center',
-      inline: 'center',
-    })
     const length = LOTTO_GAME_TYPE_LENGTH[this.state.gameType]
     if (num === -1) {
       return this.setState({ numberSet: this.state.numberSet.slice(0, -1) })
@@ -137,7 +129,7 @@ class MakingLotto extends Component<IMakingLottoComponentProps, IMakingLottoComp
         return (
           <>
             <div className="row m4-t">
-              <div className="col text-center">
+              <div className="col text-center selected-number-ditgit">
                 <LottoNumbersets />
               </div>
             </div>
@@ -170,28 +162,61 @@ class MakingLotto extends Component<IMakingLottoComponentProps, IMakingLottoComp
     }
   }
 
-  render() {
+  renderLottoGameTypes = (): JSX.Element => {
     const gameList = LOTTO_GAME_TYPES[this.props.gameSlug]
+
+    const LottoGamTypesComponent = map(gameList, (gameType, gameTypeIndex) => {
+      const isCurrentActive = isEqual(this.state.gameType, gameType)
+
+      const combindedBetRateType = `${this.props.gameSlug}_${gameType}` as TBetType
+      const betRate: IBetRate = get(this.props.betRates.filter((rate) => rate.type === combindedBetRateType), '0', {})
+      const rateAsMoney = number.castToMoney(Number(betRate.rate || '0'))
+      const betRateText = `${constants.betRate} ${rateAsMoney}`
+
+      return (
+        <div
+          className="m1-t col-6 col-md-4 d-flex"
+          key={`lotto-game-type-${gameTypeIndex}-${gameType}`}
+          style={{ paddingRight: 4, paddingLeft: 4 }}
+        >
+          <ButtonRadio
+            id={`lotto-game-type-${gameType}`}
+            text={(
+              <>
+                <h4 className="primary-blue-text">{LOTTO_GAME_TYPE_NAME[gameType]}</h4>
+                <h6 className="subtitle-2 secondary-text">{betRateText}</h6>
+              </>
+            )}
+            paddingY={8}
+            forceState={isCurrentActive}
+            defaultState={isCurrentActive}
+            onChangeState={state => {
+              if (state) {
+                if (gameType === 'RUN_DOWN' || gameType === 'RUN_UP') {
+                  return this.setState({ gameType, numberSet: '', inputMode: 'NUMBERPAD' })
+                }
+                this.setState({ gameType, numberSet: '' })
+              }
+            }}
+            backgroundColor={colors.PRIMARY_TEXT}
+          />
+        </div>
+      )
+    })
+
+    return (<div className="row">{LottoGamTypesComponent}</div>)
+  }
+
+  render() {
     const GameInput = this.renderInputMode
+    const LottoGameTypes = this.renderLottoGameTypes
 
     return (
-      <div ref={this.makingLottoRef}>
+      <div>
         <div className="row">
           <div className="col">
             <h4 className="m1-l m1-b">{constants.gameType}</h4>
-            <InputSelect<TLottoGameType, TLottoGameType>
-              name="lotto-game-type"
-              items={gameList}
-              value={this.state.gameType}
-              onChange={(type) => {
-                if (type === 'RUN_DOWN' || type === 'RUN_UP') {
-                  return this.setState({ gameType: type, numberSet: '', inputMode: 'NUMBERPAD' })
-                }
-                this.setState({ gameType: type, numberSet: '' })
-              }}
-              placeholder={constants.placeholderGameType}
-              RenderSelected={this.renderLottoGameTypeOption}
-            />
+            <LottoGameTypes />
           </div>
         </div>
         {
@@ -214,6 +239,7 @@ class MakingLotto extends Component<IMakingLottoComponentProps, IMakingLottoComp
                 <div className="row m2-t">
                   <div className="col text-center">
                     <ButtonRadio
+                      paddingX={32}
                       id="switch-number-mode"
                       text={constants.switchNumberMode}
                       onChangeState={this.handleOnChangeSwitchMode}

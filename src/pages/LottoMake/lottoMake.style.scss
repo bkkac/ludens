@@ -10,6 +10,19 @@
   &.opened {
     padding-top: calc(112px + 46px);
   }
+
+  .scroll-to-top-lotto-make-wrapper {
+    width: 40px;
+    height: 40px;
+    border-radius: 4px;
+    position: fixed;
+    bottom: 104px;
+    right: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba($color: $secondary-text, $alpha: 0.4);
+  }
 }
 
 .summary-notification-container {

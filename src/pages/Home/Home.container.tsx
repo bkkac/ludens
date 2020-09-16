@@ -1,15 +1,17 @@
 import React, { Component, createRef, RefObject } from 'react'
-import { noop } from 'lodash'
+import { noop, trim } from 'lodash'
 import { Formik, FormikProps } from 'formik'
 import { RouteComponentProps } from 'react-router-dom'
 import response from 'constants/response'
-import { Modal } from 'components'
+import { Modal, ButtonIcon } from 'components'
 import { LoginForm, LottoList } from './components'
 import initialValues from './models/initialValues'
 import scheme from './models/scheme'
 import LogoThailandBet from 'assets/images/logo/logothailandbet.png'
 import './home.style.scss'
 import routes from 'constants/routes'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faArrowUp } from '@fortawesome/free-solid-svg-icons'
 
 const constants = {
   ok: 'ตกลง',
@@ -64,7 +66,12 @@ class HomeContainer extends Component<IHomeProps & IHomeActionProps & DefaultPro
 
   onSubmitLogin = (values: ILogin) => {
     this.props.loader(true)
-    this.props.login(values)
+    const loginObject: ILogin = {
+      username: trim(values.username),
+      password: trim(values.password),
+      remember: values.remember,
+    }
+    this.props.login(loginObject)
   }
 
   onNavigateToRegister = () => {
@@ -73,6 +80,16 @@ class HomeContainer extends Component<IHomeProps & IHomeActionProps & DefaultPro
 
   onNavigateToForgotPassword = () => {
     this.props.history.push(routes.forgotPassword.path)
+  }
+
+  handleScrollToTop = () => {
+    if(this.homeContainerRef.current){
+      this.homeContainerRef.current.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start',
+        inline: 'start',
+      })
+    }
   }
 
   renderLoginForm = () => {
@@ -120,6 +137,14 @@ class HomeContainer extends Component<IHomeProps & IHomeActionProps & DefaultPro
           <div className="container">
             <RenderLottoListComponent />
           </div>
+        </div>
+        <div className="scroll-to-top-wrapper">
+          <ButtonIcon
+            onClick={this.handleScrollToTop}
+            CustomIcon={<FontAwesomeIcon icon={faArrowUp} className="primary-text" />}
+            type="custom"
+            id="scroll-to-top"
+          />
         </div>
       </div>
     )
