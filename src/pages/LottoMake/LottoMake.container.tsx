@@ -143,17 +143,20 @@ class LottoMakeContainer extends Component<
   }
 
   componentDidMount() {
-    this.props.loader(true)
-
     const locationState: IMakingLottoRouteProps = this.props.location.state
-    const game = locationState.selectedLottoGame
-    const gameDate = moment.utc(game.createdAt).format('DDMMYYYY')
-    const gameRound = number.padNumber(locationState.selectedLottoGame.round, 3)
+    if (!isEmpty(get(this.props.location, 'state.selectedLottoGame', {}))) {
+      this.props.loader(true)
+      const game = locationState.selectedLottoGame
+      const gameDate = moment.utc(game.createdAt).format('DDMMYYYY')
+      const gameRound = number.padNumber(locationState.selectedLottoGame.round, 3)
 
-    const slugName = this.props.match.params.type
-    this.props.getLottoGame(slugName, gameDate, gameRound)
-    this.props.getBetRate()
-    this.setState({ numberList: locationState.betList || [] })
+      const slugName = this.props.match.params.type
+      this.props.getLottoGame(slugName, gameDate, gameRound)
+      this.props.getBetRate()
+      this.setState({ numberList: locationState.betList || [] })
+    } else {
+      return this.props.history.goBack()
+    }
   }
 
   componentDidUpdate(prevProps: IMakingLottoProps) {
@@ -190,7 +193,18 @@ class LottoMakeContainer extends Component<
           action: () => {
             this.setState({ numberList: [] }, () => {
               Modal.success.hide()
-              this.handleOnClickBreadcrumb(routes.lottoChrildren.exactPath(this.props.match.params.type))
+              const slugName = this.props.match.params.type
+              if (slugName === 'LOTTER_YEGEE') {
+                this.handleOnClickBreadcrumb(routes.lottoChrildren.exactPath(this.props.match.params.type))
+              } else {
+                setTimeout(() => {
+                  this.handleScrollToTop()
+                }, 512)
+                const locationState: IMakingLottoRouteProps = this.props.location.state
+                const game = locationState.selectedLottoGame
+                this.props.history.replace(
+                  routes.lottoMaking.exactPath(this.props.match.params.type), { selectedLottoGame: game })
+              }
             })
           },
           actionText: constants.ok,
