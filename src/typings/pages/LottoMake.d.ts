@@ -31,6 +31,10 @@ declare interface IMakingLottoProps {
   getLottoGameCode: number | string
   getLottoGameError: string
   lottoGame: ILottoGame
+  getBetNumberRateIsFetching: boolean
+  getBetNumberRateCode: number | string
+  getBetNumberRateError: string
+  betRateNumbers: (IBetNumberRateRequest & { rate: string })[]
 }
 
 declare interface IMakingLottoActionProps {
@@ -47,11 +51,16 @@ declare interface IMakingLottoActionProps {
   playYeege(data: IYeegePlayRequest): void
   loader(state: boolean): void
   clearBetResult(): void
+  getBetNumberRate(numbers: IBetNumberRateRequest[]): void
 }
 
 declare interface IMakingLottoState {
   activeModeSwitch: TMakeLottoGameMode
   numberList: ILottoNumber[]
+  temporaryNumberList: {
+    filter: ILottoNumber[],
+    adding: ILottoNumber[],
+  }
   defaultGameValue: string
   remainingTime: {
     hours: number

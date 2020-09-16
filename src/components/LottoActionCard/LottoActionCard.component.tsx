@@ -1,4 +1,4 @@
-import React, { SFC, useState, useEffect } from 'react'
+import React, { FC, useState, useEffect } from 'react'
 import { replace, isNaN } from 'lodash'
 import { ResponsiveIcon, Badge } from 'components'
 import colors from 'constants/colors'
@@ -8,6 +8,7 @@ import './lottoActionCard.style.scss'
 
 const constants = {
   day: 'วัน',
+  timeups: 'ปิด',
 }
 
 type DefaultProps = Readonly<typeof defaultProps>
@@ -27,7 +28,7 @@ const defaultProps: ILottoActionCard = {
   icon: '',
 }
 
-const LottoActionCard: SFC<ILottoActionCard & DefaultProps> = (props) => {
+const LottoActionCard: FC<ILottoActionCard & DefaultProps> = (props) => {
 
   const {
     id,
@@ -59,10 +60,10 @@ const LottoActionCard: SFC<ILottoActionCard & DefaultProps> = (props) => {
     clearLocalInterval()
 
     if (isCountingdown) {
-      const expireMoment = moment(replace(expire!, /\s/g, ''))
+      const expireMoment = moment.utc(replace(expire!, /\s/g, ''))
       const expireWithCastTimezone = expireMoment.clone()
       intervalId = setInterval(() => {
-        const duration = moment.duration(expireWithCastTimezone.diff(moment()))
+        const duration = moment.duration(expireWithCastTimezone.diff(moment.utc()))
         const days = duration.days()
         const hours = duration.hours()
         const minutes = duration.minutes()
@@ -89,6 +90,9 @@ const LottoActionCard: SFC<ILottoActionCard & DefaultProps> = (props) => {
 
   const BadgeComponent = ({ text }: { text: string }) => {
     if (status === 'OPEN') {
+      if (remain.days <= 0 || remain.hours <= 0 || remain.minutes <= 0 || remain.seconds <= 0) {
+        return <Badge text={text} backgroundColor={colors.SECONDARY_TEXT} color={colors.PRIMARY_TEXT} />
+      }
       return <Badge text={text} backgroundColor={colors.PRIMARY_GREEN} color={colors.PRIMARY_TEXT} />
     } else if (status === 'CLOSE') {
       return <Badge text={text} backgroundColor={colors.SECONDARY_RED} color={colors.PRIMARY_TEXT} />
@@ -108,8 +112,13 @@ const LottoActionCard: SFC<ILottoActionCard & DefaultProps> = (props) => {
 
   const statusText = (): string => {
     if (isCountingdown) {
-      if (remain.days > 0) { return `${number.padNumber(String(remain.hours), 2)} ${constants.day}` }
-      return `${number.padNumber(String(remain.hours), 2)}:${number.padNumber(String(remain.minutes), 2)}:${number.padNumber(String(remain.seconds), 2)}`
+      if (remain.days > 0) {
+        return `${number.padNumber(String(remain.days), 2)} ${constants.day}`
+      } else if (remain.days <= 0 || remain.hours <= 0 || remain.minutes <= 0 || remain.seconds <= 0) {
+        return constants.timeups
+      } else {
+        return `${number.padNumber(String(remain.hours), 2)}:${number.padNumber(String(remain.minutes), 2)}:${number.padNumber(String(remain.seconds), 2)}`
+      }
     } else if (status === 'OPEN') {
       return openedStatusText || ''
     } else if (status === 'WAIT') {
