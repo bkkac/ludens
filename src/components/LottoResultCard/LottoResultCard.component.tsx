@@ -32,7 +32,7 @@ const LottoResultCard: FC<ILottoResultCard & DefaultProps> = (props) => {
   } = lotto
 
   const normalizationCode: TLottoType = includes(code, 'YEGEE') ? 'YEGEE' : code
-  const dateDisplay = moment(replace(createdAt, /\s/g, '')).format('Do MMM YY')
+  const dateDisplay = moment.utc(replace(createdAt, /\s/g, '')).format('Do MMM YY')
 
   const groupLottoTypes: { [type in TLottoGameType]: ILottoResult[] } =
     groupBy<ILottoResult>(lottos, 'type') as { [type in TLottoGameType]: ILottoResult[] }

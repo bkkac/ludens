@@ -9,3 +9,9 @@ declare interface IBetRate {
     createdAt: string
     updatedAt: string
 }
+
+declare interface IBetNumberRateRequest {
+    type: TLottoGameType
+    code: TLottoSlug
+    number: string
+}
