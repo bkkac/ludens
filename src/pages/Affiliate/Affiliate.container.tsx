@@ -92,7 +92,7 @@ class AffilateContainer extends
 			return {
 				memberName: memberData.memberName,
 				totalMakedMoney: number.castToMoney(Number(memberData.totalBet)),
-				createdAt: moment(memberData.createdAt).add('years', 543).format('Do MMMM YY'),
+				createdAt: moment.utc(memberData.createdAt).add('years', 543).format('Do MMMM YY'),
 			}
 		})
 

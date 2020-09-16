@@ -1,10 +1,12 @@
 import { getType } from 'typesafe-actions'
 import { RootAction } from 'typings/reduxs/Actions'
-import { initialState } from './constants'
+import { initialBetRateState, initialBetNumberRateState } from './constants'
 import actions from './actions'
+import { combineReducers } from 'redux'
+import response from 'constants/response'
 
 const getBetRateReducer = (
-  state: ReducerState<IBetRate[]> = initialState,
+  state: ReducerState<IBetRate[]> = initialBetRateState,
   action: RootAction
 ): ReducerState<IBetRate[]> => {
   switch (action.type) {
@@ -29,10 +31,42 @@ const getBetRateReducer = (
         code: action.payload.response?.status,
       }
     case getType(actions.clearBetRateAction):
-      return initialState
+      return initialBetRateState
     default:
       return state
   }
 }
 
-export default getBetRateReducer
+const getBetNumberRateReducer = (
+  state: ReducerState<(IBetNumberRateRequest & { rate: string })[]> = initialBetNumberRateState,
+  action: RootAction
+): ReducerState<(IBetNumberRateRequest & { rate: string })[]> => {
+  switch (action.type) {
+    case getType(actions.getBetNumberRateAction):
+      return {
+        ...state,
+        isFetching: true,
+      }
+    case getType(actions.getBetNumberRateSuccessAction):
+      return {
+        ...state,
+        isFetching: false,
+        data: action.payload,
+        code: response.OK,
+      }
+
+    case getType(actions.getBetNumberRateFailureAction):
+      return {
+        ...state,
+        isFetching: false,
+        error: action.payload.message,
+        code: Number(action.payload.code) || response.BAD_REQUEST,
+      }
+    case getType(actions.clearBetNumberRateAction):
+      return initialBetNumberRateState
+    default:
+      return state
+  }
+}
+
+export default combineReducers({ rate: getBetRateReducer, number: getBetNumberRateReducer })

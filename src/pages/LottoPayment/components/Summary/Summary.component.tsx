@@ -6,7 +6,7 @@ import {
   InputNumber,
   ResponsiveIcon,
 } from 'components'
-import { get, groupBy, keys, noop, reduce, sum, filter, split, map } from 'lodash'
+import { get, groupBy, keys, noop, reduce, sum, filter, split, map, isEmpty } from 'lodash'
 import { number } from 'utils'
 import colors from 'constants/colors'
 import { LOTTO_GAME_TYPE_NAME } from 'constants/variables'
@@ -80,9 +80,8 @@ class SummaryLottoComponent extends Component<ILottoPaymentSummaryProps, ILottoP
   handleOnBlurValue = (value: string, seq: number) => {
     const betArray: ILottoNumber[] = filter<ILottoNumber>(this.state.betList, (_, index) => index === seq)
     const betObject: ILottoNumber = get(betArray, '0', {})
-    const newObject: ILottoNumber = { ...betObject, value }
     const newBetList: ILottoNumber[] = this.state.betList
-    newBetList[seq] = newObject
+    newBetList[seq] = betObject
     this.setState({ betList: newBetList }, () => {
       this.props.onBetListChanged!(newBetList)
     })
@@ -123,9 +122,11 @@ class SummaryLottoComponent extends Component<ILottoPaymentSummaryProps, ILottoP
     const totally: number = reduce(this.state.betList, (prev, curr) => {
       const lotterType = split(curr.slug!, '_', 2).reduce((prevType, currType) => `${prevType}_${currType}`)
       const betType = `${lotterType}_${curr.type}`
-      const betRate: IBetRate = get(this.props.betRates.filter((rate) => rate.type === betType), '0', {})
+      const betRateValue = (isEmpty(curr.rate) || Number(curr.rate) <= 0)
+        ? get(this.props.betRates.filter((rate) => rate.type === betType), '0.rate', '0')
+        : curr.rate
       const betValue = number.castToInteger(curr.value || '0')
-      const total = Number(betRate.rate) * Number(number.castToInteger(betValue))
+      const total = Number(betRateValue) * Number(number.castToInteger(betValue))
       return sum([prev, total])
     }, 0)
     return number.castToMoney(totally)
@@ -140,7 +141,9 @@ class SummaryLottoComponent extends Component<ILottoPaymentSummaryProps, ILottoP
       const LottoListComponent = groupingLottoListObject[lottos as TLottoGameType]?.map((lotto, lottoIndex) => {
         const lotterType = split(lotto.slug!, '_', 2).reduce((prev, curr) => `${prev}_${curr}`)
         const betType = `${lotterType}_${lotto.type}`
-        const betRate: IBetRate = get(this.props.betRates.filter((rate) => rate.type === betType), '0', {})
+        const betRateValue = (isEmpty(lotto.rate) || Number(lotto.rate) <= 0)
+          ? get(this.props.betRates.filter((rate) => rate.type === betType), '0.rate', '0')
+          : lotto.rate
         return (
           <div className="row lotto-row primary-bg p2-y p2-x" key={`lotto-${lotto.type}-${lottoIndex}`}>
             <div className="col-12 lotto-wrapper">
@@ -156,14 +159,14 @@ class SummaryLottoComponent extends Component<ILottoPaymentSummaryProps, ILottoP
                   name={`values-${lotto.seq}`}
                   onBlur={(event: ChangeEvent<HTMLInputElement>) =>
                     this.handleOnBlurValue(event.target.value, lotto.seq!)}
-                  onChange={(event: ChangeEvent<HTMLInputElement>) =>
-                    this.handleOnChangeValue(event.target.value, lotto.seq!)}
+                  onValueChange={({ value }) =>
+                    this.handleOnChangeValue(value, lotto.seq!)}
                   value={lotto.value}
                 />
               </div>
               <div className="text-center p2-r">
                 <h6 className="subtitle-1 secondary-text">{constants.perBath}</h6>
-                <h6 className="subtitle-2">x {number.castToMoney(Number(betRate.rate))}</h6>
+                <h6 className="subtitle-2">x {number.castToMoney(Number(betRateValue))}</h6>
               </div>
               <div className="lotto-remove-wrapper">
                 <div className="delete-lotto-button-container" onClick={() => this.handleOnRemove(lotto.seq!)}>
@@ -178,7 +181,7 @@ class SummaryLottoComponent extends Component<ILottoPaymentSummaryProps, ILottoP
             <div className="col-12 lotto-win-rate-wrapper p2-t">
               <h4>
                 <span className="subtitle-1 secondary-text">{constants.win}</span>
-                {this.calculateBenefitValue(lotto.value || '0', betRate.rate || '0')}
+                {this.calculateBenefitValue(lotto.value || '0', betRateValue || '0')}
               </h4>
             </div>
           </div>
@@ -224,7 +227,7 @@ class SummaryLottoComponent extends Component<ILottoPaymentSummaryProps, ILottoP
               decimalScale={0}
               name="maked-all-value"
               allowNegative={false}
-              onChange={(event: ChangeEvent<HTMLInputElement>) => this.setState({ defaultValue: event.target.value })}
+              onValueChange={({ value }) => this.setState({ defaultValue: value })}
               onBlur={this.handleOnDefaultValueBlur}
               value={this.state.defaultValue}
             />

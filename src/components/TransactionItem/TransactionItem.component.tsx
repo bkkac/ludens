@@ -35,7 +35,7 @@ const TransactionItem: SFC<ITransactionItem & DefaultProps> = (props) => {
 
   const name = `${transactionName[type]} ${status === 'WAIT' ? '(รอตรวจสอบ)' : (status === 'FAIL' ? '(ไม่สำเร็จ)' : '')}`
   const displayMoney = number.castToMoney(money)
-  const displayTime = moment(time, 'YYYYMMDDHHmmss').format('lll')
+  const displayTime = moment.utc(time, 'YYYYMMDDHHmmss').format('lll')
   const statusClass = () => {
     switch (type) {
       case 'DEPOSIT':

@@ -84,11 +84,11 @@ const RegisterStep2: SFC<
     if (intervalId) {
       clearInterval(intervalId);
     }
-    const createAt = moment(replace(otpObject.createAt!, /\s/g, ''))
+    const createAt = moment.utc(replace(otpObject.createAt!, /\s/g, ''))
     const timeRange = createAt.clone().add(LIMIT_TIME, LIMIT_UNIT)
 
     intervalId = setInterval(() => {
-      const duration = moment.duration(timeRange.diff(moment()))
+      const duration = moment.duration(timeRange.diff(moment.utc()))
       const minutes = duration.minutes()
       const seconds = duration.seconds()
 
@@ -110,10 +110,10 @@ const RegisterStep2: SFC<
     if (intervalRequestId) {
       clearInterval(intervalRequestId);
     }
-    const timeRange = moment().add(LIMIT_REQUEST, LIMIT_UNIT)
+    const timeRange = moment.utc().add(LIMIT_REQUEST, LIMIT_UNIT)
 
     intervalRequestId = setInterval(() => {
-      const duration = moment.duration(timeRange.diff(moment()))
+      const duration = moment.duration(timeRange.diff(moment.utc()))
       const seconds = duration.seconds()
 
       if (seconds <= 0) {
@@ -147,9 +147,9 @@ const RegisterStep2: SFC<
 
   useEffect(() => {
     if (!isEmpty(otpObject)) {
-      const createAt = moment(replace(otpObject.createAt!, /\s/g, ''))
+      const createAt = moment.utc(replace(otpObject.createAt!, /\s/g, ''))
       const timeRange = createAt.clone().add(LIMIT_TIME, LIMIT_UNIT)
-      const duration = moment.duration(timeRange.diff(moment()))
+      const duration = moment.duration(timeRange.diff(moment.utc()))
       const minutes = duration.minutes()
       const seconds = duration.seconds()
       if (minutes >= 0 && seconds > 0) {

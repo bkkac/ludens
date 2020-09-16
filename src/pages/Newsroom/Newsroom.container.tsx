@@ -56,7 +56,7 @@ class NewsroomContainer extends Component<
 
   renderNewsList = () => {
     const NewsComponent = map(this.props.news, (news, newsIndex) => {
-      const updatedTime = moment(news.updatedAt).format('LLL')
+      const updatedTime = moment.utc(news.updatedAt).format('LLL')
       return (
         <div className="border-rounded secondary-bg p2 m3-t" key={`news-${newsIndex}`}>
           <h4 className="secondary-blue-text">{news.title}</h4>
