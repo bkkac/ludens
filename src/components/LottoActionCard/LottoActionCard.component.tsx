@@ -61,7 +61,7 @@ const LottoActionCard: FC<ILottoActionCard & DefaultProps> = (props) => {
 
     if (isCountingdown) {
       const expireMoment = moment.utc(replace(expire!, /\s/g, ''))
-      const expireWithCastTimezone = expireMoment.clone()
+      const expireWithCastTimezone = expireMoment.clone().add(-7, 'hours')
       intervalId = setInterval(() => {
         const duration = moment.duration(expireWithCastTimezone.diff(moment.utc()))
         const days = duration.days()
