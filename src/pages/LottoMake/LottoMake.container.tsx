@@ -147,7 +147,7 @@ class LottoMakeContainer extends Component<
     if (!isEmpty(get(this.props.location, 'state.selectedLottoGame', {}))) {
       this.props.loader(true)
       const game = locationState.selectedLottoGame
-      const gameDate = moment.utc(game.createdAt).format('DDMMYYYY')
+      const gameDate = moment(game.createdAt).format('DDMMYYYY')
       const gameRound = number.padNumber(locationState.selectedLottoGame.round, 3)
 
       const slugName = this.props.match.params.type
@@ -167,8 +167,8 @@ class LottoMakeContainer extends Component<
         this.setState({ lottoStatus: this.props.lottoGame.status }, () => {
           if (this.props.lottoGame.status === 'OPEN') {
             this.props.loader(false)
-            const momentEndAt = moment.utc(replace(this.props.lottoGame.endTime!, /\s/g, ''))
-            const momentEndAtTimezone = momentEndAt.clone()
+            const momentEndAt = moment(replace(this.props.lottoGame.endTime!, /\s/g, ''))
+            const momentEndAtTimezone = momentEndAt.clone().add(-7, 'hours')
             const duration = moment.duration(momentEndAtTimezone.diff(moment.utc()))
             const hours = duration.hours()
             const minutes = duration.minutes()
@@ -237,7 +237,7 @@ class LottoMakeContainer extends Component<
       && !this.props.getYeegeSumIsFetching) {
       if (this.props.lottoGame.status === 'OPEN') {
         const lottoGame = this.props.lottoGame
-        const gameDate = moment.utc(lottoGame.createdAt).format('DDMMYYYY')
+        const gameDate = moment(lottoGame.createdAt).format('DDMMYYYY')
         const gameRound = number.padNumber(lottoGame.round, 3)
         this.props.listenYeegeSum({ date: gameDate, round: gameRound })
       }
@@ -247,7 +247,7 @@ class LottoMakeContainer extends Component<
       && !this.props.getPlayedYeegeListIsFetching) {
       if (this.props.lottoGame.status === 'OPEN') {
         const lottoGame = this.props.lottoGame
-        const gameDate = moment.utc(lottoGame.createdAt).format('DDMMYYYY')
+        const gameDate = moment(lottoGame.createdAt).format('DDMMYYYY')
         const gameRound = number.padNumber(lottoGame.round, 3)
         this.props.listenPlayedYeegeList({ date: gameDate, round: gameRound })
       }
@@ -292,7 +292,7 @@ class LottoMakeContainer extends Component<
     const slugName = this.props.match.params.type
     if (slugName === 'LOTTER_YEGEE') {
       const lottoGame = this.props.lottoGame
-      const gameDate = moment.utc(lottoGame.createdAt).format('DDMMYYYY')
+      const gameDate = moment(lottoGame.createdAt).format('DDMMYYYY')
       const gameRound = number.padNumber(lottoGame.round, 3)
       const gameQuery = { date: gameDate, round: gameRound }
       this.props.unlistenYeegeSum(gameQuery)
@@ -309,7 +309,7 @@ class LottoMakeContainer extends Component<
   handleGetBetResult = () => {
     this.props.loader(true)
     const lottoGame = this.props.lottoGame
-    const gameDate = moment.utc(lottoGame.createdAt).format('DDMMYYYY')
+    const gameDate = moment(lottoGame.createdAt).format('DDMMYYYY')
     const gameRound = number.padNumber(lottoGame.round, 3)
     const slugName = this.props.match.params.type
     this.props.getBetResult({
@@ -327,8 +327,8 @@ class LottoMakeContainer extends Component<
   countingdown = () => {
     this.clearLocalInterval()
     const lottoGame = this.props.lottoGame
-    const momentEndAt = moment.utc(replace(lottoGame.endTime!, /\s/g, ''))
-    const momentEndAtTimezone = momentEndAt.clone()
+    const momentEndAt = moment(replace(lottoGame.endTime!, /\s/g, ''))
+    const momentEndAtTimezone = momentEndAt.clone().clone().add(-7, 'hours')
 
     this.intervalId = setInterval(() => {
       const duration = moment.duration(momentEndAtTimezone.diff(moment.utc()))
@@ -341,14 +341,14 @@ class LottoMakeContainer extends Component<
         this.setState({ onLottoProcessing: true }, () => {
           const slugName = this.props.match.params.type
           if (slugName === 'LOTTER_YEGEE') {
-            const gameDate = moment.utc(lottoGame.createdAt).format('DDMMYYYY')
+            const gameDate = moment(lottoGame.createdAt).format('DDMMYYYY')
             const gameRound = number.padNumber(lottoGame.round, 3)
             const gameQuery = { date: gameDate, round: gameRound }
             this.props.unlistenYeegeSum(gameQuery)
             this.props.unlistenPlayedYeegeList(gameQuery)
           }
           setTimeout(() => {
-            const gameDate = moment.utc(lottoGame.createdAt).format('DDMMYYYY')
+            const gameDate = moment(lottoGame.createdAt).format('DDMMYYYY')
             const gameRound = number.padNumber(lottoGame.round, 3)
             this.props.loader(true)
             this.props.getLottoGame(slugName, gameDate, gameRound)
