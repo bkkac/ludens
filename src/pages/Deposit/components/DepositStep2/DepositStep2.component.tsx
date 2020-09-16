@@ -82,11 +82,11 @@ const DepositStep2:
         const LIMIT_TIME = 10
         const LIMIT_UNIT = 'minutes'
         const createdAtTimeString = get(extraProps, 'requestedTransaction.createdAt', '')
-        const createAt = moment(replace(createdAtTimeString, /\s/g, ''))
+        const createAt = moment.utc(replace(createdAtTimeString, /\s/g, ''))
         const timeRange = createAt.clone().add(LIMIT_TIME, LIMIT_UNIT)
 
         intervalId = setInterval(() => {
-          const duration = moment.duration(timeRange.diff(moment()))
+          const duration = moment.duration(timeRange.diff(moment.utc()))
           const minutes = duration.minutes()
           const seconds = duration.seconds()
 

@@ -73,7 +73,7 @@ class LottoFavoriteContainer extends Component<
     const finding = (numb: ILottoNumber) => isEmpty(find(favoriteItems.list, { number: numb.number, type: numb.type }))
     const newNumberList: ILottoNumber[] = locationState.betList.filter(finding)
 
-    const currentTime = moment().format('DDMMYYYYHHmm')
+    const currentTime = moment.utc().format('DDMMYYYYHHmm')
     const addNumberList: ILottoNumber[] = favoriteItems.list.map(numb => ({
       number: numb.number,
       type: numb.type,

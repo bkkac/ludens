@@ -39,7 +39,7 @@ const PlayedUser: SFC<IPlayedUsers> = ({ playedYeegeList }) => {
       <div className="player-game-wrapper">
         {
           playedYeegeList.map((played, playedIndex) => {
-            const time = moment(played.createdAt).clone().format('HH:mm:ss')
+            const time = moment.utc(played.createdAt).clone().format('HH:mm:ss')
             return (
               <div className="row" key={`played-game-user-${playedIndex}`}>
                 <div className="col">
