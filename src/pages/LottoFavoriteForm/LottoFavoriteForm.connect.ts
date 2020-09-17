@@ -7,7 +7,7 @@ import favoriteSelector from 'reduxs/lotto/favorite/selectors'
 import LottoFavoriteFormContainer from './LottoFavoriteForm.container'
 
 const mapStateToProps = (state: RootReducers): ILottoFavoriteFormProps => {
-  const getFavoriteLotto = favoriteSelector.favoriteAddNumber(state)
+  const getFavoriteLotto = favoriteSelector.getFavoriteNumber(state)
   const favoriteAddNumber = favoriteSelector.favoriteAddNumber(state)
   const favoriteAddSet = favoriteSelector.favoriteAddSet(state)
   const favoriteEditNumber = favoriteSelector.favoriteEditNumber(state)

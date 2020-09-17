@@ -375,11 +375,11 @@ class LottoFavoriteFormContainer
     const numberList = this.props.favoriteLotto.list
     const NumberListComponent = map(numberList, (favoriteNumber: IFavoriteNumber, index: number) => {
       return (
-        <div className="row p1-y">
+        <div className="row p1-y" key={`favorite-lotto-${index}-${favoriteNumber.number}`}>
           <div className="col">
             <span className="body-1">{index + 1} {LOTTO_GAME_TYPE_NAME[favoriteNumber.type] || ''}</span>
           </div>
-          <div className="col d-flex flex-row">
+          <div className="col d-flex flex-row align-items-center">
             <span className="flex body-1">{favoriteNumber.number}</span>
             <div>
               <ButtonIcon

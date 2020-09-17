@@ -20,5 +20,5 @@ export const initialState: ReducerState<IFavoriteSet> = {
 
 
 export const endpoint = {
-  getLottoFavorite: (id: number) => `${project.environment[project.environmentName].api}/number-sets?id=${id}`,
+  getLottoFavorite: (id: number) => `${project.environment[project.environmentName].api}/number-sets/all?id=${id}`,
 }
