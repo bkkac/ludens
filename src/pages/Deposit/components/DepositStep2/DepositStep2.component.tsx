@@ -1,4 +1,4 @@
-import React, { SFC, useEffect, useState } from 'react'
+import React, { FC, useEffect, useState } from 'react'
 import {
   ALink,
   Button,
@@ -7,9 +7,9 @@ import {
   SelectorItem,
   AlertNotification,
 } from 'components'
-import moment from 'moment'
-import { number } from 'utils'
-import { noop, replace, get } from 'lodash'
+import moment from 'moment-timezone'
+import { date, number } from 'utils'
+import { noop, get } from 'lodash'
 import { FormikProps, Form } from 'formik'
 import copy from 'copy-to-clipboard'
 import ImageBankSet from 'assets/images/global/bank'
@@ -18,7 +18,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faChevronLeft, faChevronCircleRight, faChevronCircleDown } from '@fortawesome/free-solid-svg-icons'
 
 const constants = {
-  backText: 'กลับ',
+  backText: 'ย้อนกลับ',
   depositTitle: 'ฝาก',
   depositSubTitle: 'ขั้นตอนสุดท้าย',
   transferToLabel: 'โอนให้',
@@ -49,7 +49,7 @@ const defaultProps: IDepositFormProps<{ requestedTransaction: ITransactionReques
 const CURRENT_STEP = 2
 
 const DepositStep2:
-  SFC<FormikProps<IDepositForm>
+  FC<FormikProps<IDepositForm>
     & IDepositFormProps<{ requestedTransaction: ITransactionRequest }> & DefaultProps> = (props) => {
 
       let intervalId: NodeJS.Timeout | null = null
@@ -82,11 +82,11 @@ const DepositStep2:
         const LIMIT_TIME = 10
         const LIMIT_UNIT = 'minutes'
         const createdAtTimeString = get(extraProps, 'requestedTransaction.createdAt', '')
-        const createAt = moment.utc(replace(createdAtTimeString, /\s/g, ''))
+        const createAt = date.calibratingTime(createdAtTimeString)
         const timeRange = createAt.clone().add(LIMIT_TIME, LIMIT_UNIT)
 
         intervalId = setInterval(() => {
-          const duration = moment.duration(timeRange.diff(moment.utc()))
+          const duration = moment.duration(timeRange.diff(moment().local()))
           const minutes = duration.minutes()
           const seconds = duration.seconds()
 

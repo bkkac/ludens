@@ -10,7 +10,7 @@ import {
   groupBy,
   Dictionary,
 } from 'lodash'
-import moment from 'moment'
+import moment from 'moment-timezone'
 import response from 'constants/response'
 import {
   ALink,
@@ -24,6 +24,7 @@ import {
   faMinus,
   faChevronLeft,
 } from '@fortawesome/free-solid-svg-icons'
+import { date } from 'utils'
 import './creditInfo.style.scss'
 
 const constants = {
@@ -98,7 +99,7 @@ class TransactionListContainer extends
 
   renderTransactionList = () => {
     const creditGroupList: Dictionary<ICredit[]> = groupBy<ICredit>(
-      map(this.props.creditInfo, credit => ({ ...credit, groupTime: moment.utc(credit.createdAt).format('YYYYMMDD') })),
+      map(this.props.creditInfo, credit => ({ ...credit, groupTime: date.calibratingTime(credit.createdAt).format('YYYYMMDD') })),
       'groupTime')
 
     if (isEmpty(creditGroupList)) { return <></> }
@@ -108,8 +109,8 @@ class TransactionListContainer extends
         reverse(sortBy(creditGroupList[key], ['createdAt'])),
         (transaction, transactionIndex) => (<TransactionItemCollapsible credit={transaction} key={`credit-info-items-${transactionIndex}`} />))
 
-      const dateMoment = moment.utc(key, 'YYYYMMDD')
-      const isToDay = dateMoment.clone().diff(moment.utc(), 'day')
+      const dateMoment = moment(key, 'YYYYMMDD').local()
+      const isToDay = dateMoment.clone().diff(moment().local(), 'day')
       const displayDayString = (isToDay === 0)
         ? constants.today
         : (isToDay === -1)

@@ -17,7 +17,7 @@ import { faChevronLeft, faChevronCircleRight, faChevronCircleDown } from '@forta
 import './withdrawForm.style.scss'
 
 const constants = {
-  backText: 'กลับ',
+  backText: 'ย้อนกลับ',
   withdrawTitle: 'ถอน',
   buttonFinish: 'แจ้งถอนเงิน',
   buttonCancel: 'ยกเลิกรายการ',

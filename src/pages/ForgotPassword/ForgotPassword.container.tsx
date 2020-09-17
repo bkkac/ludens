@@ -14,7 +14,7 @@ import response from 'constants/response'
 
 const constants = {
   ok: 'ตกลง',
-  back: 'กลับ',
+  back: 'ย้อนกลับ',
   gotoMain: 'กลับสู่หน้าหลัก',
   requestedSuccess: 'เปลี่ยนรหัสผ่านสำเร็จ',
   forgotPassword: 'ลืมรหัสผ่าน',

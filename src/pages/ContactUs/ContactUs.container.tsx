@@ -8,7 +8,7 @@ import colors from 'constants/colors'
 import './contactUs.style.scss'
 
 const constants = {
-  back: 'กลับ',
+  back: 'ย้อนกลับ',
   contactus: 'ติดต่อเรา',
   subtitle: 'หากท่านมีปัญหา หรือข้อสงสัยใดๆ ท่านสามารถติดต่อเราในช่องทางด่านล่างนี้ได้เลย ทางเรามีพนักงานคอยดูแลเสมอ',
   line: 'Line official:',

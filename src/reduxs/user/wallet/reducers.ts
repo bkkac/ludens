@@ -1,6 +1,7 @@
 import { getType } from 'typesafe-actions'
 import { RootAction } from 'typings/reduxs/Actions'
 import { initialState } from './constants'
+import moment from 'moment-timezone'
 import actions from './actions'
 
 const coreSocketReducer = (state: IWallet = initialState, action: RootAction): IWallet => {
@@ -11,7 +12,7 @@ const coreSocketReducer = (state: IWallet = initialState, action: RootAction): I
       return {
         ...state,
         ...action.payload,
-        updatedTime: new Date().toISOString(),
+        updatedTime: moment().local().format(),
       }
     case getType(actions.walletUpdateFailureSocketAction):
       return state

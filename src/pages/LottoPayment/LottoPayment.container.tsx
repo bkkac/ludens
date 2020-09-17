@@ -16,7 +16,7 @@ import { number } from 'utils'
 import './lottoPayment.style.scss'
 
 const constants = {
-	back: 'กลับ',
+	back: 'ย้อนกลับ',
 	ok: 'ตกลง',
 	betSuccess: 'คุณได้ทำรายการเสร็จสมบูรณ์',
 	cannotBet: 'ไม่สามารถแทงได้',

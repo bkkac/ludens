@@ -13,7 +13,7 @@ const constants = {
   placeholderPhoneNumber: 'หมายเลขโทรศัพท์ 10 หลัก',
   placeholderHint: 'รหัส 4 ตัวในภาพ',
   buttonRequestOTP: 'ขอ OTP',
-  backText: 'กลับ',
+  backText: 'ย้อนกลับ',
 }
 
 type DefaultProps = Readonly<typeof defaultProps>

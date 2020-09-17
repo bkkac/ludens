@@ -11,8 +11,8 @@ import {
   groupBy,
   Dictionary,
 } from 'lodash'
-import moment from 'moment'
-import { number } from 'utils'
+import moment from 'moment-timezone'
+import { date, number } from 'utils'
 import colors from 'constants/colors'
 import response from 'constants/response'
 import { ALink, Modal, TransactionItem } from 'components'
@@ -88,7 +88,7 @@ class TransactionListContainer extends
 
     const transactionGroupList: Dictionary<ITransaction[]> = groupBy<ITransaction>(
       map(this.props.transactionList, (transaction) =>
-        ({ ...transaction, createdAt: moment(get(transaction, 'updatedAt', '')).format('YYYYMMDD') })),
+        ({ ...transaction, createdAt: date.calibratingTime(get(transaction, 'updatedAt', '')).format('YYYYMMDD') })),
       'createdAt')
 
     return map(reverse(keys(transactionGroupList).sort()), (key, index) => {
@@ -123,7 +123,7 @@ class TransactionListContainer extends
 
   render() {
     const time = this.props.wallet.updatedTime || ''
-    const updatedTime = moment(time).format('lll') || ''
+    const updatedTime = date.calibratingTime(time).format('lll') || ''
     const updatedTimeText = `${constants.latedUpdate} ${updatedTime}`
 
     const total = this.props.wallet.money || 0

@@ -11,12 +11,12 @@ import { LOTTO_SLUG_NAME } from 'constants/variables'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons'
 import { isEmpty, noop } from 'lodash'
-import moment from 'moment'
 import './lottoListChrildren.style.scss'
+import { date } from 'utils'
 
 const constants = {
   lottoLabel: 'แทงหวย',
-  back: 'กลับ',
+  back: 'ย้อนกลับ',
   round: 'รอบที่',
   closedStatus: 'หมดเวลา',
   closedMakeTime: 'เวลาที่ปิดรับ: ',
@@ -73,7 +73,7 @@ class LottoListChrildrenContainer extends Component<
     if (!isEmpty(this.props.yeegeGameList)) {
       const ListComponent = this.props.yeegeGameList.map((yeege: ILottoGame, index) => {
         const yeegeRound = `${constants.round} ${yeege.round}`
-        const expireTime = moment.utc(yeege.endTime).format('DD MMM YY HH:mm')
+        const expireTime = date.calibratingTime(yeege.endTime).format('DD MMM YY HH:mm')
 
         return (
           <div className="col-12 col-md-6 col-lg-4 m2-t" key={`sub-${yeege.round}-${index}`}>

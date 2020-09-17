@@ -6,8 +6,8 @@ import {
   Badge,
   ButtonIcon,
 } from 'components'
-import moment from 'moment'
-import { number } from 'utils'
+import moment from 'moment-timezone'
+import { number, date } from 'utils'
 import colors from 'constants/colors'
 import response from 'constants/response'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -27,7 +27,6 @@ import {
   find,
   split,
   values,
-  replace,
   isArray,
   isEmpty,
   reverse,
@@ -49,7 +48,7 @@ const constants = {
   makeLabel: 'แทงหวย',
   numberList: (length: number) => `รายการแทง (${length})`,
   yeegeLabel: (round: string) => `หวยยี่กีรอบที่ ${round}`,
-  back: 'กลับ',
+  back: 'ย้อนกลับ',
   qa: 'กติกาการเล่น',
   cannotBet: 'ไม่สามารถแทงได้',
   betSuccess: 'คุณได้ทำรายการเสร็จสมบูรณ์',
@@ -147,7 +146,7 @@ class LottoMakeContainer extends Component<
     if (!isEmpty(get(this.props.location, 'state.selectedLottoGame', {}))) {
       this.props.loader(true)
       const game = locationState.selectedLottoGame
-      const gameDate = moment(game.createdAt).format('DDMMYYYY')
+      const gameDate = date.calibratingTime(game.createdAt).format('DDMMYYYY')
       const gameRound = number.padNumber(locationState.selectedLottoGame.round, 3)
 
       const slugName = this.props.match.params.type
@@ -167,13 +166,12 @@ class LottoMakeContainer extends Component<
         this.setState({ lottoStatus: this.props.lottoGame.status }, () => {
           if (this.props.lottoGame.status === 'OPEN') {
             this.props.loader(false)
-            const momentEndAt = moment(replace(this.props.lottoGame.endTime!, /\s/g, ''))
-            const momentEndAtTimezone = momentEndAt.clone().add(-7, 'hours')
-            const duration = moment.duration(momentEndAtTimezone.diff(moment.utc()))
+            const momentEndAt = date.calibratingTime(this.props.lottoGame.endTime)
+            const duration = moment.duration(momentEndAt.diff(moment().local()))
             const hours = duration.hours()
             const minutes = duration.minutes()
             const seconds = duration.seconds()
-            if (hours > 0 && minutes > 0 && seconds > 0) {
+            if (hours > 0 || minutes > 0 || seconds > 0) {
               this.countingdown()
             } else { this.setState({ lottoStatus: 'CLOSE' }, this.handleGetBetResult) }
           } else {
@@ -327,11 +325,10 @@ class LottoMakeContainer extends Component<
   countingdown = () => {
     this.clearLocalInterval()
     const lottoGame = this.props.lottoGame
-    const momentEndAt = moment(replace(lottoGame.endTime!, /\s/g, ''))
-    const momentEndAtTimezone = momentEndAt.clone().clone().add(-7, 'hours')
+    const momentEndAt = date.calibratingTime(lottoGame.endTime)
 
     this.intervalId = setInterval(() => {
-      const duration = moment.duration(momentEndAtTimezone.diff(moment.utc()))
+      const duration = moment.duration(momentEndAt.diff(moment().local()))
       const hours = duration.hours()
       const minutes = duration.minutes()
       const seconds = duration.seconds()
