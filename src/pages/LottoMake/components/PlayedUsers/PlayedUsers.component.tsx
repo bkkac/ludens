@@ -1,9 +1,8 @@
-import React, { SFC, useState } from 'react'
-import moment from 'moment'
+import React, { FC, useState } from 'react'
 import { Collapse } from 'components'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faChevronRight } from '@fortawesome/free-solid-svg-icons'
-import { transformer } from 'utils'
+import { date, transformer } from 'utils'
 
 import './playedUsers.style.scss'
 
@@ -15,7 +14,7 @@ const defaultProps: IPlayedUsers = {
   playedYeegeList: [],
 }
 
-const PlayedUser: SFC<IPlayedUsers> = ({ playedYeegeList }) => {
+const PlayedUser: FC<IPlayedUsers> = ({ playedYeegeList }) => {
 
   const [collapseState, setCollapseState] = useState(false)
 
@@ -39,7 +38,7 @@ const PlayedUser: SFC<IPlayedUsers> = ({ playedYeegeList }) => {
       <div className="player-game-wrapper">
         {
           playedYeegeList.map((played, playedIndex) => {
-            const time = moment(played.createdAt).clone().format('HH:mm:ss')
+            const time = date.calibratingTime(played.createdAt).clone().format('HH:mm:ss')
             return (
               <div className="row" key={`played-game-user-${playedIndex}`}>
                 <div className="col">

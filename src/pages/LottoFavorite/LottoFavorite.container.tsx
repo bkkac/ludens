@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { ALink, Button, Modal } from 'components'
-import moment from 'moment'
+import moment from 'moment-timezone'
 import colors from 'constants/colors'
 import routers from 'constants/routes'
 import { noop, map, isEmpty, find } from 'lodash'
@@ -12,7 +12,7 @@ import response from 'constants/response'
 import './lottoFavorite.style.scss'
 
 const constants = {
-  backText: 'กลับ',
+  backText: 'ย้อนกลับ',
   favoriteList: 'รายการชุดตัวเลข',
   favoriteManagement: 'จัดการโพย',
   select: 'เลือก',
@@ -29,7 +29,7 @@ const defaultProps: ILottoFavoriteProps & ILottoFavoriteActionProps = {
 
 class LottoFavoriteContainer extends Component<
   ILottoFavoriteProps & ILottoFavoriteActionProps
-  & RouteComponentProps<any, any, ILottoPaymentRouteProps | ILottoFavoriteRouteProps>
+  & RouteComponentProps<any, any, IMakingLottoRouteProps | ILottoFavoriteRouteProps>
   > {
 
   static defaultProps = defaultProps
@@ -54,13 +54,12 @@ class LottoFavoriteContainer extends Component<
   }
 
   onPressBack = () => {
-    const locationState: ILottoFavoriteRouteProps = this.props.location.state
-    const paymentRouteProps: ILottoPaymentRouteProps = {
-      betList: locationState.betList,
-      lottoSlug: locationState.lottoSlug,
-      selectedLottoGame: locationState.selectedLottoGame,
+    const { lottoSlug, selectedLottoGame, betList } = this.props.location.state as ILottoPaymentRouteProps
+    const makeLottoRouteProps: IMakingLottoRouteProps = {
+      selectedLottoGame,
+      betList,
     }
-    this.props.history.replace(routers.lottoCheckout.path, paymentRouteProps)
+    this.props.history.replace(routers.lottoMaking.exactPath(lottoSlug), makeLottoRouteProps)
   }
 
   onClickFavoriteManagement = () => {
@@ -69,12 +68,12 @@ class LottoFavoriteContainer extends Component<
   }
 
   onClickSelectFavorite = (favoriteItems: IFavoriteSet) => {
-    const locationState: ILottoFavoriteRouteProps = this.props.location.state
+    const locationState: ILottoFavoriteRouteProps = this.props.location.state as ILottoPaymentRouteProps
 
     const finding = (numb: ILottoNumber) => isEmpty(find(favoriteItems.list, { number: numb.number, type: numb.type }))
     const newNumberList: ILottoNumber[] = locationState.betList.filter(finding)
 
-    const currentTime = moment().format('DDMMYYYYHHmm')
+    const currentTime = moment().local().format('DDMMYYYYHHmm')
     const addNumberList: ILottoNumber[] = favoriteItems.list.map(numb => ({
       number: numb.number,
       type: numb.type,
@@ -86,12 +85,13 @@ class LottoFavoriteContainer extends Component<
       ...newNumberList,
       ...addNumberList,
     ]
-    const paymentRouteProps: ILottoPaymentRouteProps = {
+
+    const { lottoSlug } = this.props.location.state as ILottoPaymentRouteProps
+    const makeLottoRouteProps: IMakingLottoRouteProps = {
       betList: appendedList,
-      lottoSlug: locationState.lottoSlug,
       selectedLottoGame: locationState.selectedLottoGame,
     }
-    this.props.history.replace(routers.lottoCheckout.path, paymentRouteProps)
+    this.props.history.replace(routers.lottoMaking.exactPath(lottoSlug), makeLottoRouteProps)
   }
 
   renderFavoriteList = () => {

@@ -1,4 +1,4 @@
-import React, { SFC } from 'react'
+import React, { FC } from 'react'
 import {
   ALink,
   Button,
@@ -14,7 +14,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faChevronLeft, faChevronCircleRight, faChevronCircleDown } from '@fortawesome/free-solid-svg-icons'
 
 const constants = {
-  backText: 'กลับ',
+  backText: 'ย้อนกลับ',
   depositTitle: 'ฝาก',
   depositSubTitle: 'ขั้นตอนที่ 1',
   depositDescription: '* กรุณาใช้บัญชีนี้โอนเงินเข้ามาเท่านั้น',
@@ -41,7 +41,7 @@ const defaultProps: IDepositFormProps<{ banks: IBank[]; userBank: IBank }> = {
 const CURRENT_STEP = 1
 
 const DepositStep1:
-  SFC<FormikProps<IDepositForm> & IDepositFormProps<{ banks: IBank[]; userBank: IBank }> & DefaultProps> = (props) => {
+  FC<FormikProps<IDepositForm> & IDepositFormProps<{ banks: IBank[]; userBank: IBank }> & DefaultProps> = (props) => {
 
     const {
       values,

@@ -1,9 +1,9 @@
 
-import React, { SFC } from 'react'
+import React, { FC } from 'react'
 import { InputText } from 'components'
 import NumberFormat, { NumberFormatProps } from 'react-number-format'
 
-const InputNumberComponent: SFC<IInputTextProps & NumberFormatProps> = (props) => {
+const InputNumberComponent: FC<IInputTextProps & NumberFormatProps> = (props) => {
 
   const {
     placeholder,

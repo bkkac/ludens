@@ -1,6 +1,5 @@
-import React, { SFC, useState, Fragment } from 'react'
-import { number } from 'utils'
-import moment from 'moment'
+import React, { FC, useState, Fragment } from 'react'
+import { date, number } from 'utils'
 import { split, groupBy, Dictionary, isEmpty, map, keys, get } from 'lodash'
 import { Badge } from 'components'
 import { LOTTO_TYPE, LOTTO_GAME_TYPE_NAME, TRANSACTION_TYPE } from 'constants/variables'
@@ -46,7 +45,7 @@ const defaultProps: ITransactionItemCollapsible = {
   },
 }
 
-const TransactionItemCollapsible: SFC<ITransactionItemCollapsible & DefaultProps> = (props) => {
+const TransactionItemCollapsible: FC<ITransactionItemCollapsible & DefaultProps> = (props) => {
 
   const [isExpand, setExpand] = useState<boolean>(false)
 
@@ -77,7 +76,7 @@ const TransactionItemCollapsible: SFC<ITransactionItemCollapsible & DefaultProps
   const { name, type, subType } = getGroupType()
   const displayName = `${creditInfoType[type]}${LOTTO_TYPE[subType as TLottoType] || ''}`
 
-  const displayTime = moment(credit.createdAt).format('DD MMM YYYY HH:mm')
+  const displayTime = date.calibratingTime(credit.createdAt).format('DD MMM YYYY HH:mm')
   const round = (subType === 'YEGEE')
     ? ` (${constants.round} ${Number(getSlug().round)})`
     : ''

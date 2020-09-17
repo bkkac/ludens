@@ -8,6 +8,7 @@ const defaultProps: IInputTextProps = {
   placeholder: '',
   type: 'text',
   name: '',
+  textAlign: 'left',
   value: '',
   errorMessage: '',
   toLowercase: false,
@@ -32,6 +33,7 @@ const InputText = class extends Component<IInputTextProps & DefaultProps> {
       onChange,
       setFieldValue,
       type,
+      textAlign,
       error,
       hiddenErrorBlock,
       useNumberpad,
@@ -71,6 +73,7 @@ const InputText = class extends Component<IInputTextProps & DefaultProps> {
           onChange={handleOnChange}
           className="input-core"
           placeholder={placeholder}
+          style={{ textAlign }}
         />
         <div className="input-underline" />
         <Message />

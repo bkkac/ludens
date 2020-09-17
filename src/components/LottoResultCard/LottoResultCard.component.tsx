@@ -1,11 +1,11 @@
-import React, { SFC, useEffect, useState } from 'react'
+import React, { FC } from 'react'
 import { Badge } from 'components'
-import moment from 'moment'
-import { replace } from 'lodash'
+import { includes, split, groupBy, map, isEmpty } from 'lodash'
 import colors from 'constants/colors'
 import { LOTTO_GAME_TYPE_NAME, LOTTO_TYPE, LOTTO_FLAG_ALPHA } from 'constants/variables'
 import LottoFlags from 'assets/images/global/flags'
 import './lottoResultCard.style.scss'
+import { date } from 'utils'
 
 type DefaultProps = Readonly<typeof defaultProps>
 
@@ -17,9 +17,11 @@ const defaultProps: ILottoResultCard = {
   },
 }
 
-const LottoResultCard: SFC<ILottoResultCard & DefaultProps> = (props) => {
+const constants = {
+  lotto: 'หวย',
+}
 
-  const [round, setRound] = useState(0)
+const LottoResultCard: FC<ILottoResultCard & DefaultProps> = (props) => {
 
   const { lotto } = props
 
@@ -29,78 +31,80 @@ const LottoResultCard: SFC<ILottoResultCard & DefaultProps> = (props) => {
     lotto: lottos,
   } = lotto
 
-  useEffect(() => {
-    if (code.includes('YEGEE')) {
-      setRound(Number(code.split('_')[1]))
+  const normalizationCode: TLottoType = includes(code, 'YEGEE') ? 'YEGEE' : code
+  const dateDisplay = date.calibratingTime(createdAt).format('Do MMM YY')
+
+  const groupLottoTypes: { [type in TLottoGameType]: ILottoResult[] } =
+    groupBy<ILottoResult>(lottos, 'type') as { [type in TLottoGameType]: ILottoResult[] }
+
+  const NumberComponent =
+    ({ lottoNumber, type, gameType }: { lottoNumber: ILottoResult[]; type: TLottoType; gameType: TLottoGameType }) => {
+      if (isEmpty(lottoNumber) || typeof lottoNumber === 'undefined') {
+        return <></>
+      }
+      return (
+        <>
+          <div className="row pt-1">
+            <div className="col text-center">
+              <h5 className="secondary-text" id={`lotto-name-${type}-${gameType}`}>
+                {LOTTO_GAME_TYPE_NAME[gameType]}
+              </h5>
+            </div>
+          </div>
+          <div className="row m1-t">
+            <div className="col text-center">
+              {
+                map(lottoNumber, (numberResult: ILottoResult, resultIndex: number) => (
+                  <h1
+                    className="lotto secondary-blue-text"
+                    key={`lotto-number-${type}-${gameType}-${resultIndex}`}
+                    id={`lotto-number-${type}-${gameType}-${resultIndex}`}
+                  >
+                    {numberResult.numbers}
+                  </h1>
+                ))
+              }
+            </div>
+          </div>
+        </>
+      )
     }
-  }, [code])
-
-  const dateDisplay = moment(replace(createdAt, /\s/g, '')).format('Do MMM YY')
-
-  const NumberComponent = ({ lottoNumber, type }: { lottoNumber: ILottoResult; type: TLottoType }) => (
-    <>
-      <div className="row pt-1">
-        <div className="col text-center lotto-title">
-          <h5 className="secondary-text" id={`lotto-name-${type}-${lottoNumber.type}`}>
-            {LOTTO_GAME_TYPE_NAME[lottoNumber.type]}
-          </h5>
-        </div>
-      </div>
-      <div className="row">
-        <div className="col text-center">
-          <h1 className="lotto secondary-blue-text" id={`lotto-number-${type}-${lottoNumber.type}`}>
-            {lottoNumber.numbers}
-          </h1>
-        </div>
-      </div>
-    </>
-  )
 
   const LottoNumbersFormat = () => {
-    let currentCode = code
-    if (currentCode.includes('YEGEE')) currentCode = code.split('_')[0] as 'YEGEE'
-
-    switch (code) {
+    switch (normalizationCode) {
       case 'GOVN':
         return (
           <>
-            <NumberComponent type={code} lottoNumber={lottos[0] || {}} />
-            <NumberComponent type={code} lottoNumber={lottos[1] || {}} />
+            <NumberComponent
+              type={normalizationCode}
+              lottoNumber={groupLottoTypes.ONE_AWARD}
+              gameType="ONE_AWARD"
+            />
+            <NumberComponent
+              type={normalizationCode}
+              lottoNumber={groupLottoTypes.TWO_DOWN}
+              gameType="TWO_DOWN"
+            />
             <div className="row">
               <div className="col">
-                <NumberComponent type={code} lottoNumber={lottos[2] || {}} />
+                <NumberComponent
+                  type={normalizationCode}
+                  lottoNumber={groupLottoTypes.THREE_FRONT}
+                  gameType="THREE_FRONT"
+                />
               </div>
               <div className="col">
-                <NumberComponent type={code} lottoNumber={lottos[3] || {}} />
+                <NumberComponent
+                  type={normalizationCode}
+                  lottoNumber={groupLottoTypes.THREE_BACK}
+                  gameType="THREE_BACK"
+                />
               </div>
             </div>
           </>
         )
       case 'GSB':
-        return (
-          <div className="row">
-            {lottos.map((lottoResult, index) => (
-              <div className="col" key={`bank-${lottoResult.type}-${index}`}>
-                <NumberComponent type={code} lottoNumber={lottoResult} />
-              </div>
-            ))}
-          </div>
-        )
       case 'BAAC':
-        return (
-          <div className="row">
-            {lottos.map((lottoResult, index) => (
-              <div className="col" key={`bank-${lottoResult.type}-${index}`}>
-                <NumberComponent type={code} lottoNumber={lottoResult} />
-              </div>
-            ))}
-          </div>
-        )
-      case 'LAO':
-        return (
-          <>{lottos.map((lottoResult, index) =>
-            <NumberComponent type={code} key={`lao-${lottoResult.type}-${index}`} lottoNumber={lottoResult} />)}</>
-        )
       case 'TH_SHARE_MORNING':
       case 'TH_SHARE_MIDDAY':
       case 'TH_SHARE_AFTERNOON':
@@ -126,23 +130,35 @@ const LottoResultCard: SFC<ILottoResultCard & DefaultProps> = (props) => {
       case 'NAT_SHARE_HUNGSENG_MORNING':
       case 'NAT_SHARE_HUNGSENG_AFTERNOON':
       case 'NAT_SHARE_LAO':
-        return (
-          <div className="row">
-            {lottos.map((lottoResult, index) => (
-              <div className="col" key={`bank-${lottoResult.type}-${index}`}>
-                <NumberComponent type={code} lottoNumber={lottoResult} />
-              </div>
-            ))}
-          </div>
-        )
       case 'YEGEE':
         return (
           <div className="row">
-            {lottos.map((lottoResult, index) => (
-              <div className="col" key={`bank-${lottoResult.type}-${index}`}>
-                <NumberComponent type={code} lottoNumber={lottoResult} />
-              </div>
-            ))}
+            <div className="col">
+              <NumberComponent
+                type={normalizationCode}
+                lottoNumber={groupLottoTypes.THREE_UP}
+                gameType="THREE_UP"
+              />
+            </div>
+            <div className="col">
+              <NumberComponent
+                type={normalizationCode}
+                lottoNumber={groupLottoTypes.TWO_DOWN}
+                gameType="TWO_DOWN"
+              />
+            </div>
+          </div>
+        )
+      case 'LAO':
+        return (
+          <div className="row">
+            <div className="col">
+              <NumberComponent
+                type={normalizationCode}
+                lottoNumber={groupLottoTypes.FOUR_SUIT}
+                gameType="FOUR_SUIT"
+              />
+            </div>
           </div>
         )
       default:
@@ -150,14 +166,20 @@ const LottoResultCard: SFC<ILottoResultCard & DefaultProps> = (props) => {
     }
   }
 
-  const FlagIcon = LottoFlags[LOTTO_FLAG_ALPHA[code]].Icon
+  const FlagIcon = LottoFlags[LOTTO_FLAG_ALPHA[normalizationCode]].Icon
+  const gameName = normalizationCode === 'YEGEE'
+    ? `${constants.lotto}${LOTTO_TYPE[normalizationCode]}`
+    : LOTTO_TYPE[normalizationCode]
+  const gameRound = normalizationCode === 'YEGEE'
+    ? Number(split(code, '_')[1])
+    : ''
 
   return (
     <div className="col-12">
       <div className="lotto-card-container secondary-bg p3">
-        <div className="row mb-2">
+        <div className="row m2-b">
           <div className="col text-left d-flex flex-row align-items-center">
-            <h3>{LOTTO_TYPE[lotto.code]}{round !== 0 ? ` รอบที่ ${round}` : ``}</h3>
+            <h4>{gameName} {gameRound}</h4>
             <img alt="lotto-flag" src={FlagIcon} className="flag-icon" />
           </div>
           <div className="col-auto text-right m-auto">

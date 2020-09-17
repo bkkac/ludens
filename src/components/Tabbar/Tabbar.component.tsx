@@ -1,6 +1,6 @@
-import React, { SFC } from 'react'
+import React, { FC } from 'react'
 import { useHistory, useLocation } from 'react-router-dom'
-import { noop, isEqual } from 'lodash'
+import { noop, includes } from 'lodash'
 import './tabbar.style.scss'
 
 const defaultProps: ITabbarProps = {
@@ -8,7 +8,7 @@ const defaultProps: ITabbarProps = {
   mode: 'dark-mode',
 }
 
-const TabbarComponent: SFC<ITabbarProps> = ({
+const TabbarComponent: FC<ITabbarProps> = ({
   tabs,
   mode,
 }) => {
@@ -30,7 +30,7 @@ const TabbarComponent: SFC<ITabbarProps> = ({
       InactiveIcon,
     }, itemIndex) => {
 
-      const isActive = isEqual(location.pathname, path)
+      const isActive = includes(location.pathname, path)
       return (
         <div
           className="flex d-flex p0"

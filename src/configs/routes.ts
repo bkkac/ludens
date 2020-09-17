@@ -165,6 +165,20 @@ const routes: IRoutes[] = [
   },
   {
     exact: true,
+    name: route.slots.name,
+    path: route.slots.path,
+    component: pages.Slots,
+    private: true,
+  },
+  {
+    exact: true,
+    name: route.bacara.name,
+    path: route.bacara.path,
+    component: pages.Casino,
+    private: true,
+  },
+  {
+    exact: true,
     name: route.games.name,
     path: route.games.path,
     component: pages.Games,

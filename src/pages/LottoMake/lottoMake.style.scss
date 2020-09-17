@@ -10,6 +10,19 @@
   &.opened {
     padding-top: calc(112px + 46px);
   }
+
+  .scroll-to-top-lotto-make-wrapper {
+    width: 40px;
+    height: 40px;
+    border-radius: 4px;
+    position: fixed;
+    bottom: 104px;
+    right: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba($color: $secondary-text, $alpha: 0.4);
+  }
 }
 
 .summary-notification-container {
@@ -27,6 +40,57 @@
   }
 }
 
+.lotto-summary-navigator-button-wrapper {
+  height: 60px;
+  width: 60px;
+  position: fixed;
+  bottom: 96px;
+  left: 12px;
+  z-index: 1;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  transform: scale(0);
+
+  .inside-summary-navigator {
+    height: 44px;
+    width: 44px;
+    border-radius: 4px;
+    background-color: rgba($color: $secondary-blue, $alpha: 1);
+    box-shadow: 0px 0px 16px 0 rgba($color: $primary-bg, $alpha: 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+
+    .bell-notification {
+      color: $primary-text;
+      font-size: 24px;
+    }
+  }
+
+  .badge-number-noti {
+    position: absolute;
+    padding: 0 4px;
+    min-width: 20px;
+    height: 20px;
+    border-radius: 10px;
+    background-color: $secondary-red;
+    z-index: 1;
+    top: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  &.display {
+    animation: bounce 1s;
+    transform: scale(1);
+    display: flex;
+  }
+}
+
 .yeege-game-result-container {
   border-radius: 8px;
   background-color: rgba($color: $secondary-bg, $alpha: 0.5);
@@ -38,27 +102,30 @@
   }
 }
 
-.summary-badge-container {
-  position: absolute;
-  top: 90px;
-  right: 32px;
-  width: 80px;
-  height: 80px;
-  border-radius: 40px;
-  -webkit-backdrop-filter: blur(30px);
-  backdrop-filter: blur(30px);
-  box-shadow: 6px 6px 16px 0 #00000071;
-  background-color: #5c9ef4;
-  cursor: pointer;
-  transition: all 254ms ease-in;
-
-  &:hover {
-    background-color: #3772c0;
+@keyframes bounce {
+  0% {
+    transform: scale(0);
+    opacity: 0;
   }
-
-  .document-image-icon {
-    width: 50px;
-    height: 50px;
-    object-fit: contain;
+  15% {
+    opacity: 1;
+  }
+  25% {
+    transform: scale(1.5);
+    opacity: 0.7;
+  }
+  50% {
+    transform: scale(0.7);
+    opacity: 0.7;
+  }
+  60% {
+    transform: scale(1.1);
+    opacity: 1;
+  }
+  80% {
+    transform: scale(0.95);
+  }
+  100% {
+    transform: scale(1);
   }
 }

@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { SFC, useState, useEffect } from 'react'
-import { noop, replace, isEmpty, get } from 'lodash'
-import moment from 'moment'
+import React, { FC, useState, useEffect } from 'react'
+import { noop, isEmpty, get } from 'lodash'
+import moment from 'moment-timezone'
 import { FormikProps } from 'formik'
 import {
   ResponsiveIcon,
@@ -14,11 +14,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faChevronLeft, faSms } from '@fortawesome/free-solid-svg-icons'
 import SMSIcon from 'assets/images/register/sms.svg'
 import './registerStep2.style.scss'
+import { date } from 'utils'
 
 const constants = {
   title: 'สมัครสมาชิก',
   subTitle: 'ขั้นตอนที่ 2',
-  backText: 'กลับ',
+  backText: 'ย้อนกลับ',
   confirmPhoneNumber: 'ยืนยันหมายเลขโทรศัพท์',
   confirmSMS: 'ระบบได้ส่งรหัสยืนยันผ่าน SMS ไปยังเบอร์โทรศัพท์ที่กรอก',
   confirmNumber: (phoneNumber: string) => `${phoneNumber}`,
@@ -39,7 +40,7 @@ const LIMIT_TIME = 1
 const LIMIT_UNIT = 'minutes'
 const LIMIT_REQUEST = 0.5
 
-const RegisterStep2: SFC<
+const RegisterStep2: FC<
   FormikProps<IRegister>
   & IRegisterFormProps<{ otp: IOTP; requestOTP(mobileNumber: string): void }>
   & DefaultProps
@@ -84,11 +85,11 @@ const RegisterStep2: SFC<
     if (intervalId) {
       clearInterval(intervalId);
     }
-    const createAt = moment(replace(otpObject.createAt!, /\s/g, ''))
+    const createAt = date.calibratingTime(otpObject.createAt)
     const timeRange = createAt.clone().add(LIMIT_TIME, LIMIT_UNIT)
 
     intervalId = setInterval(() => {
-      const duration = moment.duration(timeRange.diff(moment()))
+      const duration = moment.duration(timeRange.diff(moment().local()))
       const minutes = duration.minutes()
       const seconds = duration.seconds()
 
@@ -110,10 +111,10 @@ const RegisterStep2: SFC<
     if (intervalRequestId) {
       clearInterval(intervalRequestId);
     }
-    const timeRange = moment().add(LIMIT_REQUEST, LIMIT_UNIT)
+    const timeRange = moment().local().add(LIMIT_REQUEST, LIMIT_UNIT)
 
     intervalRequestId = setInterval(() => {
-      const duration = moment.duration(timeRange.diff(moment()))
+      const duration = moment.duration(timeRange.diff(moment.locale()))
       const seconds = duration.seconds()
 
       if (seconds <= 0) {
@@ -147,9 +148,9 @@ const RegisterStep2: SFC<
 
   useEffect(() => {
     if (!isEmpty(otpObject)) {
-      const createAt = moment(replace(otpObject.createAt!, /\s/g, ''))
+      const createAt = date.calibratingTime(otpObject.createAt)
       const timeRange = createAt.clone().add(LIMIT_TIME, LIMIT_UNIT)
-      const duration = moment.duration(timeRange.diff(moment()))
+      const duration = moment.duration(timeRange.diff(moment().local()))
       const minutes = duration.minutes()
       const seconds = duration.seconds()
       if (minutes >= 0 && seconds > 0) {

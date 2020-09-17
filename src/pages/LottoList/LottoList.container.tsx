@@ -5,7 +5,6 @@ import {
   Breadcrumb,
   LottoActionCard,
 } from 'components'
-import moment from 'moment'
 import { noop, isEmpty, map } from 'lodash'
 import colors from 'constants/colors'
 import { LOTTO_SLUG_NAME, LOTTO_FLAG_ALPHA, LOTTO_SLUG_TO_TYPE } from 'constants/variables'
@@ -14,9 +13,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons'
 import './lottoList.style.scss'
 import routes from 'constants/routes'
+import { date } from 'utils'
 
 const constants = {
-  back: 'กลับ',
+  back: 'ย้อนกลับ',
   lottoLabel: 'แทงหวย',
   closedLabel: 'เวลาที่ปิดรับ: ',
   openedYeegeLabel: 'เปิดรับ: ',
@@ -65,7 +65,7 @@ class LottoListContainer extends Component<
       ? `88 ${constants.round}`
       : isEmpty(lotto.endTime)
         ? '-'
-        : moment(lotto.endTime).add(-7, 'hour').format('DD MMM YY')
+        : date.calibratingTime(lotto.endTime).format('DD MMM YY')
     const isCountingDown = (lotto.code === 'LOTTER_YEGEE')
       ? false
       : (lotto.status === 'OPEN')

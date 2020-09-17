@@ -7,10 +7,10 @@ import { faChevronLeft } from '@fortawesome/free-solid-svg-icons'
 import colors from 'constants/colors'
 import response from 'constants/response'
 import './newsroom.style.scss'
-import moment from 'moment'
+import { date } from 'utils'
 
 const constants = {
-  back: 'กลับ',
+  back: 'ย้อนกลับ',
   newsroom: 'ข่าวสาร',
 }
 
@@ -56,7 +56,7 @@ class NewsroomContainer extends Component<
 
   renderNewsList = () => {
     const NewsComponent = map(this.props.news, (news, newsIndex) => {
-      const updatedTime = moment(news.updatedAt).format('LLL')
+      const updatedTime = date.calibratingTime(news.updatedAt).format('LLL')
       return (
         <div className="border-rounded secondary-bg p2 m3-t" key={`news-${newsIndex}`}>
           <h4 className="secondary-blue-text">{news.title}</h4>

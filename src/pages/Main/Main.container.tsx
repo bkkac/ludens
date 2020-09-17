@@ -12,7 +12,7 @@ import ContactIcon from 'assets/images/main/contacts/contacts.svg'
 import ProblemIcon from 'assets/images/main/problem/problem.svg'
 import MegaphoneIcon from 'assets/images/main/megaphone/megaphone.svg'
 import CasinoIcon from 'assets/images/main/casino/casino.svg'
-import SlotIcon from 'assets/images/main/slot/slot.svg'
+import GameIcon from 'assets/images/main/game/game.svg'
 
 import './main.style.scss'
 import routes from 'constants/routes'
@@ -27,8 +27,8 @@ const constants = {
   gotoAffli: 'ระบบแนะนำเพื่อน',
   gotoNews: 'ข่าวสาร',
   gotoContact: 'ติดต่อทีมงาน',
-  gotoCasino: 'คาสิโน',
-  gotoGame: 'เกมส์/สล๊อต',
+  gotoCasino: 'คาสิโน/สล๊อต',
+  gotoGame: 'ไทยเกมส์',
 }
 
 type DefaultProps = Readonly<typeof defaultProps>
@@ -109,7 +109,7 @@ class MainContainer extends Component<IMainProps & IMainActionProps & DefaultPro
                         id="goto-slot-button"
                         onClick={() => this.onNavigateTo(routes.games.path)}
                         text={constants.gotoGame}
-                        icon={SlotIcon}
+                        icon={GameIcon}
                       />
                     </div>
                   </div>

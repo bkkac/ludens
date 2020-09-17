@@ -1,6 +1,6 @@
-import React, { SFC } from 'react'
+import React, { FC } from 'react'
 import { number } from 'utils'
-import moment from 'moment'
+import moment from 'moment-timezone'
 import './transactionItem.style.scss'
 
 const constants = {
@@ -22,7 +22,7 @@ const defaultProps: ITransactionItem = {
   containerClassName: '',
 }
 
-const TransactionItem: SFC<ITransactionItem & DefaultProps> = (props) => {
+const TransactionItem: FC<ITransactionItem & DefaultProps> = (props) => {
 
   const {
     status,

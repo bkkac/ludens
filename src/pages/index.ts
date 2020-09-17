@@ -19,12 +19,14 @@ import { ForgotPassword } from './ForgotPassword'
 import { QandA } from './QandA'
 import { Casino } from './Casino'
 import { Games } from './Games'
+import { Slots } from './Slots'
 import { LottoFavoriteManagement } from './LottoFavoriteManagement'
 import { LottoFavoriteForm } from './LottoFavoriteForm'
 
 export default {
   Home,
   Main,
+  Slots,
   Games,
   QandA,
   Casino,

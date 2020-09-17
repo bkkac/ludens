@@ -5,8 +5,7 @@ import colors from 'constants/colors'
 import { RouteComponentProps } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faChevronLeft, faChevronRight, faDice, faLink, faCopy } from '@fortawesome/free-solid-svg-icons'
-import { number } from 'utils'
-import moment from 'moment'
+import { date, number } from 'utils'
 import copy from 'copy-to-clipboard'
 import './affiliate.style.scss'
 import routes from 'constants/routes'
@@ -92,7 +91,7 @@ class AffilateContainer extends
 			return {
 				memberName: memberData.memberName,
 				totalMakedMoney: number.castToMoney(Number(memberData.totalBet)),
-				createdAt: moment(memberData.createdAt).add('years', 543).format('Do MMMM YY'),
+				createdAt: date.calibratingTime(memberData.createdAt).add('years', 543).format('Do MMMM YY'),
 			}
 		})
 

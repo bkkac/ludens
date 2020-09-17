@@ -8,7 +8,7 @@ import {
   map,
 } from 'rxjs/operators'
 import { isActionOf } from 'typesafe-actions'
-import { fetchGetBetRate } from './services'
+import { fetchGetBetRate, fetchGetBetNumberRate } from './services'
 import { RootAction } from 'typings/reduxs/Actions'
 import actions from './actions'
 
@@ -25,6 +25,20 @@ const getBetRateEpic: Epic<RootAction, RootAction, RootReducers> = (action$, sto
     )
   )
 
+const getBetNumberRateEpic: Epic<RootAction, RootAction, RootReducers> = (action$, store) =>
+  action$.pipe(
+    filter(isActionOf(actions.getBetNumberRateAction)),
+    exhaustMap(action =>
+      from(fetchGetBetNumberRate(action.payload))
+        .pipe(
+          map(actions.getBetNumberRateSuccessAction),
+          catchError(error => of(actions.getBetNumberRateFailureAction(error))),
+          takeUntil(action$.pipe(filter(isActionOf(actions.getBetNumberRateCancelAction))))
+        ),
+    )
+  )
+
 export default [
   getBetRateEpic,
+  getBetNumberRateEpic,
 ]

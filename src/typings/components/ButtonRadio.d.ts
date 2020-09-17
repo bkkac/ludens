@@ -1,10 +1,11 @@
 declare interface IButtonRadio {
     id: string
-    text: string
+    text: string | JSX.Element
     defaultState?: boolean
     forceState?: boolean
     color?: string
-    padding?: number
+    paddingX?: number
+    paddingY?: number
     backgroundColor?: string
     stylename?: 'normal' | 'outline'
     onChangeState?(state: boolean): void
