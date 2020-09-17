@@ -14,7 +14,7 @@ class GamesContainer extends Component {
   renderGames = () => {
     const GamesComponent = map(games, (game, _) => {
       return (
-        <div className="col-6 col-md-3 m3-b" key={`game-${game.id}`}>
+        <div className="col m3-b" key={`game-${game.id}`}>
           <div className="game-button-wrapper secondary-bg text-center" id={`game-${game.id}`}>
             <ResponsiveIcon icon={game.image} alt={`game-${game.id}-alt`} className="game-image" />
           </div>

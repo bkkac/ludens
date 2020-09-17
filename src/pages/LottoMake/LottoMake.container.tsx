@@ -17,6 +17,7 @@ import {
   faChevronLeft,
   faStopwatch,
   faArrowUp,
+  faBell,
 } from '@fortawesome/free-solid-svg-icons'
 import {
   get,
@@ -121,6 +122,7 @@ class LottoMakeContainer extends Component<
 
   static defaultProps = defaultProps
   lottoMakeContainerRef: RefObject<HTMLDivElement> = createRef()
+  summaryContainerRef: RefObject<HTMLDivElement> = createRef()
 
   intervalId: NodeJS.Timeout | null = null
 
@@ -576,7 +578,7 @@ class LottoMakeContainer extends Component<
       return <></>
     } else if (this.state.lottoStatus === 'OPEN') {
       return (
-        <div className="m2-t">
+        <div className="m2-t" ref={this.summaryContainerRef}>
           <Summary
             onNavigateToFavorite={this.handleOnGotoSelectFavorite}
             betRates={this.props.betRates}
@@ -591,6 +593,7 @@ class LottoMakeContainer extends Component<
   }
 
   handleOnBack = () => {
+    this.props.loader(false)
     const slugName = this.props.match.params.type
     if (slugName !== 'LOTTER_YEGEE') {
       this.props.history.goBack()
@@ -661,10 +664,42 @@ class LottoMakeContainer extends Component<
     }
   }
 
+  handleScrollToSummary = () => {
+    if (this.summaryContainerRef.current) {
+      this.summaryContainerRef.current.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start',
+        inline: 'start',
+      })
+    }
+  }
+
+  renderLottoSummaryNavigatorButton = () => {
+    if (this.state.onLottoProcessing) {
+      return <></>
+    } else if (this.state.lottoStatus === 'OPEN') {
+      const lottoLength = get(this.state.numberList, 'length', 0)
+      const displayClass = (lottoLength > 0) ? 'display' : ''
+      return (
+        <div className={`lotto-summary-navigator-button-wrapper ${displayClass}`}>
+          <div className="inside-summary-navigator" onClick={this.handleScrollToSummary}>
+            <FontAwesomeIcon icon={faBell} className="bell-notification" />
+          </div>
+          <div className="badge-number-noti">
+            <h6 className="subtitle-1">{lottoLength}</h6>
+          </div>
+        </div>
+      )
+    }
+
+    return <></>
+  }
+
   render() {
     const GameModeComponent = this.renderGameMode
     const SummaryModeComponent = this.renderSummaryMode
     const RenderYeegeGameComponent = this.renderYeegeGame
+    const SummaryNavigatorButton = this.renderLottoSummaryNavigatorButton
 
     const sumtime = sum(values(this.state.remainingTime))
     const remainingTime = (this.state.lottoStatus === 'OPEN')
@@ -738,6 +773,7 @@ class LottoMakeContainer extends Component<
             id="scroll-to-top"
           />
         </div>
+        <SummaryNavigatorButton />
       </div>
     )
   }

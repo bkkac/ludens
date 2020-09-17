@@ -25,8 +25,8 @@ import { ReactComponent as BillIcon } from 'assets/images/global/menu/bill.svg'
 import { ReactComponent as BillColorIcon } from 'assets/images/global/menu/bill-color.svg'
 import { ReactComponent as ChipIcon } from 'assets/images/global/menu/chip.svg'
 import { ReactComponent as ChipColorIcon } from 'assets/images/global/menu/chip-color.svg'
-import { ReactComponent as SlotIcon } from 'assets/images/global/menu/slot.svg'
-import { ReactComponent as SlotColorIcon } from 'assets/images/global/menu/slot-color.svg'
+import { ReactComponent as GameIcon } from 'assets/images/global/menu/game.svg'
+import { ReactComponent as GameColorIcon } from 'assets/images/global/menu/game-color.svg'
 
 type DefaultProps = Readonly<typeof defaultProps>
 
@@ -66,8 +66,8 @@ const Menus: ITabItem[] = [
     title: 'เกมส์',
     name: 'game',
     path: routers.games.path,
-    ActiveIcon: (<SlotColorIcon className="tab-menu-icon m0-b" />),
-    InactiveIcon: (<SlotIcon className="tab-menu-icon m0-b" />),
+    ActiveIcon: (<GameColorIcon className="tab-menu-icon m0-b" />),
+    InactiveIcon: (<GameIcon className="tab-menu-icon m0-b" />),
   },
 ]
 

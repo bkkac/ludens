@@ -19,10 +19,12 @@ import { ForgotPassword } from './ForgotPassword'
 import { QandA } from './QandA'
 import { Casino } from './Casino'
 import { Games } from './Games'
+import { Slots } from './Slots'
 
 export default {
   Home,
   Main,
+  Slots,
   Games,
   QandA,
   Casino,
