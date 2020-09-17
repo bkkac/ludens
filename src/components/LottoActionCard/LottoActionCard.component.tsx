@@ -1,9 +1,9 @@
 import React, { FC, useState, useEffect } from 'react'
-import { replace, isNaN } from 'lodash'
+import { isNaN } from 'lodash'
 import { ResponsiveIcon, Badge } from 'components'
 import colors from 'constants/colors'
-import moment from 'moment'
-import { number } from 'utils'
+import moment from 'moment-timezone'
+import { date, number } from 'utils'
 import './lottoActionCard.style.scss'
 
 const constants = {
@@ -60,10 +60,9 @@ const LottoActionCard: FC<ILottoActionCard & DefaultProps> = (props) => {
     clearLocalInterval()
 
     if (isCountingdown) {
-      const expireMoment = moment.utc(replace(expire!, /\s/g, ''))
-      const expireWithCastTimezone = expireMoment.clone().add(-7, 'hours')
+      const expireMoment = date.calibratingTime(expire)
       intervalId = setInterval(() => {
-        const duration = moment.duration(expireWithCastTimezone.diff(moment.utc()))
+        const duration = moment.duration(expireMoment.diff(moment().local()))
         const days = duration.days()
         const hours = duration.hours()
         const minutes = duration.minutes()

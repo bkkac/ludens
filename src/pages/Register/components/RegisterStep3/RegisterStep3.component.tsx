@@ -1,4 +1,4 @@
-import React, { SFC } from 'react'
+import React, { FC } from 'react'
 import {
   noop,
   isEmpty,
@@ -21,7 +21,7 @@ import './registerStep3.style.scss'
 const constants = {
   title: 'สมัครสมาชิก',
   subTitle: 'ขั้นตอนสุดท้าย',
-  backText: 'กลับ',
+  backText: 'ย้อนกลับ',
   remarkText: '* คือ จำเป็นต้องกรอก',
   placeholderUsername: 'ชื่อผู้ใช้ *',
   placeholderPassword: 'รหัสผ่าน *',
@@ -29,6 +29,7 @@ const constants = {
   placeholderAffilate: 'รหัสคนชวน ',
   placeholderInput: (type: string) => `ระบุ${type}`.slice(0, -1),
   selectBankText: 'เลือกธนาคาร *',
+  placeholderSelectBankText: 'ธนาคาร *',
   placeholderBankNumber: 'หมายเลขบัญชีธนาคาร *',
   placeholderOwnerName: 'ชื่อ - นามสกุลบัญชีธนาคาร *',
   buttonConfirm: 'สมัครสมาชิก',
@@ -45,7 +46,7 @@ const defaultProps: IRegisterFormProps<{ isAffiliate: boolean }> = {
 
 const CURRENT_STEP = 3
 
-const RegisterStep3: SFC<
+const RegisterStep3: FC<
   FormikProps<IRegister>
   & IRegisterFormProps<{ isAffiliate: boolean }>
   & DefaultProps
@@ -213,7 +214,7 @@ const RegisterStep3: SFC<
             onChange={(selected, name) => {
               setFieldValue(name, selected.value)
             }}
-            placeholder={constants.placeholderInput(constants.selectBankText)}
+            placeholder={constants.placeholderInput(constants.placeholderSelectBankText)}
             RenderSelected={renderBankOption}
           />
           <div className="select-bank-error-message">{isEmpty(errors.bankType) ? '' : errors.bankType}</div>

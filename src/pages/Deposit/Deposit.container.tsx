@@ -129,7 +129,6 @@ class DepositContainer extends
           },
         })
       } else {
-        console.log('errrrorororor')
         Modal.error.show({
           action: () => { Modal.error.hide(); return this.props.history.goBack(); },
           description: `${this.props.transactionRequestError} ${constants.pleaseTryAgain}`,
