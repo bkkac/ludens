@@ -1,11 +1,11 @@
 import React, { FC } from 'react'
 import { Badge } from 'components'
-import moment from 'moment'
-import { replace, includes, split, groupBy, map, isEmpty } from 'lodash'
+import { includes, split, groupBy, map, isEmpty } from 'lodash'
 import colors from 'constants/colors'
 import { LOTTO_GAME_TYPE_NAME, LOTTO_TYPE, LOTTO_FLAG_ALPHA } from 'constants/variables'
 import LottoFlags from 'assets/images/global/flags'
 import './lottoResultCard.style.scss'
+import { date } from 'utils'
 
 type DefaultProps = Readonly<typeof defaultProps>
 
@@ -32,7 +32,7 @@ const LottoResultCard: FC<ILottoResultCard & DefaultProps> = (props) => {
   } = lotto
 
   const normalizationCode: TLottoType = includes(code, 'YEGEE') ? 'YEGEE' : code
-  const dateDisplay = moment.utc(replace(createdAt, /\s/g, '')).format('Do MMM YY')
+  const dateDisplay = date.calibratingTime(createdAt).format('Do MMM YY')
 
   const groupLottoTypes: { [type in TLottoGameType]: ILottoResult[] } =
     groupBy<ILottoResult>(lottos, 'type') as { [type in TLottoGameType]: ILottoResult[] }

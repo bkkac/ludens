@@ -10,7 +10,7 @@ import qas from 'assets/json/qa'
 import './qandA.style.scss'
 
 const constants = {
-  back: 'กลับ',
+  back: 'ย้อนกลับ',
   qa: 'ถาม - ตอบ',
 }
 

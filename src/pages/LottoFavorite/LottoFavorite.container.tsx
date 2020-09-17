@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { ALink, Button, Modal } from 'components'
-import moment from 'moment'
+import moment from 'moment-timezone'
 import colors from 'constants/colors'
 import routers from 'constants/routes'
 import { noop, map, isEmpty, find } from 'lodash'
@@ -12,7 +12,7 @@ import response from 'constants/response'
 import './lottoFavorite.style.scss'
 
 const constants = {
-  backText: 'กลับ',
+  backText: 'ย้อนกลับ',
   favoriteList: 'รายการชุดตัวเลข',
   favoriteManagement: 'จัดการโพย',
   select: 'เลือก',
@@ -73,7 +73,7 @@ class LottoFavoriteContainer extends Component<
     const finding = (numb: ILottoNumber) => isEmpty(find(favoriteItems.list, { number: numb.number, type: numb.type }))
     const newNumberList: ILottoNumber[] = locationState.betList.filter(finding)
 
-    const currentTime = moment.utc().format('DDMMYYYYHHmm')
+    const currentTime = moment().local().format('DDMMYYYYHHmm')
     const addNumberList: ILottoNumber[] = favoriteItems.list.map(numb => ({
       number: numb.number,
       type: numb.type,

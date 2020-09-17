@@ -3,3 +3,4 @@ export const DECIMAL_DITGITS = /(\.\d+)+/g
 export const COMMA = /[,]/g
 export const ENG = /^[a-zA-Z0-9]+$/g
 export const LOWERCASE = /^[a-z0-9]+$/g
+export const ESCAPED_TIMEZONE = /\b\S{1,19}\b/g

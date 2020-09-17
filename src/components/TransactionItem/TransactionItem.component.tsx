@@ -1,6 +1,6 @@
-import React, { SFC } from 'react'
+import React, { FC } from 'react'
 import { number } from 'utils'
-import moment from 'moment'
+import moment from 'moment-timezone'
 import './transactionItem.style.scss'
 
 const constants = {
@@ -22,7 +22,7 @@ const defaultProps: ITransactionItem = {
   containerClassName: '',
 }
 
-const TransactionItem: SFC<ITransactionItem & DefaultProps> = (props) => {
+const TransactionItem: FC<ITransactionItem & DefaultProps> = (props) => {
 
   const {
     status,
@@ -35,7 +35,7 @@ const TransactionItem: SFC<ITransactionItem & DefaultProps> = (props) => {
 
   const name = `${transactionName[type]} ${status === 'WAIT' ? '(รอตรวจสอบ)' : (status === 'FAIL' ? '(ไม่สำเร็จ)' : '')}`
   const displayMoney = number.castToMoney(money)
-  const displayTime = moment.utc(time, 'YYYYMMDDHHmmss').format('lll')
+  const displayTime = moment(time, 'YYYYMMDDHHmmss').format('lll')
   const statusClass = () => {
     switch (type) {
       case 'DEPOSIT':
