@@ -7,3 +7,5 @@ Secondary Red: #3446d0
 
 Primary Blue: #3b4fe8
 Secondary Blue: #3446d0
+
+[![Run on Repl.it](https://repl.it/badge/github/biwswalker/ludens)](https://repl.it/github/biwswalker/ludens)
